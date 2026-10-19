@@ -14,8 +14,9 @@
 - [x] Implement the six-stop Journey Letters preview and online-only disclosure.
 - [x] Run typecheck, lint, production build, and interaction smoke checks.
 - [x] Capture and review 390px phone and 1440px desktop screenshots.
-- [ ] Push a reviewable Phase 1 branch; stop at visual review before Phase 2.
+- [x] Push a reviewable Phase 1 branch; stop at visual review before Phase 2.
 
 ## Scope still ahead
 
 Real accounts and partner bonds; protected letter delivery and server-timed release; persisted Memory Books and Our Dates; scheduled Journey Letters; operational privacy controls; cross-browser/device, accessibility, and production security hardening. No production authentication, database, or public deployment has been added.
+
