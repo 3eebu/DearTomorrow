@@ -32,4 +32,3 @@ pnpm start
 - Current delivery and remaining scope: `docs/PROGRESS.md`
 
 Phase 1 is intentionally local-only. Do not add production credentials until the Phase 2 setup has been reviewed.
-

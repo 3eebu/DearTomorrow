@@ -1,0 +1,5 @@
+Read `DEAR_TOMORROW_MASTER_CODEX_PROMPT.md` completely. Also read `PRODUCT_BLUEPRINT_BACKGROUND.md` and inspect the two images in `reference_images/` if available. The new master prompt is authoritative; the brand is Dear Tomorrow, not Letters.
+
+Follow the “Exact First Implementation Request” at the end. Begin writing a real runnable Next.js project now. Focus on a spectacular, genuinely animated, mobile-responsive Phase 1: cinematic homepage, opening envelope, fully interactive sample Memory Book with custom name and cover, branching Our Dates timeline/calendar, working Create action, and Journey Letters showcase.
+
+Do not claim production authentication, persistence or offline travel support until implemented. Test and report run commands, actual results and screen widths inspected. Stop for my visual review at the Phase 1 checkpoint.
