@@ -1,35 +1,16 @@
 # Dear Tomorrow
 
-An intimate, private world for letters, memory books, journeys, and the moments that connect them.
-
-## Phase 1 preview
-
-This repository currently contains the first interactive website slice. It includes a cinematic home page, an opening letter preview, a personalizable sample Memory Book, a branching Our Dates timeline with a matching calendar, and a six-stop Journey Letters demo. Demo changes and selected photos live only in the current browser session; nothing is uploaded or synced. The preview does not authenticate users, send letters, or unlock real scheduled content.
+An interactive Phase 1 Next.js website prototype. No real sending, authentication, cloud persistence, subscriptions or offline access.
 
 ## Run locally
 
-Requirements: Node.js 20.9 or newer and pnpm.
+Install Node.js 20+ then:
 
 ```bash
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
-Open `http://localhost:3000`. Production checks:
+Visit http://localhost:3000. Verify with `npm run typecheck`, `npm run lint`, `npm run build`.
 
-```bash
-pnpm lint
-pnpm typecheck
-pnpm build
-pnpm start
-```
-
-## Project guide
-
-- Product and design decisions: `docs/`
-- Supplied documents and conceptual screenshots: `docs/reference-pack/`
-- Original generated editorial assets: `public/media/`
-- Current delivery and remaining scope: `docs/PROGRESS.md`
-
-Phase 1 is intentionally local-only. Do not add production credentials until the Phase 2 setup has been reviewed.
-
+The demo includes a click-to-open envelope, guest letter draft, book title and color personalization, animated page changes, Our Dates timeline/calendar with local milestone creation, and six interactive journey checkpoints. Changes disappear on refresh. See docs/PROGRESS.md.
