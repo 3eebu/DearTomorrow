@@ -369,7 +369,6 @@ export default function HomeStudio() {
     setCreateOpen(false);
     if (section === 'letters') { setComposeOpen(true); return; }
     document.getElementById(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (section === 'memory-tree') setAddSignal(number => number + 1);
     if (section === 'books') window.setTimeout(() => document.getElementById('dt-book-name')?.focus({ preventScroll: true }), 500);
   }
   return <div className="dt-app" id="home">
@@ -476,7 +475,7 @@ export default function HomeStudio() {
       <div className="dt-create-choices">
         <button type="button" onClick={() => goTo('letters')}><span className="dt-choice-ornament">✉</span><span><strong>Write a letter</strong><small>Something meaningful, in your own words</small></span><span aria-hidden="true">↗</span></button>
         <button type="button" onClick={() => goTo('books')}><span className="dt-choice-ornament">▤</span><span><strong>Make a Memory Book</strong><small>Give your story its very own cover</small></span><span aria-hidden="true">↗</span></button>
-        <button type="button" onClick={() => goTo('memory-tree')}><span className="dt-choice-ornament">♧</span><span><strong>Add a memory</strong><small>Let a new leaf grow on your tree</small></span><span aria-hidden="true">↗</span></button>
+        <button type="button" onClick={() => { goTo('memory-tree'); setAddSignal(number => number + 1); }}><span className="dt-choice-ornament">♧</span><span><strong>Add a memory</strong><small>Let a new leaf grow on your tree</small></span><span aria-hidden="true">↗</span></button>
       </div><p className="dt-inline-note">This is a demo. Nothing is shared or stored online.</p>
     </Dialog>}
 
