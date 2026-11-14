@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties, FormEvent, ReactNode } from 'react';
+import type { CSSProperties, FormEvent, ReactNode, TouchEvent } from 'react';
 
 type Moment = { id: string; title: string; date: string; story: string; chapter: string };
 type Section = 'letters' | 'books' | 'memory-tree' | 'journeys';
@@ -117,7 +117,7 @@ function MemoryBook() {
   const [page, setPage] = useState(0);
   const swipeOrigin = useRef<number | null>(null);
   const changePage = (direction: number) => setPage(current => Math.max(0, Math.min(pages.length - 1, current + direction)));
-  const onTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+  const onTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
     if (swipeOrigin.current === null) return;
     const distance = event.changedTouches[0].clientX - swipeOrigin.current;
     if (Math.abs(distance) > 55) {
