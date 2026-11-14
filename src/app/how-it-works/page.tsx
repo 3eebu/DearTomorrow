@@ -13,9 +13,9 @@ const steps=[
   {number:"03",title:"Give it a place to live.",body:"In the full version, letters, book pages, journeys and memories will live together in a private shared space. For now, the preview is local and temporary."}
 ];
 const experiences=[
-  {name:"Letters",status:"Preview available",body:"Open a sample envelope and try writing a guest draft. Nothing is sent or saved to an account.",href:"/#top",cta:"Try the letter"},
+  {name:"Letters",status:"Preview available",body:"Open a sample envelope and try writing a guest draft. Nothing is sent or saved to an account.",href:"/#letters",cta:"Try the letter"},
   {name:"Memory Books",status:"Preview available",body:"Rename a sample book, change its cover and use the page controls to turn through the demo.",href:"/#books",cta:"Try the book"},
-  {name:"Memory Tree",status:"Early timeline preview",body:"Explore sample milestones, add a moment and switch to the matching calendar. The living tree animation is still in development.",href:"/#dates",cta:"Explore memories"},
+  {name:"Memory Tree",status:"Early timeline preview",body:"Explore sample milestones, add a moment and switch to the matching calendar. The living tree animation is still in development.",href:"/#memory-tree",cta:"Explore memories"},
   {name:"Journey Letters",status:"Showcase only",body:"Explore six example checkpoints along a journey. The release schedule is illustrative, not a working delivery system.",href:"/#journeys",cta:"See the journey"}
 ];
 export default function HowItWorksPage(){
@@ -24,7 +24,7 @@ export default function HowItWorksPage(){
       <p className="info-kicker">A SIMPLE WAY TO BEGIN</p>
       <h1>It starts with <em>one little moment.</em></h1>
       <p>You don't need to know where the story is going. Just start with something worth keeping.</p>
-      <Link href="/#story" className="info-btn">Explore the preview <span aria-hidden="true">↗</span></Link>
+      <Link href="/#dt-discover" className="info-btn">Explore the preview <span aria-hidden="true">↗</span></Link>
       <div className="info-paper-sweep" aria-hidden="true"><span className="info-sweep-line"/><span className="info-sweep-seal">✧</span></div>
     </section>
 
