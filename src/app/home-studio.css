@@ -268,3 +268,6 @@
 .dt-app .dt-tree-trunk,.dt-app .dt-tree-root,.dt-app .dt-tree-limb{stroke-dashoffset:0}
 .dt-app .dt-living-leaves{opacity:1}
 }
+
+/* Start the tree-growth animation when the Memory Tree enters the viewport. */
+.dt-tree-world:not(.dt-visible) .dt-tree-trunk,.dt-tree-world:not(.dt-visible) .dt-tree-root,.dt-tree-world:not(.dt-visible) .dt-tree-limb,.dt-tree-world:not(.dt-visible) .dt-living-leaves,.dt-tree-world:not(.dt-visible) .dt-tree-marker{animation-play-state:paused}
