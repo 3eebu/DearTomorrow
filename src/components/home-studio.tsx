@@ -435,7 +435,7 @@ export default function HomeStudio() {
       <section id="letters" className="dt-letters-section dt-section" aria-labelledby="letters-heading">
         <div className="dt-letters-copy" data-reveal><span className="dt-overline">01 / LETTERS FOR LATER</span>
           <h2 id="letters-heading">Some things are better <em>said in a letter.</em></h2>
-          <p>For the big days, the hard days, and the ones you don't know are important until you look back.</p>
+          <p>For the big days, the hard days, and the ones you don&apos;t know are important until you look back.</p>
           <button type="button" className="dt-text-action" onClick={() => setComposeOpen(true)}>Write a little something <span aria-hidden="true">↗</span></button>
         </div>
         <div className="dt-stationery-panel" data-reveal aria-hidden="true">
@@ -450,8 +450,8 @@ export default function HomeStudio() {
       <section className="dt-closing" data-reveal aria-labelledby="closing-heading">
         <div className="dt-closing-symbol" aria-hidden="true">✳</div>
         <span className="dt-overline">A PLACE TO COME BACK TO</span>
-        <h2 id="closing-heading">However the story unfolds,<br /><em>there's room for it here.</em></h2>
-        <p>For now, this is just the beginning. And sometimes that's the loveliest part.</p>
+        <h2 id="closing-heading">However the story unfolds,<br /><em>there&apos;s room for it here.</em></h2>
+        <p>For now, this is just the beginning. And sometimes that&apos;s the loveliest part.</p>
         <button className="dt-button dt-button-cream" type="button" onClick={() => setCreateOpen(true)}>Start with a little something <span aria-hidden="true">↗</span></button>
       </section>
     </main>

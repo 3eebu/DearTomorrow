@@ -23,7 +23,7 @@ export default function HowItWorksPage(){
     <section className="info-how-hero">
       <p className="info-kicker">A SIMPLE WAY TO BEGIN</p>
       <h1>It starts with <em>one little moment.</em></h1>
-      <p>You don't need to know where the story is going. Just start with something worth keeping.</p>
+      <p>You don&apos;t need to know where the story is going. Just start with something worth keeping.</p>
       <Link href="/#dt-discover" className="info-btn">Explore the preview <span aria-hidden="true">↗</span></Link>
       <div className="info-paper-sweep" aria-hidden="true"><span className="info-sweep-line"/><span className="info-sweep-seal">✧</span></div>
     </section>
@@ -69,8 +69,8 @@ export default function HowItWorksPage(){
 
     <section className="info-honesty-section">
       <p className="info-kicker">COME AS YOU ARE</p>
-      <h2>There's no perfect way <em>to remember.</em></h2>
-      <p>A sentence, a first date, or a whole chapter — it's all worth keeping.</p>
+      <h2>There&apos;s no perfect way <em>to remember.</em></h2>
+      <p>A sentence, a first date, or a whole chapter — it&apos;s all worth keeping.</p>
       <Link href="/about" className="info-btn">Read the story behind it <span aria-hidden="true">↗</span></Link>
     </section>
   </InformationShell>;
