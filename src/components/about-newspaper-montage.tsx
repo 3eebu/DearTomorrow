@@ -5,20 +5,20 @@ import styles from "./about-newspaper-montage.module.css";
 
 // These are invented print layouts, never reproductions or claims of press coverage.
 const clippings = [
-  { publication: "The Keepsake Review", edition: "An edition for the everyday", title: "Dear Tomorrow", deck: "On the quiet art of holding on.", format: "folio", x: 3, y: 13, w: 46, r: -14, z: 1, delay: .08, from: [-70, -100, -22], mobile: [4, 9, 52, -12] },
+  { publication: "The Keepsake Review", edition: "An edition for the everyday", title: "Dear Tomorrow", deck: "On the quiet art of holding on.", format: "folio", x: 3, y: 13, w: 46, r: -14, z: 1, delay: .08, from: [-70, -100, -22], spill: -21, mobile: [4, 9, 52, -12] },
   { publication: "The Sunday Edition", edition: "Words • Moments • Everything between", title: "DEAR TOMORROW", deck: "Some words are worth waiting for.", format: "sunday", x: 40, y: 5, w: 49, r: 10, z: 2, delay: .5, from: [65, -110, 19], mobile: [44, 4, 52, 9] },
   { publication: "Notes on a life", edition: "A small, occasional journal", title: "Dear Tomorrow.", deck: "The ordinary becomes the unforgettable.", format: "column", x: 73, y: 23, w: 27, r: 13, z: 3, delay: .86, from: [110, 10, 26] },
-  { publication: "A Journal of Affection", edition: "Collected correspondence / 01", title: "Dear Tomorrow", deck: "For all the things we mean to say.", format: "journal", x: -4, y: 40, w: 43, r: -9, z: 4, delay: 1.12, from: [-120, 15, -20] },
+  { publication: "A Journal of Affection", edition: "Collected correspondence / 01", title: "Dear Tomorrow", deck: "For all the things we mean to say.", format: "journal", x: -4, y: 40, w: 43, r: -9, z: 4, delay: 1.12, from: [-120, 15, -20], spill: -18, mediumSpill: -5 },
   { publication: "The Art of Remembering", edition: "A study in the things that stay", title: "Dear Tomorrow.", deck: "A little place for a life well loved.", format: "review", x: 45, y: 42, w: 51, r: -12, z: 5, delay: 1.47, from: [80, 110, -19], mobile: [48, 40, 50, 11] },
   { publication: "From the archive", edition: "Keep this close", title: "DEAR TOMORROW", deck: "A story still being written.", format: "ink", x: 5, y: 73, w: 52, r: -7, z: 6, delay: 1.8, from: [-60, 110, -15], mobile: [1, 75, 65, -7] },
-  { publication: "The Daily Journal", edition: "A fictional edition · No. 001", title: "DEAR TOMORROW", deck: "A place for the words we never want to lose.", format: "broadsheet", x: 17, y: 17, w: 60, r: -7, z: 10, delay: 2.06, from: [-100, -40, -16], mobile: [13, 23, 75, -6] },
+  { publication: "The Daily Journal", edition: "A fictional edition · No. 001", title: "DEAR TOMORROW", deck: "A place for the words we never want to lose.", format: "broadsheet", x: 17, y: 17, w: 60, r: -7, z: 10, delay: 2.06, from: [-100, -40, -16], spill: -3, mobile: [13, 23, 75, -6] },
   { publication: "The intimate issue", edition: "On love & the passing of time", title: "Dear Tomorrow", deck: "To remember is to love something twice.", format: "magazine", x: 57, y: 35, w: 43, r: 14, z: 8, delay: 2.45, from: [120, -20, 25] },
-  { publication: "The Little Chronicle", edition: "For a slower kind of morning", title: "Dear Tomorrow", deck: "An ordinary day. An extraordinary life.", format: "chronicle", x: -1, y: 46, w: 40, r: -13, z: 9, delay: 2.72, from: [-110, 65, -24] },
+  { publication: "The Little Chronicle", edition: "For a slower kind of morning", title: "Dear Tomorrow", deck: "An ordinary day. An extraordinary life.", format: "chronicle", x: -1, y: 46, w: 40, r: -13, z: 9, delay: 2.72, from: [-110, 65, -24], spill: -21 },
   { publication: "Letters to the future", edition: "Collected words / Volume one", title: "Dear Tomorrow", deck: "One name. A thousand little moments.", format: "letters", x: 38, y: 36, w: 45, r: -3, z: 7, delay: 3.02, from: [75, 90, 10] },
   { publication: "A Quiet Quarterly", edition: "The words worth keeping", title: "Dear Tomorrow", deck: "An unfinished story.", format: "quarterly", x: 47, y: -5, w: 35, r: -5, z: 0, delay: 3.24, from: [0, -120, -14] },
-  { publication: "An archive of affection", edition: "A typographic collection", title: "Dear Tomorrow", deck: "For the things that stay.", format: "cutout", x: 7, y: 3, w: 52, r: -5, z: 11, delay: 3.46, from: [-60, -100, -12], mobile: [7, -2, 66, -5] },
+  { publication: "An archive of affection", edition: "A typographic collection", title: "Dear Tomorrow", deck: "For the things that stay.", format: "cutout", x: 7, y: 3, w: 52, r: -5, z: 11, delay: 3.46, from: [-60, -100, -12], spill: -12, mobile: [7, -2, 66, -5] },
   { publication: "The Memory Ledger", edition: "Little things, carefully kept", title: "DEAR TOMORROW", deck: "Make a little room for what matters.", format: "ledger", x: 69, y: 54, w: 32, r: 9, z: 6, delay: 3.7, from: [110, 70, 21] },
-  { publication: "Between the lines", edition: "A note for you", title: "Dear Tomorrow.", deck: "Always, yours.", format: "note", x: 1, y: 48, w: 32, r: 7, z: 12, delay: 3.95, from: [-90, 40, 16], mobile: [-4, 53, 47, -10] },
+  { publication: "Between the lines", edition: "A note for you", title: "Dear Tomorrow.", deck: "Always, yours.", format: "note", x: 1, y: 48, w: 32, r: 7, z: 12, delay: 3.95, from: [-90, 40, 16], spill: -21, mobile: [-4, 53, 47, -10] },
   { publication: "The things we keep", edition: "An imagined archive", title: "DEAR TOMORROW", deck: "Every story starts somewhere.", format: "strip", x: 30, y: 84, w: 64, r: 4, z: 13, delay: 4.18, from: [35, 110, 12] },
   { publication: "Archives of Affection", edition: "The collected edition", title: "Dear Tomorrow.", deck: "For the things that stay.", format: "affection", x: 36, y: 43, w: 55, r: 8, z: 14, delay: 4.52, from: [100, 85, 19], mobile: [27, 49, 65, 7] },
 ];
@@ -27,7 +27,7 @@ function NewspaperClipping({ clipping, index }: { clipping: typeof clippings[num
   const mobile = clipping.mobile;
   const variables = {
     "--paper-x": `${clipping.x}%`, "--paper-y": `${clipping.y}%`, "--paper-width": `${clipping.w}%`,
-    "--paper-rotation": `${clipping.r}deg`, "--paper-z": clipping.z,
+    "--paper-rotation": `${clipping.r}deg`, "--paper-z": clipping.z, "--paper-spill": `${clipping.spill ?? 0}%`, "--paper-spill-medium": `${clipping.mediumSpill ?? 0}%`,
     "--arrival-delay": `${clipping.delay}s`, "--arrival-duration": `${1.1 + index % 3 * .12}s`,
     "--arrival-easing": ["cubic-bezier(.18,.75,.24,1)", "cubic-bezier(.16,.85,.3,1)", "cubic-bezier(.22,.68,.2,1)"][index % 3],
     "--arrival-x": `${clipping.from[0]}%`, "--arrival-y": `${clipping.from[1]}%`, "--arrival-rotation": `${clipping.from[2]}deg`,

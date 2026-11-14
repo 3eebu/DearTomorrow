@@ -20,6 +20,13 @@
 .info-kicker{font-size:10px!important;font-weight:600;letter-spacing:.23em;color:#967a6d;text-transform:uppercase}
 .info-kicker-rule{display:inline-block;height:1px;width:22px;background:#9b786d;vertical-align:middle;margin-right:12px}
 .info-hero{min-height:680px;display:grid;grid-template-columns:1.04fr .96fr;align-items:stretch}
+.info-about-hero{position:relative;isolation:isolate;overflow-x:clip;overflow-y:visible}
+.info-about-hero .info-hero-copy{position:relative;z-index:2}
+.info-about-hero .info-personal-story{max-width:450px;color:#75635a}
+.info-about-hero .info-personal-story p{font-size:clamp(14px,1.12vw,16px);line-height:1.78;margin:0 0 13px}
+.info-about-hero .info-personal-story p:last-child{margin-bottom:0}
+.info-about-hero .info-hero-actions{margin-top:29px}
+.info-about-hero>figure{z-index:1;overflow:visible}
 .info-hero-copy{padding:clamp(70px,9vw,140px) 6vw 90px clamp(26px,7.5vw,142px)}
 .info-hero-copy h1{max-width:710px;margin:27px 0 30px}
 .info-lead{font-size:clamp(14px,1.2vw,17px);max-width:510px;color:var(--info-muted)}
@@ -41,11 +48,10 @@
 .info-section-index{font-size:10px;letter-spacing:.2em;font-weight:700;color:#987c6e;display:flex;align-items:center;gap:16px}
 .info-section-index span{height:1px;width:36px;background:#b99e8c}
 .info-letter-section{display:grid;grid-template-columns:1fr 2fr;gap:45px;background:#eee5db}
-.info-founder-note{max-width:780px}
-.info-founder-note p{font-size:clamp(15px,1.3vw,18px);color:#685952;line-height:2}
-.info-founder-note .info-dropcap{font:clamp(29px,3.3vw,49px)/1.4 'Playfair Display',Georgia,serif;color:#302927;margin-bottom:32px}
-.info-founder-note .info-signoff{color:var(--info-wine);font-style:italic;font-family:'Playfair Display',Georgia,serif;font-size:24px}
-.info-signature{display:block;font-size:12px;letter-spacing:.08em;color:#9d8173;margin-top:22px}
+.info-meaning-copy{max-width:820px}
+.info-meaning-copy .info-kicker{margin:0 0 17px}
+.info-meaning-copy h2{max-width:760px;margin:0 0 24px}
+.info-meaning-copy>p:last-child{max-width:660px;margin:0;color:#806e63;font-size:16px;line-height:1.9}
 .info-feature-intro{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:40px;margin:22px 0 64px}
 .info-feature-intro p{max-width:420px;color:var(--info-muted);font-size:14px}
 .info-feature-row{display:grid;grid-template-columns:1fr 2fr;gap:35px;padding:36px 0;border-top:1px solid var(--info-hair)}

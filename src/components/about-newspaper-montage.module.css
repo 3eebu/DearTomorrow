@@ -9,7 +9,8 @@
   min-width: 0;
   min-height: 760px;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 1;
   background: radial-gradient(ellipse at 46% 42%, #eee7da, #d6cbbb 85%);
   border-left: 1px solid #d8cbbd;
   perspective: 1400px;
@@ -45,7 +46,7 @@
 .paper {
   container-type: inline-size;
   position: absolute;
-  left: var(--paper-x);
+  left: calc(var(--paper-x) + var(--paper-spill, 0%));
   top: var(--paper-y);
   width: var(--paper-width);
   z-index: var(--paper-z);
@@ -207,8 +208,11 @@
   .canvas { inset: 110px 8px 168px; }
   .archiveHeading { inset: 28px 20px auto; font-size: 7px; }
 }
+@media (min-width: 761px) and (max-width: 1300px) {
+  .paper { left: calc(var(--paper-x) + var(--paper-spill-medium, 0%)); }
+}
 @media (max-width: 760px) {
-  .scene { min-height: clamp(565px, 156.5vw, 760px); border-left: 0; border-top: 1px solid #d8cbbd; }
+  .scene { min-height: clamp(565px, 156.5vw, 760px); border-left: 0; border-top: 1px solid #d8cbbd; overflow: hidden; }
   .archiveHeading { inset: 25px 24px auto; font-size: 7.5px; }
   .canvas { inset: 63px 0 143px; width: min(480px, calc(100% - 28px)); margin-inline: auto; transform: none; }
   .paper { display: none; }

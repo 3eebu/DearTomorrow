@@ -5,8 +5,8 @@ import { AboutNewspaperMontage } from "@/components/about-newspaper-montage";
 import "../story-pages.css";
 
 export const metadata:Metadata={
-  title:"About Dear Tomorrow — A little place for what matters",
-  description:"Meet Dear Tomorrow: a quiet, personal home for the words, moments, letters and memories that mean the most."
+  title:"Made for a Very Special Woman — About Dear Tomorrow",
+  description:"The personal story behind Dear Tomorrow, a quiet place to keep the memories and moments that matter."
 };
 
 const features=[
@@ -19,9 +19,13 @@ export default function AboutPage(){
   return <InformationShell>
     <section className="info-hero info-about-hero">
       <div className="info-hero-copy">
-        <p className="info-kicker"><span className="info-kicker-rule"/> THE STORY BEHIND DEAR TOMORROW</p>
-        <h1>A little place for <em>the things that stay.</em></h1>
-        <p className="info-lead">The internet gives us endless ways to talk. I wanted to make somewhere quieter — somewhere the words, dates and ordinary moments that mean everything could have a home.</p>
+        <p className="info-kicker"><span className="info-kicker-rule"/> THE REASON DEAR TOMORROW BEGAN</p>
+        <h1>Made For A <em>Very Special Woman.</em></h1>
+        <div className="info-personal-story">
+          <p>I created Dear Tomorrow because I&apos;m deeply in love with an incredible woman. I wanted to make something just for her. Somewhere we could keep our memories, remember all our little firsts, and create something beautiful that would always belong to us.</p>
+          <p>But I know our story isn&apos;t the only one. I know there are people out there who love someone just as deeply, and I wanted them to have something like this too.</p>
+          <p>So, whoever brought you here, I hope Dear Tomorrow helps you make them feel as special as they are to you.</p>
+        </div>
         <div className="info-hero-actions">
           <Link href="/how-it-works" className="info-btn">See how it works <span aria-hidden="true">↗</span></Link>
           <Link href="/#dt-discover" className="info-text-link">Explore Dear Tomorrow <span aria-hidden="true">→</span></Link>
@@ -31,18 +35,16 @@ export default function AboutPage(){
     </section>
 
     <section className="info-letter-section">
-      <div className="info-section-index">01 <span/> A NOTE FROM THE MAKER</div>
-      <div className="info-founder-note">
-        <p className="info-dropcap">I don&apos;t want Dear Tomorrow to feel like another app you open, use, and forget.</p>
-        <p>I want it to feel like coming home. A place where you can leave a note for someone you love, come back to the day everything started, or open a book of moments you&apos;d otherwise lose in a camera roll or an old conversation.</p>
-        <p>Not everything meaningful needs to be shared with the world. Some things are better kept somewhere that feels like yours.</p>
-        <p className="info-signoff">That&apos;s the kind of place I&apos;m building.</p>
-        <span className="info-signature">— The person behind Dear Tomorrow</span>
+      <div className="info-section-index">02 <span/> WHAT DEAR TOMORROW IS MEANT TO BE</div>
+      <div className="info-meaning-copy">
+        <p className="info-kicker">A place for the things that stay</p>
+        <h2>A little place for <em>the things that stay.</em></h2>
+        <p>The internet gives us endless ways to talk. I wanted to make somewhere quieter — somewhere the words, dates and ordinary moments that mean everything could have a home.</p>
       </div>
     </section>
 
     <section className="info-feature-section">
-      <div className="info-section-index">02 <span/> WHAT I&apos;M BUILDING</div>
+      <div className="info-section-index">03 <span/> WHAT I&apos;M BUILDING</div>
       <div className="info-feature-intro">
         <h2>One home.<br/><em>So many ways to remember.</em></h2>
         <p>The different parts of Dear Tomorrow are meant to feel connected, like different chapters of the same story — not separate tools.</p>
