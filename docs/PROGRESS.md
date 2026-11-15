@@ -4,20 +4,20 @@
 - Redesigned no-photography landing page: warm editorial typography, simple navigation, textured stationery, a cinematic fictional newspaper montage in the homepage and About hero, and reveal animation.
 - Homepage hero newspaper montage with fictional editorial clippings, replay control and a separate mobile arrangement.
 - Create flow with three beginner-first choices and a local letter composer including preview.
-- Interactive Memory Book demo: editable cover name and palette, physical-styled cover, page turns using buttons, keyboard and swipe.
+- Memory Books: homepage sample plus a local multi-book library at `/memory-books`, separate flat Studio and immersive Reading, personal photo/Polaroid/text editing, chapters/pages and IndexedDB autosave. See `docs/MEMORY_BOOKS.md` for the first review checkpoint.
 - Memory Tree: animated SVG trunk, branches, leaves, interactive memory markers, list and details; new memory creation via form; same data in calendar and tree.
 - Journey Letters: route animation and six selectable demonstration checkpoints.
 - About and How It Works pages, with navigation updated for Memory Tree.
 - Responsive mobile navigation, reduced-motion rules, modal keyboard focus cycling, basic semantic controls.
 
 ## Not yet done or verified
-- No live accounts, database, uploads, real letter sending, subscriptions, real scheduled unlocks, email notifications or offline letter functionality.
-- All editor and memory state is local only; refreshing loses changes.
+- No live accounts, server database, cloud uploads, real letter sending, subscriptions, real scheduled unlocks, email notifications or offline letter functionality. Memory Book photo import and draft storage are local only.
+- Memory Book drafts persist in this browser via IndexedDB. The homepage sample, Memory Tree and letter composer still reset on refresh.
 - Memory Tree uses tapered wood, bark highlights and compound sprays of veined leaves. Every added memory creates a bough and an unfurling memory leaf; tree size increases with memory count. All memories remain selectable in the tree, list and calendar. Very large collections still need performance profiling and clustering.
-- The current memory book is a stylized CSS/dimensional prototype, not the full freeform scrapbook studio.
+- The Memory Book first review checkpoint is functional, with a curved segmented-sheet approximation. The full master vision, measured performance, real-device touch and cross-browser polish remain unfinished.
 - No images have been added to the homepage; in the future users can opt to upload their own photos.
-- Automated browser interaction tests, real-device inspection and screenshots at 390px / 1440px have not been performed.
-- npm lint/typecheck/build have not been run in the assistant environment because npm dependencies cannot be fetched there; the GitHub workflow requests these checks remotely when GitHub Actions is available. A workflow file is not proof that checks passed.
+- Memory Book browser journeys were inspected at 390px and 1440px. Real-device inspection has not been performed.
+- Memory Book model/storage tests, typecheck, lint and production build have passed locally; actual browser checks and limitations are tracked in `docs/MEMORY_BOOKS.md`. A GitHub workflow alone is not proof that checks passed.
 - Preview deployments are NOT automatically connected to this GitHub repository.
 
 ## Next review items
@@ -42,3 +42,7 @@ The Couples Arcade with optional worldwide leaderboards remains future scope. It
 - Preserved the headline, compose action, responsive montage arrangement, replay control and reduced-motion behavior.
 - Checks passed: `npm run typecheck`, `npm run lint`, `npm run build`, and `git diff --check`.
 - No public deployment was made.
+
+
+## Memory Book Reading and Studio checkpoint
+See `docs/MEMORY_BOOKS.md` for architecture, implemented workflow, actual checks, local storage behavior and remaining work. The growing spine and additional volumes remain deferred by the founder.

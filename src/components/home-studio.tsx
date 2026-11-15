@@ -113,7 +113,8 @@ function MemoryBook() {
             className={coverColor === hex ? 'dt-color-active' : ''} style={{ backgroundColor: hex }} onClick={() => setCoverColor(hex)} />)}
         </div>
       </div>
-      <p className="dt-inline-note">Interactive sample · Your changes stay in this tab only.</p>
+      <Link className="dt-button dt-button-dark" href="/memory-books">Open my Memory Books ↗</Link>
+      <p className="dt-inline-note">Try the sample here, or create books saved on this device in the Studio.</p>
     </div>
     <div className="dt-book-stage" data-reveal>
       <div className="dt-book-light" aria-hidden="true"/>
