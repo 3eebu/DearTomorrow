@@ -13,7 +13,7 @@
 ## Not yet done or verified
 - No live accounts, database, uploads, real letter sending, subscriptions, real scheduled unlocks, email notifications or offline letter functionality.
 - All editor and memory state is local only; refreshing loses changes.
-- Memory Tree illustration is an interactive first pass, not a finished realistic or unlimited-scale tree; it currently displays up to 16 marker locations, with extra memories in the list.
+- Memory Tree uses tapered wood, bark highlights and compound sprays of veined leaves. Every added memory creates a bough and an unfurling memory leaf; tree size increases with memory count. All memories remain selectable in the tree, list and calendar. Very large collections still need performance profiling and clustering.
 - The current memory book is a stylized CSS/dimensional prototype, not the full freeform scrapbook studio.
 - No images have been added to the homepage; in the future users can opt to upload their own photos.
 - Automated browser interaction tests, real-device inspection and screenshots at 390px / 1440px have not been performed.
@@ -27,3 +27,11 @@
 4. Get founder approval before adding credentials, authentication or payments.
 
 The Couples Arcade with optional worldwide leaderboards remains future scope. It is not part of Phase 1.
+
+
+## Memory Tree botanical iteration — 2026-11-16
+- Replaced oval decoration and the 16-marker cap with individually veined leaves, leafy boughs, bark highlights and roots. Memory count controls the tree scale, and each added memory unfurls a new shoot. Existing positions stay stable as more memories are added.
+- Preserved the memory list, selection, form, keyboard leaf controls and shared calendar. Fixed conditional view panels staying invisible after switching views.
+- Checks passed: `npm run typecheck`, `npm run lint`, `npm run build`, and `git diff --check`. The build required execution outside the command sandbox after a filesystem permission failure.
+- Chrome inspection: desktop tree, 390px responsive layout, adding a fifth memory and finding it on its calendar date. Reduced-motion rules disable tree scaling transitions and unfurl animations; an emulated reduced-motion render and large-collection performance test were not performed.
+- Memory data remains a local demo and resets on refresh. No public deployment was made.

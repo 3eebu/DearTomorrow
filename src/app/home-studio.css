@@ -138,21 +138,7 @@
 .dt-subtle-button{border:1px solid #b9a697;background:transparent;color:var(--dt-plum);padding:13px 19px;min-height:44px;font-size:12px;transition:background .2s}
 .dt-subtle-button:hover{background:#fffaf3}
 .dt-tree-world{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);max-width:1250px;margin:0 auto;gap:5vw;align-items:center;position:relative}
-.dt-tree-stage{position:relative;aspect-ratio:700/620;min-width:0}
-.dt-living-tree{display:block;height:100%;width:100%;filter:drop-shadow(6px 10px 5px #4d43351c)}
-.dt-living-tree path{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.dt-tree-trunk{stroke:url(#dt-bark);stroke-width:20;stroke-dasharray:700;stroke-dashoffset:700;animation:dtTreeDraw 2.7s .25s ease forwards}
-.dt-tree-root{stroke:#8d6b56;stroke-width:7;stroke-dasharray:220;stroke-dashoffset:220;animation:dtTreeDraw 1.5s 2s ease forwards}
-.dt-tree-limb{stroke:#846655;stroke-width:10;stroke-dasharray:650;stroke-dashoffset:650;animation:dtTreeDraw 2.3s 1s ease forwards}
-.dt-limb-three,.dt-limb-four{stroke-width:7}
-.dt-living-leaves{fill:#8d9c83;opacity:0;animation:dtFadeLeaves 1.1s 2.1s ease forwards}
-.dt-living-leaves .dt-leaf-muted{fill:#b2aa8b}
-.dt-tree-marker{position:absolute;transform:translate(-50%,-50%);width:42px;height:42px;display:grid;place-items:center;background:none;border:0;z-index:3;animation:dtMarkerIn .7s 1.1s both}
-.dt-marker-leaf{width:18px;height:29px;transform:rotate(37deg);background:#9ba88b;border-radius:100% 2% 100% 2%;box-shadow:1px 3px 3px #544f4129;transition:transform .3s,background .3s}
-.dt-marker-core{position:absolute;width:7px;height:7px;background:#f9f1e4;border-radius:50%;box-shadow:0 0 0 2px #765d53}
-.dt-tree-marker:hover .dt-marker-leaf,.dt-tree-marker.dt-marker-selected .dt-marker-leaf{transform:rotate(23deg) scale(1.35);background:#bd8d88}
-.dt-tree-marker.dt-marker-selected .dt-marker-core{background:#7a4b58}
-.dt-tree-ground{position:absolute;height:1px;width:56%;background:linear-gradient(90deg,transparent,#a79f8d,transparent);left:22%;bottom:2%}
+.dt-tree-stage{position:relative;min-width:0}
 .dt-tree-side{align-self:center}
 .dt-tree-side-intro{font:italic 20px 'Playfair Display',Georgia,serif;color:#836c5e}
 .dt-tree-moment-list{margin:28px 0;border-top:1px solid #d9cbbb;max-height:268px;overflow:auto}

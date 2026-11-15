@@ -1,0 +1,20 @@
+.art{width:100%;min-width:0;position:relative}
+.tree{display:block;width:100%;height:auto;overflow:visible}
+.growth{transform-origin:0 0;transition:transform 1.8s cubic-bezier(.2,.7,.3,1)}
+.bough{filter:drop-shadow(0 2px 1px #3b462014)}
+.foliage{transform-origin:0 0}
+.newBough .branch{stroke-dasharray:1;animation:branchGrow 1.2s ease both}
+.newBough .foliage{animation:unfurl 1.4s calc(.5s + var(--leaf-delay,0ms)) cubic-bezier(.2,.7,.3,1) both}
+.memory{cursor:pointer;outline:none}
+.memory>g{transition:filter .25s}
+.hit{fill:transparent;stroke:transparent;stroke-width:1.5}
+.memory:hover>g,.memory:focus-visible>g,.selected>g{filter:drop-shadow(0 2px 4px #493a2740)}
+.memory:focus-visible .hit{stroke:#673f4c;stroke-dasharray:3 4;fill:#faf5e51a}
+.selected .hit{stroke:#8c6a4d;stroke-opacity:.45;fill:#f8f1df12}
+.newLeaf{animation:unfurl 1.8s .5s both;transform-origin:0 0}
+.caption{text-align:center;margin:0 0 20px;color:#79765e;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.caption span,.caption em{display:block}
+.caption em{margin-top:8px;font:italic 15px Georgia,serif;letter-spacing:0;text-transform:none;color:#8a806b}
+@keyframes branchGrow{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes unfurl{from{opacity:0;transform:scale(.05) rotate(-22deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.growth,.memory>g{transition:none}.newBough .branch,.newBough .foliage,.newLeaf{animation:none}}

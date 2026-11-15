@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { MemoryTreeArt } from './memory-tree-art';
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, FormEvent, ReactNode, TouchEvent } from 'react';
 
@@ -13,11 +14,6 @@ const initialMoments: Moment[] = [
   { id: 'next-chapter', title: 'A promise for tomorrow', date: '2026-11-07', story: 'A reminder that our favorite moments are not all behind us.', chapter: 'Tomorrow' },
 ];
 const chapters = ['Our firsts', 'Little days', 'Adventures', 'Tomorrow'];
-const treePositions = [
-  [169, 282], [278, 163], [468, 202], [541, 320], [213, 398], [476, 414],
-  [369, 118], [104, 248], [573, 232], [317, 344], [417, 293], [231, 227],
-  [405, 470], [138, 345], [524, 136], [315, 92]
-];
 const pages = [
   { chapter: 'I', eyebrow: 'THE VERY BEGINNING', title: 'It started with a hello.', text: 'And somehow, in the middle of all the ordinary days, one small moment became the beginning of everything.', footer: 'The first of many little forevers' },
   { chapter: 'II', eyebrow: 'THE EVERYDAY', title: 'The little things were everything.', text: 'A familiar voice. A long walk. The way a good day gets better when you have someone to tell about it.', footer: 'Somewhere between here and forever' },
@@ -195,6 +191,7 @@ function MemoryTree({ addSignal }: { addSignal: number }) {
   const [view, setView] = useState<'tree' | 'calendar'>('tree');
   const [selectedId, setSelectedId] = useState<string | null>(initialMoments[0].id);
   const [adding, setAdding] = useState(false);
+  const [newestId, setNewestId] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [story, setStory] = useState('');
   const [chapter, setChapter] = useState(chapters[0]);
@@ -213,6 +210,8 @@ function MemoryTree({ addSignal }: { addSignal: number }) {
     if (!title.trim() || !date) return;
     const moment: Moment = { id: 'demo-' + Date.now(), title: title.trim(), date, story: story.trim() || 'One more moment worth keeping.', chapter };
     setMoments(existing => [...existing, moment]);
+    setNewestId(moment.id);
+    setView('tree');
     setSelectedId(moment.id);
     setCalendarDate(new Date(Number(date.slice(0, 4)), Number(date.slice(5, 7)) - 1, 1));
     setTitle('');
@@ -232,36 +231,9 @@ function MemoryTree({ addSignal }: { addSignal: number }) {
       </div>
       <button type="button" className="dt-subtle-button" onClick={() => setAdding(true)}>＋ Add a memory</button>
     </div>
-    {view === 'tree' ? <div className="dt-tree-world" data-reveal>
+    {view === 'tree' ? <div className="dt-tree-world dt-visible">
       <div className="dt-tree-stage">
-        <svg className="dt-living-tree" viewBox="0 0 700 620" role="img" aria-label="A growing tree with four organic branches">
-          <defs>
-            <linearGradient id="dt-bark" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#765749"/><stop offset=".5" stopColor="#a27b67"/><stop offset="1" stopColor="#77584b"/></linearGradient>
-          </defs>
-          <path className="dt-tree-root" d="M345 603 C306 595 283 609 253 614 M347 603 C385 592 408 611 449 616 M349 602 Q349 618 334 620"/>
-          <path className="dt-tree-trunk" d="M347 605 C340 525 354 471 354 408 C351 346 344 307 354 254 C365 198 360 133 356 92"/>
-          <path className="dt-tree-limb dt-limb-one" d="M354 407 Q312 385 281 350 T211 302 Q182 285 163 279 M276 348 Q245 354 212 398"/>
-          <path className="dt-tree-limb dt-limb-two" d="M354 344 Q408 315 450 273 T541 228 M438 284 Q466 320 539 324"/>
-          <path className="dt-tree-limb dt-limb-three" d="M355 260 Q308 239 288 198 Q272 171 277 162 M309 213 Q272 199 228 222"/>
-          <path className="dt-tree-limb dt-limb-four" d="M359 187 Q413 159 442 122 Q468 111 493 104 M411 160 Q388 133 370 117"/>
-          <g className="dt-living-leaves" aria-hidden="true">
-            {[
-              [169,282,-35],[213,398,25],[278,163,-35],[228,222,55],[468,202,42],[541,228,30],
-              [541,320,-45],[476,414,22],[370,117,-15],[493,104,33],[440,122,60],[310,290,-25],
-              [310,355,48],[425,280,-50],[199,293,20],[512,266,37],[318,188,18]
-            ].map(([x, y, r], i) => <ellipse key={i} cx={x} cy={y} rx={i % 3 === 0 ? 13 : 10} ry={i % 2 === 0 ? 26 : 20} transform={'rotate(' + r + ' ' + x + ' ' + y + ')'} className={i % 3 === 0 ? 'dt-leaf-muted' : ''}/>)}
-          </g>
-        </svg>
-        {moments.slice(0, treePositions.length).map((moment, index) => {
-          const position = treePositions[index];
-          return <button key={moment.id} type="button" aria-label={'Read memory: ' + moment.title}
-            aria-pressed={selectedId === moment.id} onClick={() => setSelectedId(selectedId === moment.id ? null : moment.id)}
-            className={'dt-tree-marker ' + (selectedId === moment.id ? 'dt-marker-selected' : '')}
-            style={{ left: (position[0] / 700 * 100) + '%', top: (position[1] / 620 * 100) + '%' }}>
-            <span className="dt-marker-leaf" aria-hidden="true"/><span className="dt-marker-core" aria-hidden="true"/>
-          </button>;
-        })}
-        <span className="dt-tree-ground" aria-hidden="true"/>
+        <MemoryTreeArt memories={moments} selectedId={selectedId} newestId={newestId} onSelect={setSelectedId}/>
       </div>
       <div className="dt-tree-side">
         <span className="dt-overline">THE LEAVES OF OUR STORY</span>
@@ -279,9 +251,9 @@ function MemoryTree({ addSignal }: { addSignal: number }) {
             <p>Choose a leaf to open its memory.</p>}
         </div>
       </div>
-      <p className="dt-inline-note dt-tree-note">A living-tree prototype · New memories appear as leaves; larger collections will need clustering.</p>
+      <p className="dt-inline-note dt-tree-note">Every memory grows a new leafy shoot. Your tree grows taller and fuller as your story grows.</p>
     </div> :
-      <div className="dt-calendar-panel" data-reveal>
+      <div className="dt-calendar-panel dt-visible">
         <div className="dt-calendar-bar">
           <button type="button" aria-label="Previous month" onClick={() => shiftCalendar(-1)}>←</button>
           <h3>{monthLabel}</h3>
