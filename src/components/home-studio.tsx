@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { MemoryTreeArt } from './memory-tree-art';
+import { AboutNewspaperMontage } from './about-newspaper-montage';
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, FormEvent, ReactNode, TouchEvent } from 'react';
 
@@ -76,32 +77,6 @@ function Dialog({ title, onClose, children }: { title: string; onClose: () => vo
     <div ref={ref} className="dt-dialog" role="dialog" aria-modal="true" aria-label={title}>
       <button className="dt-dialog-close" type="button" onClick={onClose} aria-label="Close window">×</button>
       {children}
-    </div>
-  </div>;
-}
-
-function Envelope({ onWrite }: { onWrite: () => void }) {
-  const [opened, setOpened] = useState(false);
-  return <div className="dt-envelope-scene">
-    <div className="dt-envelope-aura" aria-hidden="true" />
-    <button type="button" aria-label={opened ? 'Close the example envelope' : 'Open the example envelope'} aria-expanded={opened}
-      className={'dt-envelope ' + (opened ? 'dt-envelope-open' : '')} onClick={() => setOpened(value => !value)}>
-      <span className="dt-envelope-back" aria-hidden="true" />
-      <span className="dt-envelope-paper">
-        <span className="dt-paper-overline">A LETTER FOR YOU</span>
-        <span className="dt-paper-greeting">My dearest,</span>
-        <span className="dt-paper-words">If this finds you on an ordinary day, I hope it makes the day feel a little extraordinary.</span>
-        <span className="dt-paper-sign">Always, yours.</span>
-      </span>
-      <span className="dt-envelope-front" aria-hidden="true" />
-      <span className="dt-envelope-flap" aria-hidden="true" />
-      <span className="dt-envelope-seal" aria-hidden="true">✳</span>
-    </button>
-    <div className="dt-envelope-caption">
-      <span>{opened ? 'A little note, just for you.' : 'An envelope, waiting to be opened.'}</span>
-      <button type="button" onClick={opened ? onWrite : () => setOpened(true)}>
-        {opened ? 'Write your own note' : 'Open the letter'} <span aria-hidden="true">↗</span>
-      </button>
     </div>
   </div>;
 }
@@ -375,7 +350,7 @@ export default function HomeStudio() {
           </div>
           <span className="dt-hero-footnote">ONE PERSON. A THOUSAND MOMENTS. A LIFETIME OF LETTERS.</span>
         </div>
-        <Envelope onWrite={() => setComposeOpen(true)} />
+        <AboutNewspaperMontage variant="home" />
       </section>
 
       <section id="dt-discover" className="dt-welcome-section" aria-labelledby="welcome-heading">

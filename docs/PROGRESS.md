@@ -1,8 +1,8 @@
 # Dear Tomorrow — Phase 1 build progress
 
 ## Current implementation
-- Redesigned no-photography landing page: warm editorial typography, simple navigation, textured stationery built with CSS, and reveal animation.
-- Clickable 3D-style envelope and readable sample letter.
+- Redesigned no-photography landing page: warm editorial typography, simple navigation, textured stationery, a cinematic fictional newspaper montage in the homepage and About hero, and reveal animation.
+- Homepage hero newspaper montage with fictional editorial clippings, replay control and a separate mobile arrangement.
 - Create flow with three beginner-first choices and a local letter composer including preview.
 - Interactive Memory Book demo: editable cover name and palette, physical-styled cover, page turns using buttons, keyboard and swipe.
 - Memory Tree: animated SVG trunk, branches, leaves, interactive memory markers, list and details; new memory creation via form; same data in calendar and tree.
@@ -35,3 +35,10 @@ The Couples Arcade with optional worldwide leaderboards remains future scope. It
 - Checks passed: `npm run typecheck`, `npm run lint`, `npm run build`, and `git diff --check`. The build required execution outside the command sandbox after a filesystem permission failure.
 - Chrome inspection: desktop tree, 390px responsive layout, adding a fifth memory and finding it on its calendar date. Reduced-motion rules disable tree scaling transitions and unfurl animations; an emulated reduced-motion render and large-collection performance test were not performed.
 - Memory data remains a local demo and resets on refresh. No public deployment was made.
+
+
+## Homepage newspaper montage restoration — 2026-11-16
+- Put the existing fictional newspaper montage back in the homepage hero using the same paper fragments and opening sequence as the About page. Added a homepage layout mode to keep clippings inside their column.
+- Preserved the headline, compose action, responsive montage arrangement, replay control and reduced-motion behavior.
+- Checks passed: `npm run typecheck`, `npm run lint`, `npm run build`, and `git diff --check`.
+- No public deployment was made.

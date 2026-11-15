@@ -15,6 +15,13 @@
   border-left: 1px solid #d8cbbd;
   perspective: 1400px;
 }
+.homeScene {
+  min-height: min(790px, calc(100vh - 118px));
+  height: 100%;
+  border-left: 0;
+  overflow: hidden;
+}
+.homeScene .paper { left: var(--paper-x); }
 .scene::before {
   content: "";
   position: absolute;
@@ -213,10 +220,12 @@
 }
 @media (max-width: 760px) {
   .scene { min-height: clamp(565px, 156.5vw, 760px); border-left: 0; border-top: 1px solid #d8cbbd; overflow: hidden; }
+  .scene.homeScene { min-height: clamp(565px, 156.5vw, 760px); }
   .archiveHeading { inset: 25px 24px auto; font-size: 7.5px; }
   .canvas { inset: 63px 0 143px; width: min(480px, calc(100% - 28px)); margin-inline: auto; transform: none; }
   .paper { display: none; }
   .mobilePaper { display: block; left: var(--mobile-x); top: var(--mobile-y); width: var(--mobile-width); --paper-rotation: var(--mobile-rotation) !important; }
+  .homeScene .mobilePaper { left: var(--mobile-x); }
   .caption { bottom: 67px; left: 20px; right: 20px; }
   .captionTitle { font-size: 19px; }
   .captionNote { font-size: 8px; }

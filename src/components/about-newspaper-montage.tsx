@@ -50,7 +50,7 @@ function NewspaperClipping({ clipping, index }: { clipping: typeof clippings[num
   </div>;
 }
 
-export function AboutNewspaperMontage() {
+export function AboutNewspaperMontage({ variant = "about" }: { variant?: "about" | "home" }) {
   const scene = useRef<HTMLElement>(null);
   const frame = useRef<number>(0);
   const started = useRef(false);
@@ -109,7 +109,7 @@ export function AboutNewspaperMontage() {
     setPhase(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "settled" : "playing");
   }
 
-  return <figure ref={scene} className={styles.scene} data-phase={phase} onPointerMove={movePaper} onPointerLeave={resetPaper} aria-label="An animated typographic archive of fictional Dear Tomorrow newspaper clippings">
+  return <figure ref={scene} className={`${styles.scene} ${variant === "home" ? styles.homeScene : ""}`} data-phase={phase} onPointerMove={movePaper} onPointerLeave={resetPaper} aria-label="An animated typographic archive of fictional Dear Tomorrow newspaper clippings">
     <div className={styles.archiveHeading}><span>The Dear Tomorrow archive</span><span>Vol. 01</span></div>
     <div className={styles.canvas} key={take} aria-hidden="true">
       {clippings.map((clipping, index) => <NewspaperClipping key={clipping.publication} clipping={clipping} index={index} />)}
