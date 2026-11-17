@@ -11,6 +11,7 @@ export function BookLibrary() {
   const [books, setBooks] = useState<MemoryBookDocument[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [loadError, setLoadError] = useState('');
+  const [loadMs, setLoadMs] = useState<number | undefined>();
   const [notice, setNotice] = useState('');
   const [status, setStatus] = useState('Loading local drafts…');
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -27,7 +28,8 @@ export function BookLibrary() {
   const [retry, setRetry] = useState(0);
   useEffect(() => {
     let cancelled = false;
-    loadLibrary().then(data => { if (!cancelled) { savedBooks.current = data; setBooks(data); setLoaded(true); setLoadError(''); setStatus('Saved on this device'); } }).catch(error => { if (!cancelled) setLoadError(String(error.message)); });
+    const began = performance.now();
+    loadLibrary().then(data => { if (!cancelled) { setLoadMs(performance.now() - began); savedBooks.current = data; setBooks(data); setLoaded(true); setLoadError(''); setStatus('Saved on this device'); } }).catch(error => { if (!cancelled) setLoadError(String(error.message)); });
     return () => { cancelled = true; };
   }, []);
   useEffect(() => {
@@ -62,7 +64,7 @@ export function BookLibrary() {
   return <div className={s.app}>
     {mode === 'library' && <>
       <div className={s.topbar}><a href="/" className={s.brand}>Dear Tomorrow.</a><span className={s.localBadge}>YOUR PRIVATE LITTLE LIBRARY · ON THIS DEVICE</span><a href="/">Back to Dear Tomorrow ↗</a></div>
-      <main className={s.library}>
+      <main className={s.library} data-library-load-ms={process.env.NODE_ENV === 'development' ? loadMs : undefined}>
         <div className={s.libraryIntro}><div><span className={s.eyebrow}>FOR THE THINGS THAT STAY</span><h1>My Memory <em>Books.</em></h1><p>A place for your photographs, your words, your wonderfully ordinary days.</p></div><button className={s.primary} disabled={!loaded} onClick={() => setCreating(true)}>＋ Create a book</button></div>
         <div className={s.libraryTools}><label>Find a book<input aria-label="Search books" placeholder="A title, a little story…" value={search} onChange={e => setSearch(e.target.value)}/></label><label>Arrange by<select value={sort} onChange={e => setSort(e.target.value)}><option value="recent">Recently edited</option><option value="created">Recently created</option><option value="title">Title</option><option value="pages">Page count</option></select></label><button aria-pressed={archive} onClick={() => setArchive(v => !v)}>{archive ? 'Show my books' : 'Archived books'}</button><button disabled={!loaded} onClick={() => importRef.current?.click()}>Import a backup ↗</button></div>
         {loadError && <div role="alert" className={s.error}>{loadError} Reload this page to retry. Your stored library has not been changed.</div>}

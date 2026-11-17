@@ -1,5 +1,8 @@
 # Dear Tomorrow — Phase 1 build progress
 
+## Memory Book Project Realism checkpoint
+The reader now has a custom curved CSS 3D surface, dimensional covers and separate thickness-driven stacks, interruptible drag/settling, consistent note state, responsive single-page reading, and measured development diagnostics. See `docs/MEMORY_BOOK_REALISM.md` for the implementation choice, actual measurements, browser checks and remaining device/physics limitations. The document model and local persistence format are unchanged.
+
 ## Current implementation
 - Redesigned no-photography landing page: warm editorial typography, simple navigation, textured stationery, a cinematic fictional newspaper montage in the homepage and About hero, and reveal animation.
 - Homepage hero newspaper montage with fictional editorial clippings, replay control and a separate mobile arrangement.

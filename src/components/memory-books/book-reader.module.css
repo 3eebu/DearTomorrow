@@ -1,0 +1,48 @@
+/* The reader owns its 3D scene. No filter/opacity/overflow on preserve-3d ancestors. */
+.reader{min-height:100dvh;background:radial-gradient(ellipse at 50% 36%,#f6f1e7 0,#e5ddcf 75%,#ddd3c2);color:#574b40;overflow-x:clip}
+.readerTop{position:relative;top:auto;height:auto;min-height:72px;background:transparent;backdrop-filter:none;border:0;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 32px;font-size:12px}
+.readerTop>span{font:italic 17px Georgia,serif;color:#8c7a65}.readerTop>div{display:flex;gap:14px}.readerTop button{border:0!important;font-size:11px!important;background:transparent!important}
+.readStage{position:relative;min-height:66dvh;display:flex;align-items:center;justify-content:center;padding:45px 55px 35px;perspective:2400px;isolation:isolate}
+.groundShadow{position:absolute;bottom:20px;left:20%;right:20%;height:35px;border-radius:50%;background:#53422d20;filter:blur(22px);pointer-events:none}
+.physicalBook{--open:0;--cover-shadow:0;--sheet-lift:0;--left-depth:1.2px;--right-depth:4px;width:min(100%,1050px,calc(61dvh * var(--ratio) * 2));aspect-ratio:calc(var(--ratio) * 2);position:relative;transform-style:preserve-3d;transform:translateX(calc((1 - var(--open)) * -25%)) rotateX(calc(18deg - var(--open) * 11deg)) rotateY(calc((1 - var(--open)) * -12deg)) rotateZ(calc(-1.8deg + var(--open) * 1.8deg));}
+.backBoard{position:absolute;left:49.3%;width:51.5%;top:-1.2%;height:102.5%;background:var(--cover-color);border-radius:2px 5px 5px 2px;transform:translateZ(-3px);box-shadow:0 3px 0 var(--cover-color),1px 5px 2px #33271d55,0 15px 27px #48332124}
+.spine{position:absolute;left:49.1%;width:2%;top:-1.2%;height:102.5%;border-radius:35% 10% 10% 35%;background:var(--cover-color);transform:translateZ(calc(var(--depth) * .5)) rotateY(-80deg);transform-origin:center;box-shadow:inset 3px 0 4px #24182355,inset -2px 0 2px #fff2;opacity:calc(1 - var(--open) * .75)}
+.spine i{position:absolute;left:0;right:0;top:17%;height:3px;border-top:1px solid #fff2;border-bottom:1px solid #23171933}.spine i:nth-child(2){top:79%}.spine i:nth-child(3){top:84%}
+.pageStack{position:absolute;top:0;bottom:0;width:50%;background:#e4d8c2;transform-style:preserve-3d;border-radius:1px 3px 3px 1px;box-shadow:0 2px 3px #3b2b1a28}
+.stackRight{left:50%;transform:translateZ(var(--right-depth))}.stackLeft{left:0;transform:translateZ(var(--left-depth));opacity:var(--open)}
+.pageStack:after{content:'';position:absolute;left:0;right:0;top:100%;height:var(--right-depth);transform-origin:top;transform:rotateX(-90deg);background:repeating-linear-gradient(0deg,#bcad914f 0 .45px,#f2e7d3 .6px 1.6px);border-bottom:1px solid #c6b699}
+.stackLeft:after{height:var(--left-depth)}
+.pageStack:before{content:'';position:absolute;left:100%;top:0;bottom:0;width:var(--right-depth);transform-origin:left;transform:rotateY(90deg);background:repeating-linear-gradient(90deg,#e2d4bb 0 .7px,#faf0de .8px 1.7px);border-radius:0 1px 2px 0}
+.stackLeft:before{left:auto;right:100%;width:var(--left-depth);transform-origin:right;transform:rotateY(-90deg)}
+.leftPage,.rightPage{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;border-radius:1px 3px 3px 1px;background:#efe5d4}
+.leftPage{left:0;transform:translateZ(calc(var(--left-depth) + .1px));opacity:var(--open);border-radius:3px 1px 1px 3px}
+.rightPage{left:50%;transform:translateZ(calc(var(--right-depth) + .1px))}
+.leftPage:after,.rightPage:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#4e392c30 0,transparent 4%,#fff2 12%,transparent 25%,transparent 95%,#ae987512);border:1px solid #b4a68e16}
+.leftPage:after{background:linear-gradient(270deg,#4e392c33 0,transparent 5%,#fff2 13%,transparent 30%,transparent 97%,#ae987518)}
+.gutter{position:absolute;left:49.7%;top:0;bottom:0;width:.6%;background:linear-gradient(90deg,#513e2e0a,#35241855,#513e2e0a);transform:translateZ(calc(var(--depth) + 1px));opacity:var(--open);pointer-events:none}
+.castShadow{position:absolute;inset:-2% 0;background:radial-gradient(ellipse at var(--shadow-position,50%) 55%,#3b291c4d,transparent 45%);opacity:calc((var(--sheet-lift) + var(--cover-shadow)) * .6);transform:translateZ(calc(var(--depth) + 1.5px));pointer-events:none}
+.reader button.hingedCover{position:absolute;left:49.6%;top:-.6%;width:51%;height:101.2%;padding:0;border:0;background:var(--cover-color);border-radius:2px 5px 5px 2px;transform-style:preserve-3d;transform-origin:.8% center;transform:translateZ(calc((1 - var(--open)) * (var(--depth) + 3px) - var(--open) * 3px)) rotateY(calc(var(--open) * -180deg));box-shadow:2px 3px 3px #32241830}
+.reader button.hingedCover:hover{background:var(--cover-color)}
+.coverFront,.coverBack{position:absolute;inset:0;backface-visibility:hidden;border-radius:inherit;overflow:hidden}
+.coverFront{transform:translateZ(2px)}.coverBack{transform:rotateY(180deg) translateZ(.2px);padding:2%;background:var(--cover-color);box-shadow:inset 0 0 0 1px #34241933}
+.boardEdge{position:absolute;left:100%;top:0;bottom:0;width:3px;transform-origin:left;transform:rotateY(90deg);background:var(--cover-color);box-shadow:inset 1px 0 #fff3}
+.boardBottom{position:absolute;left:0;right:0;top:100%;height:3px;transform-origin:top;transform:rotateX(-90deg);background:var(--cover-color);box-shadow:inset 0 1px #fff2}
+.bookOpened:not(.opening) .hingedCover{pointer-events:none}
+.turnSheet{position:absolute;top:0;bottom:0;left:50%;width:50%;transform-style:preserve-3d;transform:translateZ(calc(var(--depth) + 2px));pointer-events:none}
+.strip{position:absolute;left:0;top:0;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
+.stripFace{position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;background:#f6efdf;transform:translateZ(.07px)}
+.stripBack{transform:rotateY(180deg) translateZ(.07px)}.stripContent{position:absolute;top:0;height:100%;container-type:inline-size;pointer-events:none}
+.surfaceLight{position:absolute;inset:0;background:#39291d;opacity:var(--shade,.08);pointer-events:none}
+.reader button.turnEdge{position:absolute;top:0;height:100%;width:12%;min-width:36px;border:0;transform:translateZ(calc(var(--depth) + 4px));padding:0;background:transparent!important;color:#816e55;touch-action:pan-y;user-select:none;cursor:grab}
+.reader button.turnEdge:active{cursor:grabbing;touch-action:none}.turnEdge span{display:block;opacity:0;font:24px Georgia,serif;transition:opacity .2s}.turnEdge:hover span,.turnEdge:focus-visible span{opacity:.5}.previousEdge{left:0}.nextEdge{right:0}
+.readControls{display:flex;justify-content:center;align-items:center;gap:35px;min-height:65px;padding:10px 20px;font-size:11px;color:#88745a}.readControls button{border:0!important;background:transparent!important;font-size:11px!important}.readControls p{font:italic 20px Georgia,serif}
+.readerFoot{display:flex;justify-content:center;align-items:center;gap:25px;flex-wrap:wrap;padding:10px 20px 30px;font-size:10px}.readerFoot button{border:0!important;font-size:11px!important}.readerFoot label{flex-direction:row;align-items:center;font-size:10px}.readerFoot select{max-width:160px;font-size:11px}.readerFoot small{font-size:9px;color:#9a886f}
+.linearReader{max-width:750px;margin:auto;padding:30px}.linearReader h1{font-size:40px}.linearReader h2{font-size:24px}.linearReader article{padding:30px 0;border-top:1px solid #bcaa8b55}.linearReader p{white-space:pre-wrap;font-size:17px;line-height:1.8}.linearReader img{max-width:100%;max-height:500px;object-fit:contain}
+.physicalBook[data-material=leather] .hingedCover{box-shadow:inset 0 0 0 1px #fff1,2px 4px 3px #31201e40}
+@media(max-width:1000px){.readerTop>span{display:none}.readStage{padding:35px 30px}.readerTop{padding:14px 20px}}
+@media(max-width:700px){.readerTop{padding:10px 12px;gap:6px}.readerTop>div{gap:0;flex-wrap:wrap;justify-content:flex-end}.readerTop button{padding:7px 8px;font-size:10px!important}.readStage{padding:30px 28px;min-height:61dvh;perspective:1800px}.singleStage .physicalBook{width:min(100%,550px,calc(59dvh * var(--ratio)));aspect-ratio:var(--ratio);transform:rotateX(5deg)}.singleStage .rightPage,.singleStage .turnSheet{left:0;width:100%}.singleStage .stackRight{left:0;width:100%}.singleStage .backBoard{left:-1%;width:102%}.singleStage .spine{left:-1.5%}.singleStage .gutter{display:none}.singleStage .reader button.hingedCover,.singleStage button.hingedCover{left:-.5%;width:102%}.singleStage .hingedCover{visibility:visible}.singleStage .bookOpened:not(.opening) .hingedCover{visibility:hidden}.singleStage .castShadow{inset:0}.readControls{gap:16px}.readerFoot{gap:12px}.readerFoot small{width:100%;text-align:center;font-size:8px}.turnEdge span{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.physicalBook{transform:translateX(calc((1 - var(--open)) * -25%))}.singleStage .physicalBook{transform:none}.turnEdge span{transition:none}.strip{will-change:auto}}
+@supports not (transform-style:preserve-3d){.reader .physicalBook{transform:none}.reader .hingedCover{display:none}.reader .readStage{display:none}}
+
+.coverLight{position:absolute;inset:0;pointer-events:none;background:linear-gradient(95deg,#21151666,transparent 65%);opacity:calc(var(--cover-shadow) * .55)}
+.stripContent *{scrollbar-width:none}.stripContent *::-webkit-scrollbar{display:none}

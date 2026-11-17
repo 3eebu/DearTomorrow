@@ -59,7 +59,7 @@ test('a slow short drag cancels, a long drag completes, and fresh flicks work in
 });
 
 // A transactional IndexedDB double checks commit/abort semantics, not UI state.
-function storageHarness(failWrites = false) {
+function storageHarness(failWrites = false, failOpen = false) {
   let store = new Map();
   const database = { close() {}, transaction() {
     const staged = new Map(store); let pending = 0, aborted = false, timer;
@@ -69,7 +69,7 @@ function storageHarness(failWrites = false) {
   } };
   const module = { exports: {} };
   const output = ts.transpileModule(fs.readFileSync('src/lib/memory-book-storage.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
-  vm.runInNewContext(output,{exports:module.exports,require:()=>sandbox.exports,indexedDB:{open(){const request={};queueMicrotask(()=>{request.result=database;request.onsuccess();});return request;}},setTimeout,clearTimeout,console});
+  vm.runInNewContext(output,{exports:module.exports,require:()=>sandbox.exports,indexedDB:{open(){const request={};queueMicrotask(()=>{if(failOpen)request.onerror();else{request.result=database;request.onsuccess();}});return request;}},setTimeout,clearTimeout,console});
   return { api:module.exports, get:(key)=>store.get(key), externalRevision:()=>store.set('revision',(store.get('revision')||0)+1) };
 }
 test('local saving completes only after the transaction commits and reload restores the document',async()=>{
@@ -82,4 +82,14 @@ test('an aborted storage transaction rejects without claiming or storing a save'
 });
 test('another tab changing the library prevents stale data from overwriting it',async()=>{
   const h=storageHarness();await h.api.loadLibrary();const book=make();await h.api.saveLibrary([book]);h.externalRevision();await assert.rejects(h.api.saveLibrary([]),/Another tab/);assert.equal(h.get('books')[0].id,book.id);
+});
+test('unavailable storage rejects initialization, clears the pending read, and never writes an empty library',async()=>{
+  const h=storageHarness(false,true);
+  await assert.rejects(h.api.loadLibrary(),/Browser storage is unavailable/);
+  await assert.rejects(h.api.loadLibrary(),/Browser storage is unavailable/);
+  assert.equal(h.get('books'),undefined);
+});
+test('concurrent initialization shares one pending request without caching stale reads',async()=>{
+  const h=storageHarness();const a=h.api.loadLibrary(),b=h.api.loadLibrary();assert.equal(a,b);await a;
+  const c=h.api.loadLibrary();assert.notEqual(c,a);await c;
 });

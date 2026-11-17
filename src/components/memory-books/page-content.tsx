@@ -1,15 +1,19 @@
 'use client';
 /* Local, resized data images are rendered directly; no external image service is used. */
 /* eslint-disable @next/next/no-img-element */
-import { useState, type CSSProperties } from 'react';
+import { createContext, useContext, useState, type CSSProperties } from 'react';
 import { fonts, type BookElement, type BookPage, type MemoryBookDocument } from '@/lib/memory-books';
 import s from './memory-books.module.css';
+export const ReadingNotes = createContext<{ open: ReadonlySet<string>; toggle: (id: string) => void } | null>(null);
 
 export function ElementContent({ element: e, book, interactive = false }: { element: BookElement; book: MemoryBookDocument; interactive?: boolean }) {
   const [revealed, setRevealed] = useState(false);
+  const notes = useContext(ReadingNotes);
+  const isRevealed = notes ? notes.open.has(e.id) : revealed;
+  const noteContent = isRevealed || (!interactive && !notes) ? e.text : <><span className={s.noteFold}/><em>Open a little note ↗</em></>;
   const image = e.assetId && book.assets[e.assetId];
   if (e.kind === 'text') return <div className={s.words}>{e.text}</div>;
-  if (e.kind === 'note') return interactive ? <button type="button" className={s.note} style={{ background: e.background }} aria-expanded={revealed} onClick={() => setRevealed(v => !v)}>{revealed ? e.text : <><span className={s.noteFold}/><em>Open a little note ↗</em></>}</button> : <div className={s.note} style={{ background: e.background }}>{e.text}</div>;
+  if (e.kind === 'note') return interactive ? <button type="button" className={s.note} style={{ background: e.background }} aria-expanded={isRevealed} onClick={() => notes ? notes.toggle(e.id) : setRevealed(v => !v)}>{noteContent}</button> : <div className={s.note} style={{ background: e.background }}>{noteContent}</div>;
   return <div className={e.kind === 'polaroid' ? s.polaroid : s.photo} style={{ background: e.background }}>
     <div className={s.photoWell}>{image ? <img src={image.data} alt={e.text || 'A personal memory'} draggable={false} style={{ objectPosition: `${e.cropX}% ${e.cropY}%` }}/>: <div className={s.photoPlaceholder}><svg viewBox="0 0 100 80" aria-hidden="true"><path d="M10 65 36 35 54 52 68 29 92 65M63 16a7 7 0 1 0 14 0a7 7 0 1 0-14 0" fill="none" stroke="currentColor" strokeWidth="1"/></svg><span>Your photograph, here</span></div>}</div>
     {e.kind === 'polaroid' && <div className={s.photoCaption}>{e.text}</div>}
