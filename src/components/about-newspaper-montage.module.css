@@ -19,9 +19,9 @@
   min-height: min(790px, calc(100vh - 118px));
   height: 100%;
   border-left: 0;
-  overflow: hidden;
+  overflow: visible;
 }
-.homeScene .paper { left: var(--paper-x); }
+.homeScene .paper { left: calc(var(--paper-x) + var(--paper-spill, 0%)); }
 .scene::before {
   content: "";
   position: absolute;
@@ -220,7 +220,14 @@
 }
 @media (max-width: 760px) {
   .scene { min-height: clamp(565px, 156.5vw, 760px); border-left: 0; border-top: 1px solid #d8cbbd; overflow: hidden; }
-  .scene.homeScene { min-height: clamp(565px, 156.5vw, 760px); }
+  .scene.homeScene { min-height: clamp(565px, 156.5vw, 760px); overflow: hidden; background: transparent; border-top: 0; }
+  .scene.homeScene::before {
+    inset: 0 10%;
+    z-index: -1;
+    opacity: 1;
+    mix-blend-mode: normal;
+    background: radial-gradient(ellipse at 46% 42%, #eee7da, #d6cbbb 85%);
+  }
   .archiveHeading { inset: 25px 24px auto; font-size: 7.5px; }
   .canvas { inset: 63px 0 143px; width: min(480px, calc(100% - 28px)); margin-inline: auto; transform: none; }
   .paper { display: none; }

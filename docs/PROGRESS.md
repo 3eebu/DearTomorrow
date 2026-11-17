@@ -46,3 +46,8 @@ The Couples Arcade with optional worldwide leaderboards remains future scope. It
 
 ## Memory Book Reading and Studio checkpoint
 See `docs/MEMORY_BOOKS.md` for architecture, implemented workflow, actual checks, local storage behavior and remaining work. The growing spine and additional volumes remain deferred by the founder.
+
+## Homepage paper overlap — 2026-11-17
+- Restored the homepage newspaper clippings' overlap beyond the artwork panel on desktop. The headline and controls remain above the artwork.
+- On mobile the backdrop is inset so papers extend beyond its sides while the composition stays within the viewport.
+- Inspected at 1440px and 390px; the 390px document did not overflow horizontally. The original About montage remains separate.
