@@ -32,7 +32,7 @@
 .dt-inline-note,.dt-demo-disclaimer{font-size:10px!important;color:#917d71!important;line-height:1.7!important}
 .dt-demo-disclaimer{margin:35px auto 0;text-align:center;letter-spacing:.05em}
 .dt-section{padding:clamp(85px,9vw,145px) clamp(24px,7vw,130px)}
-[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.8,.2,1)}
+[data-reveal]{opacity:.85;transform:translateY(12px);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.8,.2,1)}
 [data-reveal].dt-visible{opacity:1;transform:translateY(0)}
 .dt-hero{min-height:min(790px,calc(100vh - 118px));display:grid;grid-template-columns:1.01fr .99fr;position:relative}
 .dt-hero-light{position:absolute;top:0;left:0;pointer-events:none;height:100%;width:50%;background:radial-gradient(circle at 5% 0%,#fff9,transparent 55%)}
@@ -160,6 +160,7 @@
 .dt-calendar-grid button{aspect-ratio:1;min-height:37px;border:1px solid transparent;background:none;color:#665850;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px}
 .dt-calendar-grid button:hover{border-color:#d1b8a8}
 .dt-calendar-grid button.dt-calendar-has-memory{background:#f1e3d8;border-color:#d7b9ab;color:var(--dt-plum)}
+.dt-calendar-grid button[aria-pressed="true"]{outline:2px solid var(--dt-plum);outline-offset:-2px}
 .dt-calendar-grid button span{font-size:11px;color:var(--dt-plum)}
 .dt-calendar-result{border-top:1px solid #ded0c4;padding-top:24px}
 .dt-calendar-result h4{font-size:25px;margin:12px 0}

@@ -91,14 +91,15 @@ function MemoryTree() {
   const [story, setStory] = useState('');
   const [chapter, setChapter] = useState(chapters[0]);
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
-  const [calendarDate, setCalendarDate] = useState(() => new Date(2026, 10, 1));
+  const [calendarDate, setCalendarDate] = useState(() => new Date(Number(initialMoments[0].date.slice(0, 4)), Number(initialMoments[0].date.slice(5, 7)) - 1, 1));
   const selected = moments.find(moment => moment.id === selectedId);
   const displayMonth = calendarDate.getMonth();
   const displayYear = calendarDate.getFullYear();
   const days = new Date(displayYear, displayMonth + 1, 0).getDate();
   const startOfMonth = new Date(displayYear, displayMonth, 1).getDay();
   const monthLabel = calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  const shiftCalendar = (delta: number) => setCalendarDate(d => new Date(d.getFullYear(), d.getMonth() + delta, 1));
+  const shiftCalendar = (delta: number) => { setCalendarDate(d => new Date(d.getFullYear(), d.getMonth() + delta, 1)); setSelectedId(null); };
+  const selectMoment = (id: string) => { const moment = moments.find(item => item.id === id); setSelectedId(id); if (moment) setCalendarDate(new Date(Number(moment.date.slice(0, 4)), Number(moment.date.slice(5, 7)) - 1, 1)); };
   function addMoment(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!title.trim() || !date) return;
@@ -127,7 +128,7 @@ function MemoryTree() {
     </div>
     {view === 'tree' ? <div className="dt-tree-world dt-visible">
       <div className="dt-tree-stage">
-        <MemoryTreeArt memories={moments} selectedId={selectedId} newestId={newestId} onSelect={setSelectedId}/>
+        <MemoryTreeArt memories={moments} selectedId={selectedId} newestId={newestId} onSelect={selectMoment}/>
       </div>
       <div className="dt-tree-side">
         <span className="dt-overline">THE LEAVES OF OUR STORY</span>
@@ -135,7 +136,7 @@ function MemoryTree() {
         <div className="dt-tree-moment-list">
           {[...moments].sort((a, b) => a.date.localeCompare(b.date)).map(moment => <button type="button" key={moment.id}
             aria-pressed={selectedId === moment.id} className={selectedId === moment.id ? 'dt-moment-active' : ''}
-            onClick={() => setSelectedId(moment.id)}>
+            onClick={() => selectMoment(moment.id)}>
             <span>{new Date(moment.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
             <strong>{moment.title}</strong><span aria-hidden="true">↗</span>
           </button>)}
@@ -160,9 +161,9 @@ function MemoryTree() {
             const day = n + 1;
             const key = [displayYear, String(displayMonth + 1).padStart(2, '0'), String(day).padStart(2, '0')].join('-');
             const onDay = moments.filter(moment => moment.date === key);
-            return <button type="button" key={key} className={onDay.length ? 'dt-calendar-has-memory' : ''}
+            return <button type="button" key={key} className={onDay.length ? 'dt-calendar-has-memory' : ''} aria-pressed={selected?.date === key}
               aria-label={day + (onDay.length ? ': ' + onDay.map(m => m.title).join(', ') : '')}
-              onClick={() => { if (onDay.length) setSelectedId(onDay[0].id); }} >
+              onClick={() => { if (onDay.length) selectMoment(onDay[0].id); else setSelectedId(null); }} >
               {day}{onDay.length > 0 && <span aria-hidden="true">✦</span>}
             </button>;
           })}

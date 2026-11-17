@@ -1,5 +1,6 @@
 import { LIMITS, validateBook, type MemoryBookDocument } from './memory-books';
 let loadedRevision: number | null = null;
+let pendingLoad: Promise<MemoryBookDocument[]> | null = null;
 
 function database(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -10,7 +11,14 @@ function database(): Promise<IDBDatabase> {
     request.onblocked = () => reject(new Error('Close other Memory Book tabs, then retry saving.'));
   });
 }
-export async function loadLibrary(): Promise<MemoryBookDocument[]> {
+export function loadLibrary(): Promise<MemoryBookDocument[]> {
+  if (pendingLoad) return pendingLoad;
+  const request = readLibrary();
+  pendingLoad = request;
+  void request.finally(() => { if (pendingLoad === request) pendingLoad = null; }).catch(() => {});
+  return request;
+}
+async function readLibrary(): Promise<MemoryBookDocument[]> {
   const db = await database();
   try {
     const data = await new Promise<unknown>((resolve, reject) => {

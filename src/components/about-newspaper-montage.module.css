@@ -199,6 +199,13 @@
 .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip: rect(0,0,0,0); overflow: hidden; white-space: nowrap; border: 0; }
 .scene[data-phase="waiting"] .paper { opacity: 0; }
 .scene[data-phase="playing"] .paper { animation: paper-arrive var(--arrival-duration) var(--arrival-delay) var(--arrival-easing) both; }
+/* Keep the masthead present while the remaining clippings arrive. */
+.scene[data-phase="waiting"] .cutout { opacity: 1; }
+.scene[data-phase="playing"] .cutout { animation: masthead-arrive 1.1s ease both; }
+@keyframes masthead-arrive {
+  from { opacity: 1; transform: translate3d(0,-12px,0) rotate(calc(var(--paper-rotation) - 1deg)); }
+  to { opacity: 1; transform: translate3d(0,0,0) rotate(var(--paper-rotation)); }
+}
 @keyframes paper-arrive {
   0% { opacity: 0; transform: translate3d(var(--arrival-x), var(--arrival-y), 0) rotate(var(--arrival-rotation)) scale(.93); }
   15% { opacity: 1; }
