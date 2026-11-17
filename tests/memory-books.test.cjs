@@ -37,7 +37,7 @@ test('positions, rotation, typography and embedded photo bytes survive export', 
   assert.equal(e.rotation,12);assert.equal(e.x,30);assert.equal(e.assetId,'test');
 });
 test('invalid version, missing assets, duplicate pages and off-page geometry are rejected', () => {
-  for (const mutate of [b=>b.version=2,b=>b.pages.push(b.pages[0]),b=>b.pages[0].elements[0].x=101,b=>b.pages[0].elements[0].assetId='missing',b=>b.widthMm=0,b=>b.pages[0].elements[0].rotation=NaN]) {
+  for (const mutate of [b=>b.version=3,b=>b.pages.push(b.pages[0]),b=>b.pages[0].elements[0].x=201,b=>b.pages[0].elements[0].assetId='missing',b=>b.widthMm=0,b=>b.pages[0].elements[0].rotation=NaN]) {
     const b=make();mutate(b);assert.throws(()=>validateBook(b));
   }
 });
@@ -92,4 +92,13 @@ test('unavailable storage rejects initialization, clears the pending read, and n
 test('concurrent initialization shares one pending request without caching stale reads',async()=>{
   const h=storageHarness();const a=h.api.loadLibrary(),b=h.api.loadLibrary();assert.equal(a,b);await a;
   const c=h.api.loadLibrary();assert.notEqual(c,a);await c;
+});
+test('invalid expanded content is rejected before replacing an existing saved library',async()=>{
+  const h=storageHarness();await h.api.loadLibrary();const good=make();await h.api.saveLibrary([good]);
+  const bad=JSON.parse(JSON.stringify(good));bad.pages[0].elements[0].imageZoom=Infinity;
+  await assert.rejects(h.api.saveLibrary([bad]),/unsupported format/);assert.equal(h.get('books')[0].pages[0].elements[0].imageZoom,undefined);
+});
+test('a stored version 1 book upgrades on read without rewriting the stored original',async()=>{
+  const h=storageHarness();await h.api.loadLibrary();const old=make();old.version=1;await h.api.saveLibrary([old]);
+  const result=await h.api.loadLibrary();assert.equal(result[0].version,2);assert.equal(result[0].pages[0].id,old.pages[0].id);assert.equal(h.get('books')[0].version,1);
 });

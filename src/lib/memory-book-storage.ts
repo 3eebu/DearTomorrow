@@ -35,6 +35,9 @@ async function readLibrary(): Promise<MemoryBookDocument[]> {
   } finally { db.close(); }
 }
 export async function saveLibrary(books: MemoryBookDocument[], expected?: MemoryBookDocument[]) {
+  // Validate before opening a write transaction. Invalid new content never
+  // replaces a previously saved library, and callers receive a real error.
+  books.forEach(validateBook);
   const db = await database();
   try {
     await new Promise<void>((resolve, reject) => {

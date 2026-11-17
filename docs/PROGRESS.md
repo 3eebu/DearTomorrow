@@ -50,6 +50,11 @@ The Couples Arcade with optional worldwide leaderboards remains future scope. It
 ## Memory Book Reading and Studio checkpoint
 See `docs/MEMORY_BOOKS.md` for architecture, implemented workflow, actual checks, local storage behavior and remaining work. The growing spine and additional volumes remain deferred by the founder.
 
+## Creative Freedom Studio — 2026-11-18
+- Implemented a functional creation-to-reader increment: responsive Studio workspace, safe v2 projects/v1 compatibility, precise object tools, mixed writing, local photo tray and Polaroids, original decorations, shapes, vector drawing, paper, templates, layers and groups.
+- Preserved the physical reader and the existing local storage transaction protocol. No user data reset or backend service was introduced.
+- See `docs/CREATIVE_FREEDOM.md` for the actual browser workflows, 35 passing tests, build results, measured Node timings, screenshots, and the remaining device/feature work. The full Studio vision is not claimed complete.
+
 ## Homepage paper overlap — 2026-11-17
 - Restored the homepage newspaper clippings' overlap beyond the artwork panel on desktop. The headline and controls remain above the artwork.
 - On mobile the backdrop is inset so papers extend beyond its sides while the composition stays within the viewport.
