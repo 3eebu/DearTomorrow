@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, FormEvent, ReactNode, TouchEvent } from 'react';
 
 type Moment = { id: string; title: string; date: string; story: string; chapter: string };
-type Section = 'letters' | 'books' | 'memory-tree' | 'journeys';
+type WorkspacePage = 'home' | 'memory-tree' | 'letters';
 const initialMoments: Moment[] = [
   { id: 'first-hello', title: 'The very first hello', date: '2026-02-14', story: 'It was such a small thing at the time. Only later did we realize it was where the whole story began.', chapter: 'Our firsts' },
   { id: 'ordinary-day', title: 'An ordinary Tuesday', date: '2026-05-12', story: 'Nothing extraordinary happened. We just laughed until we forgot what we were laughing about.', chapter: 'Little days' },
@@ -81,88 +81,7 @@ function Dialog({ title, onClose, children }: { title: string; onClose: () => vo
   </div>;
 }
 
-function MemoryBook() {
-  const [name, setName] = useState('Our Little Forever');
-  const [coverColor, setCoverColor] = useState('#583a44');
-  const [opened, setOpened] = useState(false);
-  const [page, setPage] = useState(0);
-  const swipeOrigin = useRef<number | null>(null);
-  const changePage = (direction: number) => setPage(current => Math.max(0, Math.min(pages.length - 1, current + direction)));
-  const onTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-    if (swipeOrigin.current === null) return;
-    const distance = event.changedTouches[0].clientX - swipeOrigin.current;
-    if (Math.abs(distance) > 55) {
-      if (!opened) setOpened(true);
-      else changePage(distance < 0 ? 1 : -1);
-    }
-    swipeOrigin.current = null;
-  };
-  return <section id="books" className="dt-section dt-book-section" aria-labelledby="book-heading">
-    <div className="dt-section-content" data-reveal>
-      <span className="dt-overline">02 / MEMORY BOOKS</span>
-      <h2 id="book-heading">A whole world<br /><em>between the pages.</em></h2>
-      <p>Some memories deserve more than a place in your phone. Give them a name, a cover, and somewhere to live.</p>
-      <div className="dt-book-editor">
-        <label htmlFor="dt-book-name">THE NAME ON YOUR COVER</label>
-        <input id="dt-book-name" value={name} maxLength={70} onChange={event => setName(event.target.value)} placeholder="Name this little forever" />
-        <span className="dt-sub-label">CHOOSE A COVER</span>
-        <div className="dt-cover-palette" role="group" aria-label="Choose a cover color">
-          {[
-            ['#583a44', 'Mulberry'], ['#657369', 'Sage'], ['#3d4b5b', 'Midnight'], ['#a27868', 'Terracotta']
-          ].map(([hex, label]) => <button key={hex} type="button" title={label} aria-label={label} aria-pressed={coverColor === hex}
-            className={coverColor === hex ? 'dt-color-active' : ''} style={{ backgroundColor: hex }} onClick={() => setCoverColor(hex)} />)}
-        </div>
-      </div>
-      <Link className="dt-button dt-button-dark" href="/memory-books">Open my Memory Books ↗</Link>
-      <p className="dt-inline-note">Try the sample here, or create books saved on this device in the Studio.</p>
-    </div>
-    <div className="dt-book-stage" data-reveal>
-      <div className="dt-book-light" aria-hidden="true"/>
-      <div className={'dt-book-object ' + (opened ? 'dt-is-open' : '')} style={{ '--dt-cover': coverColor } as CSSProperties}
-        tabIndex={0} aria-label="Memory Book. Use left and right arrow keys to turn pages."
-        onKeyDown={event => { if (!opened || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')) return; event.preventDefault(); changePage(event.key === 'ArrowRight' ? 1 : -1); }}
-        onTouchStart={event => { swipeOrigin.current = event.touches[0].clientX; }}
-        onTouchEnd={onTouchEnd}>
-        {!opened ? <button type="button" className="dt-book-cover" onClick={() => setOpened(true)} aria-label={'Open memory book ' + name}>
-          <span className="dt-book-spine" aria-hidden="true"/>
-          <span className="dt-book-ornament" aria-hidden="true">✧</span>
-          <span className="dt-cover-border">
-            <span className="dt-cover-small">A BOOK OF MOMENTS</span>
-            <strong>{name || 'Untitled memories'}</strong>
-            <span className="dt-cover-divider"/>
-            <em>an unfinished story</em>
-          </span>
-          <span className="dt-cover-small dt-cover-foot">DEAR TOMORROW · VOLUME ONE</span>
-        </button> : <div className="dt-book-spread">
-          <div className="dt-book-left-page">
-            <span className="dt-page-overline">DEAR TOMORROW</span>
-            <div className="dt-page-illustration" aria-hidden="true"><span className="dt-page-arch"/><span className="dt-page-orbit"/><span className="dt-page-star">✧</span></div>
-            <span className="dt-page-handwritten">A little piece of us.</span>
-          </div>
-          <div className="dt-book-right-page" key={page}>
-            <span className="dt-page-overline">CHAPTER {pages[page].chapter} · {pages[page].eyebrow}</span>
-            <span className="dt-chapter-rule" aria-hidden="true"/>
-            <h3>{pages[page].title}</h3>
-            <p>{pages[page].text}</p>
-            <span className="dt-page-handwritten">{pages[page].footer}</span>
-            <small className="dt-book-pagination">{page + 1} / {pages.length}</small>
-          </div>
-        </div>}
-      </div>
-      <div className="dt-book-controls">
-        {!opened ? <button type="button" className="dt-text-action" onClick={() => setOpened(true)}>Open this book <span aria-hidden="true">↗</span></button>
-        : <>
-          <button type="button" className="dt-icon-button" onClick={() => changePage(-1)} disabled={page === 0} aria-label="Previous page">←</button>
-          <span className="dt-page-count">{page + 1} of {pages.length}</span>
-          <button type="button" className="dt-icon-button" onClick={() => changePage(1)} disabled={page === pages.length - 1} aria-label="Next page">→</button>
-          <button type="button" className="dt-text-action" onClick={() => { setOpened(false); setPage(0); }}>Close book</button>
-        </>}
-      </div>
-    </div>
-  </section>;
-}
-
-function MemoryTree({ addSignal }: { addSignal: number }) {
+function MemoryTree() {
   const [moments, setMoments] = useState<Moment[]>(initialMoments);
   const [view, setView] = useState<'tree' | 'calendar'>('tree');
   const [selectedId, setSelectedId] = useState<string | null>(initialMoments[0].id);
@@ -173,7 +92,6 @@ function MemoryTree({ addSignal }: { addSignal: number }) {
   const [chapter, setChapter] = useState(chapters[0]);
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [calendarDate, setCalendarDate] = useState(() => new Date(2026, 10, 1));
-  useEffect(() => { if (addSignal > 0) setAdding(true); }, [addSignal]);
   const selected = moments.find(moment => moment.id === selectedId);
   const displayMonth = calendarDate.getMonth();
   const displayYear = calendarDate.getFullYear();
@@ -276,11 +194,11 @@ function MemoryTree({ addSignal }: { addSignal: number }) {
 
 function JourneyLetters() {
   const [selected, setSelected] = useState(0);
-  return <section id="journeys" className="dt-journey-section dt-section" aria-labelledby="journey-heading">
+  return <section id="journey-letters" className="dt-journey-section dt-section" aria-labelledby="journey-heading">
     <div className="dt-journey-intro" data-reveal>
-      <span className="dt-overline">04 / JOURNEY LETTERS</span>
+      <span className="dt-overline">LETTERS FOR THE JOURNEY</span>
       <h2 id="journey-heading">A little closer,<br /><em>with every mile.</em></h2>
-      <p>Six small notes for the journey between goodbye and hello again. A gentle reminder that someone is thinking of you.</p>
+      <p>Six letters for the journey between goodbye and hello again. They are all part of the same story: words sent with love.</p>
     </div>
     <div className="dt-journey-route" data-reveal>
       <div className="dt-route-city"><strong>LAHORE</strong><span>Where the journey begins</span></div>
@@ -303,22 +221,15 @@ function JourneyLetters() {
   </section>;
 }
 
-export default function HomeStudio() {
+export default function HomeStudio({ page = 'home' }: { page?: WorkspacePage }) {
   useReveals();
+  const isHome = page === 'home';
   const [mobileMenu, setMobileMenu] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
   const [composeOpen, setComposeOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [letterKind, setLetterKind] = useState('A simple letter');
   const [previewLetter, setPreviewLetter] = useState(false);
-  const [addSignal, setAddSignal] = useState(0);
-  function goTo(section: Section) {
-    setMobileMenu(false);
-    setCreateOpen(false);
-    if (section === 'letters') { setComposeOpen(true); return; }
-    document.getElementById(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (section === 'books') window.setTimeout(() => document.getElementById('dt-book-name')?.focus({ preventScroll: true }), 500);
-  }
   return <div className="dt-app" id="home">
     <a className="dt-skip" href="#dt-main">Skip to the story</a>
     <div className="dt-prototype-banner">A WORK IN PROGRESS · THIS IS A SAFE, UNSAVED DEMO</div>
@@ -327,9 +238,9 @@ export default function HomeStudio() {
       <nav className={'dt-navigation ' + (mobileMenu ? 'dt-nav-open' : '')} aria-label="Primary navigation">
         <Link onClick={() => setMobileMenu(false)} href="/about">Our story</Link>
         <Link onClick={() => setMobileMenu(false)} href="/how-it-works">How it works</Link>
-        <a onClick={() => setMobileMenu(false)} href="#books">Memory Books</a>
-        <a onClick={() => setMobileMenu(false)} href="#memory-tree">Memory Tree</a>
-        <a onClick={() => setMobileMenu(false)} href="#journeys">Journeys</a>
+        <Link onClick={() => setMobileMenu(false)} href="/memory-books">Memory Books</Link>
+        <Link onClick={() => setMobileMenu(false)} href="/memory-tree">Memory Tree</Link>
+        <Link onClick={() => setMobileMenu(false)} href="/letters">Letters</Link>
       </nav>
       <div className="dt-header-right">
         <button className="dt-button dt-header-create" type="button" onClick={() => setCreateOpen(true)}>Create something <span aria-hidden="true">↗</span></button>
@@ -339,22 +250,22 @@ export default function HomeStudio() {
       </div>
     </header>
     <main id="dt-main">
-      <section className="dt-hero" aria-labelledby="dt-hero-title">
+      {isHome && <section className="dt-hero" aria-labelledby="dt-hero-title">
         <div className="dt-hero-light" aria-hidden="true"/>
         <div className="dt-hero-copy" data-reveal>
           <p className="dt-overline">A QUIET LITTLE CORNER OF THE WORLD</p>
           <h1 id="dt-hero-title">Some words<br />are worth<br /><em>waiting for.</em></h1>
           <p className="dt-hero-lead">A place to leave love in the little things. To hold on to your favorite moments. To build a story that feels like home.</p>
           <div className="dt-hero-actions">
-            <button type="button" className="dt-button dt-button-dark" onClick={() => setComposeOpen(true)}>Write your first letter <span aria-hidden="true">↗</span></button>
+          <Link className="dt-button dt-button-dark" href="/letters">Write your first letter <span aria-hidden="true">↗</span></Link>
             <a className="dt-text-action" href="#dt-discover">Take a look around <span aria-hidden="true">↓</span></a>
           </div>
           <span className="dt-hero-footnote">ONE PERSON. A THOUSAND MOMENTS. A LIFETIME OF LETTERS.</span>
         </div>
         <AboutNewspaperMontage variant="home" />
-      </section>
+      </section>}
 
-      <section id="dt-discover" className="dt-welcome-section" aria-labelledby="welcome-heading">
+      {isHome && <section id="dt-discover" className="dt-welcome-section" aria-labelledby="welcome-heading">
         <div className="dt-welcome-heading" data-reveal>
           <span className="dt-overline">COME IN. MAKE YOURSELF AT HOME.</span>
           <h2 id="welcome-heading">For all the things<br /><em>you never want to lose.</em></h2>
@@ -364,22 +275,22 @@ export default function HomeStudio() {
           <p>Dear Tomorrow is being made for those things — the words, the firsts, the ordinary afternoons that somehow become everything.</p>
           <Link href="/about" className="dt-text-action">Why I started Dear Tomorrow <span aria-hidden="true">↗</span></Link>
         </div>
-      </section>
+      </section>}
 
-      <section className="dt-rooms-section dt-section" aria-labelledby="rooms-heading">
+      {isHome && <section className="dt-rooms-section dt-section" aria-labelledby="rooms-heading">
         <div className="dt-rooms-top" data-reveal><span className="dt-overline">THERE IS A PLACE FOR EVERY PART OF YOUR STORY</span><h2 id="rooms-heading">Find your little <em>corner.</em></h2></div>
         <div className="dt-room-links" data-reveal>
           {[
-            ['01', 'Letters', 'Words for a moment still to come.', 'letters'],
-            ['02', 'Memory Books', 'A lifetime of little chapters.', 'books'],
-            ['03', 'Memory Tree', 'A living story, growing with you.', 'memory-tree'],
-            ['04', 'Journey Letters', 'A familiar feeling, miles from home.', 'journeys']
-          ].map(item => <button type="button" key={item[0]} onClick={() => goTo(item[3] as Section)}>
+            ['01', 'Letters', 'Words for a moment still to come.', '/letters'],
+            ['02', 'Memory Books', 'A lifetime of little chapters.', '/memory-books'],
+            ['03', 'Memory Tree', 'A living story, growing with you.', '/memory-tree']
+          ].map(item => <Link href={item[3]} className="dt-room-link" key={item[0]}>
             <span>{item[0]}</span><strong>{item[1]}</strong><span className="dt-room-description">{item[2]}</span><span className="dt-room-arrow" aria-hidden="true">↗</span>
-          </button>)}
+          </Link>)}
         </div>
-      </section>
+      </section>}
 
+      {page === 'letters' && <>
       <section id="letters" className="dt-letters-section dt-section" aria-labelledby="letters-heading">
         <div className="dt-letters-copy" data-reveal><span className="dt-overline">01 / LETTERS FOR LATER</span>
           <h2 id="letters-heading">Some things are better <em>said in a letter.</em></h2>
@@ -390,40 +301,40 @@ export default function HomeStudio() {
           <div className="dt-stationery-line"/><div className="dt-stationery-letter"><span>FOR AN ORDINARY DAY</span><strong>Here is a little reminder.</strong><p>You are loved, even from far away.</p><em>with all my heart.</em></div><div className="dt-stationery-shadow"/>
         </div>
       </section>
-
-      <MemoryBook />
-      <MemoryTree addSignal={addSignal}/>
       <JourneyLetters />
+      </>}
 
-      <section className="dt-closing" data-reveal aria-labelledby="closing-heading">
+      {page === 'memory-tree' && <MemoryTree/>}
+
+      {isHome && <section className="dt-closing" data-reveal aria-labelledby="closing-heading">
         <div className="dt-closing-symbol" aria-hidden="true">✳</div>
         <span className="dt-overline">A PLACE TO COME BACK TO</span>
         <h2 id="closing-heading">However the story unfolds,<br /><em>there&apos;s room for it here.</em></h2>
         <p>For now, this is just the beginning. And sometimes that&apos;s the loveliest part.</p>
         <button className="dt-button dt-button-cream" type="button" onClick={() => setCreateOpen(true)}>Start with a little something <span aria-hidden="true">↗</span></button>
-      </section>
+      </section>}
     </main>
     <footer className="dt-footer">
       <div><Link href="/" className="dt-wordmark">Dear <em>Tomorrow.</em></Link><span>Some words are worth waiting for.</span></div>
-      <nav aria-label="Footer navigation"><Link href="/about">About</Link><Link href="/how-it-works">How it works</Link><a href="#memory-tree">Memory Tree</a><a href="#books">Memory Books</a></nav>
+      <nav aria-label="Footer navigation"><Link href="/about">About</Link><Link href="/how-it-works">How it works</Link><Link href="/memory-tree">Memory Tree</Link><Link href="/memory-books">Memory Books</Link><Link href="/letters">Letters</Link></nav>
       <small>© 2026 Dear Tomorrow · An interactive preview, not a live service</small>
     </footer>
-    <nav className="dt-bottom-nav" aria-label="Quick mobile navigation">
-      <a href="#home"><span aria-hidden="true">⌂</span>Home</a>
-      <a href="#books"><span aria-hidden="true">▤</span>Books</a>
+    {isHome && <nav className="dt-bottom-nav" aria-label="Quick mobile navigation">
+      <Link href="/"><span aria-hidden="true">⌂</span>Home</Link>
+      <Link href="/memory-books"><span aria-hidden="true">▤</span>Books</Link>
       <button type="button" className="dt-bottom-create" onClick={() => setCreateOpen(true)}><span aria-hidden="true">＋</span>Create</button>
-      <a href="#memory-tree"><span aria-hidden="true">♧</span>Tree</a>
-      <a href="#journeys"><span aria-hidden="true">✈</span>Trips</a>
-    </nav>
+      <Link href="/memory-tree"><span aria-hidden="true">♧</span>Tree</Link>
+      <Link href="/letters"><span aria-hidden="true">✉</span>Letters</Link>
+    </nav>}
 
     {createOpen && <Dialog title="What would you like to make?" onClose={() => setCreateOpen(false)}>
       <span className="dt-overline">THE START OF SOMETHING LOVELY</span>
       <h2 className="dt-dialog-title">What would you like <em>to make?</em></h2>
       <p className="dt-dialog-intro">Just start with one small thing. The rest can come later.</p>
       <div className="dt-create-choices">
-        <button type="button" onClick={() => goTo('letters')}><span className="dt-choice-ornament">✉</span><span><strong>Write a letter</strong><small>Something meaningful, in your own words</small></span><span aria-hidden="true">↗</span></button>
-        <button type="button" onClick={() => goTo('books')}><span className="dt-choice-ornament">▤</span><span><strong>Make a Memory Book</strong><small>Give your story its very own cover</small></span><span aria-hidden="true">↗</span></button>
-        <button type="button" onClick={() => { goTo('memory-tree'); setAddSignal(number => number + 1); }}><span className="dt-choice-ornament">♧</span><span><strong>Add a memory</strong><small>Let a new leaf grow on your tree</small></span><span aria-hidden="true">↗</span></button>
+        <Link href="/letters" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">✉</span><span><strong>Write a letter</strong><small>Something meaningful, in your own words</small></span><span aria-hidden="true">↗</span></Link>
+        <Link href="/memory-books" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">▤</span><span><strong>Make a Memory Book</strong><small>Give your story its very own cover</small></span><span aria-hidden="true">↗</span></Link>
+        <Link href="/memory-tree" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">♧</span><span><strong>Add a memory</strong><small>Let a new leaf grow on your tree</small></span><span aria-hidden="true">↗</span></Link>
       </div><p className="dt-inline-note">This is a demo. Nothing is shared or stored online.</p>
     </Dialog>}
 

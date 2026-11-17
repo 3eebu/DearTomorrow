@@ -10,10 +10,9 @@ export const metadata:Metadata={
 };
 
 const features=[
-  {number:"01",label:"Letters",title:"For words worth keeping",body:"Write something that matters, whether it's for today, a birthday, a difficult day, or a moment still to come. Timed delivery and shared letters are part of the longer-term vision.",href:"/#letters",link:"Meet the letters"},
-  {number:"02",label:"Memory Books",title:"A story you can turn through",body:"Give your story a title, choose a cover and bring your favorite moments into chapters. Our current preview lets you personalize and turn a sample book; the full scrapbook studio is being built.",href:"/#books",link:"See the sample book"},
-  {number:"03",label:"Memory Tree",title:"Let your story grow",body:"Imagine a living tree where every first, every little adventure and every important date becomes a leaf or branch. The present demo uses a simple timeline and calendar while the true tree takes shape.",href:"/#memory-tree",link:"Explore the timeline preview"},
-  {number:"04",label:"Journey Letters",title:"A little company along the way",body:"A letter for departure, another for halfway there, one for arrival. The six-checkpoint journey is a visual demo today; real scheduling and online unlocking come in a later phase.",href:"/#journeys",link:"See the journey"}
+  {number:"01",label:"Letters",title:"For words worth keeping",body:"Write something for today, a birthday, a difficult day, or a moment still to come. Letters can also accompany someone along a journey. Timed delivery and shared letters are part of the longer-term vision.",href:"/letters",link:"Meet the letters"},
+  {number:"02",label:"Memory Books",title:"A story you can turn through",body:"Give your story a title, choose a cover and bring your favorite moments into chapters. Our current preview lets you personalize pages and keep books on this device.",href:"/memory-books",link:"See the sample book"},
+  {number:"03",label:"Memory Tree",title:"Let your story grow",body:"Imagine a living tree where every first, every little adventure and every important date becomes a leaf or branch. The present demo uses a simple timeline and calendar while the true tree takes shape.",href:"/memory-tree",link:"Explore the timeline preview"},
 ];
 export default function AboutPage(){
   return <InformationShell>

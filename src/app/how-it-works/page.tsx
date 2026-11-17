@@ -5,18 +5,17 @@ import "../story-pages.css";
 
 export const metadata:Metadata={
   title:"How Dear Tomorrow Works — Start with a moment",
-  description:"Discover letters, personalized memory books, the Memory Tree and Journey Letters. See what you can try in the current Dear Tomorrow preview."
+  description:"Discover letters, personalized memory books and the Memory Tree. See what you can try in the current Dear Tomorrow preview."
 };
 const steps=[
   {number:"01",title:"Start with something small.",body:"A note you want to write. A date you never want to forget. A story you want to give a title. You don't need to plan an entire book before beginning."},
   {number:"02",title:"Make it yours.",body:"Choose a cover, write in your own words or add a meaningful date. We want the experience to feel personal without making you learn a complicated editor."},
-  {number:"03",title:"Give it a place to live.",body:"In the full version, letters, book pages, journeys and memories will live together in a private shared space. For now, the preview is local and temporary."}
+  {number:"03",title:"Give it a place to live.",body:"In the full version, letters, book pages and memories will live together in a private shared space. For now, the preview is local and temporary."}
 ];
 const experiences=[
-  {name:"Letters",status:"Preview available",body:"Open a sample envelope and try writing a guest draft. Nothing is sent or saved to an account.",href:"/#letters",cta:"Try the letter"},
-  {name:"Memory Books",status:"Preview available",body:"Rename a sample book, change its cover and use the page controls to turn through the demo.",href:"/#books",cta:"Try the book"},
-  {name:"Memory Tree",status:"Early timeline preview",body:"Explore sample milestones, add a moment and switch to the matching calendar. The living tree animation is still in development.",href:"/#memory-tree",cta:"Explore memories"},
-  {name:"Journey Letters",status:"Showcase only",body:"Explore six example checkpoints along a journey. The release schedule is illustrative, not a working delivery system.",href:"/#journeys",cta:"See the journey"}
+  {name:"Letters",status:"Preview available",body:"Write a guest letter or explore six example letters for a journey. The schedule is illustrative, not a working delivery system.",href:"/letters",cta:"Explore Letters"},
+  {name:"Memory Books",status:"Preview available",body:"Create books, personalize pages, read your story, and keep local drafts on this device.",href:"/memory-books",cta:"Open Memory Books"},
+  {name:"Memory Tree",status:"Early timeline preview",body:"Explore sample milestones, add a moment and switch to the matching calendar. The living tree animation is still in development.",href:"/memory-tree",cta:"Explore memories"}
 ];
 export default function HowItWorksPage(){
   return <InformationShell>

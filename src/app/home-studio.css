@@ -67,12 +67,13 @@
 .dt-welcome-copy{max-width:480px;padding-top:20px}
 .dt-welcome-copy p{color:#776c61;font-size:15px;margin:0 0 18px}
 .dt-rooms-section{background:#f2ebe3}
-.dt-rooms-top{display:flex;justify-content:space-between;gap:60px;align-items:end;margin-bottom:55px}
+.dt-rooms-top{display:flex;justify-content:space-between;gap:60px;align-items:flex-end;margin-bottom:55px}
 .dt-rooms-top h2{margin:14px 0 0}
 .dt-room-links{border-top:1px solid #d9c9ba}
-.dt-room-links button{display:grid;grid-template-columns:50px 1fr 1fr 44px;align-items:center;gap:30px;min-height:112px;width:100%;border:0;border-bottom:1px solid #d9c9ba;background:none;text-align:left;padding:25px 9px;transition:background .25s,padding .25s}
-.dt-room-links button:hover{background:#fff7ed;padding-left:20px}
-.dt-room-links button>span:first-child{font:17px 'Playfair Display',Georgia,serif;color:#9f8575}
+.dt-room-link{display:grid;grid-template-columns:50px 1fr 1fr 44px;align-items:center;gap:30px;min-height:112px;width:100%;border:0;border-bottom:1px solid #d9c9ba;background:none;text-align:left;padding:25px 9px;transition:background .25s,padding .25s}
+.dt-room-link{text-decoration:none;color:inherit}
+.dt-room-link:hover{background:#fff7ed;padding-left:20px}
+.dt-room-link>span:first-child{font:17px 'Playfair Display',Georgia,serif;color:#9f8575}
 .dt-room-links strong{font:clamp(23px,2.7vw,37px) 'Playfair Display',Georgia,serif;letter-spacing:-.04em}
 .dt-room-description{font-size:13px;color:#867569}
 .dt-room-arrow{color:var(--dt-plum);font-size:25px;justify-self:end}
@@ -205,10 +206,10 @@
 .dt-dialog-title{font-size:clamp(36px,4vw,58px);margin:17px 30px 23px 0}
 .dt-dialog-intro{font-size:14px;color:#786e62;margin-bottom:25px}
 .dt-create-choices{display:flex;flex-direction:column;border-top:1px solid #e1d4c6}
-.dt-create-choices button{display:grid;grid-template-columns:62px 1fr 20px;align-items:center;gap:17px;text-align:left;border:0;border-bottom:1px solid #e1d4c6;background:none;padding:21px 9px;min-height:95px;transition:background .2s,padding .2s}
-.dt-create-choices button:hover{background:#fff9f0;padding-left:18px}
+.dt-create-choices a{display:grid;grid-template-columns:62px 1fr 20px;align-items:center;gap:17px;text-align:left;border:0;border-bottom:1px solid #e1d4c6;background:none;padding:21px 9px;min-height:95px;transition:background .2s,padding .2s}
+.dt-create-choices a:hover{background:#fff9f0;padding-left:18px}
 .dt-choice-ornament{width:52px;height:52px;border-radius:50%;background:#eee3d9;display:grid;place-items:center;color:#7b515d;font-size:25px}
-.dt-create-choices button>span:nth-child(2){display:flex;flex-direction:column;gap:8px}
+.dt-create-choices a>span:nth-child(2){display:flex;flex-direction:column;gap:8px}
 .dt-create-choices strong{font:23px 'Playfair Display',Georgia,serif;font-weight:400}
 .dt-create-choices small{color:#9c8679;font-size:11px}
 .dt-form{display:flex;flex-direction:column;gap:13px}
@@ -233,7 +234,7 @@
 @media(max-width:780px){
 .dt-header{height:69px;padding:0 20px}.dt-header-create{display:none}.dt-menu-button{display:flex}.dt-navigation{display:none;position:absolute;left:0;right:0;top:69px;background:#f9f6f0;box-shadow:0 14px 22px #66534425;border-bottom:1px solid #e3d7ca;flex-direction:column;align-items:stretch;padding:17px 24px;gap:4px}.dt-navigation.dt-nav-open{display:flex}.dt-navigation a{padding:13px 0;font-size:14px}
 .dt-hero{grid-template-columns:1fr;min-height:auto}.dt-hero-copy{padding:67px 24px 54px}.dt-hero h1{font-size:clamp(53px,11vw,82px)}.dt-hero-footnote{margin-top:44px}.dt-envelope-scene{min-height:480px}
-.dt-welcome-section{padding:85px 24px;grid-template-columns:1fr;gap:25px}.dt-welcome-copy{padding-top:0}.dt-rooms-top{display:block}.dt-room-links button{grid-template-columns:30px 1fr 28px;gap:15px}.dt-room-description{grid-column:2;grid-row:2}.dt-room-arrow{grid-column:3;grid-row:1}
+.dt-welcome-section{padding:85px 24px;grid-template-columns:1fr;gap:25px}.dt-welcome-copy{padding-top:0}.dt-rooms-top{display:block}.dt-room-link{grid-template-columns:30px 1fr 28px;gap:15px}.dt-room-description{grid-column:2;grid-row:2}.dt-room-arrow{grid-column:3;grid-row:1}
 .dt-letters-section,.dt-book-section{grid-template-columns:1fr;gap:38px}.dt-stationery-panel{min-height:430px}.dt-book-stage{min-height:475px;padding:52px 18px 32px}.dt-book-object{height:360px}
 .dt-tree-world{grid-template-columns:1fr;gap:5px}.dt-tree-stage{max-width:650px;margin:auto;width:100%}.dt-tree-side{padding:20px 0}.dt-tree-note{margin:25px auto}
 .dt-checkpoints{grid-template-columns:repeat(3,1fr)}.dt-footer{padding-bottom:110px}.dt-bottom-nav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fdf9f3ee;backdrop-filter:blur(18px);border-top:1px solid #ded3c8;justify-content:space-around;align-items:center;padding:8px 4px calc(9px + env(safe-area-inset-bottom))}
@@ -242,11 +243,11 @@
 @media(max-width:490px){
 .dt-section{padding:75px 22px}.dt-overline{font-size:9px}.dt-hero h1{font-size:clamp(50px,13vw,68px)}.dt-hero-lead{font-size:14px}.dt-hero-actions{align-items:flex-start;flex-direction:column;gap:15px}.dt-hero-footnote{font-size:8px;line-height:1.7}
 .dt-envelope-scene{min-height:400px}.dt-envelope{width:81%;height:266px}.dt-envelope-back,.dt-envelope-front{height:175px}.dt-envelope-flap{top:91px;height:105px}.dt-envelope-seal{top:166px}.dt-envelope-paper{height:215px;padding:18px 15px;gap:10px}.dt-envelope-open .dt-envelope-paper{transform:translateY(-72px)}.dt-paper-greeting{font-size:16px}.dt-paper-words{font-size:11px}.dt-paper-sign{font-size:12px}.dt-envelope-caption{bottom:18px}.dt-envelope-caption span{font-size:12px}
-.dt-room-links button{min-height:95px;padding:18px 4px}.dt-room-links strong{font-size:25px}.dt-room-description{font-size:12px}.dt-stationery-panel{min-height:345px}.dt-stationery-letter{width:76%;min-height:255px;padding:28px 20px;gap:13px}.dt-stationery-letter strong{font-size:25px}.dt-stationery-letter p{font-size:14px}
+.dt-room-link{min-height:95px;padding:18px 4px}.dt-room-links strong{font-size:25px}.dt-room-description{font-size:12px}.dt-stationery-panel{min-height:345px}.dt-stationery-letter{width:76%;min-height:255px;padding:28px 20px;gap:13px}.dt-stationery-letter strong{font-size:25px}.dt-stationery-letter p{font-size:14px}
 .dt-book-stage{min-height:390px;padding:30px 7px 25px}.dt-book-object{height:290px;width:100%}.dt-book-cover{padding:17px}.dt-cover-border{margin:12px 0;gap:12px;padding:8px}.dt-cover-border strong{font-size:20px}.dt-cover-small{font-size:6px}.dt-book-left-page,.dt-book-right-page{padding:13px}.dt-page-illustration{width:90%;height:56%;border-width:5px}.dt-book-right-page h3{font-size:22px;margin:12px 0}.dt-book-right-page p{font-size:11px;line-height:1.55}.dt-chapter-rule{margin-top:17px}.dt-page-handwritten{font-size:11px}.dt-book-spread .dt-page-overline{font-size:6px}
 .dt-tree-intro h2{font-size:clamp(41px,10vw,56px)}.dt-tree-topbar{align-items:stretch;flex-direction:column}.dt-view-switch button{flex:1;padding:11px}.dt-subtle-button{width:100%}.dt-tree-moment-list button{grid-template-columns:70px 1fr 16px}.dt-tree-moment-list button strong{font-size:15px}.dt-calendar-panel{padding:14px}.dt-calendar-grid{gap:2px}.dt-calendar-grid button{font-size:11px;min-height:38px}.dt-calendar-bar h3{font-size:23px}
 .dt-journey-route{gap:7px;margin:45px auto 33px}.dt-route-city strong{font-size:10px}.dt-route-city span{font-size:8px}.dt-checkpoints{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dt-checkpoint{min-height:170px;padding:16px 12px}.dt-checkpoint strong{font-size:16px}.dt-checkpoint small{font-size:9px}
-.dt-dialog{max-height:calc(100dvh - 28px);padding:35px 21px 24px}.dt-overlay{padding:14px}.dt-dialog-title{font-size:37px}.dt-create-choices button{grid-template-columns:48px 1fr 14px;gap:10px;padding:18px 4px}.dt-create-choices strong{font-size:19px}.dt-choice-ornament{width:43px;height:43px}.dt-form-split{grid-template-columns:1fr}
+.dt-dialog{max-height:calc(100dvh - 28px);padding:35px 21px 24px}.dt-overlay{padding:14px}.dt-dialog-title{font-size:37px}.dt-create-choices a{grid-template-columns:48px 1fr 14px;gap:10px;padding:18px 4px}.dt-create-choices strong{font-size:19px}.dt-choice-ornament{width:43px;height:43px}.dt-form-split{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){
 .dt-app *,.dt-app *:before,.dt-app *:after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}

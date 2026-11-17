@@ -11,10 +11,11 @@ export function InformationShell({children}:{children:ReactNode}) {
         <nav aria-label="Information pages">
           <Link href="/about">About</Link>
           <Link href="/how-it-works">How it works</Link>
-          <Link href="/#books">Memory Books</Link>
-          <Link href="/#memory-tree">Memory Tree</Link>
+          <Link href="/memory-books">Memory Books</Link>
+          <Link href="/memory-tree">Memory Tree</Link>
+          <Link href="/letters">Letters</Link>
         </nav>
-        <Link className="info-header-cta" href="/#dt-discover">Explore the preview <span aria-hidden="true">↗</span></Link>
+        <Link className="info-header-cta" href="/">Explore the preview <span aria-hidden="true">↗</span></Link>
       </header>
       <main id="main-content">{children}</main>
       <footer className="info-footer">
@@ -26,7 +27,8 @@ export function InformationShell({children}:{children:ReactNode}) {
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
           <Link href="/how-it-works">How it works</Link>
-          <Link href="/#memory-tree">Memory Tree</Link>
+          <Link href="/memory-tree">Memory Tree</Link>
+          <Link href="/letters">Letters</Link>
         </nav>
         <small>© Dear Tomorrow · Currently in preview</small>
       </footer>
