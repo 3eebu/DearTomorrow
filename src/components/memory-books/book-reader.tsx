@@ -7,6 +7,8 @@ import { clamp, lastSpread, motionDuration, paperSurface, releaseTurn, turnPages
 import { PageContent, ElementContent } from './page-content';
 import { ReadingInteractions, SimpleSurprise } from './paper-surprise';
 import type { Interaction } from '@/lib/book-surprises';
+import { VoiceCard, VoicePlayer } from './voice-memory';
+import { profileBook } from '@/lib/book-perf';
 import { GiftActions, WrappedCover, useGiftPresentation } from './gift-presentation';
 import giftStyles from './gift-presentation.module.css';
 import s from './book-reader.module.css';
@@ -94,7 +96,7 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
 
   function finish(complete: boolean) {
     // Development-only measurements describe actual animation callbacks, not a claimed FPS target.
-    if (process.env.NODE_ENV !== 'production' && volume.current) {
+    if (profileBook() && volume.current) {
       const values = timing.current.intervals.filter(v => v > 1).sort((a, b) => a - b);
       const costs = timing.current.costs;
       volume.current.dataset.frameTiming = JSON.stringify({ frames: values.length, median: values[Math.floor(values.length / 2)] || 0,
@@ -224,7 +226,8 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
     onPointerEnter={e => peek(direction, e)} onPointerLeave={unpeek} onPointerDown={e => start(direction, e)} onPointerMove={move}
     onPointerUp={() => release()} onPointerCancel={() => release(true)} onLostPointerCapture={() => { if (drag.current) release(true); }}
     onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); start(direction); } if (e.key === 'Escape') commands.current.cancel(); }}><span aria-hidden="true">{direction === 1 ? '›' : '‹'}</span></button>;
-  return <ReadingInteractions.Provider value={{
+  const voiceScope = linear ? 'simple' : opened && !opening && turn === null ? `spread:${index}:${single}` : 'closed-or-turning';
+  return <VoicePlayer scope={voiceScope}><ReadingInteractions.Provider value={{
     states: interactions,
     update: (id, state) => setInteractions(previous => {
       const updated = new Map(previous);
@@ -235,10 +238,11 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
     }),
   }}><div className={`${s.reader} ${environment.world}`} data-scene={environmentScene} ref={scene} onKeyDownCapture={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); commands.current.cancel(); } }}>
     <header className={s.readerTop}><button onClick={onExit}>{exitLabel}</button><span>{book.title}</span><div><button disabled={!advancedAvailable} onClick={() => { commands.current.cancel(); cancelAnimationFrame(coverFrame.current); openAmount.current = 0; coverTarget.current = false; setOpening(false); setOpened(false); if (gift.wrapped) gift.skip(); setLinear(v => !v); }}>{linear ? 'Book view' : 'Simple reading'}</button><button onClick={async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await scene.current?.requestFullscreen(); } catch { /* Simple reading remains available if fullscreen is declined. */ } }}>Fullscreen</button>{book.gift && !opened && !opening && !gift.wrapped && !linear && <button onClick={() => { setBackPreview(false); gift.replay(); }}>{gift.presented ? "Replay gift opening" : "Present wrapped"}</button>}<button disabled={gift.wrapped} aria-pressed={backPreview} onClick={() => setBackPreview(v => !v)}>Back cover</button><button onClick={onEdit}>{editLabel}</button></div></header>
-    {!linear && !gift.wrapped && <ReaderPlaces book={book} pageId={opened ? book.pages[visible[0]]?.id : undefined} onJump={jumpToPage}/>}{backPreview&&<div className={making.backPreview} style={{aspectRatio:book.widthMm/book.heightMm}}><BookSurface book={book} surface="back"/></div>}<ReaderEnvironment scene={environmentScene} choose={chooseEnvironment}/>{gift.presented && !gift.wrapped && !opened && book.gift?.message && <p className={giftStyles.openingMessage} role="status">{book.gift.message}</p>}{linear ? <main className={s.linearReader}><h1>{book.title}</h1>{book.dedication && <p>{book.dedication}</p>}{book.pages.map((page, i) => <article key={page.id}><h2>Page {i + 1}</h2>{page.elements.filter(e => !e.hidden).map(e => <div key={e.id}>{["shape", "sticker", "drawing"].includes(e.kind) && <div style={{ width: "min(100%, 400px)", aspectRatio: (e.width * book.widthMm) / (e.height * book.heightMm), containerType: "inline-size" }}><ElementContent element={e} book={book}/></div>}{e.assetId && book.assets[e.assetId] && <img src={book.assets[e.assetId].data} alt={e.text || 'Personal memory'}/>}{e.text && e.kind !== 'surprise' && <p style={{ whiteSpace: 'pre-wrap' }}>{e.text}</p>}{e.surprise && <SimpleSurprise element={e} book={book}/>}</div>)}</article>)}</main> : <>
+    {!linear && !gift.wrapped && <ReaderPlaces book={book} pageId={opened ? book.pages[visible[0]]?.id : undefined} onJump={jumpToPage}/>}{backPreview&&<div className={making.backPreview} style={{aspectRatio:book.widthMm/book.heightMm}}><BookSurface book={book} surface="back"/></div>}<ReaderEnvironment scene={environmentScene} choose={chooseEnvironment}/>{gift.presented && !gift.wrapped && !opened && book.gift?.message && <p className={giftStyles.openingMessage} role="status">{book.gift.message}</p>}{linear ? <main className={s.linearReader}><h1>{book.title}</h1>{book.dedication && <p>{book.dedication}</p>}{book.pages.map((page, i) => <article key={page.id}><h2>Page {i + 1}</h2>{page.elements.filter(e => !e.hidden).map(e => <div key={e.id}>{["shape", "sticker", "drawing"].includes(e.kind) && <div style={{ width: "min(100%, 400px)", aspectRatio: (e.width * book.widthMm) / (e.height * book.heightMm), containerType: "inline-size" }}><ElementContent element={e} book={book}/></div>}{e.assetId && book.assets[e.assetId] && <img src={book.assets[e.assetId].data} alt={e.text || 'Personal memory'}/>}{e.text && e.kind !== 'surprise' && <p style={{ whiteSpace: 'pre-wrap' }}>{e.text}</p>}{e.surprise && <SimpleSurprise element={e} book={book}/>} {e.voice && <VoiceCard element={e} book={book} pageId={page.id} interactive linear/>}</div>)}</article>)}</main> : <>
       <main className={`${s.readStage} ${single ? s.singleStage : ''}`} aria-label="Memory book reading area">
         <div className={s.groundShadow} aria-hidden="true"/>
         <div ref={volume} className={`${s.physicalBook} ${opened ? s.bookOpened : ''} ${opening ? s.opening : ''}`} data-material={book.cover.material} data-turning={turn !== null} style={{ '--open': openAmount.current, '--cover-shadow': Math.sin(Math.PI * openAmount.current), '--ratio': book.widthMm / book.heightMm, '--cover-color': book.cover.color, '--depth': `${thickness}px`, '--page-count': book.pages.length } as CSSProperties}>
+          <div className={s.contact} aria-hidden="true"/>
           <div className={s.backBoard} aria-hidden="true"/><div className={s.spine} aria-hidden="true">{book.cover.design?.bands!==false&&<><i/><i/><i/></>}{book.pages.length>=20&&<span className={making.spineText}>{book.cover.design?.spineTitle||book.title}</span>}</div>{book.cover.design?.ribbon&&<div className={making.ribbon} style={{"--ribbon":book.cover.design.ribbon} as CSSProperties}/>}
           <div className={`${s.pageStack} ${s.stackLeft}`} aria-hidden="true"/><div className={`${s.pageStack} ${s.stackRight}`} aria-hidden="true"/>
           {!single && <div className={s.leftPage} aria-hidden={!opened || opening || turn !== null}>{book.pages[leftIndex]?<PageContent book={book} page={book.pages[leftIndex]} interactive={opened && !opening && !turn}/>:<BookSurface book={book} surface="insideFront"/>}</div>}
@@ -258,5 +262,5 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
       {gift.wrapped ? <GiftActions releasing={gift.releasing} unwrap={gift.unwrap} skip={gift.skip}/> : <div className={s.readControls}>{opened ? <><button disabled={index === 0 || opening} onClick={() => start(-1)}>← Previous</button><span aria-live="polite">{label}</span><button disabled={index >= last || opening} onClick={() => start(1)}>Next →</button></> : <p>A story made to be opened. Tap the cover.</p>}</div>}
       {opened && <footer className={s.readerFoot}><button onClick={() => openCover(false)}>Close book</button><label>Find a chapter<select aria-label="Jump to chapter" value="" disabled={turn !== null || opening} onChange={e => { const target = book.pages.findIndex(p => p.chapterId === e.target.value); if (target >= 0) setIndex(single ? target : Math.ceil(target / 2) * 2); }}><option value="">Chapters…</option>{book.chapters.filter(c => book.pages.some(p => p.chapterId === c.id)).map(c => <option key={c.id} value={c.id}>{c.title}</option>)}</select></label><small>Drag a page edge · Arrow keys to turn · Escape to let go</small></footer>}
     </>}
-  </div></ReadingInteractions.Provider>;
+  </div></ReadingInteractions.Provider></VoicePlayer>;
 }

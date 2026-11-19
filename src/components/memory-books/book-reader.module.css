@@ -50,3 +50,14 @@
 
 .coverLight{position:absolute;inset:0;pointer-events:none;background:linear-gradient(95deg,#21151666,transparent 65%);opacity:calc(var(--cover-shadow) * .55)}
 .stripContent *{scrollbar-width:none}.stripContent *::-webkit-scrollbar{display:none}
+.contact {
+  position: absolute; pointer-events: none; z-index: -1;
+  left: calc(47% * (1 - var(--open))); right: -1%; top: 2%; bottom: -2%;
+  border-radius: 3% 5% 8% 6%; transform: translate3d(3px, 7px, -6px);
+  background: #49322029; box-shadow: -5px 6px 13px #513b2633;
+}
+.reader[data-scene=candle] .contact { background: #20121469; box-shadow: -10px 6px 15px #2418177a; }
+.reader[data-scene=rain] .contact { background: #44555445; box-shadow: 1px 7px 15px #3f515345; }
+.reader[data-scene=candle] .boardEdge { box-shadow: inset -3px -1px 3px #f6bd795d; }
+.reader[data-scene=morning] .boardEdge { box-shadow: inset 3px 0 3px #fff3d842; }
+@media (max-width:700px) { .singleStage .contact { left: -1%; } }

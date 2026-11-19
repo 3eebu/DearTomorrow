@@ -2,32 +2,40 @@
 /* Personal images stay local. */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent, type CSSProperties } from 'react';
-import { blankPage, LIMITS, newElement, uid, stickers, shapeNames, type BookElement, type BookPage, type DrawingStroke, type ElementKind, type MemoryBookDocument } from '@/lib/memory-books';
+import { blankPage, LIMITS, newElement, uid, stickers, shapeNames, validateBook, type BookElement, type BookPage, type DrawingStroke, type ElementKind, type MemoryBookDocument } from '@/lib/memory-books';
 import { exportBook, readPhoto } from '@/lib/memory-book-storage';
 import { constrain, outside, resizeObject, snapPosition, alignObjects, transformSelection, strokeHit } from '@/lib/studio-geometry';
-import { copyObjects, insertPhoto, moveObjects, surpriseElement } from '@/lib/studio-document';
+import { copyObjects, insertPhoto, moveObjects, placeNewObject, pruneVoiceAssets, setVoiceAsset, surpriseElement, voiceElement } from '@/lib/studio-document';
 import { surpriseKinds, surpriseNames, type SurpriseKind } from '@/lib/book-surprises';
 import { StudioHistory } from '@/lib/studio-history';
 import { clonePage, editText, templateNames, templatePage, textStyles } from '@/lib/studio-content';
 import { ElementContent, elementStyle, PageContent } from './page-content';
 import { CreativeGraphic, PaperBackground, strokePath } from './creative-objects';
-import { StudioInspector } from './studio-inspector';
+import { PagePaperSettings, StudioInspector } from './studio-inspector';
+import { profileBook } from '@/lib/book-perf';
 import { StudioBookSettings } from './studio-settings';
 import s from './studio.module.css';
 import shared from './memory-books.module.css';
 
-type Tool = 'writing' | 'photos' | 'polaroids' | 'surprises' | 'decorations' | 'shapes' | 'draw' | 'templates' | 'layers' | 'book' | 'pan';
+type Tool = 'writing' | 'photos' | 'surprises' | 'decorations' | 'draw' | 'paper' | 'templates' | 'layers' | 'book' | 'pan';
 type PhotoTarget = { page: string; object: string; hidden?: { type: SurpriseKind; itemId?: string } };
 type Gesture = { originals: BookElement[]; next: BookElement[]; x: number; y: number; rect: DOMRect; mode: string; pageId: string; nodes: Map<string, HTMLElement>; frames: number[]; previous: number };
-const tools: [Tool, string, string][] = [['writing','T','Writing'],['photos','▧','Photos'],['polaroids','▣','Polaroids'],['surprises','✉','Little Surprises'],['decorations','❧','Little things'],['shapes','◇','Shapes'],['draw','〰','Draw'],['templates','▤','Layouts'],['layers','▱','Layers'],['book','⌑','Book'],['pan','✥','Hand']];
+const tools: [Tool, string, string][] = [
+  ['writing', 'T', 'Writing'], ['photos', '▧', 'Photographs'], ['decorations', '❧', 'Decorations'],
+  ['draw', '〰', 'Drawing'], ['paper', '▱', 'Paper'], ['surprises', '✉', 'Little Surprises'],
+  ['templates', '▤', 'Templates'], ['layers', '▰', 'Layers'], ['book', '⌑', 'Book settings'], ['pan', '✥', 'Hand'],
+];
 const handles = ['nw','n','ne','e','se','s','sw','w'];
-export function BookStudio({ book, onChange, status, onRead, onDone, onError, surfaceMode = false }: {
+export function BookStudio({ book, onChange, status, onRead, onDone, onError, onCover, onGift, surfaceMode = false }: {
   surfaceMode?: boolean; book: MemoryBookDocument; onChange: (book: MemoryBookDocument) => void; status: string; onRead: () => void; onDone: () => void; onError: (message: string) => void;
+  onCover?: () => void; onGift?: () => void;
 }) {
   const [pageId, setPageId] = useState(book.pages[0].id), [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [tool, setTool] = useState<Tool>('writing'), [collection, setCollection] = useState(true), [properties, setProperties] = useState(true), [pagesOpen, setPagesOpen] = useState(true);
   const [zoom, setZoom] = useState(1), [grid, setGrid] = useState(false), [safe, setSafe] = useState(false), [gutter, setGutter] = useState(false), [snap, setSnap] = useState(true), [bleed, setBleed] = useState(true);
   const [fitWidth, setFitWidth] = useState(400);
+  const [readyMs, setReadyMs] = useState<number>();
+  const mountedAt = useRef<number>();
   const [search, setSearch] = useState(''), [category, setCategory] = useState('all'), [inline, setInline] = useState<string | null>(null), [overflow, setOverflow] = useState(false);
   const [historyTick, setHistoryTick] = useState(0), [uploading, setUploading] = useState(false);
   const [groupScale, setGroupScale] = useState(100), [groupAngle, setGroupAngle] = useState(0);
@@ -36,12 +44,19 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
   const [drawTool, setDrawTool] = useState<DrawingStroke['tool'] | 'eraser'>('pen'), [drawColor, setDrawColor] = useState('#643e4a'), [drawWidth, setDrawWidth] = useState(.5), [drawOpacity, setDrawOpacity] = useState(1);
   const latest = useRef(book); latest.current = book;
   const history = useRef(new StudioHistory()), clipboard = useRef<BookElement[]>([]), photoInput = useRef<HTMLInputElement>(null), replaceTarget = useRef<PhotoTarget | null>(null);
+  const clipboardVoice = useRef<MemoryBookDocument['voiceAssets']>();
   const canvas = useRef<HTMLDivElement>(null), viewport = useRef<HTMLDivElement>(null), draft = useRef<SVGPathElement>(null), guides = useRef<HTMLDivElement>(null);
   const frame = useRef(0), gesture = useRef<Gesture | null>(null), drawing = useRef<DrawingStroke | null>(null), erased = useRef(new Set<string>()), layerDrag = useRef('');
   const pan = useRef<{ x: number; y: number; left: number; top: number } | null>(null), pointers = useRef(new Map<number, { x: number; y: number }>()), pinch = useRef<{ distance: number; zoom: number } | null>(null);
   const page = book.pages.find(p => p.id === pageId) || book.pages[0], pageIndex = book.pages.indexOf(page);
   const selected = page.elements.filter(e => selectedIds.includes(e.id)), e = selected.length === 1 ? selected[0] : undefined;
   const locked = selected.length === 0 || selected.every(v => v.locked), size = { width: book.widthMm, height: book.heightMm };
+  useLayoutEffect(() => {
+    if (!profileBook()) return;
+    mountedAt.current ??= performance.now();
+    const frame = requestAnimationFrame(() => setReadyMs(performance.now() - mountedAt.current!));
+    return () => cancelAnimationFrame(frame);
+  }, []);
   useLayoutEffect(() => {
     const media = matchMedia('(max-width:900px)');
     const adapt = () => { if (media.matches) { setCollection(false); setProperties(false); } };
@@ -60,6 +75,7 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
 
   function commit(next: MemoryBookDocument, key = '') {
     if (next === latest.current) return;
+    if (!surfaceMode) next = pruneVoiceAssets(next);
     history.current.record(latest.current, next, key); latest.current = next; onChange(next); setHistoryTick(v => v + 1);
   }
   function changePage(next: BookPage, key = '') { const current = latest.current; commit({ ...current, pages: current.pages.map(p => p.id === next.id ? next : p) }, key ? `${next.id}:${key}` : ''); }
@@ -76,7 +92,8 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
   function restore(forward: boolean) { finish(true); const next = forward ? history.current.redo(latest.current) : history.current.undo(latest.current); if (next) { latest.current = next; onChange(next); setInline(null); setHistoryTick(v => v + 1); } }
   function addElement(kind: ElementKind, patch: Partial<BookElement> = {}) {
     if (page.elements.length >= LIMITS.elements) { onError('This page supports 100 objects. Add another page to keep creating.'); return; }
-    const element = { ...newElement(kind), ...patch }; changePage({ ...page, elements: [...page.elements, element] }); setSelectedIds([element.id]);
+    const element = placeNewObject({ ...newElement(kind), ...patch }, page.elements);
+    changePage({ ...page, elements: [...page.elements, element] }); setSelectedIds([element.id]);
     if (matchMedia('(max-width:900px)').matches) { setCollection(false); setProperties(false); } else setProperties(true);
   }
   function select(element: BookElement, additive = false) {
@@ -87,9 +104,21 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
   function paste(items = clipboard.current) {
     if (page.elements.length + items.length > LIMITS.elements) { onError('Pasting would exceed 100 objects on this page. Add a new page first.'); return; }
     if (!items.length) return;
-    const copies = copyObjects(items); changePage({ ...page, elements: [...page.elements, ...copies] }); setSelectedIds(copies.map(v => v.id));
+    const copies = copyObjects(items);
+    const nextPage = { ...page, elements: [...page.elements, ...copies] };
+    const audio = copies.flatMap(element => {
+      const id = element.voice?.assetId;
+      return id && !book.voiceAssets?.[id] && clipboardVoice.current?.[id] ? [[id, clipboardVoice.current[id]] as const] : [];
+    });
+    if (audio.length) {
+      const next = { ...book, voiceAssets: { ...book.voiceAssets, ...Object.fromEntries(audio) },
+        pages: book.pages.map(value => value.id === page.id ? nextPage : value) };
+      try { validateBook(next); commit(next); }
+      catch { onError('This book cannot fit another recording. Remove a recording or start a new book.'); return; }
+    } else changePage(nextPage);
+    setSelectedIds(copies.map(v => v.id));
   }
-  function copySelection() { clipboard.current = selected; setClipboardCount(selected.length); }
+  function copySelection() { clipboard.current = selected; clipboardVoice.current = book.voiceAssets; setClipboardCount(selected.length); }
   function remove() { if (!locked) { changePage({ ...page, elements: page.elements.filter(v => !selectedIds.includes(v.id) || v.locked) }); setSelectedIds([]); } }
   function layer(where: number) {
     const items = [...page.elements], moving = items.filter(v => selectedIds.includes(v.id) && !v.locked);
@@ -156,7 +185,7 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
     if (cancel) { g.originals.forEach(v => { const node = g.nodes.get(v.id); if (node) Object.assign(node.style, elementStyle(v)); }); return; }
     const current = latest.current;
     if (g.next.some((v, i) => JSON.stringify(v) !== JSON.stringify(g.originals[i]))) commit({ ...current, pages: current.pages.map(p => p.id === g.pageId ? { ...p, elements: p.elements.map(v => g.next.find(n => n.id === v.id) || v) } : p) });
-    if (process.env.NODE_ENV === 'development' && canvas.current && g.frames.length) { const f = g.frames.sort((a,b)=>a-b); canvas.current.dataset.dragTiming = JSON.stringify({ frames: f.length, median: f[Math.floor(f.length / 2)], p95: f[Math.floor(f.length * .95)] }); }
+    if (profileBook() && canvas.current && g.frames.length) { const f = g.frames.sort((a,b)=>a-b); canvas.current.dataset.dragTiming = JSON.stringify({ frames: f.length, median: f[Math.floor(f.length / 2)], p95: f[Math.floor(f.length * .95)] }); }
   }
   const commands = useRef({ key: (_event: KeyboardEvent) => {} });
   commands.current.key = event => {
@@ -225,10 +254,16 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
   function go(id: string) { finish(true); drawFinish(true); setPageId(id); setSelectedIds([]); setInline(null); }
   const matchingStickers = stickers.filter(v => v.includes(search.toLowerCase()) && (category === 'all' || ({ romance: ['heart','bow'], botanical: ['branch','rose','daisy'], stationery: ['tape','stamp','label','bookmark'], celebrations: ['stars'], travel: ['ticket','postmark'] }[category]?.includes(v))));
   const selectedSet = new Set(selectedIds);
-  return <div className={s.studio} data-history={historyTick}>
-    <header className={s.topbar}><button aria-label={surfaceMode ? "Back to Cover Studio" : "Back to library"} onClick={onDone}>← <span className={s.desktopLabel}>{surfaceMode ? "Cover Studio" : "Library"}</span></button><div className={s.title}><input aria-label="Book title" readOnly={surfaceMode} maxLength={120} value={book.title} onChange={ev => commit({ ...book, title: ev.target.value }, 'book-title')}/><small role="status">{status}{uploading ? ' · Preparing photos…' : ''}</small></div><div className={s.undo}><button disabled={!history.current.past.length} aria-label="Undo" onClick={() => restore(false)}>↶</button><button disabled={!history.current.future.length} aria-label="Redo" onClick={() => restore(true)}>↷</button></div>{!surfaceMode && <button className={s.export} onClick={() => exportBook(latest.current)}>Export</button>}<button className={shared.primary} onClick={onRead}>{surfaceMode ? "Physical preview ↗" : "Read my book ↗"}</button></header>
+  return <div className={s.studio} data-history={historyTick} data-studio-ready-ms={readyMs}>
+    <header className={s.topbar}><button aria-label={surfaceMode ? "Back to Cover Studio" : "Back to library"} onClick={onDone}>← <span className={s.desktopLabel}>{surfaceMode ? "Cover Studio" : "Library"}</span></button><div className={s.title}><input aria-label="Book title" readOnly={surfaceMode} maxLength={120} value={book.title} onChange={ev => commit({ ...book, title: ev.target.value }, 'book-title')}/><small role="status">{status}{uploading ? ' · Preparing photos…' : ''}</small></div><div className={s.undo}><button disabled={!history.current.past.length} aria-label="Undo" onClick={() => restore(false)}>↶</button><button disabled={!history.current.future.length} aria-label="Redo" onClick={() => restore(true)}>↷</button></div>{!surfaceMode && <details className={s.bookShortcuts}><summary>Book options</summary>
+      <div>
+        {onCover && <button onClick={onCover}>Cover Studio</button>}
+        {onGift && <button onClick={onGift}>Wrap as a gift</button>}
+        <button onClick={() => exportBook(latest.current)}>Export backup</button>
+      </div>
+    </details>}<button className={shared.primary} onClick={onRead}>{surfaceMode ? "Physical preview ↗" : "Read my book ↗"}</button></header>
     <div className={`${s.workspace} ${collection ? s.withCollection : ''} ${properties ? s.withProperties : ''}`}>
-      <nav className={s.rail} aria-label="Creative tools">{tools.filter(t=>!surfaceMode || !["templates","book","surprises"].includes(t[0])).map(([name,icon,label]) => <button key={name} aria-pressed={collection && tool === name} onClick={() => { setTool(name); if(matchMedia('(max-width:900px)').matches)setProperties(false); setCollection(tool !== name || !collection); setSearch(''); }}><b aria-hidden="true">{icon}</b><span>{label}</span></button>)}</nav>
+      <nav className={s.rail} aria-label="Creative tools">{tools.filter(t=>!surfaceMode || !["templates","book","surprises"].includes(t[0])).map(([name,icon,label]) => <button key={name} title={label} aria-pressed={collection && tool === name} onClick={() => { setTool(name); if(matchMedia('(max-width:900px)').matches)setProperties(false); setCollection(tool !== name || !collection); setSearch(''); }}><b aria-hidden="true">{icon}</b><span>{label}</span></button>)}</nav>
       {collection && <aside className={s.collection} aria-label={`${tool} collection`}><div className={s.panelHeading}><h2>{tools.find(t=>t[0]===tool)?.[2]}</h2><button aria-label="Close collection" onClick={() => setCollection(false)}>×</button></div>
         {tool === 'surprises' && surpriseKinds.map(kind => <button key={kind} className={s.template} onClick={() => {
           const element = surpriseElement(kind);
@@ -236,11 +271,17 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
           setCollection(false);
           setProperties(true);
         }}>＋ {surpriseNames[kind]}</button>)}
+        {tool === 'surprises' && <button className={s.template} onClick={() => {
+          addElement('voice', voiceElement());
+          setCollection(false);
+          setProperties(true);
+        }}>＋ Voice memory</button>}
+        {tool === 'paper' && <PagePaperSettings book={book} page={page} changePage={changePage} commit={commit}/>}
         {tool === 'writing' && <><p className={s.help}>A few words. A whole love letter. Every line is yours.</p>{textStyles.map(([label,fontSize,font,text]) => <button className={s.textSample} key={label} onClick={() => addElement('text', { name: label, fontSize, font, text, height: label === 'Paragraph' || label === 'Handwritten letter' ? 50 : 20, italic: label === 'Quote' })}><strong style={{ fontFamily: font === 'hand' ? 'cursive' : font === 'sans' ? 'Arial' : font === 'mono' ? 'monospace' : 'Georgia' }}>{label}</strong><small>{text.slice(0,42)}</small></button>)}<button onClick={() => addElement('note')}>＋ A folded little note</button></>}
         {tool === 'photos' && <><button className={s.upload} disabled={uploading} onClick={() => { replaceTarget.current = null; photoInput.current?.click(); }}>＋ Add photographs</button><p className={s.help}>Drop JPEG, PNG or WebP files onto the canvas. Up to 8 MB each. Prepared and kept only on this device. Transparent PNGs are welcome.</p><div className={s.assets}>{Object.entries(book.assets).map(([id,a]) => <button key={id} aria-label={`Insert ${a.name}`} onClick={() => addElement('photo', { assetId: id, text: a.name })}><img src={a.data} alt={a.name} loading="lazy"/><small>{a.name}</small></button>)}</div>{!Object.keys(book.assets).length && <p className={s.empty}>Your photographs will live here, ready to use again.</p>}</>}
-        {tool === 'polaroids' && <><p className={s.help}>A photograph, a few words underneath, and a little room for feeling.</p>{['classic','vintage','wide','mini','retro','thin','custom'].map((frame,i) => <button key={frame} className={s.frameSample} onClick={() => addElement('polaroid', { frame: frame as BookElement['frame'], name: `${frame} instant photo`, background: i===1 ? '#e8dec7' : '#fffaf0', frameMargin: i===5 ? 2 : 5, captionMargin: i===5 ? 9 : 20, width: i===2 ? 62 : i===3 ? 30 : 45, height: i===2 ? 43 : 52 })}><span className={s.miniPolaroid} style={{ background: i===1 ? '#e8dec7' : '#fffaf0', transform: `rotate(${i%2 ? 4 : -4}deg)` }}><i/></span><span>{frame}<small>Fully yours to customize</small></span></button>)}</>}
+        {tool === 'photos' && <details><summary>Instant photo frames</summary>{['classic','vintage','wide','mini','retro','thin','custom'].map((frame,i) => <button key={frame} className={s.frameSample} onClick={() => addElement('polaroid', { frame: frame as BookElement['frame'], name: `${frame} instant photo`, background: i===1 ? '#e8dec7' : '#fffaf0', frameMargin: i===5 ? 2 : 5, captionMargin: i===5 ? 9 : 20, width: i===2 ? 62 : i===3 ? 30 : 45, height: i===2 ? 43 : 52 })}><span className={s.miniPolaroid} style={{ background: i===1 ? '#e8dec7' : '#fffaf0', transform: `rotate(${i%2 ? 4 : -4}deg)` }}><i/></span><span>{frame}<small>Editable frame</small></span></button>)}</details>}
         {tool === 'decorations' && <><label>Find a little thing<input value={search} onChange={ev=>setSearch(ev.target.value)} placeholder="A leaf, a bow…"/></label><label>Collection<select value={category} onChange={ev=>setCategory(ev.target.value)}>{['all','romance','botanical','stationery','celebrations','travel'].map(c=><option key={c}>{c}</option>)}</select></label><div className={s.decorations}>{matchingStickers.map(sticker => <button key={sticker} aria-label={`Add ${sticker}`} onClick={() => addElement('sticker', { sticker, name: sticker, text: '', x: 35, y: 35, width: sticker === 'tape' ? 30 : 20, height: sticker === 'tape' ? 10 : 20, color: ['branch','rose','daisy'].includes(sticker) ? '#78836b' : '#79505a', background: sticker === 'tape' ? '#d8c8a4' : '#e8c8bf', rotation: -5 })}><CreativeGraphic element={{ ...newElement('sticker'), sticker, background: '#ead7c5', color: '#79505a' }}/><small>{sticker}</small></button>)}</div>{!matchingStickers.length && <p className={s.help}>No little things match this search.</p>}</>}
-        {tool === 'shapes' && <div className={s.decorations}>{shapeNames.map(shape => <button key={shape} aria-label={`Add ${shape}`} onClick={() => addElement('shape', { shape, name: shape, text: '', width: 30, height: shape === 'line' || shape === 'arrow' ? 5 : 30, background: '#e8c8bf', fillNone: ['line','arrow','border'].includes(shape) })}><CreativeGraphic element={{ ...newElement('shape'), shape, background: '#e8c8bf' }}/><small>{shape}</small></button>)}</div>}
+        {tool === 'decorations' && <details><summary>Shapes and borders</summary><div className={s.decorations}>{shapeNames.map(shape => <button key={shape} aria-label={`Add ${shape}`} onClick={() => addElement('shape', { shape, name: shape, text: '', width: 30, height: shape === 'line' || shape === 'arrow' ? 5 : 30, background: '#e8c8bf', fillNone: ['line','arrow','border'].includes(shape) })}><CreativeGraphic element={{ ...newElement('shape'), shape, background: '#e8c8bf' }}/><small>{shape}</small></button>)}</div></details>}
         {tool === 'draw' && <><p className={s.help}>A signature, a small sketch, a line only you could make. Draw directly on the page.</p><div className={s.drawTools}>{(['pencil','pen','marker','highlighter','eraser'] as const).map(name => <button key={name} aria-pressed={drawTool === name} onClick={()=>{setDrawTool(name);if(name!=='eraser'){setDrawWidth(({pencil:.25,pen:.5,marker:1.4,highlighter:2.6})[name]);setDrawOpacity(name==='marker'?.85:1);}}}>{name}</button>)}</div><label>Ink<input type="color" value={drawColor} onChange={ev=>setDrawColor(ev.target.value)}/></label><label>Stroke width<input type="range" min=".1" max="4" step=".1" value={drawWidth} onChange={ev=>setDrawWidth(Number(ev.target.value))}/></label><label>Opacity<input type="range" min=".1" max="1" step=".05" value={drawOpacity} onChange={ev=>setDrawOpacity(Number(ev.target.value))}/></label><p className={s.help}>The eraser removes a touched stroke. Each stroke can be undone or recolored in Properties.</p><button onClick={()=>{setTool('layers');setCollection(false);}}>Done drawing</button></>}
         {tool === 'templates' && <><p className={s.help}>A place to start, never a rule to follow. Layouts are inserted as new pages; your current page stays safe.</p>{templateNames.map(name=><button className={s.template} key={name} onClick={()=>addPage(false,templatePage(name,page.chapterId))}>＋ {name}</button>)}<details><summary>Your saved layouts</summary>{book.templates?.map(t=><div className={s.savedTemplate} key={t.id}><button onClick={()=>addPage(false,clonePage(t.page,page.chapterId))}>{t.title}</button><button aria-label={`Remove saved layout ${t.title}`} onClick={()=>commit({...book,templates:book.templates?.filter(v=>v.id!==t.id)})}>×</button></div>)}<button disabled={(book.templates?.length||0)>=20} onClick={()=>{const title=window.prompt('Name this reusable layout', 'A page of our story');if(title)commit({...book,templates:[...(book.templates||[]),{id:uid(),title:title.slice(0,100),page:{...page,chapterId:''}}]});}}>Save this page as a layout</button></details></>}
         {tool === 'layers' && <><p className={s.help}>Topmost first. Drag a row to reorder, or use the selection toolbar’s layer controls.</p><div className={s.layers}>{[...page.elements].reverse().map(v=><div className={selectedIds.includes(v.id)?s.activeLayer:''} key={v.id} draggable={!v.locked} onDragStart={()=>{layerDrag.current=v.id;}} onDragOver={ev=>ev.preventDefault()} onDrop={ev=>{ev.preventDefault(); const source=page.elements.find(v=>v.id===layerDrag.current);if(!source||source.locked||source===v)return;const items=page.elements.filter(v=>v!==source);items.splice(items.indexOf(v),0,source);changePage({...page,elements:items});}}><button aria-label={`Select layer ${v.name||v.kind}`} aria-pressed={selectedIds.includes(v.id)} onClick={ev=>select(v,ev.shiftKey||multiSelect)}>{v.name||v.text.slice(0,20)||v.kind}{v.groupId&&<small> · group</small>}</button><button aria-label={`${v.hidden?'Show':'Hide'} ${v.name||v.kind}`} onClick={()=>changePage({...page,elements:page.elements.map(n=>n.id===v.id?{...n,hidden:!n.hidden}:n)})}>{v.hidden?'○':'◉'}</button><button aria-label={`${v.locked?'Unlock':'Lock'} ${v.name||v.kind}`} onClick={()=>changePage({...page,elements:page.elements.map(n=>n.id===v.id?{...n,locked:!n.locked}:n)})}>{v.locked?'⌑':'◇'}</button></div>)}</div></>}
@@ -249,7 +290,7 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
       </aside>}
       <main className={s.center}>
         <div className={s.canvasBar}><span>STUDIO <i> / </i> PAGE {pageIndex+1}</span><div><button aria-label="Zoom out" onClick={()=>setZoom(v=>constrain(v-.25,.5,3))}>−</button><button onClick={()=>setZoom(1)}>Fit page</button><button aria-label="Zoom in" onClick={()=>setZoom(v=>constrain(v+.25,.5,3))}>＋</button><span>{Math.round(zoom*100)}%</span><button aria-pressed={properties} onClick={()=>{if(matchMedia('(max-width:900px)').matches)setCollection(false);setProperties(v=>!v);}}>Properties</button></div></div>
-        <div className={s.selectionBar} aria-label="Selection actions"><button aria-pressed={multiSelect} onClick={()=>setMultiSelect(v=>!v)}>Select several</button>{selected.length ? <><span>{selected.length} selected</span><button disabled={locked} onClick={()=>paste(selected)}>Duplicate</button><button onClick={copySelection}>Copy</button><button disabled={!clipboardCount} onClick={()=>paste()}>Paste</button><button onClick={()=>applySelection({locked:!selected.every(v=>v.locked)},true)}>{selected.every(v=>v.locked)?'Unlock':'Lock'}</button><button disabled={locked} onClick={remove}>Delete</button><details><summary>Arrange ↕</summary><div className={s.popover}><button onClick={()=>layer(1)}>Bring forward</button><button onClick={()=>layer(-1)}>Send backward</button><button onClick={()=>layer(Infinity)}>Bring to front</button><button onClick={()=>layer(-Infinity)}>Send to back</button><button disabled={selected.length<2||selected.some(v=>v.locked)} onClick={group}>Group · ⌘/Ctrl G</button><button onClick={()=>applySelection({groupId:undefined})}>Ungroup · ⇧ ⌘/Ctrl G</button>{(['x','y'] as const).flatMap(axis=>(['start','center','end','distribute'] as const).map(mode=><button key={axis+mode} disabled={locked||(mode==='distribute'&&selected.length<3)} onClick={()=>changePage({...page,elements:alignObjects(page.elements,selectedSet,axis,mode,size)})}>{axis==='x'?'Horizontal':'Vertical'} {mode}</button>))}<label>Move to page<select value="" onChange={ev=>{try{commit(moveObjects(book,page.id,ev.target.value,selectedSet));setSelectedIds([]);}catch(error){onError((error as Error).message);}}}><option value="">Choose a page…</option>{book.pages.filter(p=>p!==page).map(p=><option key={p.id} value={p.id}>Page {book.pages.indexOf(p)+1}</option>)}</select></label></div></details></> : <span>A page of possibilities. Make something only you could make.</span>}</div>
+        <div className={s.selectionBar} aria-label="Selection actions"><button aria-pressed={multiSelect} onClick={()=>setMultiSelect(v=>!v)}>Select several</button>{selected.length ? <><span>{selected.length} selected</span><button disabled={locked} onClick={()=>paste(selected)}>Duplicate</button><button onClick={copySelection}>Copy</button><button disabled={!clipboardCount} onClick={()=>paste()}>Paste</button><button onClick={()=>applySelection({locked:!selected.every(v=>v.locked)},true)}>{selected.every(v=>v.locked)?'Unlock':'Lock'}</button><button disabled={locked} onClick={remove}>Delete</button><details><summary>Arrange ↕</summary><div className={s.popover}><button onClick={()=>layer(1)}>Bring forward</button><button onClick={()=>layer(-1)}>Send backward</button><button onClick={()=>layer(Infinity)}>Bring to front</button><button onClick={()=>layer(-Infinity)}>Send to back</button><button disabled={selected.length<2||selected.some(v=>v.locked)} onClick={group}>Group · ⌘/Ctrl G</button><button onClick={()=>applySelection({groupId:undefined})}>Ungroup · ⇧ ⌘/Ctrl G</button>{(['x','y'] as const).flatMap(axis=>(['start','center','end','distribute'] as const).map(mode=><button key={axis+mode} disabled={locked||(mode==='distribute'&&selected.length<3)} onClick={()=>changePage({...page,elements:alignObjects(page.elements,selectedSet,axis,mode,size)})}>{axis==='x'?'Horizontal':'Vertical'} {mode}</button>))}<label>Move to page<select value="" onChange={ev=>{try{commit(moveObjects(book,page.id,ev.target.value,selectedSet));setSelectedIds([]);}catch(error){onError((error as Error).message);}}}><option value="">Choose a page…</option>{book.pages.filter(p=>p!==page).map(p=><option key={p.id} value={p.id}>Page {book.pages.indexOf(p)+1}</option>)}</select></label></div></details></> : <span>Choose a tool to add something to this page.</span>}</div>
         <div ref={viewport} className={`${s.viewport} ${tool==='pan'?s.panning:''}`} onPointerDownCapture={touchDown} onPointerMoveCapture={touchMove} onPointerUpCapture={ev=>{pointers.current.delete(ev.pointerId);if(pointers.current.size<2)pinch.current=null;pan.current=null;}} onPointerCancelCapture={ev=>{pointers.current.delete(ev.pointerId);pinch.current=null;pan.current=null;}} onDragOver={ev=>{if(ev.dataTransfer.types.includes('Files'))ev.preventDefault();}} onDrop={ev=>{if(ev.dataTransfer.files.length){ev.preventDefault();void upload([...ev.dataTransfer.files],null);}}}>
           <div className={s.pageSizer} style={{ '--ratio':book.widthMm/book.heightMm, '--zoom':zoom, width:fitWidth*zoom } as CSSProperties}>
             <div ref={canvas} className={`${s.page} ${grid?s.grid:''}`} style={{aspectRatio:book.widthMm/book.heightMm,backgroundColor:page.paper,overflow:bleed?'visible':'hidden'}} onPointerDown={()=>{if(tool!=='draw')setSelectedIds([]);}}>
@@ -265,9 +306,9 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, su
         </div>
         {(selected.some(v=>outside(v,size))||overflow)&&<div className={s.warning} role="status">{overflow?'Some writing extends beyond its text box. Enlarge the box or continue on another page. ':'Artwork extends beyond the paper. It is retained in your project and clipped to the page in Reading. '}</div>}
         <div className={s.viewOptions}>{([['Grid',grid,setGrid],['Safe area',safe,setSafe],['Gutter',gutter,setGutter],['Snapping',snap,setSnap],['Show bleed',bleed,setBleed]] as const).map(([label,checked,set])=><button key={label} aria-pressed={checked} onClick={()=>set(v=>!v)}>{label}</button>)}{!surfaceMode && <button aria-expanded={pagesOpen} onClick={()=>setPagesOpen(v=>!v)}>Pages {pagesOpen?'⌄':'⌃'}</button>}</div>
-        {pagesOpen&&!surfaceMode&&<nav className={s.pages} aria-label="Book pages">{book.pages.map((p,i)=><PageThumbnail key={p.id} book={book} page={p} current={p.id===page.id} index={i} onClick={()=>go(p.id)}/>)}<button className={s.addPage} onClick={()=>addPage()}>＋<small>Add page</small></button></nav>}
+        {pagesOpen&&!surfaceMode&&<nav className={s.pages} aria-label="Book pages"><button className={s.addPage} onClick={()=>addPage()}>＋<small>Add page</small></button>{book.pages.map((p,i)=><PageThumbnail key={p.id} book={book} page={p} current={p.id===page.id} index={i} onClick={()=>go(p.id)}/>)}</nav>}
       </main>
-      {properties&&<aside className={s.properties} aria-label="Selection properties"><div className={s.panelHeading}><h2>{selected.length>1?`${selected.length} little things`:'Make it yours'}</h2><button aria-label="Close properties" onClick={()=>setProperties(false)}>×</button></div>{selected.length>1&&<p className={s.help}>Move the selection together. Use Arrange to group, layer, align or distribute. Select one layer for its individual details.</p>}{selected.length>1&&<form className={s.fields} onSubmit={ev=>{ev.preventDefault();try{const transformed=transformSelection(selected,size,groupScale/100,groupAngle);changePage({...page,elements:page.elements.map(v=>transformed.find(t=>t.id===v.id)||v)});setGroupScale(100);setGroupAngle(0);}catch(error){onError((error as Error).message);}}}><label>Scale selection (%)<input type="number" min="10" max="300" required value={groupScale} onChange={ev=>setGroupScale(ev.target.valueAsNumber)}/></label><label>Rotate selection (°)<input type="number" min="-180" max="180" required value={groupAngle} onChange={ev=>setGroupAngle(ev.target.valueAsNumber)}/></label><button disabled={selected.some(v=>v.locked)} type="submit">Apply to selection</button></form>}<StudioInspector book={book} page={page} selected={e} allowSurprises={!surfaceMode} uploadHidden={(type, itemId) => { if (e) { replaceTarget.current = { page: page.id, object: e.id, hidden: { type, itemId } }; photoInput.current?.click(); } }} patch={patch} changePage={changePage} commit={commit} upload={()=>{if(e){replaceTarget.current={page:page.id,object:e.id};photoInput.current?.click();}}} continueText={()=>{if(!e)return;const p=blankPage(page.chapterId);p.elements=[{...newElement('text'),x:10,y:10,width:80,height:80,font:e.font,fontSize:e.fontSize,color:e.color,text:'Continue your letter here…'}];addPage(false,p);}}/><button className={s.mobileDone} onClick={()=>setProperties(false)}>Done</button></aside>}
+      {properties&&<aside className={s.properties} aria-label="Selection properties"><div className={s.panelHeading}><h2>{selected.length>1?`${selected.length} little things`:'Make it yours'}</h2><button aria-label="Close properties" onClick={()=>setProperties(false)}>×</button></div>{selected.length>1&&<p className={s.help}>Move the selection together. Use Arrange to group, layer, align or distribute. Select one layer for its individual details.</p>}{selected.length>1&&<form className={s.fields} onSubmit={ev=>{ev.preventDefault();try{const transformed=transformSelection(selected,size,groupScale/100,groupAngle);changePage({...page,elements:page.elements.map(v=>transformed.find(t=>t.id===v.id)||v)});setGroupScale(100);setGroupAngle(0);}catch(error){onError((error as Error).message);}}}><label>Scale selection (%)<input type="number" min="10" max="300" required value={groupScale} onChange={ev=>setGroupScale(ev.target.valueAsNumber)}/></label><label>Rotate selection (°)<input type="number" min="-180" max="180" required value={groupAngle} onChange={ev=>setGroupAngle(ev.target.valueAsNumber)}/></label><button disabled={selected.some(v=>v.locked)} type="submit">Apply to selection</button></form>}<StudioInspector book={book} page={page} selected={e} allowSurprises={!surfaceMode} onVoice={(asset) => { if (e) commit(setVoiceAsset(latest.current, page.id, e.id, asset)); }} uploadHidden={(type, itemId) => { if (e) { replaceTarget.current = { page: page.id, object: e.id, hidden: { type, itemId } }; photoInput.current?.click(); } }} patch={patch} changePage={changePage} commit={commit} upload={()=>{if(e){replaceTarget.current={page:page.id,object:e.id};photoInput.current?.click();}}} continueText={()=>{if(!e)return;const p=blankPage(page.chapterId);p.elements=[{...newElement('text'),x:10,y:10,width:80,height:80,font:e.font,fontSize:e.fontSize,color:e.color,text:'Continue your letter here…'}];addPage(false,p);}}/><button className={s.mobileDone} onClick={()=>setProperties(false)}>Done</button></aside>}
     </div>
     <input ref={photoInput} hidden type="file" multiple accept="image/jpeg,image/png,image/webp" onChange={ev=>{const files=[...(ev.target.files||[])];ev.target.value='';if(files.length)void upload(files);}}/>
   </div>;

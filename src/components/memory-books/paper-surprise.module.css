@@ -130,7 +130,8 @@
 .photoTurn { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .61s var(--ease); }
 [data-open=true] .photoTurn { transform: translateZ(10px) rotateY(180deg); }
 .front, .reverse { position: absolute; inset: 0; backface-visibility: hidden; }
-.reverse { transform: rotateY(180deg); box-shadow: 2px 4px 9px #422f253e; }
+.front { transform: translateZ(.7px); }
+.reverse { transform: rotateY(180deg) translateZ(.7px); box-shadow: 2px 4px 9px #422f253e, inset 0 -2px #896b4825; }
 .flapFace[data-hinge=top], .flapFace[data-hinge=bottom] { transform-origin: center top; }
 .flapFace[data-hinge=right] { transform-origin: right center; }
 .flapFace[data-hinge=bottom] { transform-origin: center bottom; }

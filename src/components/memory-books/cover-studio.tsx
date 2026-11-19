@@ -18,12 +18,13 @@ const palette = [
   ['Navy', '#374558'], ['Warm brown', '#765548'], ['Stone', '#aaa098'], ['Charcoal', '#393539'],
 ] as const;
 
-export function CoverStudio({ book, onChange, onDone, status, onError }: {
+export function CoverStudio({ book, onChange, onDone, status, onError, exitLabel = '← Library' }: {
   book: MemoryBookDocument;
   onChange: (book: MemoryBookDocument) => void;
   onDone: () => void;
   status: string;
   onError: (message: string) => void;
+  exitLabel?: string;
 }) {
   const [surface, setSurface] = useState<CoverSurface>('front');
   const [mode, setMode] = useState<'guided' | 'advanced' | 'preview'>('guided');
@@ -81,7 +82,7 @@ export function CoverStudio({ book, onChange, onDone, status, onError }: {
   const designPreview = { ...book, cover: { ...book.cover, design } };
   return <div className={s.workshop}>
     <header className={s.bar}>
-      <button onClick={onDone}>← Library</button><h1>The cover atelier.</h1><span role="status">{status}</span>
+      <button onClick={onDone}>{exitLabel}</button><h1>The cover atelier.</h1><span role="status">{status}</span>
       <button disabled={!history.current.past.length} onClick={() => {
         const previous = history.current.undo(book);
         if (previous) onChange(previous);

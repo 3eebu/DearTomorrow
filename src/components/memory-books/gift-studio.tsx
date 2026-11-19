@@ -5,8 +5,8 @@ import type { MemoryBookDocument } from '@/lib/memory-books';
 import { BookReader } from './book-reader';
 import { GiftPaper } from './gift-presentation';
 import making from './bookmaking.module.css';
-export function GiftStudio({ book, onChange, onDone, status }: {
-  book: MemoryBookDocument; onChange: (book: MemoryBookDocument) => void; onDone: () => void; status: string;
+export function GiftStudio({ book, onChange, onDone, status, exitLabel = '← Library' }: {
+  book: MemoryBookDocument; onChange: (book: MemoryBookDocument) => void; onDone: () => void; status: string; exitLabel?: string;
 }) {
   const [preview, setPreview] = useState(false);
   const gift = book.gift ?? defaultGift;
@@ -17,7 +17,7 @@ export function GiftStudio({ book, onChange, onDone, status }: {
 
   return <div className={making.workshop}>
     <header className={making.bar}>
-      <button onClick={onDone}>← Library</button><h1>Wrap the book</h1><span role="status">{status}</span>
+      <button onClick={onDone}>{exitLabel}</button><h1>Wrap the book</h1><span role="status">{status}</span>
       <button onClick={() => { if (!book.gift) update({}); setPreview(true); }}>Preview opening ↗</button>
     </header>
     <div className={making.coverGrid}>

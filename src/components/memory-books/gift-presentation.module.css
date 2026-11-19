@@ -49,10 +49,10 @@
 .paper button.untieKnot:hover { background: #fff1; }
 [data-bow=knot] .bow { transform: translate(-50%,-50%) scale(.50,.7); }
 .tag {
-  position: absolute; top: 29%; left: 52%; width: 38%; max-height: 47%; overflow: hidden;
+  position: absolute; top: 48%; left: 64%; width: 32%; max-height: 43%; overflow: hidden;
   display: flex; flex-direction: column; gap: .2em; padding: 5% 5% 5% 7%;
   background: #fdf1dc; color: #594135; box-shadow: 1px 2px 4px #40282052;
-  transform: rotate(16deg); transform-origin: 0 50%; overflow-wrap: anywhere;
+  transform: rotate(-8deg); transform-origin: 0 0; overflow-wrap: anywhere;
   font: clamp(8px,2.15cqw,15px)/1.25 Georgia, serif;
 }
 .tag strong { font-style: italic; font-weight: 400; }

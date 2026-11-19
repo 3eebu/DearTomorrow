@@ -1,7 +1,8 @@
 import { validSurprise, type Surprise } from './book-surprises';
 import { validGift, type GiftDesign } from './book-gift';
+import { validVoiceAsset, validVoiceDesign, VOICE_BOOK_LIMIT, VOICE_COUNT_LIMIT, type VoiceAsset, type VoiceDesign } from './book-voice';
 
-export type ElementKind = 'text' | 'polaroid' | 'photo' | 'note' | 'shape' | 'sticker' | 'drawing' | 'surprise';
+export type ElementKind = 'text' | 'polaroid' | 'photo' | 'note' | 'shape' | 'sticker' | 'drawing' | 'surprise' | 'voice';
 export type TextRun = { text: string; bold?: boolean; italic?: boolean; underline?: boolean; color?: string };
 export type DrawingStroke = { id: string; tool: 'pencil' | 'pen' | 'marker' | 'highlighter'; color: string; width: number; opacity: number; points: [number, number, number][] };
 export const stickers = ['heart', 'bow', 'branch', 'daisy', 'rose', 'tape', 'stamp', 'label', 'ticket', 'postmark', 'stars', 'bookmark'] as const;
@@ -20,6 +21,7 @@ export type BookElement = {
   shape?: typeof shapeNames[number]; fillNone?: boolean; strokeWidth?: number;
   sticker?: typeof stickers[number]; strokes?: DrawingStroke[];
   surprise?: Surprise;
+  voice?: VoiceDesign;
 };
 export type BookPage = { id: string; chapterId: string; paper: string; texture: 'plain' | 'grain' | 'lines' | 'dots' | 'graph' | 'handmade' | 'vintage' | 'pattern'; elements: BookElement[]; textureStrength?: number; gradient?: string; backgroundAssetId?: string; backgroundX?: number; backgroundY?: number };
 export type MemoryBookDocument = {
@@ -31,6 +33,7 @@ export type MemoryBookDocument = {
   templates?: { id: string; title: string; page: BookPage }[];
   bookmaking?: { version: 1; collection?: string; series?: string; volume?: number; contents?: boolean };
   gift?: GiftDesign;
+  voiceAssets?: Record<string, VoiceAsset>;
 };
 export const coverSurfaces = ['front','back','insideFront','insideBack'] as const;
 export type CoverSurface = typeof coverSurfaces[number];
@@ -92,6 +95,13 @@ export function validateBook(input: unknown): MemoryBookDocument {
     assetSize += a.data.length;
   }
   if (assetSize > LIMITS.projectBytes) return fail();
+  if (b.voiceAssets !== undefined) {
+    if (version !== 2 || !b.voiceAssets || typeof b.voiceAssets !== 'object' || Array.isArray(b.voiceAssets)) return fail();
+    const audio = Object.entries(b.voiceAssets);
+    if (audio.length > VOICE_COUNT_LIMIT || !audio.every(([id, asset]) =>
+      str(id, 100) && id !== '__proto__' && id !== 'constructor' && validVoiceAsset(asset)) ||
+      audio.reduce((size, [, asset]) => size + asset.data.length, 0) > VOICE_BOOK_LIMIT) return fail();
+  }
   if (!Array.isArray(b.pages) || !b.pages.length || b.pages.length > LIMITS.pages) return fail();
   const ids = new Set<string>();
   const optional = (v: unknown, check: (v: unknown) => boolean) => v === undefined || check(v);
@@ -101,7 +111,7 @@ export function validateBook(input: unknown): MemoryBookDocument {
     if (!optional(p.gradient, color) || !optional(p.backgroundAssetId, v => str(v, 100) && Object.hasOwn(b.assets, v as string))) return fail();
     const elementIds = new Set<string>();
     for (const e of p.elements) {
-      if (!e || !str(e.id, 100) || elementIds.has(e.id) || !(version === 1 ? ['text', 'photo', 'polaroid', 'note'] : ['text', 'photo', 'polaroid', 'note', 'shape', 'sticker', 'drawing', 'surprise']).includes(e.kind) || !str(e.text, 20000) || !color(e.color) || !color(e.background) || !['serif', 'sans', 'hand', 'mono'].includes(e.font) || !['left', 'center', 'right'].includes(e.align) || typeof e.locked !== 'boolean' || !num(e.x, version === 1 ? 0 : -100, version === 1 ? 100 : 200) || !num(e.y, version === 1 ? 0 : -100, version === 1 ? 100 : 200) || !num(e.width, 1, version === 1 ? 100 : 200) || !num(e.height, 1, version === 1 ? 100 : 200) || (version === 1 && (e.x + e.width > 100.01 || e.y + e.height > 100.01)) || !num(e.rotation, -180, 180) || !num(e.opacity, 0, 1) || !num(e.fontSize, 1, 20) || !num(e.cropX, 0, 100) || !num(e.cropY, 0, 100) || (e.assetId !== undefined && (!str(e.assetId, 100) || !Object.hasOwn(b.assets, e.assetId)))) return fail();
+      if (!e || !str(e.id, 100) || elementIds.has(e.id) || !(version === 1 ? ['text', 'photo', 'polaroid', 'note'] : ['text', 'photo', 'polaroid', 'note', 'shape', 'sticker', 'drawing', 'surprise', 'voice']).includes(e.kind) || !str(e.text, 20000) || !color(e.color) || !color(e.background) || !['serif', 'sans', 'hand', 'mono'].includes(e.font) || !['left', 'center', 'right'].includes(e.align) || typeof e.locked !== 'boolean' || !num(e.x, version === 1 ? 0 : -100, version === 1 ? 100 : 200) || !num(e.y, version === 1 ? 0 : -100, version === 1 ? 100 : 200) || !num(e.width, 1, version === 1 ? 100 : 200) || !num(e.height, 1, version === 1 ? 100 : 200) || (version === 1 && (e.x + e.width > 100.01 || e.y + e.height > 100.01)) || !num(e.rotation, -180, 180) || !num(e.opacity, 0, 1) || !num(e.fontSize, 1, 20) || !num(e.cropX, 0, 100) || !num(e.cropY, 0, 100) || (e.assetId !== undefined && (!str(e.assetId, 100) || !Object.hasOwn(b.assets, e.assetId)))) return fail();
       for (const key of ['hidden', 'aspectLocked', 'bold', 'italic', 'underline', 'textShadow', 'textBackground', 'flipX', 'flipY', 'tape', 'fillNone'] as const) if (!optional(e[key], v => typeof v === 'boolean')) return fail();
       for (const [key, min, max] of [['lineHeight', .6, 3], ['letterSpacing', -.2, 1], ['padding', 0, 20], ['imageZoom', 1, 5], ['radius', 0, 50], ['border', 0, 10], ['shadow', 0, 1], ['frameMargin', 0, 20], ['captionMargin', 0, 40], ['grain', 0, 1], ['strokeWidth', .1, 10]] as const) if (!optional(e[key], v => num(v, min, max))) return fail();
       for (const key of ['name', 'groupId', 'dateLabel'] as const) if (!optional(e[key], v => str(v, 100))) return fail();
@@ -115,6 +125,7 @@ export function validateBook(input: unknown): MemoryBookDocument {
           e.surprise.type === 'fold' && e.kind === 'note';
         if (!compatible) return fail();
       } else if (e.kind === 'surprise') return fail();
+      if (e.kind === 'voice' ? version !== 2 || !validVoiceDesign(e.voice, id => Object.hasOwn(b.voiceAssets ?? {}, id)) : e.voice !== undefined) return fail();
       elementIds.add(e.id);
     }
     return p;

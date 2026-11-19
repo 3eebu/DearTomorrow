@@ -14,6 +14,6 @@ module.exports = function load(name) {
   const { outputText } = ts.transpileModule(fs.readFileSync(file, 'utf8'), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   });
-  vm.runInNewContext(outputText, { exports, require: load, crypto });
+  vm.runInNewContext(outputText, { exports, require: load, crypto, atob, btoa });
   return exports;
 };

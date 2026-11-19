@@ -8,13 +8,88 @@ function load(file) {
   const mod = { exports: {} }; cache.set(file, mod.exports);
   const source = ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText;
   const requireLocal = name => name.endsWith('.css') ? new Proxy({}, { get: (_target, prop) => prop === '__esModule' ? false : String(prop) }) : name.startsWith('@/') ? load('src/' + name.slice(2) + (name.includes('components/') ? '.tsx' : '.ts')) : name.startsWith('.') ? load(path.resolve(path.dirname(file), name) + (fs.existsSync(path.resolve(path.dirname(file), name) + '.tsx') ? '.tsx' : '.ts')) : require(name);
-  vm.runInNewContext(source, { exports: mod.exports, require: requireLocal, crypto, console, performance, setTimeout, clearTimeout }); return mod.exports;
+  vm.runInNewContext(source, { exports: mod.exports, require: requireLocal, crypto, atob, btoa, console, performance, setTimeout, clearTimeout }); return mod.exports;
 }
 const model = load('src/lib/memory-books.ts'), geometry = load('src/lib/studio-geometry.ts'), content = load('src/lib/studio-content.ts'), doc = load('src/lib/studio-document.ts'), { StudioHistory } = load('src/lib/studio-history.ts');
 const make = () => model.createBook('Anniversary QA', 180, 240, '#643e4a', 'linen', false);
 const near = (a,b) => assert.ok(Math.abs(a-b)<1e-8, `${a} != ${b}`);
 const bookmaking = load('src/lib/bookmaking.ts');
 const magic = load('src/lib/book-surprises.ts');
+const voice = load('src/lib/book-voice.ts');
+
+test('voice recordings survive a backup and reject wrong media, headers, durations, and references', () => {
+  const book = make(), page = book.pages[0], card = doc.voiceElement();
+  page.elements.push(card);
+  const sample = voice.voiceWav(new Float32Array(voice.VOICE_RATE).fill(.02), 'QA audio');
+  const recorded = doc.setVoiceAsset(book, page.id, card.id, sample);
+  const backup = JSON.stringify(recorded);
+  const roundTrip = model.validateBook(JSON.parse(backup));
+  assert.equal(JSON.stringify(roundTrip), backup);
+  const id = Object.keys(roundTrip.voiceAssets)[0];
+  assert.equal(roundTrip.voiceAssets[id].durationMs, 1000);
+  for (const invalid of [
+    { ...sample, version: 2 },
+    { ...sample, data: sample.data.replace('audio/wav', 'audio/webm') },
+    { ...sample, data: sample.data.replace('UklG', 'AAAA') },
+    { ...sample, data: sample.data.slice(0, -4) },
+    { ...sample, durationMs: 60000 },
+  ]) assert.throws(() => model.validateBook({ ...recorded, voiceAssets: { [id]: invalid } }), /unsupported format/);
+  assert.throws(() => model.validateBook({ ...recorded, voiceAssets: {} }), /unsupported format/);
+  assert.throws(() => voice.voiceWav(new Float32Array(voice.VOICE_RATE * 61), 'Too long'), /one minute/);
+});
+
+test('removing a voice honours shared copies, cleans the last asset, and remains undoable', () => {
+  const b = make(), page = b.pages[0], card = doc.voiceElement();
+  page.elements.push(card);
+  const recorded = doc.setVoiceAsset(b, page.id, card.id, voice.voiceWav(new Float32Array(320), 'Test'));
+  const withRecording = recorded.pages[0].elements.find(element => element.id === card.id);
+  const copy = doc.copyObjects([withRecording])[0];
+  const shared = { ...recorded, pages: [{ ...recorded.pages[0], elements: [withRecording, copy] }, b.pages[1]] };
+  const removedFirst = doc.setVoiceAsset(shared, page.id, card.id);
+  assert.ok(removedFirst.voiceAssets[copy.voice.assetId]);
+  const removedBoth = doc.setVoiceAsset(removedFirst, page.id, copy.id);
+  assert.equal(removedBoth.voiceAssets, undefined);
+  const trail = new StudioHistory();
+  trail.record(removedFirst, removedBoth);
+  const restored = trail.undo(removedBoth);
+  assert.equal(restored.voiceAssets[copy.voice.assetId].name, 'Test');
+  assert.throws(() => doc.setVoiceAsset(shared, page.id, 'missing', shared.voiceAssets[copy.voice.assetId]), /card changed/);
+  model.validateBook(removedBoth);
+  model.validateBook(restored);
+});
+
+test('a voice card renders without an audio player or play controls in a moving strip', () => {
+  const React = require('react'), render = require('react-dom/server').renderToStaticMarkup;
+  const { PageContent } = load('src/components/memory-books/page-content.tsx');
+  const { VoicePlayer } = load('src/components/memory-books/voice-memory.tsx');
+  const original = make(), page = original.pages[0], card = doc.voiceElement();
+  page.elements = [card];
+  const b = doc.setVoiceAsset(original, page.id, card.id, voice.voiceWav(new Float32Array(320), 'Short recording'));
+  const surface = render(React.createElement(PageContent, { book: b, page: b.pages[0], strip: [40, 44] }));
+  assert.match(surface, /A voice to keep/);
+  assert.doesNotMatch(surface, /<audio|<button|base64/);
+  const resting = render(React.createElement(VoicePlayer, { scope: 'resting' },
+    React.createElement(PageContent, { book: b, page: b.pages[0], interactive: true })));
+  assert.equal((resting.match(/<audio/g) || []).length, 1);
+  assert.match(resting, /Play A voice to keep/);
+  assert.doesNotMatch(resting, /autoplay|base64/);
+});
+
+test('a new insert uses free paper when a default placement overlaps; example opens as an independent book', () => {
+  const first = { ...model.newElement('text'), x: 18, y: 20, width: 45, height: 30 };
+  const second = { ...model.newElement('surprise'), x: 18, y: 20, width: 45, height: 30 };
+  const inserted = doc.placeNewObject(second, [first]);
+  assert.ok(inserted.y >= first.y + first.height || inserted.x >= first.x + first.width);
+  assert.equal(second.y, 20);
+  const { newShowcase } = require('./load-book-model.cjs')('./book-showcase');
+  const example = newShowcase(), another = newShowcase();
+  assert.equal(example.title, 'Every Little Thing About Us');
+  assert.equal(example.pages.length, 18);
+  assert.equal(example.chapters.length, 3);
+  assert.notEqual(example.pages[0].id, another.pages[0].id);
+  assert.equal(new Set(example.pages.flatMap(page => page.elements.flatMap(e => e.surprise?.type ?? []))).size, 7);
+  assert.ok(example.gift && example.cover.design && example.voiceAssets['example-chime']);
+});
 
 test('anniversary project backups retain all seven surprises, independent photo faces, and wrapping', () => {
   const { anniversaryBook } = require('./create-magic-fixture.cjs');
