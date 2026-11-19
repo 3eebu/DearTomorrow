@@ -28,6 +28,9 @@ test('growth stages include the empty seed and first true leaf', () => {
   assert.equal(stage(32), 'Growing tree');
   assert.equal(stage(120), 'Mature tree');
   assert.equal(stage(1000), 'Flourishing tree');
+  const first = buildTree(fixture(1), today), sapling = buildTree(fixture(20), today);
+  assert.equal(first.leaves.size, 1);
+  assert.ok(first.trunkHeight < .5 && first.heightRadius < sapling.heightRadius / 2);
 });
 
 for (const count of [1, 10, 50, 100, 500, 1000]) {
@@ -75,6 +78,7 @@ test('species alter geometry, seasons alter color, and mature memory colors use 
   for (const species of ['oak', 'willow']) assert.notDeepEqual(variant({ species }).leaves.get(8).tip, cherry.leaves.get(8).tip);
   assert.deepEqual(variant({ season: 'winter' }).leaves.get(8), cherry.leaves.get(8));
   assert.notDeepEqual(variant({ season: 'winter' }).vertices, cherry.vertices);
+  assert.deepEqual(variant({ garden: 'rain' }).vertices, cherry.vertices);
   assert.ok(leafColor('2026-11-19', today, 'summer', 'oak')[1] > leafColor('2016-11-19', today, 'summer', 'oak')[1]);
   assert.equal(activeSeason({ ...initialSettings, south: true }, '2026-12-01'), 'summer');
 });

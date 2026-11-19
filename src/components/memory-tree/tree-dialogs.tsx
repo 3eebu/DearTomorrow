@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
-import { gardens, seasons, species, MAX_PHOTOS, type Chapter, type MemoryInput, type Photo, type Settings } from '@/lib/memory-tree';
+import { seasons, species, MAX_PHOTOS, type Chapter, type MemoryInput, type Photo, type Settings } from '@/lib/memory-tree';
 import { preparePhoto } from '@/lib/memory-tree-storage';
 
 export function GardenDialog({title,children,close,busy=false}:{title:string;children:ReactNode;close:()=>void;busy?:boolean}) {
@@ -14,7 +14,6 @@ export function GardenDialog({title,children,close,busy=false}:{title:string;chi
   </dialog>;
 }
 const speciesLabels={cherry:'Flowering cherry',oak:'English oak',willow:'Weeping willow'};
-const gardenLabels={garden:'The Secret Garden',stars:'Under the Stars',rain:'The Rain Garden'};
 export function SettingsForm({initial,plant,busy,save}:{initial:Settings;plant:boolean;busy:boolean;save:(s:Settings)=>void}){
   const [settings,setSettings]=useState(initial);
   function field<K extends keyof Settings>(key:K,value:Settings[K]){setSettings(s=>({...s,[key]:value}));}
@@ -27,7 +26,6 @@ export function SettingsForm({initial,plant,busy,save}:{initial:Settings;plant:b
       <label>Tree species<select value={settings.species} onChange={e=>field('species',e.target.value as Settings['species'])}>{species.map(s=><option key={s} value={s}>{speciesLabels[s]}</option>)}</select></label>
     </div>
     {!plant&&<div className="mt-fields">
-      <label>Garden<select value={settings.garden} onChange={e=>field('garden',e.target.value as Settings['garden'])}>{gardens.map(s=><option key={s} value={s}>{gardenLabels[s]}</option>)}</select></label>
       <label>Season<select value={settings.season} onChange={e=>field('season',e.target.value as Settings['season'])}>{seasons.map(s=><option key={s} value={s}>{s[0].toUpperCase()+s.slice(1)}</option>)}</select></label>
       <label className="mt-check"><input type="checkbox" checked={settings.south} onChange={e=>field('south',e.target.checked)}/> Southern Hemisphere</label>
     </div>}

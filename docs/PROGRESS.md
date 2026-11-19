@@ -8,7 +8,7 @@ The reader now has a custom curved CSS 3D surface, dimensional covers and separa
 - Homepage hero newspaper montage with fictional editorial clippings, replay control and a separate mobile arrangement.
 - Create flow with three beginner-first choices and the browser-local Letters workspace. The Letter Box, Studio, dimensional reader, attachments and local countdowns are documented in `docs/LETTERS.md`.
 - Memory Books: homepage sample plus a local multi-book library at `/memory-books`, separate flat Studio and immersive Reading, personal photo/Polaroid/text editing, chapters/pages and IndexedDB autosave. See `docs/MEMORY_BOOKS.md` for the first review checkpoint.
-- Memory Tree: procedural 3D tree with one leaf per saved memory, three species, linked journal, timeline and calendar, and local storage for memories and photos. See `docs/MEMORY_TREE.md`.
+- Memory Tree: a procedural botanical sculpture on a cream backdrop with one leaf per saved memory, three species, linked journal, timeline and calendar, and local storage for memories and photos. See `docs/MEMORY_TREE.md`.
 - Journey Letters: route animation and six selectable demonstration checkpoints.
 - About and How It Works pages, with navigation updated for Memory Tree.
 - Responsive mobile navigation, reduced-motion rules, modal keyboard focus cycling, basic semantic controls.

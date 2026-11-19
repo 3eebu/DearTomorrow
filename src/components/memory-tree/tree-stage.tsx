@@ -5,7 +5,7 @@ import { makeRenderer, type Camera, type TreeRenderer } from '@/lib/memory-tree-
 import { displayDay, stage, type Tree } from '@/lib/memory-tree';
 
 export type Focus = { id:string; grow?:boolean; chapter?:boolean };
-const sceneNames={garden:'The Secret Garden',stars:'Under the Stars',rain:'The Rain Garden'};
+const speciesNames={cherry:'Flowering cherry',oak:'English oak',willow:'Weeping willow'};
 type Props={tree:Tree; today:string; selected:string; focus:Focus|null; onChoose:(id:string)=>void; onBranch:(id:string)=>void;
   onPause:()=>void; controls:boolean};
 export function TreeStage({tree,today,selected,focus,onChoose,onBranch,onPause,controls}:Props) {
@@ -16,9 +16,9 @@ export function TreeStage({tree,today,selected,focus,onChoose,onBranch,onPause,c
   const [pan,setPan]=useState(false),[expanded,setExpanded]=useState(false);
   const contacts=useRef(new Map<number,{x:number;y:number}>()),moved=useRef(0),lastHover=useRef(0);
   const {seed,chapters,memories,settings}=tree;
-  const {species,season,south,garden}=settings;
-  const model=useMemo(()=>buildTree({seed,chapters,memories,settings:{species,season,south,garden}},today),
-    [seed,chapters,memories,species,season,south,garden,today]);
+  const {species,season,south}=settings;
+  const model=useMemo(()=>buildTree({seed,chapters,memories,settings:{species,season,south}},today),
+    [seed,chapters,memories,species,season,south,today]);
   const stop=useCallback(()=>{
     if(endGrowth.current){renderer.current?.restore(endGrowth.current.returnTo);renderer.current?.growth(0,1);endGrowth.current=null;}
     setAnimating(false);
@@ -51,9 +51,9 @@ export function TreeStage({tree,today,selected,focus,onChoose,onBranch,onPause,c
   },[generation,stop]);
   useEffect(()=>{
     if(!available)return;
-    renderer.current?.update(model,garden,tree.id!==lastTree.current);
+    renderer.current?.update(model,tree.id!==lastTree.current);
     if(tree.id!==lastTree.current){lastTree.current=tree.id;setHover(0);}
-  },[available,generation,model,garden,tree.id]);
+  },[available,generation,model,tree.id]);
   useEffect(()=>{renderer.current?.select((memories.find(m=>m.id===selected)?.slot??-1)+1);},[available,memories,selected]);
   const current=useRef({model,memories});current.current={model,memories};
   useEffect(()=>{
@@ -82,8 +82,9 @@ export function TreeStage({tree,today,selected,focus,onChoose,onBranch,onPause,c
   const byPick=(pick:number)=>memories.find(m=>m.slot+1===pick);
   const hovered=byPick(hover);
   const selectedMemory=memories.find(m=>m.id===selected);
-  return <div ref={frame} className={'mt-stage mt-'+garden+(expanded?' mt-expanded':'')} data-motion={!(reduced||settings.paused)}>
-    <div className="mt-sky" aria-hidden="true"/><canvas ref={canvas} tabIndex={available?0:-1} aria-label="Three-dimensional Memory Tree. Arrow keys rotate, Shift and arrows pan, plus and minus zoom, Home fits the tree."
+  return <div ref={frame} className={'mt-stage'+(expanded?' mt-expanded':'')} data-motion={!(reduced||settings.paused)}>
+    <div className="mt-specimen" data-fallback={failed}>
+    <canvas ref={canvas} tabIndex={available?0:-1} aria-label="Three-dimensional Memory Tree. Arrow keys rotate, Shift and arrows pan, plus and minus zoom, Home resets the view."
       onKeyDown={e=>{const r=renderer.current;if(!r)return;
         const xy:Record<string,[number,number]>={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,1],ArrowDown:[0,-1]};
         if(xy[e.key]){const [x,y]=xy[e.key];if(e.shiftKey)r.pan(x*23,y*23);else r.orbit(x*.18,y*.13);}
@@ -105,24 +106,36 @@ export function TreeStage({tree,today,selected,focus,onChoose,onBranch,onPause,c
       onPointerUp={e=>{if(!contacts.current.delete(e.pointerId)||moved.current>7)return;
         const id=renderer.current?.pick(e.clientX,e.clientY)??0,leaf=model.leaves.get(id),branch=model.branches.get(id);
         if(leaf)onChoose(leaf.id);else if(branch){renderer.current?.focus(branch.point);onBranch(branch.id);}}}/>
-    <div className="mt-plate"><strong>{sceneNames[garden]}</strong>
-      <small>{stage(memories.length)} · {species==='cherry'?'Flowering cherry':species==='oak'?'English oak':'Weeping willow'}</small></div>
     {failed&&<p className="mt-graphics-error" role="status">3D graphics are unavailable. Open any memory in the journal below, or use Timeline and Calendar.</p>}
-    {hovered&&<div className="mt-tooltip">{hovered.title}<small>{displayDay(hovered.date)}</small></div>}
-    {selectedMemory&&<button className="mt-selected-leaf" onClick={async()=>{
-      if(document.fullscreenElement)await document.exitFullscreen();
-      setExpanded(false);document.getElementById('mt-selected-title')?.focus({preventScroll:true});
-      document.getElementById('mt-selected-title')?.scrollIntoView({block:'center'});
-    }}>
-      <span>{selectedMemory.title}</span><small>{displayDay(selectedMemory.date)} · Open memory ↗</small>
-    </button>}
-    {available&&<div className="mt-camera" aria-label="Tree camera controls">
-      <button aria-label="Zoom in" onClick={()=>renderer.current?.zoom(.75)}>＋</button><button aria-label="Zoom out" onClick={()=>renderer.current?.zoom(1.33)}>−</button>
-      <button aria-label="Rotate left" onClick={()=>renderer.current?.orbit(-.47,0)}>↶</button><button aria-label="Rotate right" onClick={()=>renderer.current?.orbit(.47,0)}>↷</button>
-      <button onClick={()=>setPan(!pan)} aria-pressed={pan}>Pan</button><button onClick={()=>renderer.current?.fit()}>Fit</button><button onClick={()=>renderer.current?.reset()}>Reset</button>
-      <button aria-label="Fullscreen tree" onClick={()=>{if(document.fullscreenElement)void document.exitFullscreen();else if(frame.current?.requestFullscreen)void frame.current.requestFullscreen().catch(()=>setExpanded(!expanded));else setExpanded(!expanded);}}>⛶</button>
+    {hovered&&<div className="mt-tooltip" aria-hidden="true">{hovered.title}<small>{displayDay(hovered.date)}</small></div>}
+    </div>
+    <div className="mt-stage-caption">
+      <p>{stage(memories.length)} <span aria-hidden="true">·</span> {speciesNames[species]}</p>
+      {selectedMemory&&<button className="mt-selected-leaf" onClick={async()=>{
+        if(document.fullscreenElement)await document.exitFullscreen();
+        setExpanded(false);document.getElementById('mt-selected-title')?.focus({preventScroll:true});
+        document.getElementById('mt-selected-title')?.scrollIntoView({block:'center'});
+      }}>
+        <span>{selectedMemory.title}</span><span aria-hidden="true">↗</span>
+      </button>}
+    </div>
+    {available&&<div className="mt-camera" role="group" aria-label="Tree camera controls">
+      <button aria-label="Rotate left" title="Rotate left" onClick={()=>renderer.current?.orbit(-.47,0)}>↶</button>
+      <button aria-label="Rotate right" title="Rotate right" onClick={()=>renderer.current?.orbit(.47,0)}>↷</button>
+      <button aria-label="Zoom out" title="Zoom out" onClick={()=>renderer.current?.zoom(1.33)}>−</button>
+      <button aria-label="Zoom in" title="Zoom in" onClick={()=>renderer.current?.zoom(.75)}>+</button>
+      <button onClick={()=>{setPan(false);renderer.current?.reset();}}>Reset</button>
+      <details className="mt-menu mt-view-menu">
+        <summary>View options</summary>
+        <div className="mt-menu-actions">
+          <button onClick={()=>setPan(!pan)} aria-pressed={pan}>Pan</button>
+          <button onClick={()=>renderer.current?.fit()}>Fit tree</button>
+          <button onClick={()=>{if(expanded)setExpanded(false);else if(document.fullscreenElement)void document.exitFullscreen();
+            else if(frame.current?.requestFullscreen)void frame.current.requestFullscreen().catch(()=>setExpanded(true));else setExpanded(true);}}>Fullscreen tree</button>
+          {controls&&<button disabled={reduced} onClick={onPause}>{reduced?'Reduced motion':settings.paused?'Resume motion':'Pause motion'}</button>}
+        </div>
+      </details>
+      {animating&&<button className="mt-skip" onClick={stop}>Skip growth</button>}
     </div>}
-    {animating&&<button className="mt-skip" onClick={stop}>Skip growth</button>}
-    {controls&&<button className="mt-motion" disabled={reduced} onClick={onPause}>{reduced?'Reduced motion':settings.paused?'Resume motion':'Pause motion'}</button>}
   </div>;
 }

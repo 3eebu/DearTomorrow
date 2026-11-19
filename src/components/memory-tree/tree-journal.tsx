@@ -23,10 +23,17 @@ const sampleStories=[
   'It was an ordinary day, right up until it became the one we kept telling people about.',
 ];
 export const seedling=newTree({...initialSettings},'unplanted',1581479201);
+const exampleNow=new Date();
+function exampleDay(index:number) {
+  if(index<12)return localDay(new Date(2020,1+index,16+index%4,12));
+  // Spread the fictional memories across the age palette, through the current month.
+  return localDay(new Date(exampleNow.getFullYear(),exampleNow.getMonth(),
+    exampleNow.getDate()-Math.round(1550*((31-index)/19)**2),12));
+}
 export const sampleTree:Tree={
   ...newTree({...initialSettings,name:'The Orchard Years',start:'2020-02-16',season:'spring'},'example',247379339),
   nextLeaf:sampleTitles.length,
-  memories:sampleTitles.map((title,i)=>({id:'sample-'+i,slot:i,title,date:localDay(new Date(2020,1+Math.floor(i*.85),16+i%4,12)),
+  memories:sampleTitles.map((title,i)=>({id:'sample-'+i,slot:i,title,date:exampleDay(i),
     time:i===0?'16:40':'',story:sampleStories[i%sampleStories.length],chapterId:'branch-'+(i%6),location:'',
     tags:i%7===0?['together']:[],photos:[],favorite:i%5===0,milestone:i%7===0,annual:i===0})),
 };

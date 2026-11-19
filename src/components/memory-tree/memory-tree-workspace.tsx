@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { chronological, displayDay, findMemories, localDay, newTree, nextAnniversary, putMemory, removeChapter, validDay,
   type Chapter, type Grove, type Memory, type MemoryInput, type Settings, type Tree, type View } from '@/lib/memory-tree';
 import { downloadTree, importTree, loadGarden, saveGarden, type SavedGrove } from '@/lib/memory-tree-storage';
@@ -52,38 +52,40 @@ export default function MemoryTreeWorkspace(){
   const tree=demo?sampleTree:active??seedling;
   return <section id="memory-tree" className="mt-workspace" aria-labelledby="mt-tree-title">
     <div className="mt-origin">
-      <div><p className="mt-kicker">Memory Tree</p><h1 id="mt-tree-title">{demo?sampleTree.settings.name:active?.settings.name||'Our Memory Tree'}</h1>
-        <p>{tree.settings.start?<><time dateTime={tree.settings.start}>{displayDay(tree.settings.start)}</time><span aria-hidden="true"> · </span></>:null}
-          {demo?'A fictional example':active?tree.memories.length+' '+(tree.memories.length===1?'memory':'memories'):'A place for the moments you keep.'}</p></div>
-      <div className="mt-origin-actions">
-        <button onClick={()=>{setDemo(!demo);setStartupFocus(null);}}>{demo?'Back to my tree':'Explore the example'}</button>
-        {!demo&&saved&&<><button disabled={busy} onClick={()=>fileInput.current?.click()}>Import backup</button>
-          <input ref={fileInput} hidden type="file" accept=".json,application/json" aria-label="Import Memory Tree backup"
-            onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';if(file)void restore(file);}}/></>}
-        {!demo&&saved&&saved.grove.trees.length>1&&<select aria-label="Choose a saved tree" disabled={busy} value={saved.grove.activeId}
-          onChange={e=>{const activeId=e.target.value;setStartupFocus(null);void transact(grove=>({...grove,activeId}));}}>
-          {saved.grove.trees.map(t=><option value={t.id} key={t.id}>{t.settings.name||'Our Memory Tree'}</option>)}
-        </select>}
-      </div>
+      {tree.settings.name&&<p className="mt-kicker">Memory Tree</p>}
+      <h1 id="mt-tree-title">{tree.settings.name||'Our Memory Tree'}</h1>
+      <p>{tree.settings.start?<><time dateTime={tree.settings.start}>{displayDay(tree.settings.start)}</time><span aria-hidden="true"> · </span></>:null}
+        {demo?'A fictional example':active?tree.memories.length+' '+(tree.memories.length===1?'memory':'memories'):'A place for the moments you keep.'}</p>
     </div>
+    {!demo&&saved&&<input ref={fileInput} hidden type="file" accept=".json,application/json" aria-label="Import Memory Tree backup"
+      onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';if(file)void restore(file);}}/>}
     {loading&&!demo?<p className="mt-status" role="status">Opening your Memory Tree…</p>:
       <TreeExperience key={tree.id} tree={tree} demo={demo} planted={!!active&&!demo} editable={!demo&&!!saved} busy={busy}
         error={error} draft={draft} commit={commit} initialFocus={startupFocus} onError={setError}
+        exampleAction={<button className="mt-example-link" onClick={()=>{setDemo(!demo);setStartupFocus(null);}}>{demo?'Back to my tree':'Explore the example'}</button>}
+        treeActions={!demo&&saved&&<>
+          <button disabled={busy} onClick={()=>fileInput.current?.click()}>Import backup</button>
+          {saved.grove.trees.length>1&&<label>Saved tree<select aria-label="Choose a saved tree" disabled={busy} value={saved.grove.activeId}
+            onChange={e=>{const activeId=e.target.value;setStartupFocus(null);void transact(grove=>({...grove,activeId}));}}>
+            {saved.grove.trees.map(t=><option value={t.id} key={t.id}>{t.settings.name||'Our Memory Tree'}</option>)}
+          </select></label>}
+        </>}
         onPlant={async settings=>{const planted=newTree(settings);if(await commit(planted)){setStartupFocus({id:'seed',grow:true});return true;}return false;}}/>}
   </section>;
 }
 
-function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,initialFocus,onError,onPlant}:{
+function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,initialFocus,onError,onPlant,exampleAction,treeActions}:{
   tree:Tree;demo:boolean;planted:boolean;editable:boolean;busy:boolean;error:string;draft:Tree|null;commit:Commit;
   initialFocus:Focus|null;onError:(s:string)=>void;onPlant:(s:Settings)=>Promise<boolean>;
+  exampleAction:ReactNode;treeActions:ReactNode;
 }){
   const [today]=useState(localDay);
   const ordered=useMemo(()=>chronological(tree.memories),[tree.memories]);
   const [view,setView]=useState<View>(tree.settings.view);
-  const gardenAnchor=useRef<HTMLDivElement>(null),scrollToGarden=useRef(false);
+  const stageAnchor=useRef<HTMLDivElement>(null),scrollToStage=useRef(false);
   useEffect(()=>{
-    if(view==='tree'&&scrollToGarden.current){
-      scrollToGarden.current=false;gardenAnchor.current?.scrollIntoView({block:'start'});
+    if(view==='tree'&&scrollToStage.current){
+      scrollToStage.current=false;stageAnchor.current?.scrollIntoView({block:'start'});
     }
   },[view]);
   const [selected,setSelected]=useState(ordered[0]?.id??''),[day,setDay]=useState(ordered[0]?.date??today);
@@ -105,8 +107,8 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
   function choose(m:Memory,bringToTree=false,displayDate=m.date){
     setSelected(m.id);setDay(displayDate);setMonth(displayDate.slice(0,7));setFocus({id:m.id});
     if(bringToTree){
-      if(view==='tree')gardenAnchor.current?.scrollIntoView({block:'start'});
-      else {scrollToGarden.current=true;changeView('tree');}
+      if(view==='tree')stageAnchor.current?.scrollIntoView({block:'start'});
+      else {scrollToStage.current=true;changeView('tree');}
     }
   }
   function changeView(v:View){
@@ -151,24 +153,30 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
     {draft&&<button type="button" onClick={()=>downloadTree(draft,(draft.settings.name||'Memory Tree')+' draft')}>Export draft</button>}</div>;
   return <>
     <div className="mt-toolbar">
+      <div className="mt-toolbar-aside">{exampleAction}</div>
       <nav aria-label="Memory Tree views">{(['tree','timeline','calendar'] as const).map(v=><button aria-pressed={view===v} key={v}
         disabled={busy} onClick={()=>changeView(v)}>{v[0].toUpperCase()+v.slice(1)}</button>)}</nav>
-      <div>
-        {planted&&<><button disabled={busy} onClick={()=>setMode('appearance')}>Appearance</button>
-          <button disabled={busy} onClick={()=>setMode('chapters')}>Chapters</button>
-          <button onClick={()=>downloadTree(tree,tree.settings.name||'Memory Tree')}>Export tree</button></>}
+      <div className="mt-toolbar-actions">
+        {editable&&<details className="mt-menu mt-tree-menu">
+          <summary>Tree options</summary>
+          <div className="mt-menu-actions">
+            {planted&&<><button disabled={busy} onClick={e=>{e.currentTarget.closest('details')!.open=false;setMode('appearance');}}>Appearance</button>
+              <button disabled={busy} onClick={e=>{e.currentTarget.closest('details')!.open=false;setMode('chapters');}}>Chapters</button>
+              <button onClick={()=>downloadTree(tree,tree.settings.name||'Memory Tree')}>Export tree</button></>}
+            {treeActions}
+          </div>
+        </details>}
         {editable&&<button className="mt-primary" disabled={busy} onClick={()=>open()}>{planted?'Add a memory':'Plant a tree'}</button>}
       </div>
     </div>
     {!mode&&displayError}
-    <div id="mt-garden" ref={gardenAnchor} hidden={view!=='tree'}>
+    <div id="mt-tree-stage" ref={stageAnchor} hidden={view!=='tree'}>
       <TreeStage tree={screenTree} today={today} focus={focus} selected={selected}
         onChoose={id=>{const m=ordered.find(m=>m.id===id);if(m)choose(m);}} onBranch={id=>setChapter(id)}
         controls={demo||planted} onPause={()=>{if(demo)setDemoPaused(!demoPaused);
           else if(!busy)void commit({...tree,settings:{...tree.settings,paused:!tree.settings.paused}});}}/>
       {!tree.memories.length&&<div className="mt-seed-note">
         <p>{planted?'Your first memory will grow the first leaf.':'Every tree begins with a seed.'}</p>
-        {editable&&<button className="mt-link" disabled={busy} onClick={()=>open()}>{planted?'Save your first memory':'Plant your own tree'} ↗</button>}
         {planted&&<button className="mt-link" onClick={()=>setFocus({id:'seed',grow:true})}>Replay planting</button>}
       </div>}
     </div>
