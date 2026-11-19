@@ -1,4 +1,8 @@
 /* The reader owns its 3D scene. No filter/opacity/overflow on preserve-3d ancestors. */
+.reader[data-scene=candle] .readControls{color:#fff0d6}
+.reader[data-scene=candle] .readerFoot button{background:#423633}
+.reader[data-scene=candle] .physicalBook{--scene-light:#ffd49330}
+.reader[data-scene=candle] .coverLight{background:linear-gradient(225deg,var(--scene-light),transparent 65%)}
 .reader{min-height:100dvh;background:radial-gradient(ellipse at 50% 36%,#f6f1e7 0,#e5ddcf 75%,#ddd3c2);color:#574b40;overflow-x:clip}
 .readerTop{position:relative;top:auto;height:auto;min-height:72px;background:transparent;backdrop-filter:none;border:0;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 32px;font-size:12px}
 .readerTop>span{font:italic 17px Georgia,serif;color:#8c7a65}.readerTop>div{display:flex;gap:14px}.readerTop button{border:0!important;font-size:11px!important;background:transparent!important}

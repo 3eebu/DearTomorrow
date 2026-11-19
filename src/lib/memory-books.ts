@@ -21,11 +21,15 @@ export type BookPage = { id: string; chapterId: string; paper: string; texture: 
 export type MemoryBookDocument = {
   version: 2; id: string; title: string; subtitle: string; dedication: string;
   createdAt: string; updatedAt: string; archived: boolean;
-  widthMm: number; heightMm: number; cover: { color: string; material: 'linen' | 'leather' | 'smooth' };
-  chapters: { id: string; title: string }[]; pages: BookPage[];
+  widthMm: number; heightMm: number; cover: { color: string; material: 'linen' | 'leather' | 'smooth'; design?: CoverDesign };
+  chapters: { id: string; title: string; description?: string; color?: string }[]; pages: BookPage[];
   assets: Record<string, { data: string; name: string }>;
   templates?: { id: string; title: string; page: BookPage }[];
+  bookmaking?: { version: 1; collection?: string; series?: string; volume?: number; contents?: boolean };
 };
+export const coverSurfaces = ['front','back','insideFront','insideBack'] as const;
+export type CoverSurface = typeof coverSurfaces[number];
+export type CoverDesign = { version: 1; fabric: 'linen'|'cotton'|'velvet'|'leather'|'pebbled'|'suede'|'matte'|'vintage'|'modern'; finish: 'matte'|'satin'|'gloss'|'textured'|'distressed'; lettering: 'print'|'gold'|'rose'|'silver'|'emboss'|'deboss'|'engraved'; ink: string; initials: string; recipient: string; date: string; branding: boolean; spineTitle: string; bands: boolean; ribbon?: string; surfaces: Partial<Record<CoverSurface,BookPage>> };
 export const LIMITS = { pages: 200, elements: 100, books: 32, uploadBytes: 8 * 1024 * 1024, projectBytes: 30 * 1024 * 1024, assetBytes: 24 * 1024 * 1024, strokes: 200, points: 2000 };
 export const uid = () => crypto.randomUUID();
 export function projectBytes(book: MemoryBookDocument) {
@@ -45,8 +49,8 @@ export const formats = [
 export function blankPage(chapterId = ''): BookPage {
   return { id: uid(), chapterId, paper: '#f6efdf', texture: 'grain', elements: [] };
 }
-export function newElement(kind: ElementKind): BookElement {
-  return { id: uid(), kind, x: 18, y: 20, width: kind === 'text' ? 64 : 45, height: kind === 'text' ? 28 : 52,
+export function newElement(kind: ElementKind, id = uid()): BookElement {
+  return { id, kind, x: 18, y: 20, width: kind === 'text' ? 64 : 45, height: kind === 'text' ? 28 : 52,
     rotation: kind === 'polaroid' ? -5 : 0, opacity: 1, locked: false,
     text: kind === 'text' ? 'A little moment worth keeping.' : kind === 'note' ? 'Something I never told you…' : 'The little things.',
     color: '#493b34', background: kind === 'note' ? '#e9dcb9' : '#fffaf0', font: kind === 'text' ? 'serif' : 'hand', fontSize: kind === 'text' ? 5 : 3.1,
@@ -103,6 +107,12 @@ export function validateBook(input: unknown): MemoryBookDocument {
     return p;
   }
   b.pages.forEach(p => { if (ids.has(p.id)) fail(); ids.add(p.id); page(p); });
+  for(const c of b.chapters) if(!optional(c.description,v=>str(v,2000))||!optional(c.color,color)) return fail();
+  if(b.bookmaking !== undefined){const m=b.bookmaking;if(!m||m.version!==1||!optional(m.collection,v=>str(v,100))||!optional(m.series,v=>str(v,100))||!optional(m.volume,v=>num(v,1,999)&&Number.isInteger(v))||!optional(m.contents,v=>typeof v==='boolean'))return fail();}
+  if(b.cover.design !== undefined){const d=b.cover.design;
+    if(!d||d.version!==1||!['linen','cotton','velvet','leather','pebbled','suede','matte','vintage','modern'].includes(d.fabric)||!['matte','satin','gloss','textured','distressed'].includes(d.finish)||!['print','gold','rose','silver','emboss','deboss','engraved'].includes(d.lettering)||!color(d.ink)||![d.initials,d.recipient,d.date,d.spineTitle].every(v=>str(v,120))||typeof d.branding!=='boolean'||typeof d.bands!=='boolean'||!optional(d.ribbon,color)||!d.surfaces||typeof d.surfaces!=='object'||Array.isArray(d.surfaces)||Object.keys(d.surfaces).some(k=>!(coverSurfaces as readonly string[]).includes(k)))return fail();
+    for(const surface of Object.values(d.surfaces))if(!surface||surface.chapterId!==''||!page(surface))return fail();
+  }
   if (b.templates !== undefined && (!Array.isArray(b.templates) || b.templates.length > 20 || !b.templates.every(t => t && str(t.id, 100) && str(t.title, 100) && page(t.page)))) return fail();
   if (version === 2 && projectBytes(b) > LIMITS.projectBytes) throw new Error('This project exceeds the 30 MB project budget. Your previously saved library has not been overwritten.');
   // An in-memory upgrade only. Stable IDs, media and user content are retained;

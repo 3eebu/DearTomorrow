@@ -4,12 +4,21 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { type MemoryBookDocument } from '@/lib/memory-books';
 import { clamp, lastSpread, motionDuration, paperSurface, releaseTurn, turnPages, visiblePages } from '@/lib/book-physics';
-import { Cover, PageContent, ReadingNotes, ElementContent } from './page-content';
+import { PageContent, ReadingNotes, ElementContent } from './page-content';
 import s from './book-reader.module.css';
 
+import {ReaderEnvironment,useEnvironment} from './reader-environment';
+import { Cover, BookSurface } from './cover-renderer';
+import {ReaderPlaces} from './reader-places';
+import making from './bookmaking.module.css';
+import environment from './reader-environment.module.css';
 type Direction = 1 | -1;
 type Gesture = { x: number; y: number; last: number; time: number; velocity: number; width: number; height: number; initial: number; corner: number; moved: boolean };
-export function BookReader({ book, onEdit, onExit }: { book: MemoryBookDocument; onEdit: () => void; onExit: () => void }) {
+export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', editLabel = 'Open Studio ↗' }: {
+  book: MemoryBookDocument; onEdit: () => void; onExit: () => void; exitLabel?: string; editLabel?: string;
+}) {
+  const {scene:environmentScene,choose:chooseEnvironment}=useEnvironment(book.id);
+  const [backPreview,setBackPreview]=useState(false);
   const [opened, setOpened] = useState(false), [opening, setOpening] = useState(false);
   const [index, setIndex] = useState(0), [single, setSingle] = useState(false), [linear, setLinear] = useState(false);
   const [advancedAvailable, setAdvancedAvailable] = useState(true);
@@ -194,25 +203,31 @@ export function BookReader({ book, onEdit, onExit }: { book: MemoryBookDocument;
   const leftIndex = turn === -1 && !single ? mapping.under : index - 1;
   const rightIndex = turn === 1 || (single && turn === -1) ? mapping.under : index;
   const visible = visiblePages(index, book.pages.length, single);
+  function jumpToPage(id: string) {
+    const target = book.pages.findIndex(page => page.id === id);
+    if (target < 0 || opening || turn !== null || linear) return;
+    if (!opened) openCover(true);
+    setIndex(single ? target : Math.ceil(target / 2) * 2);
+  }
   const label = visible.length ? `Page ${visible.map(i => i + 1).join('–')} of ${book.pages.length}` : `End of ${book.pages.length} pages`;
   const edge = (direction: Direction) => <button type="button" className={`${s.turnEdge} ${direction === 1 ? s.nextEdge : s.previousEdge}`} disabled={direction === 1 ? index >= last : index === 0}
     aria-label={direction === 1 ? 'Turn next page — drag or press Enter' : 'Turn previous page — drag or press Enter'}
     onPointerEnter={e => peek(direction, e)} onPointerLeave={unpeek} onPointerDown={e => start(direction, e)} onPointerMove={move}
     onPointerUp={() => release()} onPointerCancel={() => release(true)} onLostPointerCapture={() => { if (drag.current) release(true); }}
     onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); start(direction); } if (e.key === 'Escape') commands.current.cancel(); }}><span aria-hidden="true">{direction === 1 ? '›' : '‹'}</span></button>;
-  return <ReadingNotes.Provider value={{ open: openNotes, toggle: id => setOpenNotes(previous => { const next = new Set(previous); if (next.has(id)) next.delete(id); else next.add(id); return next; }) }}><div className={s.reader} ref={scene} onKeyDownCapture={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); commands.current.cancel(); } }}>
-    <header className={s.readerTop}><button onClick={onExit}>← Library</button><span>{book.title}</span><div><button disabled={!advancedAvailable} onClick={() => { commands.current.cancel(); cancelAnimationFrame(coverFrame.current); openAmount.current = 0; coverTarget.current = false; setOpening(false); setOpened(false); setLinear(v => !v); }}>{linear ? 'Book view' : 'Simple reading'}</button><button onClick={async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await scene.current?.requestFullscreen(); } catch { /* Simple reading remains available if fullscreen is declined. */ } }}>Fullscreen</button><button onClick={onEdit}>Open Studio ↗</button></div></header>
-    {linear ? <main className={s.linearReader}><h1>{book.title}</h1>{book.dedication && <p>{book.dedication}</p>}{book.pages.map((page, i) => <article key={page.id}><h2>Page {i + 1}</h2>{page.elements.filter(e => !e.hidden).map(e => <div key={e.id}>{["shape", "sticker", "drawing"].includes(e.kind) && <div style={{ width: "min(100%, 400px)", aspectRatio: (e.width * book.widthMm) / (e.height * book.heightMm), containerType: "inline-size" }}><ElementContent element={e} book={book}/></div>}{e.assetId && book.assets[e.assetId] && <img src={book.assets[e.assetId].data} alt={e.text || 'Personal memory'}/>}<p style={{ whiteSpace: 'pre-wrap' }}>{e.text}</p></div>)}</article>)}</main> : <>
+  return <ReadingNotes.Provider value={{ open: openNotes, toggle: id => setOpenNotes(previous => { const next = new Set(previous); if (next.has(id)) next.delete(id); else next.add(id); return next; }) }}><div className={`${s.reader} ${environment.world}`} data-scene={environmentScene} ref={scene} onKeyDownCapture={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); commands.current.cancel(); } }}>
+    <header className={s.readerTop}><button onClick={onExit}>{exitLabel}</button><span>{book.title}</span><div><button disabled={!advancedAvailable} onClick={() => { commands.current.cancel(); cancelAnimationFrame(coverFrame.current); openAmount.current = 0; coverTarget.current = false; setOpening(false); setOpened(false); setLinear(v => !v); }}>{linear ? 'Book view' : 'Simple reading'}</button><button onClick={async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await scene.current?.requestFullscreen(); } catch { /* Simple reading remains available if fullscreen is declined. */ } }}>Fullscreen</button><button aria-pressed={backPreview} onClick={() => setBackPreview(v => !v)}>Back cover</button><button onClick={onEdit}>{editLabel}</button></div></header>
+    {!linear && <ReaderPlaces book={book} pageId={opened ? book.pages[visible[0]]?.id : undefined} onJump={jumpToPage}/>}{backPreview&&<div className={making.backPreview} style={{aspectRatio:book.widthMm/book.heightMm}}><BookSurface book={book} surface="back"/></div>}<ReaderEnvironment scene={environmentScene} choose={chooseEnvironment}/>{linear ? <main className={s.linearReader}><h1>{book.title}</h1>{book.dedication && <p>{book.dedication}</p>}{book.pages.map((page, i) => <article key={page.id}><h2>Page {i + 1}</h2>{page.elements.filter(e => !e.hidden).map(e => <div key={e.id}>{["shape", "sticker", "drawing"].includes(e.kind) && <div style={{ width: "min(100%, 400px)", aspectRatio: (e.width * book.widthMm) / (e.height * book.heightMm), containerType: "inline-size" }}><ElementContent element={e} book={book}/></div>}{e.assetId && book.assets[e.assetId] && <img src={book.assets[e.assetId].data} alt={e.text || 'Personal memory'}/>}<p style={{ whiteSpace: 'pre-wrap' }}>{e.text}</p></div>)}</article>)}</main> : <>
       <main className={`${s.readStage} ${single ? s.singleStage : ''}`} aria-label="Memory book reading area">
         <div className={s.groundShadow} aria-hidden="true"/>
         <div ref={volume} className={`${s.physicalBook} ${opened ? s.bookOpened : ''} ${opening ? s.opening : ''}`} data-material={book.cover.material} data-turning={turn !== null} style={{ '--open': openAmount.current, '--cover-shadow': Math.sin(Math.PI * openAmount.current), '--ratio': book.widthMm / book.heightMm, '--cover-color': book.cover.color, '--depth': `${thickness}px`, '--page-count': book.pages.length } as CSSProperties}>
-          <div className={s.backBoard} aria-hidden="true"/><div className={s.spine} aria-hidden="true"><i/><i/><i/></div>
+          <div className={s.backBoard} aria-hidden="true"/><div className={s.spine} aria-hidden="true">{book.cover.design?.bands!==false&&<><i/><i/><i/></>}{book.pages.length>=20&&<span className={making.spineText}>{book.cover.design?.spineTitle||book.title}</span>}</div>{book.cover.design?.ribbon&&<div className={making.ribbon} style={{"--ribbon":book.cover.design.ribbon} as CSSProperties}/>}
           <div className={`${s.pageStack} ${s.stackLeft}`} aria-hidden="true"/><div className={`${s.pageStack} ${s.stackRight}`} aria-hidden="true"/>
-          {!single && <div className={s.leftPage} aria-hidden={!opened || opening || turn !== null}><PageContent book={book} page={book.pages[leftIndex]} interactive={opened && !opening && !turn}/></div>}
-          <div className={s.rightPage} aria-hidden={!opened || opening || turn !== null}><PageContent book={book} page={book.pages[rightIndex]} interactive={opened && !opening && !turn}/></div>
+          {!single && <div className={s.leftPage} aria-hidden={!opened || opening || turn !== null}>{book.pages[leftIndex]?<PageContent book={book} page={book.pages[leftIndex]} interactive={opened && !opening && !turn}/>:<BookSurface book={book} surface="insideFront"/>}</div>}
+          <div className={s.rightPage} aria-hidden={!opened || opening || turn !== null}>{book.pages[rightIndex]?<PageContent book={book} page={book.pages[rightIndex]} interactive={opened && !opening && !turn}/>:<BookSurface book={book} surface="insideBack"/>}</div>
           <div className={s.gutter} aria-hidden="true"/><div className={s.castShadow} aria-hidden="true"/>
           <button className={s.hingedCover} aria-label={opened ? 'Close the cover' : `Open ${book.title}`} onClick={() => openCover(!coverTarget.current)} tabIndex={opened ? -1 : 0}>
-            <div className={s.coverFront}><Cover book={book}/><i className={s.coverLight}/></div><div className={s.coverBack}><PageContent book={book}/></div><i className={s.boardEdge}/><i className={s.boardBottom}/>
+            <div className={s.coverFront}><Cover book={book}/><i className={s.coverLight}/></div><div className={s.coverBack}><BookSurface book={book} surface="insideFront"/></div><i className={s.boardEdge}/><i className={s.boardBottom}/>
           </button>
           {turn !== null && <div ref={sheet} className={s.turnSheet} aria-hidden="true">{Array.from({ length: count }, (_, i) => <div key={i} ref={el => { strips.current[i] = el; }} className={s.strip} style={{ width: `${100 / count + .035}%` }}>
             <div className={s.stripFace}><div className={s.stripContent} style={{ width: 'var(--page-width)', left: `calc(var(--page-width) * ${-i / count})` }}><PageContent book={book} page={book.pages[mapping.front]}/></div><i className={s.surfaceLight}/></div>

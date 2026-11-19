@@ -2,8 +2,10 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { createBook, formats, LIMITS, uid, validateBook, type MemoryBookDocument } from '@/lib/memory-books';
 import { exportBook, loadLibrary, saveLibrary } from '@/lib/memory-book-storage';
-import { Cover } from './page-content';
+import { Cover } from './cover-renderer';
 import { BookStudio } from './book-studio';
+import {CoverStudio} from './cover-studio';
+import {ChapterOrganizer} from './chapter-organizer';
 import { BookReader } from './book-reader';
 import s from './memory-books.module.css';
 
@@ -15,11 +17,12 @@ export function BookLibrary() {
   const [notice, setNotice] = useState('');
   const [status, setStatus] = useState('Loading local drafts…');
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [mode, setMode] = useState<'library' | 'studio' | 'read'>('library');
+  const [mode, setMode] = useState<'library' | 'studio' | 'read' | 'cover' | 'organize'>('library');
   const [creating, setCreating] = useState(false);
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('recent');
   const [archive, setArchive] = useState(false);
+  const [collection, setCollection] = useState('');
   const revision = useRef(0);
   const savedRevision = useRef(0);
   const savedBooks = useRef<MemoryBookDocument[]>([]);
@@ -54,32 +57,42 @@ export function BookLibrary() {
   }, []);
   function change(next: MemoryBookDocument[]) { revision.current++; setBooks(next); }
   function update(book: MemoryBookDocument) { change(books.map(b => b.id === book.id ? { ...book, updatedAt: new Date().toISOString() } : b)); }
-  function open(book: MemoryBookDocument, next: 'read' | 'studio') { setActiveId(book.id); setMode(next); setNotice(''); }
+  function open(book: MemoryBookDocument, next: 'read' | 'studio' | 'cover' | 'organize') { setActiveId(book.id); setMode(next); setNotice(''); }
   function add(book: MemoryBookDocument) {
     if (books.length >= LIMITS.books) { setNotice('This local library supports 32 books. Export a backup before deleting a book to make room.'); return; }
     change([...books, book]); setCreating(false); open(book, 'read');
   }
   const active = books.find(b => b.id === activeId);
-  const visible = books.filter(b => b.archived === archive && b.title.toLowerCase().includes(search.toLowerCase())).sort((a, b) => sort === 'title' ? a.title.localeCompare(b.title) : sort === 'pages' ? b.pages.length - a.pages.length : (sort === 'created' ? b.createdAt.localeCompare(a.createdAt) : b.updatedAt.localeCompare(a.updatedAt)));
+  const collections = [...new Set(books.map(book => book.bookmaking?.collection?.trim()).filter((name): name is string => !!name))].sort();
+  const activeCollection = collections.includes(collection) ? collection : '';
+  const visible = books.filter(b => b.archived === archive && b.title.toLowerCase().includes(search.toLowerCase()) &&
+    (!activeCollection || b.bookmaking?.collection?.trim() === activeCollection)).sort((a, b) => sort === 'title' ? a.title.localeCompare(b.title) : sort === 'pages' ? b.pages.length - a.pages.length : (sort === 'created' ? b.createdAt.localeCompare(a.createdAt) : b.updatedAt.localeCompare(a.updatedAt)));
   return <div className={s.app}>
     {mode === 'library' && <>
       <div className={s.topbar}><a href="/" className={s.brand}>Dear Tomorrow.</a><span className={s.localBadge}>YOUR PRIVATE LITTLE LIBRARY · ON THIS DEVICE</span><a href="/">Back to Dear Tomorrow ↗</a></div>
       <main className={s.library} data-library-load-ms={process.env.NODE_ENV === 'development' ? loadMs : undefined}>
         <div className={s.libraryIntro}><div><span className={s.eyebrow}>FOR THE THINGS THAT STAY</span><h1>My Memory <em>Books.</em></h1><p>A place for your photographs, your words, your wonderfully ordinary days.</p></div><button className={s.primary} disabled={!loaded} onClick={() => setCreating(true)}>＋ Create a book</button></div>
         <div className={s.libraryTools}><label>Find a book<input aria-label="Search books" placeholder="A title, a little story…" value={search} onChange={e => setSearch(e.target.value)}/></label><label>Arrange by<select value={sort} onChange={e => setSort(e.target.value)}><option value="recent">Recently edited</option><option value="created">Recently created</option><option value="title">Title</option><option value="pages">Page count</option></select></label><button aria-pressed={archive} onClick={() => setArchive(v => !v)}>{archive ? 'Show my books' : 'Archived books'}</button><button disabled={!loaded} onClick={() => importRef.current?.click()}>Import a backup ↗</button></div>
+        {collections.length > 0 && <div className={s.libraryTools}><label>Collection<select value={activeCollection} onChange={event => setCollection(event.target.value)}>
+          <option value="">All collections</option>{collections.map(name => <option key={name}>{name}</option>)}
+        </select></label></div>}
         {loadError && <div role="alert" className={s.error}>{loadError} Reload this page to retry. Your stored library has not been changed.</div>}
         {!loaded && !loadError && <p>Opening your local library…</p>}
-        {loaded && visible.length === 0 && <div className={s.empty}><span className={s.emptyBook}>✧</span><h2>{search || archive ? 'No books here yet.' : 'Every story deserves a beginning.'}</h2><p>{search || archive ? 'Try another title, or return to your books.' : 'Choose a cover. Keep a moment. Make something that could only be yours.'}</p>{!search && !archive && <button className={s.primary} onClick={() => setCreating(true)}>Create your first book ↗</button>}</div>}
+        {loaded && visible.length === 0 && <div className={s.empty}><span className={s.emptyBook}>✧</span><h2>{search || archive || activeCollection ? 'No books here yet.' : 'Every story deserves a beginning.'}</h2><p>{search || archive || activeCollection ? 'Try another title or collection, or return to your books.' : 'Choose a cover. Keep a moment. Make something that could only be yours.'}</p>{!search && !archive && !activeCollection && <button className={s.primary} onClick={() => setCreating(true)}>Create your first book ↗</button>}</div>}
         <div className={s.shelf}>{visible.map(book => <article className={s.libraryBook} key={book.id}>
           <button className={s.coverButton} style={{ aspectRatio: book.widthMm / book.heightMm }} aria-label={`Read ${book.title}`} onClick={() => open(book, 'read')}><Cover book={book}/></button>
-          <h2>{book.title}</h2><p>{book.pages.length} pages · {book.chapters.length} chapters · {Math.round(book.widthMm)} × {Math.round(book.heightMm)} mm</p>
-          <div className={s.bookActions}><button onClick={() => open(book, 'read')}>Read ↗</button><button onClick={() => open(book, 'studio')}>Studio ↗</button><details><summary aria-label={`Options for ${book.title}`}>•••</summary><div><button onClick={() => { const copy = structuredClone(book); copy.id = uid(); copy.title = (book.title + ' — copy').slice(0, 120); copy.createdAt = copy.updatedAt = new Date().toISOString(); add(copy); }}>Duplicate</button><button onClick={() => exportBook(book)}>Export backup</button><button onClick={() => update({ ...book, archived: !book.archived })}>{book.archived ? 'Restore' : 'Archive'}</button><button onClick={() => { if (window.confirm(`Delete “${book.title}” from this device? Export a backup first if you want to keep it. This cannot be undone.`)) change(books.filter(b => b.id !== book.id)); }}>Delete…</button></div></details></div>
+          <h2>{book.title}</h2><p>{book.pages.length} pages · {book.chapters.length} {book.chapters.length === 1 ? 'chapter' : 'chapters'} · {book.widthMm} × {book.heightMm} mm</p>
+          {(book.bookmaking?.collection || book.bookmaking?.series || book.bookmaking?.volume) &&
+            <p>{[book.bookmaking.collection, book.bookmaking.series, book.bookmaking.volume && `Volume ${book.bookmaking.volume}`].filter(Boolean).join(' · ')}</p>}
+          <div className={s.bookActions}><button onClick={() => open(book, 'read')}>Read ↗</button><button onClick={() => open(book, 'studio')}>Studio ↗</button><details><summary aria-label={`Options for ${book.title}`}>•••</summary><div><button onClick={() => { const copy = structuredClone(book); copy.id = uid(); copy.title = (book.title + ' — copy').slice(0, 120); copy.createdAt = copy.updatedAt = new Date().toISOString(); add(copy); }}>Duplicate</button><button onClick={() => open(book, 'cover')}>Cover Studio</button><button onClick={() => open(book, 'organize')}>Chapters & pages</button><button onClick={() => exportBook(book)}>Export backup</button><button onClick={() => update({ ...book, archived: !book.archived })}>{book.archived ? 'Restore' : 'Archive'}</button><button onClick={() => { if (window.confirm(`Delete “${book.title}” from this device? Export a backup first if you want to keep it. This cannot be undone.`)) change(books.filter(b => b.id !== book.id)); }}>Delete…</button></div></details></div>
         </article>)}</div>
         <p className={s.storageNote}>Saved only in this browser on this device. Clearing browser data removes drafts. Export a project backup to keep a separate copy. Photos stay on your device.</p>
       </main>
     </>}
     {active && mode === 'studio' && <BookStudio key={active.id} book={active} onChange={update} status={status} onRead={() => setMode('read')} onDone={() => setMode('library')} onError={setNotice}/>}
     {active && mode === 'read' && <BookReader key={active.id} book={active} onEdit={() => setMode('studio')} onExit={() => setMode('library')}/>}
+    {active && mode === 'cover' && <CoverStudio book={active} onChange={update} status={status} onDone={()=>setMode('library')} onError={setNotice}/>}
+    {active && mode === 'organize' && <ChapterOrganizer book={active} onChange={update} onDone={()=>setMode('library')} onError={setNotice}/>}
     {notice && <div className={s.toast} role="alert"><span>{notice}</span><button onClick={() => setNotice('')}>Dismiss</button>{status === 'Unable to save' && <><button onClick={() => setRetry(v => v + 1)}>Retry saving</button>{active && <button onClick={() => exportBook(active)}>Export current book</button>}</>}</div>}
     <input hidden ref={importRef} type="file" accept=".json,application/json" onChange={async event => { const file = event.target.files?.[0]; event.target.value = ''; if (!file) return; try { if (file.size > LIMITS.projectBytes) throw new Error('Choose a project smaller than 30 MB.'); const book = structuredClone(validateBook(JSON.parse(await file.text()))); book.id = uid(); book.title = (book.title + ' — imported').slice(0, 120); book.archived = false; book.createdAt = book.updatedAt = new Date().toISOString(); add(book); } catch (error) { setNotice(error instanceof Error ? error.message : 'Unable to import this project.'); } }}/>
     {creating && <CreateBook onCreate={add} onClose={() => setCreating(false)}/>}

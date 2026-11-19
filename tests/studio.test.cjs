@@ -13,6 +13,58 @@ function load(file) {
 const model = load('src/lib/memory-books.ts'), geometry = load('src/lib/studio-geometry.ts'), content = load('src/lib/studio-content.ts'), doc = load('src/lib/studio-document.ts'), { StudioHistory } = load('src/lib/studio-history.ts');
 const make = () => model.createBook('Anniversary QA', 180, 240, '#643e4a', 'linen', false);
 const near = (a,b) => assert.ok(Math.abs(a-b)<1e-8, `${a} != ${b}`);
+const bookmaking = load('src/lib/bookmaking.ts');
+
+test('bookmaking metadata and independent cover canvases survive a backup round trip', () => {
+  const book = make();
+  const orderedIds = Array.from(book.pages, page => page.id);
+  const cover = bookmaking.coverDesign(book);
+  const front = model.blankPage();
+  front.elements.push({...model.newElement('text'), text: 'S & H'});
+  book.cover.design = {...cover, fabric: 'velvet', lettering: 'gold', ribbon: '#b98583', surfaces: {front}};
+  book.bookmaking = {version: 1, collection: 'Our story', series: 'First years', volume: 2, contents: true};
+  const copy = model.validateBook(JSON.parse(JSON.stringify(book)));
+  assert.deepEqual(Array.from(copy.pages, page => page.id), orderedIds);
+  assert.equal(JSON.stringify(copy), JSON.stringify(book));
+  for (const change of [
+    b => { b.cover.design.version = 2; },
+    b => { b.cover.design.ribbon = 'url(https://example.com)'; },
+    b => { b.cover.design.surfaces.front.chapterId = b.chapters[0].id; },
+    b => { b.bookmaking.volume = 1.5; },
+    b => { b.chapters[0].color = 'invalid'; },
+  ]) {
+    const broken = structuredClone(book);
+    change(broken);
+    assert.throws(() => model.validateBook(broken), /unsupported format/);
+  }
+});
+
+test('explicit chapter moves preserve every page and keep contents numbering in sync', () => {
+  const book = make();
+  const first = book.chapters[0].id;
+  const second = model.uid();
+  const [a, b] = book.pages;
+  const c = bookmaking.divider(second, 'Little adventures', 'botanical');
+  const unassigned = model.blankPage();
+  book.chapters.push({id: second, title: 'Little adventures'});
+  book.pages = [a, c, b, unassigned];
+  const order = value => Array.from(value.pages, p => p.id);
+  assert.deepEqual(order(model.validateBook(book)), order(book));
+  const reordered = bookmaking.reorderChapter(book, second, -1);
+  assert.deepEqual(order(reordered), [c.id, a.id, b.id, unassigned.id]);
+  assert.deepEqual(Array.from(bookmaking.contents(reordered), item => item.page), [1, 2]);
+  const moved = bookmaking.movePages(reordered, [a.id, unassigned.id], second);
+  assert.deepEqual(order(moved), order(reordered));
+  const duplicate = bookmaking.duplicateChapter(moved, second);
+  const copiedChapter = duplicate.chapters[1].id;
+  const copied = duplicate.pages.filter(page => page.chapterId === copiedChapter);
+  assert.equal(copied.length, 3);
+  assert.notEqual(copied[0].elements[0].id, c.elements[0].id);
+  assert.equal(copied[0].elements[0].text, c.elements[0].text);
+  assert.equal(new Set(order(duplicate)).size, 7);
+  assert.equal(book.pages[0].chapterId, first);
+  model.validateBook(duplicate);
+});
 test('version 1 upgrades in memory with stable IDs, photo bytes and object geometry, without mutating the input', () => {
   const b = make(); b.version = 1; const original = JSON.stringify(b), result = model.validateBook(b);
   assert.equal(JSON.stringify(b), original); assert.equal(result.version,2); assert.equal(result.id,b.id); assert.equal(result.pages[0].elements[1].id,b.pages[0].elements[1].id);

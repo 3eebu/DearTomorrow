@@ -33,6 +33,3 @@ export function PageContent({ page, book, interactive = false }: { page?: BookPa
     {page ? page.elements.map(e => <div key={e.id} className={s.object} style={elementStyle(e)}><ElementContent element={e} book={book} interactive={interactive}/></div>) : <div className={s.endpaper}><span>Dear Tomorrow.</span><em>{book.dedication || 'For all the things that stay.'}</em></div>}
   </div>;
 }
-export function Cover({ book }: { book: MemoryBookDocument }) {
-  return <div className={`${s.cover} ${s[book.cover.material]}`} style={{ backgroundColor: book.cover.color }}><div className={s.coverInset}><small>DEAR TOMORROW</small><span className={s.coverOrnament}>✧</span><strong>{book.title}</strong><span className={s.coverRule}/><em>{book.subtitle}</em><small>A BOOK OF MOMENTS</small></div></div>;
-}

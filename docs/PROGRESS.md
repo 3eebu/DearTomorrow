@@ -59,3 +59,7 @@ See `docs/MEMORY_BOOKS.md` for architecture, implemented workflow, actual checks
 - Restored the homepage newspaper clippings' overlap beyond the artwork panel on desktop. The headline and controls remain above the artwork.
 - On mobile the backdrop is inset so papers extend beyond its sides while the composition stays within the viewport.
 - Inspected at 1440px and 390px; the 390px document did not overflow horizontally. The original About montage remains separate.
+
+## The Art of Bookmaking — 2026-11-19
+- Added Cover Studio, a chapter and page organizer, collection filtering, bookmark and resume controls, and three selectable reading environments.
+- See `docs/BOOKMAKING.md` for document compatibility, verified workflows, and remaining work.
