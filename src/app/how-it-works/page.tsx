@@ -10,10 +10,10 @@ export const metadata:Metadata={
 const steps=[
   {number:"01",title:"Start with something small.",body:"A note you want to write. A date you never want to forget. A story you want to give a title. You don't need to plan an entire book before beginning."},
   {number:"02",title:"Make it yours.",body:"Choose a cover, write in your own words or add a meaningful date. We want the experience to feel personal without making you learn a complicated editor."},
-  {number:"03",title:"Give it a place to live.",body:"In the full version, letters, book pages and memories will live together in a private shared space. For now, the preview is local and temporary."}
+  {number:"03",title:"Give it a place to live.",body:"The current preview saves your work in this browser. A private space to share letters, books and memories is part of the longer-term vision."}
 ];
 const experiences=[
-  {name:"Letters",status:"Preview available",body:"Write a guest letter or explore six example letters for a journey. The schedule is illustrative, not a working delivery system.",href:"/letters",cta:"Explore Letters"},
+  {name:"Letters",status:"Available in this preview",body:"Write, customize and seal a letter, then keep it in your browser’s Letter Box. Letters to Tomorrow can count down to a local opening time.",href:"/letters",cta:"Explore Letters"},
   {name:"Memory Books",status:"Preview available",body:"Create books, personalize pages, read your story, and keep local drafts on this device.",href:"/memory-books",cta:"Open Memory Books"},
   {name:"Memory Tree",status:"Available in this preview",body:"Explore an example tree or plant your own. Each memory becomes a leaf you can find on the tree, timeline and calendar. Personal trees are saved in this browser.",href:"/memory-tree",cta:"Explore memories"}
 ];

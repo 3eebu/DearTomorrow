@@ -58,7 +58,7 @@ export default function AboutPage(){
     <section className="info-honesty-section">
       <p className="info-kicker">WHERE WE ARE TODAY</p>
       <h2>A beginning, <em>not a finished story.</em></h2>
-      <p>Dear Tomorrow is currently an interactive prototype. You can explore sample letters, customize a demo book, and add example memories in your browser. Real accounts, private storage, scheduled delivery and subscriptions have not launched yet.</p>
+      <p>Dear Tomorrow is currently an interactive prototype. You can write letters, customize books, and grow a Memory Tree. Your work is saved in this browser. Accounts, shared storage, scheduled delivery and subscriptions are part of the longer-term vision.</p>
       <Link href="/how-it-works" className="info-btn">What can I try? <span aria-hidden="true">↗</span></Link>
     </section>
   </InformationShell>;

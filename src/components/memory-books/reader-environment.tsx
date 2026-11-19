@@ -11,12 +11,16 @@ export function ReaderEnvironment({ scene, choose }: { scene: string; choose: (v
       )}
       <button type="button" aria-pressed={paused} onClick={() => setPaused(value => !value)}>Pause scene motion</button>
     </nav>
-    <div className={s.decor} data-paused={paused} aria-hidden="true">
-      <div className={s.table}/>
-      {scene === 'candle' ? <div className={s.candle}>
-        <i className={s.glow}/><i className={s.flame}/><i className={s.wick}/><div className={s.wax}/><div className={s.saucer}/>
-      </div> : scene === 'rain' ? <div className={s.window}><i className={s.rainDrops}/></div> :
-        <div className={s.sun}/>}
-    </div>
+    <ReadingAtmosphere scene={scene} paused={paused}/>
   </>;
+}
+
+export function ReadingAtmosphere({ scene, paused }: { scene: string; paused: boolean }) {
+  return <div className={s.decor} data-paused={paused} aria-hidden="true">
+    <div className={s.table}/>
+    {scene === 'candle' ? <div className={s.candle}>
+      <i className={s.glow}/><i className={s.flame}/><i className={s.wick}/><div className={s.wax}/><div className={s.saucer}/>
+    </div> : scene === 'rain' ? <div className={s.window}><i className={s.rainDrops}/></div> :
+      <div className={s.sun}/>}
+  </div>;
 }

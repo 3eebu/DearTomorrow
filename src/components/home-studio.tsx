@@ -101,18 +101,14 @@ function JourneyLetters() {
   </section>;
 }
 
-export default function HomeStudio({ page = 'home', tree }: { page?: WorkspacePage; tree?: ReactNode }) {
+export default function HomeStudio({ page = 'home', tree, letters }: { page?: WorkspacePage; tree?: ReactNode; letters?: ReactNode }) {
   useReveals();
   const isHome = page === 'home';
   const [mobileMenu, setMobileMenu] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
-  const [composeOpen, setComposeOpen] = useState(false);
-  const [draft, setDraft] = useState('');
-  const [letterKind, setLetterKind] = useState('A simple letter');
-  const [previewLetter, setPreviewLetter] = useState(false);
   return <div className="dt-app" id="home">
     <a className="dt-skip" href="#dt-main">Skip to the story</a>
-    <div className="dt-prototype-banner">{page === 'memory-tree' ? 'A WORK IN PROGRESS · YOUR MEMORIES ARE SAVED ON THIS DEVICE' : 'A WORK IN PROGRESS · THIS IS A SAFE, UNSAVED DEMO'}</div>
+    <div className="dt-prototype-banner">{page === 'memory-tree' ? 'A WORK IN PROGRESS · YOUR MEMORIES ARE SAVED ON THIS DEVICE' : page === 'letters' ? 'A WORK IN PROGRESS · YOUR LETTERS ARE SAVED ON THIS DEVICE' : 'A WORK IN PROGRESS · THIS IS A SAFE, UNSAVED DEMO'}</div>
     <header className="dt-header">
       <Link className="dt-wordmark" href="/" aria-label="Dear Tomorrow home">Dear <em>Tomorrow.</em></Link>
       <nav className={'dt-navigation ' + (mobileMenu ? 'dt-nav-open' : '')} aria-label="Primary navigation">
@@ -170,19 +166,7 @@ export default function HomeStudio({ page = 'home', tree }: { page?: WorkspacePa
         </div>
       </section>}
 
-      {page === 'letters' && <>
-      <section id="letters" className="dt-letters-section dt-section" aria-labelledby="letters-heading">
-        <div className="dt-letters-copy" data-reveal><span className="dt-overline">01 / LETTERS FOR LATER</span>
-          <h2 id="letters-heading">Some things are better <em>said in a letter.</em></h2>
-          <p>For the big days, the hard days, and the ones you don&apos;t know are important until you look back.</p>
-          <button type="button" className="dt-text-action" onClick={() => setComposeOpen(true)}>Write a little something <span aria-hidden="true">↗</span></button>
-        </div>
-        <div className="dt-stationery-panel" data-reveal aria-hidden="true">
-          <div className="dt-stationery-line"/><div className="dt-stationery-letter"><span>FOR AN ORDINARY DAY</span><strong>Here is a little reminder.</strong><p>You are loved, even from far away.</p><em>with all my heart.</em></div><div className="dt-stationery-shadow"/>
-        </div>
-      </section>
-      <JourneyLetters />
-      </>}
+      {page === 'letters' && <>{letters}<JourneyLetters /></>}
 
       {page === 'memory-tree' && tree}
 
@@ -218,21 +202,5 @@ export default function HomeStudio({ page = 'home', tree }: { page?: WorkspacePa
       </div><p className="dt-inline-note">This is a demo. Nothing is shared or stored online.</p>
     </Dialog>}
 
-    {composeOpen && <Dialog title="Write a guest letter" onClose={() => setComposeOpen(false)}>
-      <span className="dt-overline">A LETTER, JUST FOR YOU</span>
-      <h2 className="dt-dialog-title">Dear <em>someone special,</em></h2>
-      <div className="dt-form">
-        <label htmlFor="dt-letter-kind">What kind of letter is this?</label>
-        <select id="dt-letter-kind" value={letterKind} onChange={event => setLetterKind(event.target.value)}>
-          <option>A simple letter</option><option>Open when…</option><option>A future letter (preview only)</option><option>A journey letter (preview only)</option>
-        </select>
-        <label htmlFor="dt-letter-draft">Your words</label>
-        <textarea id="dt-letter-draft" rows={7} maxLength={7000} placeholder="There is something I've been meaning to tell you..." value={draft} onChange={event => setDraft(event.target.value)} />
-        {previewLetter && <div className="dt-draft-preview"><span className="dt-overline">{letterKind}</span><p>{draft.trim() || 'Your words will appear here.'}</p><em>With love.</em></div>}
-        <div className="dt-dialog-actions"><button type="button" className="dt-button dt-button-dark" onClick={() => setPreviewLetter(value => !value)}>{previewLetter ? 'Return to writing' : 'Preview my letter'} <span aria-hidden="true">↗</span></button>
-          <button type="button" className="dt-text-action" onClick={() => setComposeOpen(false)}>Close for now</button></div>
-        <p className="dt-inline-note">Guest draft only. Not sent, securely stored or available after refresh.</p>
-      </div>
-    </Dialog>}
   </div>;
 }

@@ -6,7 +6,7 @@ The reader now has a custom curved CSS 3D surface, dimensional covers and separa
 ## Current implementation
 - Redesigned no-photography landing page: warm editorial typography, simple navigation, textured stationery, a cinematic fictional newspaper montage in the homepage and About hero, and reveal animation.
 - Homepage hero newspaper montage with fictional editorial clippings, replay control and a separate mobile arrangement.
-- Create flow with three beginner-first choices and a local letter composer including preview.
+- Create flow with three beginner-first choices and the browser-local Letters workspace. The Letter Box, Studio, dimensional reader, attachments and local countdowns are documented in `docs/LETTERS.md`.
 - Memory Books: homepage sample plus a local multi-book library at `/memory-books`, separate flat Studio and immersive Reading, personal photo/Polaroid/text editing, chapters/pages and IndexedDB autosave. See `docs/MEMORY_BOOKS.md` for the first review checkpoint.
 - Memory Tree: procedural 3D tree with one leaf per saved memory, three species, linked journal, timeline and calendar, and local storage for memories and photos. See `docs/MEMORY_TREE.md`.
 - Journey Letters: route animation and six selectable demonstration checkpoints.
@@ -14,8 +14,8 @@ The reader now has a custom curved CSS 3D surface, dimensional covers and separa
 - Responsive mobile navigation, reduced-motion rules, modal keyboard focus cycling, basic semantic controls.
 
 ## Not yet done or verified
-- No live accounts, server database, cloud uploads, real letter sending, subscriptions, real scheduled unlocks, email notifications or offline letter functionality. Memory Book photo import and draft storage are local only.
-- Memory Book drafts and personal Memory Trees persist in this browser via separate IndexedDB databases. The homepage sample and letter composer still reset on refresh.
+- No live accounts, server database, cloud uploads, real letter sending, subscriptions, secure scheduled unlocks or email notifications. Letters to Tomorrow simulate an opening time using the device clock.
+- Letters, Memory Books and personal Memory Trees persist in this browser via separate IndexedDB databases. Backups can be exported from each workspace.
 - Memory Tree passed synthetic tests through 1,000 memories. Physical-device and cross-browser graphics profiling remains open.
 - The Memory Book first review checkpoint is functional, with a curved segmented-sheet approximation. The full master vision, measured performance, real-device touch and cross-browser polish remain unfinished.
 - No images have been added to the homepage; in the future users can opt to upload their own photos.
