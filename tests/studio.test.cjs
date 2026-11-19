@@ -14,6 +14,86 @@ const model = load('src/lib/memory-books.ts'), geometry = load('src/lib/studio-g
 const make = () => model.createBook('Anniversary QA', 180, 240, '#643e4a', 'linen', false);
 const near = (a,b) => assert.ok(Math.abs(a-b)<1e-8, `${a} != ${b}`);
 const bookmaking = load('src/lib/bookmaking.ts');
+const magic = load('src/lib/book-surprises.ts');
+
+test('anniversary project backups retain all seven surprises, independent photo faces, and wrapping', () => {
+  const { anniversaryBook } = require('./create-magic-fixture.cjs');
+  const book = anniversaryBook();
+  const backup = JSON.stringify(book);
+  const restored = model.validateBook(JSON.parse(backup));
+  assert.equal(JSON.stringify(restored), backup);
+  assert.deepEqual(restored.pages.flatMap(page => page.elements.flatMap(e => e.surprise?.type ?? [])),
+    Array.from(magic.surpriseKinds));
+  const photograph = restored.pages[1].elements.find(e => e.kind === 'polaroid');
+  assert.equal(photograph.assetId, 'fixture');
+  assert.equal(photograph.surprise.message.place, 'The coast');
+  assert.equal(restored.gift.tag, 'For our anniversary');
+});
+
+test('imports reject unsupported or unsafe surprise data before a project can be saved', () => {
+  const { anniversaryBook } = require('./create-magic-fixture.cjs');
+  for (const mutate of [
+    b => { b.pages[0].elements[1].surprise.version = 2; },
+    b => { b.pages[0].elements[1].surprise.seal = 'url(https://example.test/image)'; },
+    b => { b.pages[0].elements[1].surprise.opened = true; },
+    b => { b.pages[0].elements[1].surprise.message.assetId = 'missing-photo'; },
+    b => { b.pages[0].elements[1].surprise.message.words = 'x'.repeat(20001); },
+    b => { const p = b.pages[2].elements[2].surprise; p.items[1].id = p.items[0].id; },
+    b => { b.pages[0].elements[1].kind = 'photo'; },
+    b => { delete b.pages[0].elements[1].surprise; },
+    b => { b.gift.pattern = 'remote'; },
+    b => { b.gift.version = 9; },
+  ]) {
+    const book = anniversaryBook();
+    mutate(book);
+    assert.throws(() => model.validateBook(book), /unsupported format/);
+  }
+});
+
+test('hidden photo upload preserves front and newer copy; removed keepsake aborts without allocating an asset', () => {
+  const book = make(), page = book.pages[0];
+  const reversible = doc.surpriseElement('reverse');
+  const pocket = doc.surpriseElement('pocket');
+  book.assets.front = { name: 'Front', data: 'data:image/png;base64,aGVsbG8=' };
+  reversible.assetId = 'front';
+  reversible.surprise.message.words = 'Newer writing on the back';
+  page.elements.push(reversible, pocket);
+  const before = JSON.stringify(book);
+  const changed = doc.insertPhoto(book, page.id, book.assets.front.data, 'Back', reversible.id, { type: 'reverse' });
+  const next = changed.pages[0].elements.find(e => e.id === reversible.id);
+  assert.equal(next.assetId, 'front');
+  assert.notEqual(next.surprise.message.assetId, 'front');
+  assert.equal(next.surprise.message.words, 'Newer writing on the back');
+  assert.throws(() => doc.insertPhoto(book, page.id, book.assets.front.data, 'Pocket', pocket.id,
+    { type: 'pocket', itemId: 'removed' }), /destination changed/);
+  assert.equal(JSON.stringify(book), before);
+  model.validateBook(changed);
+});
+
+test('reader interaction keys stay isolated per page and curved strips never render duplicate controls', () => {
+  const React = require('react'), render = require('react-dom/server').renderToStaticMarkup;
+  const { PageContent } = load('src/components/memory-books/page-content.tsx');
+  const { ReadingInteractions } = load('src/components/memory-books/paper-surprise.tsx');
+  const book = make(), [first, second] = book.pages;
+  const element = doc.surpriseElement('envelope');
+  first.elements = [element]; second.elements = [{ ...element }];
+  const key = magic.interactionKey(first.id, element.id);
+  assert.notEqual(key, magic.interactionKey(second.id, element.id));
+  assert.notEqual(magic.interactionKey('a:b', 'c'), magic.interactionKey('a', 'b:c'));
+  const renderPage = (page, props = {}) => render(React.createElement(ReadingInteractions.Provider,
+    { value: { states: new Map([[key, { opened: true }]]), update() {} } },
+    React.createElement(PageContent, { page, book, ...props })));
+  assert.match(renderPage(first, { interactive: true }), /Return letter/);
+  assert.match(renderPage(second, { interactive: true }), /Open envelope/);
+  const strip = renderPage(first, { strip: [36, 40] });
+  assert.match(strip, /data-open="true"/);
+  assert.doesNotMatch(strip, /<button|tabindex/);
+  assert.doesNotMatch(renderPage(first, { strip: [0, 2] }), /data-surprise=/);
+  const copy = doc.copyObjects([element])[0];
+  assert.notEqual(copy.id, element.id);
+  assert.equal(JSON.stringify(copy.surprise), JSON.stringify(element.surprise));
+  assert.ok(magic.surpriseOverlapsStrip({ x: 38, width: 8, height: 35, rotation: 90 }, .75, 62, 67));
+});
 
 test('bookmaking metadata and independent cover canvases survive a backup round trip', () => {
   const book = make();

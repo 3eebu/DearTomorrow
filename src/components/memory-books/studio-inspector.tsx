@@ -2,11 +2,14 @@
 import { fonts, type BookElement, type BookPage, type MemoryBookDocument } from '@/lib/memory-books';
 import { editText, formatRange } from '@/lib/studio-content';
 import { useRef } from 'react';
+import type { SurpriseKind } from '@/lib/book-surprises';
+import { SurpriseInspector } from './surprise-inspector';
 import s from './studio.module.css';
 
-export function StudioInspector({ book, page, selected: e, patch, changePage, commit, upload, continueText }: {
+export function StudioInspector({ book, page, selected: e, patch, changePage, commit, upload, continueText, allowSurprises, uploadHidden }: {
   book: MemoryBookDocument; page: BookPage; selected?: BookElement; patch: (p: Partial<BookElement>, key?: string) => void;
   changePage: (p: BookPage, key?: string) => void; commit: (b: MemoryBookDocument, key?: string) => void; upload: () => void; continueText: () => void;
+  allowSurprises: boolean; uploadHidden: (type: SurpriseKind, itemId?: string) => void;
 }) {
   const selection = useRef({ start: 0, end: 0 });
   const field = (label: string, key: keyof BookElement, min: number, max: number, fallback: number, step = .1) => e && <label>{label}<input type="number" min={min} max={max} step={step} value={Number(Number(e[key] ?? fallback).toFixed(2))} disabled={e.locked} onChange={ev => { const n = ev.target.valueAsNumber; if (Number.isFinite(n)) patch({ [key]: Math.max(min, Math.min(max, n)) }, `${e.id}:${key}`); }}/></label>;
@@ -25,11 +28,12 @@ export function StudioInspector({ book, page, selected: e, patch, changePage, co
     {e ? <>
       <span className={s.kicker}>{e.kind} · {e.locked ? 'Locked' : 'Make it yours'}</span>
       {e.kind === 'photo' && <label>Image description<textarea maxLength={20000} rows={3} value={e.text} disabled={e.locked} onChange={ev=>patch({text:ev.target.value},`${e.id}:description`)}/></label>}
-      {e.kind === 'note' && colour('Note paper', 'background')}
+      {e.kind === 'note' && !e.surprise && colour('Note paper', 'background')}
       {e.kind === 'shape' && e.shape === 'rectangle' && field('Corner radius', 'radius', 0, 50, 0, 1)}
       <label>Layer name<input disabled={e.locked} maxLength={100} value={e.name || ''} placeholder={e.kind} onChange={ev => patch({ name: ev.target.value }, `${e.id}:name`)}/></label>
+      {allowSurprises && <SurpriseInspector element={e} book={book} patch={patch} upload={uploadHidden}/>}
       {(e.kind === 'photo' || e.kind === 'polaroid') && <><label>Use a saved photograph<select disabled={e.locked} value={e.assetId || ''} onChange={ev => patch({ assetId: ev.target.value || undefined })}><option value="">Choose from this book…</option>{Object.entries(book.assets).map(([id, asset]) => <option key={id} value={id}>{asset.name}</option>)}</select></label><button disabled={e.locked} onClick={upload}>{e.assetId ? 'Replace photograph' : 'Choose photograph'} ↗</button></>}
-      {['text', 'note', 'polaroid'].includes(e.kind) && <details open={e.kind === 'text' || e.kind === 'note'}><summary>Writing & caption</summary><label>{e.kind === 'text' || e.kind === 'note' ? 'Your words' : 'Caption / image description'}<textarea rows={5} maxLength={20000} value={e.text} disabled={e.locked} onSelect={ev => { selection.current = { start: ev.currentTarget.selectionStart, end: ev.currentTarget.selectionEnd }; }} onChange={ev => patch({ text: ev.target.value, runs: editText(e.text, ev.target.value, e.runs) }, `${e.id}:text`)}/></label>
+      {['text', 'note', 'polaroid'].includes(e.kind) && !(e.kind === 'note' && e.surprise) && <details open={e.kind === 'text' || e.kind === 'note'}><summary>Writing & caption</summary><label>{e.kind === 'text' || e.kind === 'note' ? 'Your words' : 'Caption / image description'}<textarea rows={5} maxLength={20000} value={e.text} disabled={e.locked} onSelect={ev => { selection.current = { start: ev.currentTarget.selectionStart, end: ev.currentTarget.selectionEnd }; }} onChange={ev => patch({ text: ev.target.value, runs: editText(e.text, ev.target.value, e.runs) }, `${e.id}:text`)}/></label>
       <p className={s.help}>Double-click writing on the page to edit. Select words here to format just that passage.</p>
       <div className={s.actionRow}>{(['bold', 'italic', 'underline'] as const).map((key, i) => <button key={key} disabled={e.locked} aria-label={key} aria-pressed={!!e[key]} onMouseDown={ev => ev.preventDefault()} onClick={() => format(key)}>{['B', 'I', 'U'][i]}</button>)}</div>
       <label>Writing style<select disabled={e.locked} value={e.font} onChange={ev => patch({ font: ev.target.value as BookElement['font'] })}>{Object.keys(fonts).map(f => <option key={f} value={f}>{({ serif: 'Classic book · Georgia', sans: 'Clean sans · Arial', hand: 'Handwritten · system cursive', mono: 'Typewriter · Courier' })[f]}</option>)}</select></label>

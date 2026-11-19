@@ -63,3 +63,7 @@ See `docs/MEMORY_BOOKS.md` for architecture, implemented workflow, actual checks
 ## The Art of Bookmaking — 2026-11-19
 - Added Cover Studio, a chapter and page organizer, collection filtering, bookmark and resume controls, and three selectable reading environments.
 - See `docs/BOOKMAKING.md` for document compatibility, verified workflows, and remaining work.
+
+## The Magic Within — Memory Book milestone 4
+- Added seven interactive paper surprises, local gift wrapping, and refinements and a pause control for the reader’s three environments.
+- See `docs/MEMORY_BOOK_MAGIC.md` for usage, compatibility, verification, and remaining voice and device work.

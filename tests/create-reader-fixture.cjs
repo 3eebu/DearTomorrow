@@ -1,11 +1,6 @@
 // Generates importable QA books; never reads or writes the user's browser library.
 const fs = require('node:fs');
-const vm = require('node:vm');
-const ts = require('typescript');
-const model = { exports: {} };
-vm.runInNewContext(ts.transpileModule(fs.readFileSync('src/lib/memory-books.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText,
-  { exports: model.exports, crypto: require('node:crypto').webcrypto });
-const { createBook, blankPage, newElement, validateBook } = model.exports;
+const { createBook, blankPage, newElement, validateBook } = require('./load-book-model.cjs')('./memory-books');
 const count = Number(process.argv[2] || 20);
 const book = createBook(`Realism QA — ${count} pages`, 203.2, 203.2, '#643e4a', 'linen', true);
 book.assets.fixture = { name: 'book-photo.png', data: 'data:image/png;base64,' + fs.readFileSync('tests/fixtures/book-photo.png').toString('base64') };

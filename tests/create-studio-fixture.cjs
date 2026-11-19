@@ -1,8 +1,6 @@
 // Synthetic acceptance data only; never opens the user's browser storage.
-const fs=require('node:fs'),vm=require('node:vm'),ts=require('typescript');
-const context={exports:{},crypto:require('node:crypto').webcrypto};
-vm.runInNewContext(ts.transpileModule(fs.readFileSync('src/lib/memory-books.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,context);
-const {createBook,blankPage,newElement,validateBook}=context.exports;
+const fs=require('node:fs');
+const {createBook,blankPage,newElement,validateBook}=require('./load-book-model.cjs')('./memory-books');
 function anniversary(objects=10,pages=20){
   const b=createBook(`Creative Freedom QA — ${objects} objects`,180,240,'#643e4a','linen',true);
   b.assets.qa={name:'Synthetic photograph.png',data:'data:image/png;base64,'+fs.readFileSync('tests/fixtures/book-photo.png').toString('base64')};

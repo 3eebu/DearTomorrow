@@ -4,7 +4,11 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { type MemoryBookDocument } from '@/lib/memory-books';
 import { clamp, lastSpread, motionDuration, paperSurface, releaseTurn, turnPages, visiblePages } from '@/lib/book-physics';
-import { PageContent, ReadingNotes, ElementContent } from './page-content';
+import { PageContent, ElementContent } from './page-content';
+import { ReadingInteractions, SimpleSurprise } from './paper-surprise';
+import type { Interaction } from '@/lib/book-surprises';
+import { GiftActions, WrappedCover, useGiftPresentation } from './gift-presentation';
+import giftStyles from './gift-presentation.module.css';
 import s from './book-reader.module.css';
 
 import {ReaderEnvironment,useEnvironment} from './reader-environment';
@@ -14,16 +18,18 @@ import making from './bookmaking.module.css';
 import environment from './reader-environment.module.css';
 type Direction = 1 | -1;
 type Gesture = { x: number; y: number; last: number; time: number; velocity: number; width: number; height: number; initial: number; corner: number; moved: boolean };
-export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', editLabel = 'Open Studio ↗' }: {
+export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', editLabel = 'Open Studio ↗', startWrapped = false }: {
   book: MemoryBookDocument; onEdit: () => void; onExit: () => void; exitLabel?: string; editLabel?: string;
+  startWrapped?: boolean;
 }) {
+  const gift = useGiftPresentation(startWrapped && !!book.gift, book.id);
   const {scene:environmentScene,choose:chooseEnvironment}=useEnvironment(book.id);
   const [backPreview,setBackPreview]=useState(false);
   const [opened, setOpened] = useState(false), [opening, setOpening] = useState(false);
   const [index, setIndex] = useState(0), [single, setSingle] = useState(false), [linear, setLinear] = useState(false);
   const [advancedAvailable, setAdvancedAvailable] = useState(true);
   const [turn, setTurn] = useState<Direction | null>(null);
-  const [openNotes, setOpenNotes] = useState<ReadonlySet<string>>(new Set());
+  const [interactions, setInteractions] = useState<ReadonlyMap<string, Interaction>>(new Map());
   const scene = useRef<HTMLDivElement>(null), volume = useRef<HTMLDivElement>(null), sheet = useRef<HTMLDivElement>(null);
   const strips = useRef<(HTMLDivElement | null)[]>([]);
   const progress = useRef(0), corner = useRef(0), frame = useRef(0), coverFrame = useRef(0), openAmount = useRef(0);
@@ -89,7 +95,7 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
   function finish(complete: boolean) {
     // Development-only measurements describe actual animation callbacks, not a claimed FPS target.
     if (process.env.NODE_ENV !== 'production' && volume.current) {
-      const values = timing.current.intervals.filter(v => v > 1 && v < 500).sort((a, b) => a - b);
+      const values = timing.current.intervals.filter(v => v > 1).sort((a, b) => a - b);
       const costs = timing.current.costs;
       volume.current.dataset.frameTiming = JSON.stringify({ frames: values.length, median: values[Math.floor(values.length / 2)] || 0,
         p95: values[Math.floor(values.length * .95)] || 0, over33ms: values.filter(v => v > 33.4).length,
@@ -105,10 +111,13 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
     if (!active.current) return;
     const direction = active.current, from = progress.current;
     const to = single || direction === 1 ? (complete ? 1 : 0) : (complete ? 0 : 1);
-    const started = performance.now();
+    let started: number | undefined;
     const duration = motionDuration(reduced.current, Math.max(180, Math.abs(to - from) * 840 / (1 + Math.min(1.6, Math.abs(velocity)) * .35)));
     cancelAnimationFrame(frame.current);
     const tick = (time: number) => {
+      // Mounting the strip contents can take longer on a dense scrapbook page.
+      // Start the settling clock only when the sheet can actually be painted.
+      started ??= time;
       const t = duration ? clamp((time - started) / duration) : 1;
       // Quintic smoothstep has zero acceleration at rest: no abrupt stop at the binding.
       const ease = t * t * t * (t * (t * 6 - 15) + 10);
@@ -192,7 +201,7 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
   useEffect(() => {
     const keyboard = (event: KeyboardEvent) => {
       if (event.key === 'Escape') { commands.current.cancel(); return; }
-      if ((event.target as HTMLElement).closest('input,textarea,select,button,[contenteditable]')) return;
+      if ((event.target as HTMLElement).closest('input,textarea,select,button,summary,[contenteditable],[data-surprise-object]')) return;
       if (event.key === 'ArrowRight') { event.preventDefault(); commands.current.next(); }
       if (event.key === 'ArrowLeft') { event.preventDefault(); commands.current.previous(); }
     };
@@ -205,7 +214,7 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
   const visible = visiblePages(index, book.pages.length, single);
   function jumpToPage(id: string) {
     const target = book.pages.findIndex(page => page.id === id);
-    if (target < 0 || opening || turn !== null || linear) return;
+    if (target < 0 || opening || turn !== null || linear || gift.wrapped) return;
     if (!opened) openCover(true);
     setIndex(single ? target : Math.ceil(target / 2) * 2);
   }
@@ -215,9 +224,18 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
     onPointerEnter={e => peek(direction, e)} onPointerLeave={unpeek} onPointerDown={e => start(direction, e)} onPointerMove={move}
     onPointerUp={() => release()} onPointerCancel={() => release(true)} onLostPointerCapture={() => { if (drag.current) release(true); }}
     onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); start(direction); } if (e.key === 'Escape') commands.current.cancel(); }}><span aria-hidden="true">{direction === 1 ? '›' : '‹'}</span></button>;
-  return <ReadingNotes.Provider value={{ open: openNotes, toggle: id => setOpenNotes(previous => { const next = new Set(previous); if (next.has(id)) next.delete(id); else next.add(id); return next; }) }}><div className={`${s.reader} ${environment.world}`} data-scene={environmentScene} ref={scene} onKeyDownCapture={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); commands.current.cancel(); } }}>
-    <header className={s.readerTop}><button onClick={onExit}>{exitLabel}</button><span>{book.title}</span><div><button disabled={!advancedAvailable} onClick={() => { commands.current.cancel(); cancelAnimationFrame(coverFrame.current); openAmount.current = 0; coverTarget.current = false; setOpening(false); setOpened(false); setLinear(v => !v); }}>{linear ? 'Book view' : 'Simple reading'}</button><button onClick={async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await scene.current?.requestFullscreen(); } catch { /* Simple reading remains available if fullscreen is declined. */ } }}>Fullscreen</button><button aria-pressed={backPreview} onClick={() => setBackPreview(v => !v)}>Back cover</button><button onClick={onEdit}>{editLabel}</button></div></header>
-    {!linear && <ReaderPlaces book={book} pageId={opened ? book.pages[visible[0]]?.id : undefined} onJump={jumpToPage}/>}{backPreview&&<div className={making.backPreview} style={{aspectRatio:book.widthMm/book.heightMm}}><BookSurface book={book} surface="back"/></div>}<ReaderEnvironment scene={environmentScene} choose={chooseEnvironment}/>{linear ? <main className={s.linearReader}><h1>{book.title}</h1>{book.dedication && <p>{book.dedication}</p>}{book.pages.map((page, i) => <article key={page.id}><h2>Page {i + 1}</h2>{page.elements.filter(e => !e.hidden).map(e => <div key={e.id}>{["shape", "sticker", "drawing"].includes(e.kind) && <div style={{ width: "min(100%, 400px)", aspectRatio: (e.width * book.widthMm) / (e.height * book.heightMm), containerType: "inline-size" }}><ElementContent element={e} book={book}/></div>}{e.assetId && book.assets[e.assetId] && <img src={book.assets[e.assetId].data} alt={e.text || 'Personal memory'}/>}<p style={{ whiteSpace: 'pre-wrap' }}>{e.text}</p></div>)}</article>)}</main> : <>
+  return <ReadingInteractions.Provider value={{
+    states: interactions,
+    update: (id, state) => setInteractions(previous => {
+      const updated = new Map(previous);
+      if (Object.keys(state).length) updated.set(id, state);
+      else updated.delete(id);
+      if (updated.size > 500) updated.delete(updated.keys().next().value!);
+      return updated;
+    }),
+  }}><div className={`${s.reader} ${environment.world}`} data-scene={environmentScene} ref={scene} onKeyDownCapture={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); commands.current.cancel(); } }}>
+    <header className={s.readerTop}><button onClick={onExit}>{exitLabel}</button><span>{book.title}</span><div><button disabled={!advancedAvailable} onClick={() => { commands.current.cancel(); cancelAnimationFrame(coverFrame.current); openAmount.current = 0; coverTarget.current = false; setOpening(false); setOpened(false); if (gift.wrapped) gift.skip(); setLinear(v => !v); }}>{linear ? 'Book view' : 'Simple reading'}</button><button onClick={async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await scene.current?.requestFullscreen(); } catch { /* Simple reading remains available if fullscreen is declined. */ } }}>Fullscreen</button>{book.gift && !opened && !opening && !gift.wrapped && !linear && <button onClick={() => { setBackPreview(false); gift.replay(); }}>{gift.presented ? "Replay gift opening" : "Present wrapped"}</button>}<button disabled={gift.wrapped} aria-pressed={backPreview} onClick={() => setBackPreview(v => !v)}>Back cover</button><button onClick={onEdit}>{editLabel}</button></div></header>
+    {!linear && !gift.wrapped && <ReaderPlaces book={book} pageId={opened ? book.pages[visible[0]]?.id : undefined} onJump={jumpToPage}/>}{backPreview&&<div className={making.backPreview} style={{aspectRatio:book.widthMm/book.heightMm}}><BookSurface book={book} surface="back"/></div>}<ReaderEnvironment scene={environmentScene} choose={chooseEnvironment}/>{gift.presented && !gift.wrapped && !opened && book.gift?.message && <p className={giftStyles.openingMessage} role="status">{book.gift.message}</p>}{linear ? <main className={s.linearReader}><h1>{book.title}</h1>{book.dedication && <p>{book.dedication}</p>}{book.pages.map((page, i) => <article key={page.id}><h2>Page {i + 1}</h2>{page.elements.filter(e => !e.hidden).map(e => <div key={e.id}>{["shape", "sticker", "drawing"].includes(e.kind) && <div style={{ width: "min(100%, 400px)", aspectRatio: (e.width * book.widthMm) / (e.height * book.heightMm), containerType: "inline-size" }}><ElementContent element={e} book={book}/></div>}{e.assetId && book.assets[e.assetId] && <img src={book.assets[e.assetId].data} alt={e.text || 'Personal memory'}/>}{e.text && e.kind !== 'surprise' && <p style={{ whiteSpace: 'pre-wrap' }}>{e.text}</p>}{e.surprise && <SimpleSurprise element={e} book={book}/>}</div>)}</article>)}</main> : <>
       <main className={`${s.readStage} ${single ? s.singleStage : ''}`} aria-label="Memory book reading area">
         <div className={s.groundShadow} aria-hidden="true"/>
         <div ref={volume} className={`${s.physicalBook} ${opened ? s.bookOpened : ''} ${opening ? s.opening : ''}`} data-material={book.cover.material} data-turning={turn !== null} style={{ '--open': openAmount.current, '--cover-shadow': Math.sin(Math.PI * openAmount.current), '--ratio': book.widthMm / book.heightMm, '--cover-color': book.cover.color, '--depth': `${thickness}px`, '--page-count': book.pages.length } as CSSProperties}>
@@ -226,18 +244,19 @@ export function BookReader({ book, onEdit, onExit, exitLabel = '← Library', ed
           {!single && <div className={s.leftPage} aria-hidden={!opened || opening || turn !== null}>{book.pages[leftIndex]?<PageContent book={book} page={book.pages[leftIndex]} interactive={opened && !opening && !turn}/>:<BookSurface book={book} surface="insideFront"/>}</div>}
           <div className={s.rightPage} aria-hidden={!opened || opening || turn !== null}>{book.pages[rightIndex]?<PageContent book={book} page={book.pages[rightIndex]} interactive={opened && !opening && !turn}/>:<BookSurface book={book} surface="insideBack"/>}</div>
           <div className={s.gutter} aria-hidden="true"/><div className={s.castShadow} aria-hidden="true"/>
-          <button className={s.hingedCover} aria-label={opened ? 'Close the cover' : `Open ${book.title}`} onClick={() => openCover(!coverTarget.current)} tabIndex={opened ? -1 : 0}>
+          <button className={s.hingedCover} aria-label={opened ? 'Close the cover' : `Open ${book.title}`} aria-hidden={gift.wrapped || undefined} onClick={() => { if (!gift.wrapped) openCover(!coverTarget.current); }} tabIndex={opened || gift.wrapped ? -1 : 0}>
             <div className={s.coverFront}><Cover book={book}/><i className={s.coverLight}/></div><div className={s.coverBack}><BookSurface book={book} surface="insideFront"/></div><i className={s.boardEdge}/><i className={s.boardBottom}/>
           </button>
+          {gift.wrapped && book.gift && <WrappedCover gift={book.gift} releasing={gift.releasing} unwrap={gift.unwrap}/>}
           {turn !== null && <div ref={sheet} className={s.turnSheet} aria-hidden="true">{Array.from({ length: count }, (_, i) => <div key={i} ref={el => { strips.current[i] = el; }} className={s.strip} style={{ width: `${100 / count + .035}%` }}>
-            <div className={s.stripFace}><div className={s.stripContent} style={{ width: 'var(--page-width)', left: `calc(var(--page-width) * ${-i / count})` }}><PageContent book={book} page={book.pages[mapping.front]}/></div><i className={s.surfaceLight}/></div>
-            <div className={`${s.stripFace} ${s.stripBack}`}><div className={s.stripContent} style={{ width: 'var(--page-width)', left: `calc(var(--page-width) * ${-(count - i - 1) / count})` }}><PageContent book={book} page={book.pages[mapping.back]}/></div><i className={s.surfaceLight}/></div>
+            <div className={s.stripFace}><div className={s.stripContent} style={{ width: 'var(--page-width)', left: `calc(var(--page-width) * ${-i / count})` }}><PageContent book={book} page={book.pages[mapping.front]} strip={[i / count * 100, (i + 1) / count * 100]}/></div><i className={s.surfaceLight}/></div>
+            <div className={`${s.stripFace} ${s.stripBack}`}><div className={s.stripContent} style={{ width: 'var(--page-width)', left: `calc(var(--page-width) * ${-(count - i - 1) / count})` }}><PageContent book={book} page={book.pages[mapping.back]} strip={[(count - i - 1) / count * 100, (count - i) / count * 100]}/></div><i className={s.surfaceLight}/></div>
           </div>)}</div>}
           {opened && !opening && <>{edge(-1)}{edge(1)}</>}
         </div>
       </main>
-      <div className={s.readControls}>{opened ? <><button disabled={index === 0 || opening} onClick={() => start(-1)}>← Previous</button><span aria-live="polite">{label}</span><button disabled={index >= last || opening} onClick={() => start(1)}>Next →</button></> : <p>A story made to be opened. Tap the cover.</p>}</div>
+      {gift.wrapped ? <GiftActions releasing={gift.releasing} unwrap={gift.unwrap} skip={gift.skip}/> : <div className={s.readControls}>{opened ? <><button disabled={index === 0 || opening} onClick={() => start(-1)}>← Previous</button><span aria-live="polite">{label}</span><button disabled={index >= last || opening} onClick={() => start(1)}>Next →</button></> : <p>A story made to be opened. Tap the cover.</p>}</div>}
       {opened && <footer className={s.readerFoot}><button onClick={() => openCover(false)}>Close book</button><label>Find a chapter<select aria-label="Jump to chapter" value="" disabled={turn !== null || opening} onChange={e => { const target = book.pages.findIndex(p => p.chapterId === e.target.value); if (target >= 0) setIndex(single ? target : Math.ceil(target / 2) * 2); }}><option value="">Chapters…</option>{book.chapters.filter(c => book.pages.some(p => p.chapterId === c.id)).map(c => <option key={c.id} value={c.id}>{c.title}</option>)}</select></label><small>Drag a page edge · Arrow keys to turn · Escape to let go</small></footer>}
     </>}
-  </div></ReadingNotes.Provider>;
+  </div></ReadingInteractions.Provider>;
 }
