@@ -67,3 +67,7 @@ See `docs/MEMORY_BOOKS.md` for architecture, implemented workflow, actual checks
 ## The Magic Within — Memory Book milestone 4
 - Added seven interactive paper surprises, local gift wrapping, and refinements and a pause control for the reader’s three environments.
 - See `docs/MEMORY_BOOK_MAGIC.md` for usage, compatibility, verification, and remaining voice and device work.
+
+## The Finishing Touch — Memory Book milestone 5
+- Audit-driven Studio and autosave refinements, local voice memories, and the separate 18-page example **Every Little Thing About Us**.
+- See `docs/MEMORY_BOOK_FINAL_REVIEW.md` for the implementation commit, actual production measurements, limitations, and device checklist.
