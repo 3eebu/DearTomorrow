@@ -7,12 +7,12 @@ Open `/memory-tree` to plant a tree or explore The Orchard Years, a fictional tr
 
 The earlier illustration gave the tree room to stand on its own. The refined page brings back that clarity with a centered title, cream backdrop, soft contact shadow, and a quiet caption below the tree. Rotation, zoom, and reset sit below the sculpture. Appearance, chapter management, and backups are grouped under **Tree options**. Pan, fit, fullscreen, and motion controls live under **View options**.
 
-The tree grows from a slender stem into curved boughs and an increasingly layered crown. Older, established, and new memories draw from a continuous palette of olive, green, and young spring tones. Warm olive and amber appear on the oldest leaves. Each leaf has a curved blade, a tapered edge, a small stalk, a shaded midrib, and branching veins. A milestone can add a small blush or ivory flower beside its leaf.
+The tree grows from a slender sprout into a twisting trunk with flared roots and a broad, layered crown. Older, established, and new memories draw from a continuous palette of olive, green, and young spring tones. Warm olive and amber appear on the oldest leaves. Each leaf has a curled blade, gently serrated edge, shaded midrib, and forked veins. Milestones add cupped ivory blossoms beside their leaves.
 
 ## Implementation
 
-- `src/lib/memory-tree-geometry.ts` uses the saved seed and memory slots to place the limbs and leaves. Young limbs establish the silhouette. Mature forks extend some of those same limbs and fill the crown. Branch radii taper at their joints. The trunk curves and widens toward the roots. Related branches can share space, and chapter filters still focus a chapter's branch. The new geometry changes the appearance of previously planted trees while retaining their memory IDs, slots, and growth history.
-- `src/lib/memory-tree-renderer.ts` batches the tree in WebGL. Shaders add bark grain, leaf texture, transmitted light, and a soft contact shadow. The camera supplies 360-degree orbit, zoom, and pan. A depth-aware color-ID pass lets a pointer select an individual leaf. New shoots and leaves unfold in sequence while the trunk extends. Gentle sway affects only foliage and its smaller twigs. System reduced motion and the pause preference control movement. The journal remains available if graphics fail.
+- `src/lib/memory-tree-geometry.ts` uses the saved seed and memory slots to place the limbs and leaves. Sculpted trunk and root cross-sections follow the bends in the wood. Lower boughs sweep outward, upper forks climb more steeply, and smaller shoots fill the crown in later growth stages. Previously planted trees retain their memory IDs, slots, and growth history. Chapter filters still focus a chapter's branch.
+- `src/lib/memory-tree-renderer.ts` draws the tree in indexed WebGL batches. Bark shading follows the wood grain, and leaf shading adds pigmentation, venation, and transmitted light. Mature trees use a lighter mesh at wide angles and restore detailed blades around the focus point when zoomed in. The depth-aware color-ID pass uses the same geometry for selection. The camera supplies 360-degree orbit, zoom, and pan. New shoots and leaves unfold in sequence, and reduced motion and the pause preference control movement. The journal remains available if graphics fail.
 - `src/lib/memory-tree.ts` keeps the version 1 tree, chapter, memory, and photo records. Earlier backup files can still carry the garden preference for compatibility. All trees appear on the cream backdrop. Species, season, and age still influence the form or color.
 - `src/lib/memory-tree-storage.ts` commits validated records to IndexedDB and detects stale writes from other tabs. Failed writes preserve the last committed record and the workspace can export the pending draft. Backup imports get a new library identity and retain memory slots. Photos are resized in the browser and embedded in backups.
 - Tree, Timeline, and Calendar share the same document. The calendar supports multiple memories per day and recurring dates. February 29 anniversaries appear on February 28 in common years. Search, chapter filters, and browsing leave the sculpture intact.
@@ -25,13 +25,26 @@ The isolated Chromium test is `node tests/memory-tree.browser.cjs`. It expects t
 
 Browser coverage includes planting, growth, pointer selection after orbiting, Calendar and Timeline links that position the selected leaf in the rendered view, chapter organization, photo attachment, edit and delete, refresh persistence, backup import and export, touch pinch and pan, reduced motion, and the journal with WebGL disabled. Viewports are 1440 × 1000, 820 × 1180, and 390 × 844. Mobile touch is emulated.
 
-All 64 automated tests passed, along with lint, type checking, the production build, and the production Chromium scenarios. The mesh test produced about 126,000 triangles in 278 ms at 1,000 memories. At 1,000 × 750 in software-rendered Chromium, the 1,000-memory backup reached the production viewer in 403 ms. In a short orbit sample it submitted nine draws with a 91 ms 95th-percentile interval. Detailed geometry costs more to render at this size. These measurements describe browser draw submissions on the development machine.
+All 64 automated tests passed, along with lint, type checking, the production build, and the production Chromium scenarios. At 1,000 × 750 in Chromium with SwiftShader, the 1,000-memory backup reached the production viewer in 395 ms. A short wide orbit sample submitted 13 draws at a 68.5 ms 95th-percentile interval. The visible pass drew 67,899 triangles at the wide fit and 154,843 when focused on a particular leaf. A separate seeded mesh test had about 247,000 full-detail triangles available.
+
+In a like-for-like development preview comparison at 1,000 memories, the initial indexed renderer brought the 95th-percentile draw interval from 70.2 ms to 55.0 ms and import-to-viewer time from 498 ms to 414 ms. These short software-rendered samples measure draw submissions on one machine.
+
+Three.js supports indexed geometry, custom attributes, and more general-purpose physically based materials. The refinement retains native WebGL because the tree can batch shared vertices, shade its materials, and use the same geometry for leaf picking. The figures above compare versions of the native renderer. [Three.js BufferGeometry](https://threejs.org/docs/pages/BufferGeometry.html) · [Three.js MeshPhysicalMaterial](https://threejs.org/docs/pages/MeshPhysicalMaterial.html)
 
 ## Visual review
 
-[Desktop](memory-tree-preview/desktop.jpg) · [Phone](memory-tree-preview/phone.jpg) · [Side view](memory-tree-preview/side.jpg) · [Leaf detail](memory-tree-preview/leaf.jpg) · [First sprout](memory-tree-preview/sprout.jpg) · [1,000-memory crown](memory-tree-preview/crown.jpg)
+The supplied botanical reference guided the S-curve of the trunk, the ribs that continue into spreading roots, the longer lower branches, and the mix of green, olive, and gold around the ivory blossoms. The browser captures show those features against the site's plain cream stage. The first memory has a single leaf and a small root flare. Gaps between branches remain visible as the crown thickens, especially around the outer boughs.
 
-The visual pass used the rendered canvas at three viewport sizes, from the front, side, and back, and with 1, 5, 20, 50, 100, 500, and 1,000 synthetic memories.
+| Memories | Front | Turned |
+| --- | --- | --- |
+| 1 | [Front](memory-tree-preview/botanical/botanical-1.jpg) | [Turned](memory-tree-preview/botanical/botanical-1-side.jpg) |
+| 10 | [Front](memory-tree-preview/botanical/botanical-10.jpg) | [Turned](memory-tree-preview/botanical/botanical-10-side.jpg) |
+| 50 | [Front](memory-tree-preview/botanical/botanical-50.jpg) | [Turned](memory-tree-preview/botanical/botanical-50-side.jpg) |
+| 100 | [Front](memory-tree-preview/botanical/botanical-100.jpg) | [Turned](memory-tree-preview/botanical/botanical-100-side.jpg) |
+| 500 | [Front](memory-tree-preview/botanical/botanical-500.jpg) | [Turned](memory-tree-preview/botanical/botanical-500-side.jpg) |
+| 1,000 | [Front](memory-tree-preview/botanical/botanical-1000.jpg) | [Turned](memory-tree-preview/botanical/botanical-1000-side.jpg) |
+
+[Desktop](memory-tree-preview/botanical/botanical-desktop.jpg) · [Tablet](memory-tree-preview/botanical/botanical-tablet.jpg) · [Phone](memory-tree-preview/botanical/botanical-phone.jpg) · [Example from behind](memory-tree-preview/botanical/botanical-back.jpg) · [Leaf detail](memory-tree-preview/botanical/botanical-leaf.jpg) · [Detail at 1,000 memories](memory-tree-preview/botanical/botanical-1000-leaf.jpg)
 
 ## Remaining device checks
 

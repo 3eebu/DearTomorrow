@@ -51,7 +51,18 @@ for (const count of [1, 10, 50, 100, 500, 1000]) {
       assert.equal(model.leaves.get(m.slot + 1).id, m.id);
       assert.ok(ids.has(m.slot + 1));
     }
-    t.diagnostic(elapsed.toFixed(1) + ' ms CPU mesh generation, ' + model.vertices.length / STRIDE / 3 + ' triangles');
+    assert.ok(model.indices.every(index=>index<model.vertices.length/STRIDE));
+    if(model.overview){
+      assert.ok(model.overview.length<model.indices.length/2);
+      const overviewLeaves=new Set();
+      for(const index of model.overview){
+        const vertex=index*STRIDE;
+        if(model.vertices[vertex+15]===1)overviewLeaves.add(model.vertices[vertex+14]);
+      }
+      assert.equal(overviewLeaves.size,count);
+    }
+    t.diagnostic(elapsed.toFixed(1) + ' ms CPU mesh generation, ' + model.indices.length/3 +
+      ' close-up triangles, ' + (model.overview?.length??model.indices.length)/3 + ' overview triangles');
   });
 }
 

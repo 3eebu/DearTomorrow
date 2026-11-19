@@ -20,8 +20,15 @@ async function run() {
         const prototype = WebGLRenderingContext.prototype;
         const read = prototype.readPixels;
         const draw = prototype.drawArrays;
+        const drawIndexed = prototype.drawElements;
         window.gardenPicks = [];
         window.gardenFrames = [];
+        window.gardenTriangles = [];
+        function frame(gl, count) {
+          if (gl.getParameter(gl.FRAMEBUFFER_BINDING)) return;
+          window.gardenFrames.push(performance.now());
+          window.gardenTriangles.push(count / 3);
+        }
         prototype.readPixels = function (...args) {
           read.apply(this, args);
           const bytes = args.at(-1);
@@ -29,7 +36,11 @@ async function run() {
         };
         prototype.drawArrays = function (...args) {
           draw.apply(this, args);
-          if (!this.getParameter(this.FRAMEBUFFER_BINDING)) window.gardenFrames.push(performance.now());
+          frame(this, args[2]);
+        };
+        prototype.drawElements = function (...args) {
+          drawIndexed.apply(this, args);
+          frame(this, args[1]);
         };
       });
       const page = await context.newPage();
@@ -281,10 +292,22 @@ async function run() {
       await profile.waitForTimeout(650);
       const metrics=await profile.evaluate(()=>{
         const times=window.gardenFrames,intervals=times.slice(1).map((t,i)=>t-times[i]).sort((a,b)=>a-b);
-        return {frames:times.length,p95:intervals[Math.min(intervals.length-1,Math.floor(intervals.length*.95))]};
+        return {frames:times.length,triangles:window.gardenTriangles.at(-1),
+          p95:intervals[Math.min(intervals.length-1,Math.floor(intervals.length*.95))]};
       });
       assert.ok(metrics.frames>=3);
       console.log(count+' memories: '+loaded.toFixed(0)+' ms import to viewer, '+metrics.frames+' draw submissions in sample, p95 '+metrics.p95?.toFixed(1)+' ms.');
+      if(count===1000) {
+        const search=profile.locator('.mt-filters input[type=search]');
+        await search.fill('Synthetic memory 930');
+        await profile.locator('.mt-rows').getByRole('button',{name:/Synthetic memory 930/}).click();
+        await profile.locator('.mt-keepsake').getByRole('button',{name:'Find this leaf ↗',exact:true}).click();
+        await profile.waitForFunction(base=>window.gardenTriangles.at(-1)>base,metrics.triangles);
+        await profile.waitForTimeout(750);
+        const nearby=await profile.evaluate(()=>window.gardenTriangles.at(-1));
+        assert.ok(nearby>metrics.triangles && nearby<metrics.triangles*3.2);
+        console.log('1,000-memory mesh: '+metrics.triangles+' overview triangles, '+nearby+' triangles with a detailed leaf in focus.');
+      }
     }
     assert.deepEqual(errors, []);
   } finally {

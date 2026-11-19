@@ -56,14 +56,14 @@ void main(){
  }
  if(surface==3.){
    vec2 ellipse=tex*vec2(1.1,1.0);
-   float contact=exp(-dot(ellipse,ellipse)*8.);
-   float spread=exp(-dot(ellipse-.15,ellipse-.15)*4.5);
+   float contact=exp(-dot(ellipse,ellipse)*11.);
+   float spread=exp(-dot(ellipse-.14,ellipse-.14)*3.9);
    float edge=1.-smoothstep(.55,1.,length(tex));
-   gl_FragColor=vec4(tint,(.17*contact+.11*spread)*edge);
+   gl_FragColor=vec4(tint,(.23*contact+.106*spread)*edge);
    return;
  }
- vec3 light=normalize(vec3(-.52,.76,.46));
- vec3 fill=normalize(vec3(.72,.48,-.46));
+ vec3 light=normalize(vec3(-.59,.71,.53));
+ vec3 fill=normalize(vec3(.71,.54,-.45));
  vec3 view=normalize(eye-world);
  vec3 norm=normalize(n);
  float keyLight=dot(norm,light);
@@ -73,35 +73,43 @@ void main(){
  if(surface==1. || surface==8.){
    // Curved secondary veins fork from the midrib and fade toward the margin.
    float flank=abs(tex.x), y=tex.y;
-   float rib=1.-smoothstep(.006,.036,flank);
-   float ribTint=rib*(.79-.51*y);
-   float line=y*7.2-flank*.94+.24*flank*flank+tex.x*.07+.020*sin(y*32.0);
-   float veins=1.-smoothstep(.022,.066,abs(fract(line)-.48));
-   float fineVeins=1.-smoothstep(.015,.054,abs(fract(line*1.7+flank*.61)-.5));
-   float envelope=smoothstep(.06,.24,y)*(1.-smoothstep(.80,.99,y))*(1.-smoothstep(.75,1.,flank));
-   float pigment=sin(world.x*321.+world.y*110.)*sin(world.z*229.+world.y*183.);
-   color*=.93+.075*sin(y*3.14)+.022*pigment-.11*pow(flank,2.3);
-   color+=vec3(.145,.140,.074)*(ribTint+envelope*(.39*veins+.10*fineVeins));
+   float rib=1.-smoothstep(.004,.031,flank*(.55+y));
+   float line=y*8.7-flank*1.11+.45*flank*flank+tex.x*.071+.037*sin(y*24.);
+   float stem=abs(fract(line)-.48);
+   float veins=1.-smoothstep(.014,.059,stem);
+   float branching=abs(fract(line*2.34+flank*.67+.13*sin(24.*y))-.5);
+   float fineVeins=(1.-smoothstep(.018,.09,branching))*smoothstep(.12,.52,flank);
+   float envelope=smoothstep(.04,.18,y)*(1.-smoothstep(.78,.99,y))*(1.-smoothstep(.80,1.,flank));
+   float pigment=.54*sin(world.x*280.+world.y*110.)*sin(world.z*197.+world.y*162.)+
+     .46*sin(y*39.+tex.x*17.4)*sin(y*51.-tex.x*13.8);
+   color*=.88+.084*sin(y*3.14)+.023*pigment-.14*pow(flank,2.2);
+   color+=vec3(.18,.16,.069)*(rib*(.81-.50*y)+envelope*(.52*veins+.18*fineVeins));
    float facing=dot(norm,view);
    vec3 visibleNormal=norm*(facing<0.?-1.:1.);
-   float transmitted=.13*max(0.,-dot(visibleNormal,light));
-   gloss=.050*pow(max(0.,dot(visibleNormal,normalize(view+light))),13.);
-   color*=.84+.18*abs(keyLight)+.055*abs(fillLight)+transmitted;
-   color+=vec3(.08,.070,.033)*transmitted;
+   float transmitted=.19*max(0.,-dot(visibleNormal,light));
+   gloss=.062*pow(max(0.,dot(visibleNormal,normalize(view+light))),14.);
+   color*=.78+.23*abs(keyLight)+.09*abs(fillLight)+transmitted;
+   color+=vec3(.19,.14,.061)*transmitted;
    if(surface==8.) color*=.76;
  } else if(surface==6.){
-   color*=.89+.13*abs(keyLight)+.04*abs(fillLight);
-   color+=vec3(.045,.018,.015)*tex.x;
+   color*=.82+.23*abs(keyLight)+.055*abs(fillLight);
+   color+=vec3(.042,.029,.015)*tex.y;
  } else {
    // Angular grooves follow the length of the wood through each bend.
    float angle=tex.x*6.283185;
-   float grain=sin(angle*18.+1.7*sin(tex.y*4.4+angle*5.)+.62*sin(tex.y*13.+angle*8.));
-   float fibers=sin(angle*41.+tex.y*3.4+sin(tex.y*9.+angle*7.));
-   float groove=smoothstep(.18,1.,grain);
-   color*=.94-.12*groove+.028*fibers+.025*sin(tex.y*5.0+angle*3.);
-   float rootShade=surface==0. || surface==7. || surface==9.?smoothstep(-.03,.34,world.y):1.;
-   color*=.79+.29*max(0.,keyLight)+.09*max(0.,fillLight)-.095*(1.-rootShade);
-   gloss=.085*pow(max(0.,dot(norm,normalize(view+light))),16.)*(1.-groove*.8);
+   float drift=2.3*sin(angle*4.+tex.y*3.9)+1.4*sin(angle*7.-tex.y*10.8);
+   float ridge=angle*19.+drift+tex.y*3.1;
+   float channel=pow(.5+.5*sin(ridge),4.3)*(.75+.25*sin(tex.y*18.+angle*11.));
+   float fibers=.55*sin(angle*43.+drift*1.54+tex.y*4.8)+.45*sin(angle*71.+drift*2.22+tex.y*7.9);
+   float flecks=sin(angle*31.+tex.y*42.)*sin(tex.y*27.-angle*17.);
+   vec3 tangent=normalize(cross(norm,vec3(.23,.91,.35))+vec3(.0008));
+   vec3 grainNormal=normalize(norm+tangent*(.13*cos(ridge)+.091*fibers));
+   float relief=max(0.,dot(grainNormal,light));
+   float occlusion=surface==9. || surface==7.?smoothstep(-.02,.56,world.y):.96;
+   color*=1.08-.22*channel+.076*fibers+.041*flecks;
+   color=mix(color,color*vec3(1.19,1.07,.88),.43+.17*sin(angle*3.+tex.y*1.4));
+   color*=.71+.42*relief+.115*max(0.,fillLight)-.14*(1.-occlusion);
+   gloss=.085*pow(max(0.,dot(grainNormal,normalize(view+light))),14.)*(1.-channel*.85);
  }
  color+=vec3(1.,.91,.80)*gloss;
  if(key>.5 && (key==selected || key==hovered)){
@@ -111,7 +119,7 @@ void main(){
 }`;
 
 export type Camera = { target: V; yaw: number; pitch: number; distance: number };
-const homeAngle = { yaw: .24, pitch: .18 };
+const homeAngle = { yaw: .16, pitch: .155 };
 export function makeRenderer(canvas: HTMLCanvasElement) {
   const context = canvas.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: false });
   if (!context) throw new Error('3D graphics are unavailable here.');
@@ -137,14 +145,21 @@ export function makeRenderer(canvas: HTMLCanvasElement) {
   gl.useProgram(program);
   gl.enable(gl.DEPTH_TEST);
   gl.disable(gl.DITHER);
-  const buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  const wideIndices=gl.getExtension('OES_element_index_uint');
+  const buffer=gl.createBuffer(), nearBuffer=gl.createBuffer(), farBuffer=gl.createBuffer();
   let offset = 0;
-  for (const [name,size] of [['position',3],['normal',3],['color',3],['uv',2],['pivot',3],['identity',1],['kind',1],['shoot',1]] as const) {
-    const loc = gl.getAttribLocation(program,name);
+  const attributes=([['position',3],['normal',3],['color',3],['uv',2],['pivot',3],['identity',1],['kind',1],['shoot',1]] as const).map(([name,size])=>{
+    const loc=gl.getAttribLocation(program,name), start=offset;
+    offset+=size;
     gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc,size,gl.FLOAT,false,STRIDE*4,offset*4);
-    offset += size;
+    return {loc,size,start};
+  });
+  let boundVertices: WebGLBuffer|null=null;
+  function bindVertices(target:WebGLBuffer|null) {
+    if(target===boundVertices)return;
+    gl.bindBuffer(gl.ARRAY_BUFFER,target);
+    for(const {loc,size,start} of attributes)gl.vertexAttribPointer(loc,size,gl.FLOAT,false,STRIDE*4,start*4);
+    boundVertices=target;
   }
   const uniforms = Object.fromEntries('eye right up look lens pickOffset pickScale time growing growth picking selected hovered oldHeight newHeight oldWidth newWidth'.split(' ')
     .map(name=>[name,gl.getUniformLocation(program,name)]));
@@ -160,6 +175,8 @@ export function makeRenderer(canvas: HTMLCanvasElement) {
   gl.bindFramebuffer(gl.FRAMEBUFFER,null);
 
   let model: Model;
+  let indexed=true, indexType:number=gl.UNSIGNED_SHORT;
+  let detailScratch: Uint16Array|Uint32Array|null=null, cachedDetail='', detailLength=0;
   let camera: Camera = { target:[0,0,0],...homeAngle,distance:4 }, goal = camera;
   let selected = 0, hovered = 0, growing = 0, growth = 1, time = 0, oldHeight = 0, oldWidth = 0, dirty = true, fitted = true;
   const float = (key: string, value: number) => gl.uniform1f(uniforms[key],value);
@@ -168,6 +185,34 @@ export function makeRenderer(canvas: HTMLCanvasElement) {
     const back: V = [Math.cos(pose.pitch)*Math.sin(pose.yaw),Math.sin(pose.pitch),Math.cos(pose.pitch)*Math.cos(pose.yaw)];
     const right = unit(cross([0,1,0],back));
     return { back,right,up:cross(back,right) };
+  }
+  function closeIndexCount() {
+    if(!detailScratch||!model.overview)return model.indices.length;
+    // Keep detailed blades around the area being inspected. Quantizing the focus
+    // area lets orbiting reuse the buffer and keeps panning uploads infrequent.
+    const cell=camera.target.map(value=>Math.round(value*2)) as V;
+    const band=Math.ceil(camera.distance*2);
+    const key=cell.join(',')+'/'+band+'/'+selected;
+    if(key===cachedDetail)return detailLength;
+    const center=mul(cell,.5), reach=Math.max(1.55,band*.40);
+    const radiusSquared=reach*reach;
+    let source=0, target=0;
+    for(const leaf of model.leafDetails){
+      const from=sub(leaf.center,center);
+      if(leaf.pick!==selected && from[0]**2+from[1]**2+from[2]**2>radiusSquared)continue;
+      const untouched=model.overview.subarray(source,leaf.overviewStart);
+      const detailed=model.indices.subarray(leaf.detailStart,leaf.detailEnd);
+      detailScratch.set(untouched,target);target+=untouched.length;
+      detailScratch.set(detailed,target);target+=detailed.length;
+      source=leaf.overviewEnd;
+    }
+    const rest=model.overview.subarray(source);
+    detailScratch.set(rest,target);
+    detailLength=target+rest.length;
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,nearBuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,detailScratch.subarray(0,detailLength),gl.DYNAMIC_DRAW);
+    cachedDetail=key;
+    return detailLength;
   }
   function paint(pick = false) {
     const { back,right,up } = basis(camera);
@@ -183,13 +228,23 @@ export function makeRenderer(canvas: HTMLCanvasElement) {
     float('oldWidth',oldWidth);float('newWidth',model.trunkRadius);
     gl.clearColor(0,0,0,0);
     gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-    gl.drawArrays(gl.TRIANGLES,pick?6:0,model.vertices.length/STRIDE-(pick?6:0));
+    const overview=model.overview!==null&&camera.distance>model.radius*1.37;
+    const length=overview?model.overview!.length:closeIndexCount(), skip=pick?6:0;
+    const indexBuffer=overview?farBuffer:nearBuffer;
+    if(indexed){
+      bindVertices(buffer);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,indexBuffer);
+      gl.drawElements(gl.TRIANGLES,length-skip,indexType,skip*(indexType===gl.UNSIGNED_INT?4:2));
+    }else{
+      bindVertices(indexBuffer);
+      gl.drawArrays(gl.TRIANGLES,skip,length-skip);
+    }
   }
   function fit(instant = false) {
     if (!model) return;
     const aspect = canvas.width/canvas.height;
-    const distance = Math.max(model.leaves.size ? 3.6 : 1.75,model.heightRadius*3.50,
-      model.widthRadius*(aspect<1.1 ? 2.81 : 3.06)/aspect);
+    const distance = Math.max(model.leaves.size ? 3.1 : 1.75,model.heightRadius*3.51,
+      model.widthRadius*(aspect<1.1 ? 2.80 : 2.95)/aspect);
     goal = {...goal,target:model.center,distance};
     if (instant) camera = goal;
     fitted = true; dirty = true;
@@ -199,7 +254,28 @@ export function makeRenderer(canvas: HTMLCanvasElement) {
       oldHeight = reset ? 0 : model?.trunkHeight ?? 0;
       oldWidth = reset ? 0 : model?.trunkRadius ?? 0;
       model = next;
-      gl.bufferData(gl.ARRAY_BUFFER, model.vertices, gl.STATIC_DRAW);
+      const wide=model.vertices.length/STRIDE>65535;
+      indexed=!wide||!!wideIndices;
+      indexType=wide?gl.UNSIGNED_INT:gl.UNSIGNED_SHORT;
+      detailScratch=indexed&&model.overview?(wide?new Uint32Array(model.indices.length):new Uint16Array(model.indices.length)):null;
+      cachedDetail='';
+      if(indexed){
+        bindVertices(buffer);
+        gl.bufferData(gl.ARRAY_BUFFER,model.vertices,gl.STATIC_DRAW);
+      }
+      for(const [destination,indices] of [[nearBuffer,model.indices],[farBuffer,model.overview]] as const){
+        if(!indices)continue;
+        if(destination===nearBuffer&&detailScratch)continue;
+        if(indexed){
+          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,destination);
+          gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,wide?indices:new Uint16Array(indices),gl.STATIC_DRAW);
+        }else{
+          const packed=new Float32Array(indices.length*STRIDE);
+          indices.forEach((index,position)=>packed.set(model.vertices.subarray(index*STRIDE,(index+1)*STRIDE),position*STRIDE));
+          bindVertices(destination);
+          gl.bufferData(gl.ARRAY_BUFFER,packed,gl.STATIC_DRAW);
+        }
+      }
       if (fitted || reset) fit(reset);
       dirty = true;
     },
@@ -256,7 +332,8 @@ export function makeRenderer(canvas: HTMLCanvasElement) {
       return pixels[0]+pixels[1]*256+pixels[2]*65536;
     },
     dispose() {
-      gl.deleteBuffer(buffer);gl.deleteFramebuffer(pickFrame);gl.deleteTexture(pickColor);
+      gl.deleteBuffer(buffer);gl.deleteBuffer(nearBuffer);gl.deleteBuffer(farBuffer);
+      gl.deleteFramebuffer(pickFrame);gl.deleteTexture(pickColor);
       gl.deleteRenderbuffer(pickDepth);gl.deleteProgram(program);
     }
   };
