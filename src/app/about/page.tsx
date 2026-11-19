@@ -12,7 +12,7 @@ export const metadata:Metadata={
 const features=[
   {number:"01",label:"Letters",title:"For words worth keeping",body:"Write something for today, a birthday, a difficult day, or a moment still to come. Letters can also accompany someone along a journey. Timed delivery and shared letters are part of the longer-term vision.",href:"/letters",link:"Meet the letters"},
   {number:"02",label:"Memory Books",title:"A story you can turn through",body:"Give your story a title, choose a cover and bring your favorite moments into chapters. Our current preview lets you personalize pages and keep books on this device.",href:"/memory-books",link:"See the sample book"},
-  {number:"03",label:"Memory Tree",title:"Let your story grow",body:"Imagine a living tree where every first, every little adventure and every important date becomes a leaf or branch. The present demo uses a simple timeline and calendar while the true tree takes shape.",href:"/memory-tree",link:"Explore the timeline preview"},
+  {number:"03",label:"Memory Tree",title:"Let your story grow",body:"Plant a tree and watch each saved memory grow into a leaf. Explore it in three dimensions, or revisit the moments that shaped it in the timeline and calendar.",href:"/memory-tree",link:"Explore the Memory Tree"},
 ];
 export default function AboutPage(){
   return <InformationShell>

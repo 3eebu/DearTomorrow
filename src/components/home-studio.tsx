@@ -1,20 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { MemoryTreeArt } from './memory-tree-art';
 import { AboutNewspaperMontage } from './about-newspaper-montage';
 import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties, FormEvent, ReactNode, TouchEvent } from 'react';
+import type { CSSProperties, ReactNode, TouchEvent } from 'react';
 
-type Moment = { id: string; title: string; date: string; story: string; chapter: string };
 type WorkspacePage = 'home' | 'memory-tree' | 'letters';
-const initialMoments: Moment[] = [
-  { id: 'first-hello', title: 'The very first hello', date: '2026-02-14', story: 'It was such a small thing at the time. Only later did we realize it was where the whole story began.', chapter: 'Our firsts' },
-  { id: 'ordinary-day', title: 'An ordinary Tuesday', date: '2026-05-12', story: 'Nothing extraordinary happened. We just laughed until we forgot what we were laughing about.', chapter: 'Little days' },
-  { id: 'first-trip', title: 'Somewhere new together', date: '2026-08-22', story: 'We took the longer road and somehow found our favorite memory along the way.', chapter: 'Adventures' },
-  { id: 'next-chapter', title: 'A promise for tomorrow', date: '2026-11-07', story: 'A reminder that our favorite moments are not all behind us.', chapter: 'Tomorrow' },
-];
-const chapters = ['Our firsts', 'Little days', 'Adventures', 'Tomorrow'];
 const pages = [
   { chapter: 'I', eyebrow: 'THE VERY BEGINNING', title: 'It started with a hello.', text: 'And somehow, in the middle of all the ordinary days, one small moment became the beginning of everything.', footer: 'The first of many little forevers' },
   { chapter: 'II', eyebrow: 'THE EVERYDAY', title: 'The little things were everything.', text: 'A familiar voice. A long walk. The way a good day gets better when you have someone to tell about it.', footer: 'Somewhere between here and forever' },
@@ -81,118 +72,6 @@ function Dialog({ title, onClose, children }: { title: string; onClose: () => vo
   </div>;
 }
 
-function MemoryTree() {
-  const [moments, setMoments] = useState<Moment[]>(initialMoments);
-  const [view, setView] = useState<'tree' | 'calendar'>('tree');
-  const [selectedId, setSelectedId] = useState<string | null>(initialMoments[0].id);
-  const [adding, setAdding] = useState(false);
-  const [newestId, setNewestId] = useState<string | null>(null);
-  const [title, setTitle] = useState('');
-  const [story, setStory] = useState('');
-  const [chapter, setChapter] = useState(chapters[0]);
-  const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
-  const [calendarDate, setCalendarDate] = useState(() => new Date(Number(initialMoments[0].date.slice(0, 4)), Number(initialMoments[0].date.slice(5, 7)) - 1, 1));
-  const selected = moments.find(moment => moment.id === selectedId);
-  const displayMonth = calendarDate.getMonth();
-  const displayYear = calendarDate.getFullYear();
-  const days = new Date(displayYear, displayMonth + 1, 0).getDate();
-  const startOfMonth = new Date(displayYear, displayMonth, 1).getDay();
-  const monthLabel = calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  const shiftCalendar = (delta: number) => { setCalendarDate(d => new Date(d.getFullYear(), d.getMonth() + delta, 1)); setSelectedId(null); };
-  const selectMoment = (id: string) => { const moment = moments.find(item => item.id === id); setSelectedId(id); if (moment) setCalendarDate(new Date(Number(moment.date.slice(0, 4)), Number(moment.date.slice(5, 7)) - 1, 1)); };
-  function addMoment(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!title.trim() || !date) return;
-    const moment: Moment = { id: 'demo-' + Date.now(), title: title.trim(), date, story: story.trim() || 'One more moment worth keeping.', chapter };
-    setMoments(existing => [...existing, moment]);
-    setNewestId(moment.id);
-    setView('tree');
-    setSelectedId(moment.id);
-    setCalendarDate(new Date(Number(date.slice(0, 4)), Number(date.slice(5, 7)) - 1, 1));
-    setTitle('');
-    setStory('');
-    setAdding(false);
-  }
-  return <section className="dt-tree-section dt-section" id="memory-tree" aria-labelledby="tree-heading">
-    <div className="dt-tree-intro" data-reveal>
-      <span className="dt-overline">03 / THE MEMORY TREE</span>
-      <h2 id="tree-heading">Every love story<br /><em>grows somewhere.</em></h2>
-      <p>Its roots are the beginning. Its branches are the chapters. Every leaf holds a moment that made it yours.</p>
-    </div>
-    <div className="dt-tree-topbar">
-      <div className="dt-view-switch" role="group" aria-label="Choose your memory view">
-        <button type="button" aria-pressed={view === 'tree'} className={view === 'tree' ? 'dt-active' : ''} onClick={() => setView('tree')}>Memory Tree</button>
-        <button type="button" aria-pressed={view === 'calendar'} className={view === 'calendar' ? 'dt-active' : ''} onClick={() => setView('calendar')}>Calendar</button>
-      </div>
-      <button type="button" className="dt-subtle-button" onClick={() => setAdding(true)}>＋ Add a memory</button>
-    </div>
-    {view === 'tree' ? <div className="dt-tree-world dt-visible">
-      <div className="dt-tree-stage">
-        <MemoryTreeArt memories={moments} selectedId={selectedId} newestId={newestId} onSelect={selectMoment}/>
-      </div>
-      <div className="dt-tree-side">
-        <span className="dt-overline">THE LEAVES OF OUR STORY</span>
-        <p className="dt-tree-side-intro">Tap a leaf. Every one has something to tell.</p>
-        <div className="dt-tree-moment-list">
-          {[...moments].sort((a, b) => a.date.localeCompare(b.date)).map(moment => <button type="button" key={moment.id}
-            aria-pressed={selectedId === moment.id} className={selectedId === moment.id ? 'dt-moment-active' : ''}
-            onClick={() => selectMoment(moment.id)}>
-            <span>{new Date(moment.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
-            <strong>{moment.title}</strong><span aria-hidden="true">↗</span>
-          </button>)}
-        </div>
-        <div className="dt-moment-detail" aria-live="polite">
-          {selected ? <><span className="dt-overline">{selected.chapter} · {selected.date}</span><h3>{selected.title}</h3><p>{selected.story}</p></> :
-            <p>Choose a leaf to open its memory.</p>}
-        </div>
-      </div>
-      <p className="dt-inline-note dt-tree-note">Every memory grows a new leafy shoot. Your tree grows taller and fuller as your story grows.</p>
-    </div> :
-      <div className="dt-calendar-panel dt-visible">
-        <div className="dt-calendar-bar">
-          <button type="button" aria-label="Previous month" onClick={() => shiftCalendar(-1)}>←</button>
-          <h3>{monthLabel}</h3>
-          <button type="button" aria-label="Next month" onClick={() => shiftCalendar(1)}>→</button>
-        </div>
-        <div className="dt-calendar-grid">
-          {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(day => <span className="dt-calendar-weekday" key={day}>{day}</span>)}
-          {Array.from({ length: startOfMonth }, (_, n) => <span key={'empty-' + n} />)}
-          {Array.from({ length: days }, (_, n) => {
-            const day = n + 1;
-            const key = [displayYear, String(displayMonth + 1).padStart(2, '0'), String(day).padStart(2, '0')].join('-');
-            const onDay = moments.filter(moment => moment.date === key);
-            return <button type="button" key={key} className={onDay.length ? 'dt-calendar-has-memory' : ''} aria-pressed={selected?.date === key}
-              aria-label={day + (onDay.length ? ': ' + onDay.map(m => m.title).join(', ') : '')}
-              onClick={() => { if (onDay.length) selectMoment(onDay[0].id); else setSelectedId(null); }} >
-              {day}{onDay.length > 0 && <span aria-hidden="true">✦</span>}
-            </button>;
-          })}
-        </div>
-        <div className="dt-calendar-result" aria-live="polite">
-          <span className="dt-overline">SELECTED MEMORY</span>
-          {selected ? <><h4>{selected.title}</h4><p>{selected.story}</p><button type="button" className="dt-text-action" onClick={() => setView('tree')}>Find it on the tree ↗</button></> : <p>Select a marked day, or add a new memory.</p>}
-        </div>
-      </div>}
-    <p className="dt-demo-disclaimer">DEMO — Memories are fictional and are not saved online. Refreshing resets new entries.</p>
-    {adding && <Dialog title="Add a memory to your tree" onClose={() => setAdding(false)}>
-      <span className="dt-overline">ANOTHER LEAF, ANOTHER MEMORY</span>
-      <h2 className="dt-dialog-title">What would you like to <em>remember?</em></h2>
-      <form className="dt-form" onSubmit={addMoment}>
-        <label htmlFor="dt-moment-title">Give this moment a name</label>
-        <input id="dt-moment-title" maxLength={90} required placeholder="The day everything changed..." value={title} onChange={event => setTitle(event.target.value)}/>
-        <div className="dt-form-split">
-          <div><label htmlFor="dt-moment-date">Date</label><input id="dt-moment-date" type="date" required value={date} onChange={event => setDate(event.target.value)}/></div>
-          <div><label htmlFor="dt-moment-chapter">Chapter</label><select id="dt-moment-chapter" value={chapter} onChange={event => setChapter(event.target.value)}>{chapters.map(c => <option key={c}>{c}</option>)}</select></div>
-        </div>
-        <label htmlFor="dt-moment-story">A few words about it</label>
-        <textarea id="dt-moment-story" rows={4} value={story} onChange={event => setStory(event.target.value)} placeholder="What made this day special?"/>
-        <button className="dt-button dt-button-dark" type="submit">Grow this memory <span aria-hidden="true">↗</span></button>
-        <p className="dt-inline-note">Local preview only. Not yet saved to an account.</p>
-      </form>
-    </Dialog>}
-  </section>;
-}
-
 function JourneyLetters() {
   const [selected, setSelected] = useState(0);
   return <section id="journey-letters" className="dt-journey-section dt-section" aria-labelledby="journey-heading">
@@ -222,7 +101,7 @@ function JourneyLetters() {
   </section>;
 }
 
-export default function HomeStudio({ page = 'home' }: { page?: WorkspacePage }) {
+export default function HomeStudio({ page = 'home', tree }: { page?: WorkspacePage; tree?: ReactNode }) {
   useReveals();
   const isHome = page === 'home';
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -233,7 +112,7 @@ export default function HomeStudio({ page = 'home' }: { page?: WorkspacePage }) 
   const [previewLetter, setPreviewLetter] = useState(false);
   return <div className="dt-app" id="home">
     <a className="dt-skip" href="#dt-main">Skip to the story</a>
-    <div className="dt-prototype-banner">A WORK IN PROGRESS · THIS IS A SAFE, UNSAVED DEMO</div>
+    <div className="dt-prototype-banner">{page === 'memory-tree' ? 'A WORK IN PROGRESS · YOUR MEMORIES ARE SAVED ON THIS DEVICE' : 'A WORK IN PROGRESS · THIS IS A SAFE, UNSAVED DEMO'}</div>
     <header className="dt-header">
       <Link className="dt-wordmark" href="/" aria-label="Dear Tomorrow home">Dear <em>Tomorrow.</em></Link>
       <nav className={'dt-navigation ' + (mobileMenu ? 'dt-nav-open' : '')} aria-label="Primary navigation">
@@ -305,7 +184,7 @@ export default function HomeStudio({ page = 'home' }: { page?: WorkspacePage }) 
       <JourneyLetters />
       </>}
 
-      {page === 'memory-tree' && <MemoryTree/>}
+      {page === 'memory-tree' && tree}
 
       {isHome && <section className="dt-closing" data-reveal aria-labelledby="closing-heading">
         <div className="dt-closing-symbol" aria-hidden="true">✳</div>

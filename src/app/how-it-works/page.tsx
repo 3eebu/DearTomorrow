@@ -15,7 +15,7 @@ const steps=[
 const experiences=[
   {name:"Letters",status:"Preview available",body:"Write a guest letter or explore six example letters for a journey. The schedule is illustrative, not a working delivery system.",href:"/letters",cta:"Explore Letters"},
   {name:"Memory Books",status:"Preview available",body:"Create books, personalize pages, read your story, and keep local drafts on this device.",href:"/memory-books",cta:"Open Memory Books"},
-  {name:"Memory Tree",status:"Early timeline preview",body:"Explore sample milestones, add a moment and switch to the matching calendar. The living tree animation is still in development.",href:"/memory-tree",cta:"Explore memories"}
+  {name:"Memory Tree",status:"Available in this preview",body:"Explore an example tree or plant your own. Each memory becomes a leaf you can find on the tree, timeline and calendar. Personal trees are saved in this browser.",href:"/memory-tree",cta:"Explore memories"}
 ];
 export default function HowItWorksPage(){
   return <InformationShell>

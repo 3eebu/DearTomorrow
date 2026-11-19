@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import HomeStudio from '@/components/home-studio';
+import MemoryTreeWorkspace from '@/components/memory-tree/memory-tree-workspace';
 import '../home-studio.css';
 
 export const metadata: Metadata = {
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function MemoryTreePage() {
-  return <HomeStudio page="memory-tree" />;
+  return <HomeStudio page="memory-tree" tree={<MemoryTreeWorkspace />} />;
 }
