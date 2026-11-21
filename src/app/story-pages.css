@@ -104,3 +104,10 @@
   .info-about-hero .info-personal-story{max-width:540px}
   .info-about-hero .info-hero-actions{gap:14px 22px}
 }
+.dt-system-page{min-height:70svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 22px;color:#493735}
+.dt-system-page .dt-system-mark{font:2.5rem Georgia,serif;color:#8c5a65;margin-bottom:16px}
+.dt-system-page .dt-overline{font-size:.7rem;letter-spacing:.2em;color:#967565}
+.dt-system-page h1{max-width:14ch;font-size:clamp(2.6rem,8vw,5rem);line-height:1.04;letter-spacing:-.045em;margin:12px auto}
+.dt-system-page>p:not(.dt-overline){max-width:38ch;color:#715b51}
+.dt-system-actions{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:20px}
+.dt-system-actions>a{color:#642f40;text-decoration:underline;text-underline-offset:.25em;min-height:44px;display:inline-flex;align-items:center}
