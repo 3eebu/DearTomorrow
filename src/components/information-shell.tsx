@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-export function InformationShell({children}:{children:ReactNode}) {
+export function InformationShell({children, showPreviewLink = true}:{children:ReactNode; showPreviewLink?: boolean}) {
   return (
     <div className="info-root">
       <a className="info-skip" href="#main-content">Skip to content</a>
@@ -15,7 +15,7 @@ export function InformationShell({children}:{children:ReactNode}) {
           <Link href="/memory-tree">Memory Tree</Link>
           <Link href="/letters">Letters</Link>
         </nav>
-        <Link className="info-header-cta" href="/">Explore the preview <span aria-hidden="true">↗</span></Link>
+        {showPreviewLink && <Link className="info-header-cta" href="/">Explore the preview <span aria-hidden="true">↗</span></Link>}
       </header>
       <main id="main-content">{children}</main>
       <footer className="info-footer">

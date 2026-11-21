@@ -1,0 +1,237 @@
+.guide {
+  --paper: #f8f4ed;
+  --cream: #f3ebe0;
+  --ink: #362925;
+  --wine: #642f40;
+  --muted: #6c574d;
+  --gold: #9b7856;
+  --rule: #d7c7b9;
+  color: var(--ink);
+}
+
+.hero {
+  text-align: center;
+  padding: clamp(50px, 7vw, 100px) 22px clamp(34px, 5vw, 66px);
+  border-block-end: 1px solid var(--rule);
+}
+
+.eyebrow {
+  margin: 0;
+  color: #7e5c4a;
+  text-transform: uppercase;
+  font-size: .6875rem;
+  font-weight: 700;
+  letter-spacing: .19em;
+}
+
+.guide .hero h1 {
+  max-width: 1050px;
+  margin: 13px auto 21px;
+  font-size: clamp(3.2rem, 6.9vw, 6.65rem);
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.intro {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: clamp(.9rem, 1.5vw, 1.04rem);
+  text-wrap: pretty;
+}
+
+.down {
+  display: grid;
+  place-items: center;
+  margin: 25px auto 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  color: var(--wine);
+  font-size: 1.23rem;
+  transition: border-color 220ms, background-color 220ms;
+}
+
+.down:hover { border-color: var(--gold); background: #f0e6d9; }
+.down:focus-visible, .controls :is(button,input):focus-visible {
+  outline: 2px solid #c08b6a;
+  outline-offset: 3px;
+}
+
+.chapter {
+  padding: clamp(48px, 7vw, 105px) clamp(20px, 5.5vw, 88px);
+  border-block-end: 1px solid var(--rule);
+  scroll-margin-top: 20px;
+}
+
+.chapter[data-chapter="letters"] { background: #f2e8de; }
+.chapter[data-chapter="memory-tree"] { background: #eeeee5; }
+.chapter[data-chapter="memory-books"] { background: #f4ede3; }
+
+.chapterInner {
+  max-width: 1310px;
+  display: grid;
+  grid-template: "title film" auto "copy film" auto / minmax(0, .92fr) minmax(0, 1.85fr);
+  column-gap: clamp(24px, 5vw, 74px);
+  align-items: start;
+  margin: 0 auto;
+}
+
+.chapter[data-chapter="memory-tree"] .chapterInner {
+  grid-template: "film title" auto "film copy" auto / minmax(0, 1.85fr) minmax(0, .92fr);
+}
+
+.chapterTitle { grid-area: title; align-self: end; }
+.chapterCopy { grid-area: copy; }
+
+.chapterTitle .eyebrow span {
+  display: inline-block;
+  margin-right: 10px;
+  padding-right: 12px;
+  border-right: 1px solid #b99d84;
+  color: var(--wine);
+}
+
+.guide .chapterTitle h2 {
+  margin: 15px 0 19px;
+  font-size: clamp(2.6rem, 4.25vw, 4.7rem);
+  line-height: 1.07;
+  text-wrap: balance;
+}
+
+.chapterCopy > p { margin: 0; font-size: .94rem; line-height: 1.68; color: var(--muted); }
+
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 27px 0 0;
+}
+
+.steps li {
+  padding: .8rem 0;
+  border-top: 1px solid #cdbcb1;
+  color: #503931;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(.98rem, 1.35vw, 1.14rem);
+}
+
+.steps li:last-child { border-bottom: 1px solid #cdbcb1; }
+.chapterCopy > .note { margin-top: 17px; font-size: .76rem; color: #75594e; }
+
+.film { grid-area: film; align-self: center; margin: 0; min-width: 0; }
+
+.filmFrame {
+  padding: 7px;
+  min-width: 0;
+  background: #302522;
+  border: 1px solid #866a5b;
+  border-radius: 14px;
+  box-shadow: 0 17px 34px #4b30261a, 0 3px 8px #4b302626;
+  overflow: hidden;
+}
+.filmFrame[data-entered="true"] { animation: arrive 650ms ease-out both; }
+@keyframes arrive {
+  from { transform: translateY(7px); opacity: .9; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.filmFrame video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #f7f0e5;
+  border-radius: 8px 8px 2px 2px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  padding: 1px 3px 0;
+  gap: clamp(3px, 1vw, 12px);
+  color: #f5e3d0;
+}
+
+.controls button {
+  flex: 0 0 43px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  border-radius: 5px;
+  font: inherit;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+.controls button:first-child { font-size: .86rem; }
+.controls button:hover { background: #514039; }
+.controls button:disabled { opacity: .4; cursor: default; }
+.controls input { flex: 1 1 auto; min-width: 0; accent-color: #d1a989; cursor: pointer; }
+.controls input:disabled { cursor: default; }
+.time { font-size: .72rem; font-variant-numeric: tabular-nums; min-width: 2.4em; }
+
+.filmFrame:fullscreen {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  place-content: stretch;
+  border: 0;
+  border-radius: 0;
+}
+.filmFrame:fullscreen video { height: 100%; }
+
+.filmCaption {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.filmError { color: var(--muted); font-size: .85rem; }
+
+.facts {
+  max-width: 1230px;
+  margin-inline: auto;
+  padding: clamp(55px, 8vw, 108px) clamp(20px, 6vw, 90px);
+  display: grid;
+  grid-template-columns: .75fr 1.8fr;
+  gap: 35px;
+}
+.guide .facts h2 { margin: 0; font-size: clamp(2.7rem, 4.7vw, 4.35rem); }
+.facts dl { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 35px; }
+.facts dl > div { padding-top: 13px; border-top: 1px solid var(--rule); }
+.facts dt { color: var(--wine); font: 1.17rem "Playfair Display", Georgia, serif; }
+.facts dd { margin: 8px 0 0; color: var(--muted); font-size: .875rem; line-height: 1.65; }
+
+.ending { padding: clamp(62px, 8vw, 115px) 22px; background: #512d37; text-align: center; color: #fff4e5; }
+.guide .ending h2 { margin: 0; font-size: clamp(2.25rem, 5vw, 4.55rem); }
+.guide .ending h2 em { color: #dfbdac; }
+
+@media (max-width: 900px) {
+  .chapterInner, .chapter[data-chapter="memory-tree"] .chapterInner {
+    grid-template: "title" "film" "copy" / minmax(0, 1fr);
+    max-width: 700px;
+    row-gap: 20px;
+  }
+  .guide .chapterTitle h2 { margin: 8px 0 0; }
+  .chapterCopy { max-width: 610px; }
+  .steps { margin-top: 18px; }
+  .facts { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 540px) {
+  .chapter { padding-inline: 16px; }
+  .chapterInner, .chapter[data-chapter="memory-tree"] .chapterInner { row-gap: 17px; }
+  .guide .hero h1 { font-size: clamp(2.85rem, 12vw, 3.8rem); }
+  .filmFrame { padding: 4px; border-radius: 11px; }
+  .facts dl { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filmFrame[data-entered="true"] { animation: none; }
+}
