@@ -1,17 +1,15 @@
 const assert = require('node:assert/strict');
 const {randomUUID,randomBytes}=require('node:crypto');
 const {createClient}=require('@supabase/supabase-js');
-
-const url=process.env.DT_TEST_SUPABASE_URL;
-const key=process.env.DT_TEST_SUPABASE_KEY;
-const secret=process.env.DT_TEST_SUPABASE_SECRET;
+const {integrationTarget}=require('./accounts-supabase-target.cjs');
 
 async function main() {
-  if(!url||!key||!secret) {
-    console.log('Skipped Supabase integration. Configure a disposable local Auth, Postgres, and Storage stack.');
+  const target=integrationTarget();
+  if(!target) {
+    console.log('Skipped Supabase integration. Configure a disposable local stack or explicitly approve a hosted development target.');
     return;
   }
-  assert.ok(['localhost','127.0.0.1','[::1]'].includes(new URL(url).hostname),'Use a disposable local project only.');
+  const {url,key,secret}=target;
   const connect=token=>createClient(url,token,{auth:{persistSession:false,autoRefreshToken:false}});
   const admin=connect(secret);
   const users=[];

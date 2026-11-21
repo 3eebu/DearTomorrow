@@ -2,8 +2,8 @@ const assert = require('node:assert/strict');
 const { randomBytes, randomUUID } = require('node:crypto');
 const { mkdir } = require('node:fs/promises');
 const path = require('node:path');
+const { integrationTarget, loopbackOrigin:localOrigin } = require('./accounts-supabase-target.cjs');
 
-const { DT_TEST_SUPABASE_URL: supabase, DT_TEST_SUPABASE_SECRET: secret } = process.env;
 const app = process.env.ACCOUNTS_URL || 'http://127.0.0.1:3002';
 const inbox = process.env.DT_TEST_MAILPIT_URL || 'http://127.0.0.1:54324';
 const shots = process.env.ACCOUNTS_SHOTS;
@@ -17,12 +17,6 @@ const name = 'Sam';
 const updatedName = 'Sam Rivers';
 const title = `A fictional memory book ${runId}`;
 let stage = 'checking the local environment';
-
-function localOrigin(value) {
-  const url = new URL(value);
-  assert.ok(['localhost', '127.0.0.1', '[::1]'].includes(url.hostname), 'Use a disposable loopback stack.');
-  return url.origin;
-}
 
 async function emailLink(address, type) {
   const search = inbox + '/api/v1/search?query=' + encodeURIComponent('to:' + address);
@@ -56,23 +50,40 @@ async function signIn(page, account) {
 }
 
 async function main() {
-  if (!supabase || !secret) {
-    console.log('Skipped authenticated browser verification. Configure a disposable local Supabase stack and Mailpit.');
+  const target=integrationTarget();
+  if (!target) {
+    console.log('Skipped authenticated browser verification. Configure local Supabase and Mailpit or an approved hosted development target.');
     return;
   }
-  for (const address of [app, inbox, supabase]) localOrigin(address);
-  // Run this test from the same environment as the Next.js server.
-  const { loadEnvConfig } = require('@next/env');
-  loadEnvConfig(process.cwd(), true, { info() {}, error() {} });
-  assert.equal(process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, ''), localOrigin(supabase),
-    'Point the Next.js preview at the disposable Supabase project before running this test.');
-  assert.equal(process.env.DEAR_TOMORROW_APP_URL, localOrigin(app),
-    'Use the same origin for the Next.js app and browser test.');
+  const {url:supabase,secret,hosted}=target;
+  localOrigin(app);
+  if (!hosted) localOrigin(inbox);
+  // Load the same environment as Next.js using Node's --env-file before running this script.
+  assert.ok(process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '') === supabase,
+    'Point the Next.js preview at the approved Supabase project before running this test.');
+  assert.ok(process.env.DEAR_TOMORROW_APP_URL === localOrigin(app),
+    'Use the same loopback origin for the Next.js app and browser test.');
 
   const { createClient } = require('@supabase/supabase-js');
   const { chromium } = require(process.env.ACCOUNTS_PLAYWRIGHT || 'playwright');
   const admin = createClient(supabase, secret, { auth: { persistSession: false, autoRefreshToken: false } });
-  assert.equal((await admin.auth.admin.listUsers({ page:1, perPage:1 })).error, null, 'Local Auth admin should be available.');
+  async function generatedLink(account, type) {
+    const confirmation=type==='email';
+    const options={redirectTo:app+'/auth/confirm'};
+    const {data,error}=await admin.auth.admin.generateLink(confirmation
+      ? {type:'signup',email:account.email,password:account.password,options:{...options,data:{display_name:name}}}
+      : {type:'recovery',email:account.email,options});
+    if (error) {
+      console.error('Auth link request failed:', error.name, error.status, error.code);
+      throw error;
+    }
+    assert.ok(data.properties?.hashed_token, 'Supabase should issue a valid test link.');
+    if (confirmation) account.id=data.user.id;
+    const link=new URL('/auth/confirm',app);
+    link.searchParams.set('token_hash',data.properties.hashed_token);
+    link.searchParams.set('type',type);
+    return link.href;
+  }
   const browser = await chromium.launch({ executablePath: process.env.ACCOUNTS_CHROMIUM });
   async function profile(width, height) {
     const context = await browser.newContext({
@@ -91,16 +102,23 @@ async function main() {
       stage = `signup and confirming fictional account ${index+1}`;
       const account = accounts[index];
       await page.goto(app + '/signup');
-      await page.getByLabel('Display name').fill(name);
-      await page.getByLabel('Email address').fill(account.email);
-      await page.getByLabel('Password', {exact:true}).fill(account.password);
-      await page.getByRole('button', {name:'Create account', exact:true}).click();
-      await page.waitForURL('**/login?message=verification');
+      const submit=page.getByRole('button', {name:'Create account', exact:true});
+      await submit.waitFor();
+      assert.ok(await submit.isEnabled(), 'Signup should be enabled with Supabase configured.');
+      if (!hosted) {
+        await page.getByLabel('Display name').fill(name);
+        await page.getByLabel('Email address').fill(account.email);
+        await page.getByLabel('Password', {exact:true}).fill(account.password);
+        await submit.click();
+        await page.waitForURL('**/login?message=verification');
+      }
       assert.equal(await sessionId(page), null);
-      await page.goto(await emailLink(account.email, 'email'));
+      await page.goto(await (hosted ? generatedLink(account,'email') : emailLink(account.email,'email')));
       await page.waitForURL('**/welcome');
-      account.id = await sessionId(page);
-      assert.ok(account.id, 'A confirmed account should have a session');
+      const id = await sessionId(page);
+      assert.ok(id, 'A confirmed account should have a session');
+      if (account.id) assert.equal(id,account.id);
+      account.id = id;
       await page.getByRole('button', {name:'Enter My Space'}).click();
       await page.waitForURL('**/my-space');
       await page.reload();
@@ -171,35 +189,49 @@ async function main() {
       }
     }
 
+    stage = 'revoking access to the shared book';
+    const readAsPartner=()=>b.request.post(app+'/api/private-space',{
+      headers:{origin:localOrigin(app),'x-dear-account':accounts[1].id},
+      data:{action:'read',document:memoryId},
+    });
+    assert.equal((await readAsPartner()).status(),200);
+    await a.getByRole('button', {name:'Keep private'}).click();
+    await a.getByRole('button', {name:'Share with my partner'}).waitFor();
+    assert.equal((await readAsPartner()).status(),404);
+    await a.getByRole('button', {name:'Share with my partner'}).click();
+    await a.getByRole('button', {name:'Keep private'}).waitFor();
+    assert.equal((await readAsPartner()).status(),200);
+
     stage = 'revoking access by disconnecting';
     await a.goto(app + '/settings');
     await a.getByText('Disconnect from '+name,{exact:true}).click();
     await a.getByRole('button', {name:'Confirm disconnect'}).click();
     await a.waitForURL('**/settings?message=saved');
-    const unavailable = await b.request.post(app + '/api/private-space', {
-      headers:{origin:localOrigin(app),'x-dear-account':accounts[1].id},
-      data:{action:'read',document:memoryId},
-    });
-    assert.equal(unavailable.status(),404);
+    assert.equal((await readAsPartner()).status(),404);
 
-    stage = 'signing out and resetting a password through Mailpit';
+    stage = 'signing out and resetting a password';
     await b.goto(app + '/settings');
     await b.getByRole('main').getByRole('button', {name:'Sign out',exact:true}).click();
     await b.waitForURL(app+'/');
     await b.goto(app + '/settings');
     await b.waitForURL('**/login');
     await b.goto(app + '/forgot-password');
-    await b.getByLabel('Email address').fill(accounts[1].email);
-    await b.getByRole('button', {name:'Send recovery link'}).click();
-    await b.waitForURL('**/forgot-password?message=recovery');
-    await b.goto(await emailLink(accounts[1].email, 'recovery'));
+    if (!hosted) {
+      await b.getByLabel('Email address').fill(accounts[1].email);
+      await b.getByRole('button', {name:'Send recovery link'}).click();
+      await b.waitForURL('**/forgot-password?message=recovery');
+    }
+    await b.goto(await (hosted ? generatedLink(accounts[1],'recovery') : emailLink(accounts[1].email,'recovery')));
     await b.waitForURL('**/reset-password');
     accounts[1].password = password();
     await b.getByLabel('New password').fill(accounts[1].password);
     await b.getByRole('button', {name:'Save new password'}).click();
     await b.waitForURL('**/login?message=changed');
     await signIn(b,accounts[1]);
-    console.log('Verified real email confirmation, sessions, IDs, pairing, shared cloud Memory Book, disconnect, and password recovery.');
+    console.log(hosted
+      ? 'Hosted Auth confirmation and recovery links verified without sending emails.'
+      : 'Local signup and recovery emails arrived through Mailpit and their links worked.');
+    console.log('Verified sessions, IDs, pairing, shared cloud Memory Book, explicit revocation, disconnect, and new-password login.');
   } finally {
     await browser.close();
     for (const {email,id} of accounts) {
@@ -215,6 +247,7 @@ async function main() {
 
 main().catch(error=>{
   // Browser assertion messages can include a one-time email link or password.
-  console.error(`Authenticated browser verification stopped while ${stage} (${error.name}).`);
+  const location=String(error.stack).match(/accounts-supabase\.browser\.cjs:\d+:\d+/)?.[0];
+  console.error(`Authenticated browser verification stopped while ${stage} (${error.name}${location?' at '+location:''}).`);
   process.exitCode=1;
 });
