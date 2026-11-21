@@ -91,7 +91,7 @@ function Watercolor() {
           </g>
         ))}
       </svg>
-      <figcaption>A song for the eyes I could never forget.</figcaption>
+      <figcaption>The eyes I fell in love with, and the eyes I dream of seeing again in our daughter</figcaption>
     </figure>
   );
 }
