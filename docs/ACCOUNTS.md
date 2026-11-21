@@ -71,3 +71,10 @@ During backend activation, Supabase CLI 3.2.0 rejected the previous inbox config
 - GitHub and the hosted Supabase endpoint were reachable again. Commit `272b64a` was pushed as a fast-forward to `main`. The earlier connection reset affected both Supabase and GitHub. The available logs did not identify its cause.
 - The hosted API suite passed again. Two fictional browser accounts completed generated-link verification, permanent ID generation and copying, ID-only pairing, Memory Book creation and sharing, explicit revocation, disconnect, and a separate password login. The run stopped at the password reset form. The expanded follow-up run covering book photos and guest copying did not finish. Email delivery remains unverified.
 - The configured production build, all 80 automated tests, lint, type checking, and the account-boundary, Memory Tree, Letters, and Journey Letters browser suites passed.
+
+### Expanded hosted browser run
+
+- Two fictional accounts confirmed through generated Supabase links. The runner verified that an unconfirmed account could not sign in and that a used confirmation link could not be reused. A generated recovery link opened the actual reset form. The new password worked on the next sign-in.
+- The owner created a cloud Memory Book with a photo and shared it through the app. The partner opened the book in the reader, decoded the photo, and could neither list nor read a second book. Explicit share revocation and disconnect each blocked fresh reads of the shared book. A signed-out browser also could not fetch it.
+- A guest book and its photo migrated to My Space. A retry recognized the existing copy without duplicating it. The original book and photo still opened from the guest library. The runner removed the fictional accounts and their test media.
+- All generated links were used within the test without exposing their tokens. SMTP delivery and the emailed templates remain unverified until a mail provider is configured.
