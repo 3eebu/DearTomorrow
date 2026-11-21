@@ -1,0 +1,136 @@
+.keepsake {
+  grid-area: keepsake;
+  min-width: 0;
+  align-self: center;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+
+.painting { width: 100%; margin: 0; }
+.watercolor { display: block; width: 100%; height: auto; overflow: visible; }
+.painting figcaption {
+  color: #876557;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(.87rem,1.15vw,1.05rem);
+  font-style: italic;
+  text-align: center;
+  margin: 5px 0 0;
+}
+
+.moving {
+  transform-origin: var(--hinge);
+  animation: watercolorBreeze var(--breath) var(--phase) infinite ease-in-out paused;
+}
+.watercolor[data-watercolor-visible="true"] .moving { animation-play-state: running; }
+.upperPetal { --hinge: 18% 22%; --breath: 10.4s; --phase: -1.7s; --turn: .81deg; --dip: -1.55px; --slide: 1px; }
+.outerPetal { --hinge: 16% 27%; --breath: 8.7s; --phase: -5.7s; --turn: -.82deg; --dip: 1px; --slide: -1.5px; }
+.bud { --hinge: 42% 22%; --breath: 11.7s; --phase: -8.2s; --turn: .84deg; --dip: -1.4px; --slide: 1.1px; }
+.lowerPetal { --hinge: 85% 79%; --breath: 9.3s; --phase: -2.9s; --turn: -.84deg; --dip: -.8px; --slide: 1.7px; }
+.lowerBloom { --hinge: 85% 79%; --breath: 10.9s; --phase: -5.1s; --turn: .93deg; --dip: 1.5px; --slide: -1.1px; }
+.hair { --hinge: 84% 23%; --breath: 12.4s; --phase: -9.3s; --turn: -.59deg; --dip: -1.4px; --slide: 1.1px; }
+.looseRight, .looseBottom { animation-name: watercolorPetal; }
+.looseRight { --hinge: 94% 52%; --breath: 12.9s; --phase: -8.4s; --turn: .93deg; --dip: -4px; --slide: 4.6px; }
+.looseBottom { --hinge: 44% 86%; --breath: 15.7s; --phase: -1.1s; --turn: -.81deg; --dip: 4px; --slide: -4.7px; }
+
+@keyframes watercolorBreeze {
+  /* A sub-frame hold gives the browser the same identity matrix across the seam. */
+  0%, .06%, 99.94%, 100% { transform: translate(0,0) rotate(0deg); }
+  52% { transform: translate(var(--slide),var(--dip)) rotate(var(--turn)); }
+}
+@keyframes watercolorPetal {
+  0%, 31%, 99.94%, 100% { transform: translate(0,0) rotate(0deg); }
+  65% { transform: translate(var(--slide),var(--dip)) rotate(var(--turn)); }
+}
+
+.music {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 460px);
+  min-width: 0;
+  padding: 23px clamp(16px, 2.25vw, 30px) 18px;
+  border-radius: 19px 23px 20px 22px;
+  border: 1px solid #614c42;
+  background: radial-gradient(ellipse at 96% 0%,#44332c,transparent 66%), #2e2523;
+  color: #fff5e7;
+  box-shadow: 0 14px 30px #62413925, inset 0 0 0 3px #2d222075;
+}
+.song { position: relative; width: fit-content; }
+.music .label {
+  margin: 0 0 5px;
+  color: #e8c894;
+  font-size: .66rem;
+  font-weight: 600;
+  letter-spacing: .21em;
+  text-transform: uppercase;
+}
+.music h2 {
+  margin: 0;
+  color: inherit;
+  font-size: clamp(1.66rem,3.15vw,2.54rem);
+  line-height: 1.13;
+}
+.music .credit { color: #dfc4b8; margin: 4px 0 0; font-size: .77rem; }
+.ink {
+  position: absolute;
+  top: 3px;
+  right: 12px;
+  width: min(42%,166px);
+  z-index: -1;
+  color: #e7c588;
+  opacity: .86;
+  pointer-events: none;
+}
+.ink path, .playMark path:last-child {
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.music[data-introduced="true"] .ink path { animation: keepsakeInk 1.25s ease-out both; }
+.music[data-introduced="true"] .ink path:nth-child(2) { animation-delay: .11s; }
+.music[data-introduced="true"] .ink path:nth-child(3) { animation-delay: .23s; }
+.music[data-introduced="true"] .ink path:nth-child(4) { animation-delay: .29s; }
+@keyframes keepsakeInk {
+  from { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  to { stroke-dasharray: 1; stroke-dashoffset: 0; }
+}
+
+.actions {
+  margin-top: 12px;
+}
+.actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 7px;
+  color: #f3ddc6;
+  font-size: .76rem;
+  font-weight: 600;
+}
+.actions a:hover { color: #fff4dd; }
+.actions a:focus-visible {
+  outline: 2px solid #f0c987;
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+.playMark {
+  display: block;
+  width: 34px;
+  height: 34px;
+  color: #f0cc91;
+  transition: transform .25s ease-out;
+}
+.playMark svg { display: block; width: 100%; }
+.actions a:is(:hover,:focus-visible) .playMark path:last-child { animation: keepsakeInk .55s ease-out both; }
+.actions a:active .playMark { transform: scale(.91); }
+
+@media (max-width:760px) {
+  .keepsake { gap: 12px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .moving, .music[data-introduced] .ink path,
+  .actions a:is(:hover,:focus-visible) .playMark path:last-child { animation: none !important; }
+  .attached { display: none; }
+  .playMark { transition: none; }
+}

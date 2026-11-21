@@ -1,17 +1,20 @@
 # Dear Tomorrow — About and How It Works
 
-Two editorial, accessible information pages have been added:
-- `/about` opens with the personal reason Dear Tomorrow began, then restores the original “A little place for the things that stay” introduction as the next editorial section, followed by the four product areas and current preview status.
+The editorial information pages cover the story and the current preview.
+
+- `/about` opens with the personal reason Dear Tomorrow began. The watercolor and its song sit alongside the founder’s story on wide screens and between the headline and story on phones. The “A little place for the things that stay” introduction, product areas, and preview status follow.
 - `/how-it-works` explains simple first steps, what can be tried in Phase 1 and what has not launched.
 
-Design: no stock photographs or external image assets. The About hero uses a cinematic montage of 16 fictional newspaper and magazine fragments, with a separate eight-fragment mobile composition. On desktop, selected clippings cross the center seam into the ivory area; the story copy stays clear above them. Medium desktop widths use a shorter spill, and mobile stacks the story above its separate montage. All paper, grain, folds, typography and shadows are made with HTML, CSS and inline SVG. These invented editions are decorative and do not claim real press coverage.
+## Watercolor keepsake
 
-The sequence starts when the artwork enters view, builds through staggered arrivals, and settles. A keyboard-accessible replay control, bounded desktop pointer depth and one restrained paper movement support the installation. Reduced-motion preferences show the final arrangement immediately and disable animation and parallax. The information navigation, product descriptions and preview-status sections remain in place.
+The supplied transparent artwork is served as lossless WebP. The conversion preserves the color of every pixel with nonzero opacity and the original alpha channel. The eyes and brows stay on the fixed base. Feathered masks limit motion to parts of two blossoms, an outer bud, and a loose hair curl. Two detached petals occupy their own layers. Each transform repeats back to its starting pose. The artwork pauses offscreen and in a hidden tab, and reduced motion displays the still composition.
 
-Important: first-person founder text is proposed copy, not a verified account of the founder's personal history. Confirm wording with founder before public publication.
+The dark keepsake links to Elena Blinova’s violin cover of “Javeda Zindagi.” The official player returned error 150 for this video in the browser, so the card opens the exact recording on YouTube. The About page makes no video or audio requests on load. [Recording](https://youtu.be/AVh5PNsOg1U?si=_iRL8HqfSSk6bkia) · [YouTube player errors](https://developers.google.com/youtube/iframe_api_reference#onError)
 
-Validation for the About hero refinement, 2026-11-14:
-- `pnpm run typecheck`, `pnpm run lint` and `pnpm run build` all passed; the build prerendered `/`, `/about` and `/how-it-works`.
-- Inspected desktop composition at 1024px and 1200px and mobile story layout at 320px and 390px. No horizontal page overflow or clipping into story copy was found. Eight fragments render in the mobile arrangement and 16 in the desktop arrangement.
-- Replayed the montage, observed its playing state and confirmed it settles with all visible papers opaque. Browser console had no errors or warnings. Reduced-motion rules remain in place; browser emulation was unavailable, so a reduced-motion render was not performed.
-- Local production preview: `http://127.0.0.1:3001/about` (available while its server is running). No public deployment was created.
+The homepage still uses the fictional newspaper montage and its replay controls.
+
+## Verification
+
+- Inspected the production page at 1440, 820, 390, and 320 pixels wide. Captures show the two-column and single-column layouts.
+- Compared eye, eyebrow, and eyelid crops over 32 seconds of continuous motion. The pixels matched throughout. All eight decorative layers returned to the same rendered pose after 250 additional simulated cycles, paused when scrolled out of view, and resumed in place.
+- Checked the still composition with reduced motion, followed the exact recording by keyboard, and rendered all six site routes in Chromium. Lint, type checking, the production build, and all 64 automated tests passed.

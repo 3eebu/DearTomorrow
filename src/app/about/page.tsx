@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { InformationShell } from "@/components/information-shell";
-import { AboutNewspaperMontage } from "@/components/about-newspaper-montage";
+import { AboutKeepsake } from "@/components/about-keepsake";
 import "../story-pages.css";
 
 export const metadata:Metadata={
@@ -16,10 +16,13 @@ const features=[
 ];
 export default function AboutPage(){
   return <InformationShell>
-    <section className="info-hero info-about-hero">
-      <div className="info-hero-copy">
+    <section className="info-about-hero">
+      <div className="info-about-title">
         <p className="info-kicker"><span className="info-kicker-rule"/> THE REASON DEAR TOMORROW BEGAN</p>
         <h1>Made For A <em>Very Special Woman.</em></h1>
+      </div>
+      <AboutKeepsake />
+      <div className="info-about-letter">
         <div className="info-personal-story">
           <p>I created Dear Tomorrow because I&apos;m deeply in love with an incredible woman. I wanted to make something just for her. Somewhere we could keep our memories, remember all our little firsts, and create something beautiful that would always belong to us.</p>
           <p>But I know our story isn&apos;t the only one. I know there are people out there who love someone just as deeply, and I wanted them to have something like this too.</p>
@@ -30,7 +33,6 @@ export default function AboutPage(){
           <Link href="/#dt-discover" className="info-text-link">Explore Dear Tomorrow <span aria-hidden="true">→</span></Link>
         </div>
       </div>
-      <AboutNewspaperMontage />
     </section>
 
     <section className="info-letter-section">
