@@ -1,29 +1,34 @@
 'use client';
 import Link from 'next/link';
+import {usePathname} from 'next/navigation';
 import {useEffect,useState} from 'react';
 import {signOut} from '@/lib/accounts/actions';
 
 type User = {id:string;name:string;paired:boolean;deleting:boolean};
 export function AccountNav({enabled}:{enabled:boolean}) {
   const [user,setUser]=useState<User|null>(null);
+  const pathname=usePathname();
   useEffect(()=>{
     if(!enabled)return;
-    let active=true;
+    let pending:AbortController|undefined;
     function refresh() {
       if(document.hidden)return;
-      void fetch('/api/account-session',{cache:'no-store'}).then(async response=>{
+      pending?.abort();
+      const request=new AbortController();
+      pending=request;
+      void fetch('/api/account-session',{cache:'no-store',signal:request.signal}).then(async response=>{
         if(!response.ok)throw new Error('Session unavailable');
         const data=await response.json();
-        if(active)setUser(data.id?data:null);
-      }).catch(()=>{if(active)setUser(null);});
+        if(!request.signal.aborted)setUser(data.id?data:null);
+      }).catch(()=>{if(!request.signal.aborted)setUser(null);});
     }
     refresh();
     window.addEventListener('pageshow',refresh);
     window.addEventListener('focus',refresh);
     document.addEventListener('visibilitychange',refresh);
-    return ()=>{active=false;window.removeEventListener('pageshow',refresh);window.removeEventListener('focus',refresh);
+    return ()=>{pending?.abort();window.removeEventListener('pageshow',refresh);window.removeEventListener('focus',refresh);
       document.removeEventListener('visibilitychange',refresh);};
-  },[enabled]);
+  },[enabled,pathname]);
   return <nav className="dt-account-nav" aria-label="Account">
     {user?<>{!user.deleting&&<><Link href="/my-space">My Space</Link>{user.paired&&<Link href="/our-space">Our Space</Link>}</>}
       <details><summary>{user.name}</summary><div><Link href="/settings">Settings</Link>

@@ -76,7 +76,7 @@ export function ConnectionDetails({view,path}:{view:ConnectionView;path:'setting
         </form>
       </details></>:<p>{requests.some(request=>request.status==='pending')?'A request is waiting for a decision.':'You can connect with one person when you’re ready.'}</p>}
     {requests.length>0&&<ul className="dt-account-list dt-connection-list">{requests.map(request=><li key={request.id} data-status={request.status}>
-      <div><strong>{request.name}</strong><small>{request.status==='pending'?(request.incoming?'They reached out to you':'Your invitation is on its way'):request.status==='accepted'?'You’re connected':request.status==='declined'?'This invitation was declined':request.status==='canceled'?'This invitation was canceled':'This invitation has expired'}</small></div>
+      <div><strong>{request.name}</strong><small>{request.status==='pending'?(request.incoming?'They reached out to you':'Your invitation is on its way'):request.status==='accepted'?'This invitation was accepted':request.status==='declined'?'This invitation was declined':request.status==='canceled'?'This invitation was canceled':'This invitation has expired'}</small></div>
       {request.status==='pending'&&<form action={manageConnection} className="dt-account-actions">
         <input type="hidden" name="reference" value={request.id}/><input type="hidden" name="path" value={path}/>
         {request.incoming?<><button className="dt-account-primary" name="operation" value="accept">Accept</button>
