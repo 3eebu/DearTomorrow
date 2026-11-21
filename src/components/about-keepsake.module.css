@@ -1,46 +1,61 @@
 .keepsake {
   grid-area: keepsake;
   min-width: 0;
-  align-self: center;
   display: grid;
   justify-items: center;
-  gap: 16px;
+  gap: clamp(14px, 1.6vw, 22px);
+  padding-top: 8px;
 }
 
 .painting { width: 100%; margin: 0; }
 .watercolor { display: block; width: 100%; height: auto; overflow: visible; }
 .painting figcaption {
-  color: #876557;
+  color: #78574e;
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(.87rem,1.15vw,1.05rem);
+  font-size: clamp(.9rem, 1.25vw, 1.07rem);
   font-style: italic;
+  line-height: 1.55;
   text-align: center;
-  margin: 5px 0 0;
+  text-wrap: balance;
+  max-width: 57ch;
+  margin: 8px auto 0;
 }
 
-.moving {
-  transform-origin: var(--hinge);
-  animation: watercolorBreeze var(--breath) var(--phase) infinite ease-in-out paused;
+.animated { display: none; isolation: isolate; }
+.attached, .cutout { mix-blend-mode: plus-lighter; }
+
+@supports (mix-blend-mode: plus-lighter) {
+  @media (prefers-reduced-motion: no-preference) {
+    .watercolor:not([data-watercolor-motion="still"]) .still { display: none; }
+    .watercolor:not([data-watercolor-motion="still"]) .animated { display: inline; }
+    .moving {
+      transform-box: view-box;
+      transform-origin: var(--hinge);
+      animation: watercolorBreeze var(--breath) var(--phase) infinite ease-in-out paused;
+    }
+    .watercolor[data-watercolor-motion="running"] .moving { animation-play-state: running; }
+    .looseRight, .looseBottom { animation-name: watercolorPetal; }
+  }
 }
-.watercolor[data-watercolor-visible="true"] .moving { animation-play-state: running; }
-.upperPetal { --hinge: 18% 22%; --breath: 10.4s; --phase: -1.7s; --turn: .81deg; --dip: -1.55px; --slide: 1px; }
-.outerPetal { --hinge: 16% 27%; --breath: 8.7s; --phase: -5.7s; --turn: -.82deg; --dip: 1px; --slide: -1.5px; }
-.bud { --hinge: 42% 22%; --breath: 11.7s; --phase: -8.2s; --turn: .84deg; --dip: -1.4px; --slide: 1.1px; }
-.lowerPetal { --hinge: 85% 79%; --breath: 9.3s; --phase: -2.9s; --turn: -.84deg; --dip: -.8px; --slide: 1.7px; }
-.lowerBloom { --hinge: 85% 79%; --breath: 10.9s; --phase: -5.1s; --turn: .93deg; --dip: 1.5px; --slide: -1.1px; }
-.hair { --hinge: 84% 23%; --breath: 12.4s; --phase: -9.3s; --turn: -.59deg; --dip: -1.4px; --slide: 1.1px; }
-.looseRight, .looseBottom { animation-name: watercolorPetal; }
-.looseRight { --hinge: 94% 52%; --breath: 12.9s; --phase: -8.4s; --turn: .93deg; --dip: -4px; --slide: 4.6px; }
-.looseBottom { --hinge: 44% 86%; --breath: 15.7s; --phase: -1.1s; --turn: -.81deg; --dip: 4px; --slide: -4.7px; }
+
+.upperBlossom { --hinge: 277px 283px; --breath: 10.6s; --phase: .2s; --turn: .88deg; --dip: -2.3px; --slide: 2.6px; }
+.outerPetal { --hinge: 268px 279px; --breath: 8.9s; --phase: 2.4s; --turn: -.76deg; --dip: .8px; --slide: -2px; }
+.bud { --hinge: 674px 203px; --breath: 11.8s; --phase: 1.2s; --turn: .73deg; --dip: -1.5px; --slide: 1.4px; }
+.rightPetal { --hinge: 1304px 815px; --breath: 9.7s; --phase: 1.8s; --turn: -.83deg; --dip: -1.7px; --slide: 2px; }
+.lowerBlossom { --hinge: 1300px 817px; --breath: 11.1s; --phase: .6s; --turn: -.87deg; --dip: 2px; --slide: -2.3px; }
+.hair { --hinge: 1330px 250px; --breath: 12.6s; --phase: .9s; --turn: -.39deg; --dip: -.8px; --slide: 1px; }
+.looseRight { --hinge: 1459px 537px; --breath: 13.4s; --phase: 1.5s; --turn: .91deg; --dip: -4px; --slide: 4px; }
+.looseBottom { --hinge: 680px 881px; --breath: 13.9s; --phase: 3.1s; --turn: -.82deg; --dip: 3.6px; --slide: -3.6px; }
 
 @keyframes watercolorBreeze {
-  /* A sub-frame hold gives the browser the same identity matrix across the seam. */
-  0%, .06%, 99.94%, 100% { transform: translate(0,0) rotate(0deg); }
-  52% { transform: translate(var(--slide),var(--dip)) rotate(var(--turn)); }
+  0%, 100% { transform: none; }
+  29% { transform: translate(calc(-.36 * var(--slide)), calc(-.29 * var(--dip))) rotate(calc(-.31 * var(--turn))); }
+  63% { transform: translate(var(--slide), var(--dip)) rotate(var(--turn)); }
 }
+
 @keyframes watercolorPetal {
-  0%, 31%, 99.94%, 100% { transform: translate(0,0) rotate(0deg); }
-  65% { transform: translate(var(--slide),var(--dip)) rotate(var(--turn)); }
+  0%, 21%, 100% { transform: none; }
+  59% { transform: translate(var(--slide), var(--dip)) rotate(var(--turn)); }
 }
 
 .music {
@@ -53,7 +68,7 @@
   border: 1px solid #614c42;
   background: radial-gradient(ellipse at 96% 0%,#44332c,transparent 66%), #2e2523;
   color: #fff5e7;
-  box-shadow: 0 14px 30px #62413925, inset 0 0 0 3px #2d222075;
+  box-shadow: 0 10px 25px #6241391a, inset 0 0 0 3px #2d222075;
 }
 .song { position: relative; width: fit-content; }
 .music .label {
@@ -64,7 +79,7 @@
   letter-spacing: .21em;
   text-transform: uppercase;
 }
-.music h2 {
+.keepsake .music h2 {
   margin: 0;
   color: inherit;
   font-size: clamp(1.66rem,3.15vw,2.54rem);
@@ -87,19 +102,13 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.music[data-introduced="true"] .ink path { animation: keepsakeInk 1.25s ease-out both; }
-.music[data-introduced="true"] .ink path:nth-child(2) { animation-delay: .11s; }
-.music[data-introduced="true"] .ink path:nth-child(3) { animation-delay: .23s; }
-.music[data-introduced="true"] .ink path:nth-child(4) { animation-delay: .29s; }
 @keyframes keepsakeInk {
   from { stroke-dasharray: 1; stroke-dashoffset: 1; }
   to { stroke-dasharray: 1; stroke-dashoffset: 0; }
 }
 
-.actions {
-  margin-top: 12px;
-}
-.actions a, .actions button {
+.actions { margin-top: 12px; }
+.actions a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -108,14 +117,8 @@
   font-size: .76rem;
   font-weight: 600;
 }
-.actions button {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-.actions a:hover, .actions button:hover { color: #fff4dd; }
-.actions a:focus-visible, .actions button:focus-visible {
+.actions a:hover { color: #fff4dd; }
+.actions a:focus-visible {
   outline: 2px solid #f0c987;
   outline-offset: 4px;
   border-radius: 3px;
@@ -128,31 +131,13 @@
   transition: transform .25s ease-out;
 }
 .playMark svg { display: block; width: 100%; }
-.actions button:is(:hover,:focus-visible) .playMark path:last-child { animation: keepsakeInk .55s ease-out both; }
-.actions button:active .playMark { transform: scale(.91); }
+.actions a:is(:hover,:focus-visible) .playMark path:last-child { animation: keepsakeInk .55s ease-out both; }
+.actions a:active .playMark { transform: scale(.91); }
 
-.music audio {
-  display: block;
-  width: 100%;
-  height: 38px;
-  margin-top: 9px;
-  accent-color: #e8c894;
+@media (max-width: 880px) {
+  .keepsake { padding-top: 0; }
 }
-.music audio:not([controls]) { display: none; }
-.wave { margin-left: auto; display: inline-flex; align-items: center; gap: 3px; height: 20px; }
-.wave i { width: 1.5px; height: 12px; background: #d8ad72; border-radius: 20px; transform: scaleY(.28); }
-.music[data-playing="true"] .wave i { animation: keepsakeWave .93s ease-in-out infinite alternate; }
-.music[data-playing="true"] .wave i:nth-child(2) { animation-delay: -.41s; }
-.music[data-playing="true"] .wave i:nth-child(3) { animation-delay: -.79s; }
-.music[data-playing="true"] .wave i:nth-child(4) { animation-delay: -.26s; }
-@keyframes keepsakeWave { to { transform: scaleY(1); } }
-
-@media (max-width:760px) {
-  .keepsake { gap: 12px; }
-}
-@media (prefers-reduced-motion:reduce) {
-  .moving, .music[data-introduced] .ink path,
+@media (prefers-reduced-motion: reduce) {
   .actions a:is(:hover,:focus-visible) .playMark path:last-child { animation: none !important; }
-  .attached { display: none; }
   .playMark { transition: none; }
 }

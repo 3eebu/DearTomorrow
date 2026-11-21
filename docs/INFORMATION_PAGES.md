@@ -2,7 +2,7 @@
 
 The editorial information pages cover the story and the current preview.
 
-- `/about` opens with the personal reason Dear Tomorrow began. The watercolor and its song sit alongside the founder’s story on wide screens and between the headline and story on phones. The “A little place for the things that stay” introduction, product areas, and preview status follow.
+- `/about` is a personal dedication. The original story sits beside the watercolor and music keepsake on wide screens. On smaller screens the painting and keepsake follow the headline, with the story and a closing line beneath them.
 - `/how-it-works` shows how to write a letter, grow a Memory Tree, and make a Memory Book. The guide explains browser-local saving, backups, and the current limits of the preview.
 
 ## How It Works recordings
@@ -17,19 +17,20 @@ The three walkthroughs were captured in the running Dear Tomorrow app with separ
 
 The guide uses silent MP4 files with WebP posters and tighter phone crops. A video loads when its chapter comes into view or a visitor presses play. Only one video plays at a time. The controls offer play, pause, replay, seeking, and fullscreen. Videos pause offscreen and await manual play when reduced motion is enabled.
 
-The production guide was verified in Chromium at 1440, 820, 390, and 320 pixels. All three desktop videos played, looped, paused offscreen, and accepted keyboard controls. The three phone crops played inline. Reduced motion loaded no video before a user action. The About screenshot matched the pre-change baseline, and all six routes rendered without browser errors. Lint, type checking, the production build, and all 64 existing automated tests passed.
+The production guide was verified in Chromium at 1440, 820, 390, and 320 pixels. All three desktop videos played, looped, paused offscreen, and accepted keyboard controls. The three phone crops played inline. Reduced motion loaded no video before a user action.
 
 ## Watercolor keepsake
 
-The supplied cherry-blossom artwork is served as lossless WebP. The eyes and brows stay on the fixed base. Feathered masks limit motion to parts of two blossoms, an outer bud, and a loose hair curl. Two detached petals occupy their own layers. Each transform repeats back to its starting pose. The artwork pauses offscreen and in a hidden tab, and reduced motion displays the still composition.
+The original lossless WebP supplies both the still painting and eight decorative layers. Complementary masks blend six local areas into the fixed painting, including parts of both blossoms, individual petals, an upper bud, and a hair curl. Two detached petals have their own clipped outlines. The eyes, lids, lashes, and brows stay on the fixed layer. The layers have independent timings, pause offscreen or in a hidden tab, and resume from the same position. Reduced motion displays the original still artwork.
 
-The dark keepsake plays the user-supplied Elena Blinova violin cover of “Javeda Zindagi” from a local audio file. The first 22 seconds were cut from the file before adding it to the site. Playback starts with an explicit button press, exposes the native player controls, and pauses when the page unloads. The audio is not requested until playback begins.
+The dark keepsake links to [Elena Blinova’s upload of “Javeda Zindagi”](https://www.youtube.com/watch?v=AVh5PNsOg1U&t=22s), starting at 22 seconds in a new tab. The public build uses this listening link because redistribution rights for the supplied MP3 could not be verified. A private copy of the trimmed recording was preserved outside the served directory during the change.
 
 The homepage still uses the fictional newspaper montage and its replay controls.
 
 ## Verification
 
-- Inspected the production page at 1440, 820, 390, and 320 pixels wide. Captures show the two-column and single-column layouts.
-- Compared eye, eyebrow, and eyelid crops over 32 seconds of continuous motion. The pixels matched throughout. All eight decorative layers returned to the same rendered pose after 250 additional simulated cycles, paused when scrolled out of view, and resumed in place.
-- Checked the still composition with reduced motion, followed the exact recording by keyboard, and rendered all six site routes in Chromium. Lint, type checking, the production build, and all 64 automated tests passed.
-- Checked that the supplied recording plays from its trimmed beginning and pauses at desktop and phone sizes.
+- Review the full-page layout at 1440, 820, 390, and 320 pixels wide. The page uses the original story text, keeps the shared navigation and footer, and places the keepsake under the painting.
+- Check the protected eye and brow regions at different animation phases, including before and after the loop boundary. Scroll the artwork out of view and back to verify that its decorative motion resumes from its paused position.
+- With reduced motion enabled, verify that the SVG shows the still artwork. Activate the listening link with the keyboard or a touch, and check that it opens the timestamped recording in a new tab.
+
+The production Our Story page was checked in Edge at all four widths. The protected eye regions matched pixel for pixel at sampled phases on desktop and phone. The review included two real cycles of every layer, offscreen pause and resume, and a simulated 250-cycle repeat. How It Works matched its previous desktop screenshot byte for byte, and all three guide films played. The Letters and Memory Tree browser suites passed. The Memory Books sample opened, turned a page, and saved an editable copy in an isolated profile. Lint, type checking, the production build, and all 65 automated tests passed.
