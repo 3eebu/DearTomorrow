@@ -4,7 +4,7 @@ const { performance } = require('node:perf_hooks');
 const load = require('./load-book-model.cjs');
 const { activeSeason, findMemories, initialSettings, localDay, newTree, nextAnniversary, putMemory,
   removeChapter, stage, validDay, validateGrove, validateTree } = load('./memory-tree');
-const { BRANCH, STRIDE, buildTree, leafColor } = load('./memory-tree-geometry');
+const { buildPaintedTree, leafPalette } = load('./memory-tree-illustration');
 const today = '2026-11-19';
 const fixture = count => {
   const tree = newTree({ ...initialSettings, name: 'Synthetic orchard', season: 'spring' }, 'test-tree', 881134);
@@ -18,82 +18,66 @@ const fixture = count => {
 };
 const plain = data => JSON.parse(JSON.stringify(data));
 
-test('growth stages include the empty seed and first true leaf', () => {
-  const model = buildTree(fixture(0), today);
-  assert.equal(model.leaves.size, 0);
-  assert.equal(stage(0), 'Seed');
-  assert.equal(stage(1), 'Sprout');
-  assert.equal(stage(3), 'Sapling');
-  assert.equal(stage(12), 'Young tree');
-  assert.equal(stage(32), 'Growing tree');
-  assert.equal(stage(120), 'Mature tree');
-  assert.equal(stage(1000), 'Flourishing tree');
-  const first = buildTree(fixture(1), today), sapling = buildTree(fixture(20), today);
-  assert.equal(first.leaves.size, 1);
-  assert.ok(first.trunkHeight < .5 && first.heightRadius < sapling.heightRadius / 2);
+test('growth moves from bare earth to a sprout and extends into a mature crown', () => {
+  const empty = buildPaintedTree(fixture(0), today);
+  assert.equal(empty.leaves.length, 0);
+  assert.equal(empty.trunk.length, 0);
+  const stages = [[0, 'Seed'], [1, 'Sprout'], [3, 'Sapling'], [12, 'Young tree'],
+    [32, 'Growing tree'], [120, 'Mature tree'], [1000, 'Flourishing tree']];
+  for (const [count, name] of stages) assert.equal(stage(count), name);
+  const [first, sapling, growing, mature] = [1, 5, 20, 100].map(count => buildPaintedTree(fixture(count), today));
+  assert.equal(first.leaves.length, 1);
+  assert.ok(first.size < sapling.size && sapling.size < growing.size && growing.size < mature.size);
+  assert.equal(first.boughs.length, 0);
+  assert.ok(sapling.boughs.length < growing.boughs.length);
+  const [left, right] = mature.leaves.reduce(([min,max], leaf) => [Math.min(min, leaf.x), Math.max(max, leaf.x)], [420,420]);
+  assert.ok(right-left > 540);
 });
 
-for (const count of [1, 10, 50, 100, 500, 1000]) {
-  test('one independently identified leaf per memory at ' + count, t => {
+for (const count of [1, 5, 20, 100, 500, 1000, 2400]) {
+  test('one independently identified painted leaf per memory at ' + count, t => {
     const tree = fixture(count);
     const started = performance.now();
-    const model = buildTree(tree, today);
+    const model = buildPaintedTree(tree, today);
     const elapsed = performance.now() - started;
-    const ids = new Set();
-    assert.equal(model.leaves.size, count);
-    for (let i = 0; i < model.vertices.length; i += STRIDE) {
-      const pick = model.vertices[i + 14];
-      if (model.vertices[i + 15] === 1) ids.add(pick);
-      if (pick >= BRANCH) assert.ok(model.branches.has(pick));
+    assert.equal(model.leaves.length, count);
+    assert.deepEqual(Array.from(model.leaves, leaf => leaf.id), tree.memories.map(memory => memory.id));
+    for (const leaf of model.leaves) {
+      assert.ok(Number.isFinite(leaf.x) && Number.isFinite(leaf.y) && leaf.size > 0);
+      assert.ok(leaf.x > 35 && leaf.x < 805 && leaf.y > 10 && leaf.y < 520);
     }
-    assert.equal(ids.size, count);
-    for (const m of tree.memories) {
-      assert.equal(model.leaves.get(m.slot + 1).id, m.id);
-      assert.ok(ids.has(m.slot + 1));
-    }
-    assert.ok(model.indices.every(index=>index<model.vertices.length/STRIDE));
-    if(model.overview){
-      assert.ok(model.overview.length<model.indices.length/2);
-      const overviewLeaves=new Set();
-      for(const index of model.overview){
-        const vertex=index*STRIDE;
-        if(model.vertices[vertex+15]===1)overviewLeaves.add(model.vertices[vertex+14]);
-      }
-      assert.equal(overviewLeaves.size,count);
-    }
-    t.diagnostic(elapsed.toFixed(1) + ' ms CPU mesh generation, ' + model.indices.length/3 +
-      ' close-up triangles, ' + (model.overview?.length??model.indices.length)/3 + ' overview triangles');
+    t.diagnostic(elapsed.toFixed(1) + ' ms for ' + count + ' painted leaf positions');
   });
 }
 
-test('other leaves keep their positions through edits, additions, deletion and chapter reorder', () => {
+test('leaf positions follow saved slots and do not jump on edits or additions', () => {
   const tree = fixture(100);
-  const base = buildTree(tree, today);
+  const base = buildPaintedTree(tree, today);
   const input = { ...tree.memories[99], title: 'A new memory', date: '2026-11-16' };
   const added = putMemory(tree, input);
   assert.equal(added.memories.at(-1).slot, 100);
   const edited = putMemory(added, { ...tree.memories[5], title: 'A different title' }, tree.memories[5].id);
-  assert.equal(edited.memories[5].slot, 5);
-  const changed = { ...edited, memories: edited.memories.filter(m => m.slot !== 15), chapters: [...tree.chapters].reverse() };
-  const next = buildTree(changed, today);
-  for (const [id, site] of base.leaves) if (id !== 16) assert.deepEqual(next.leaves.get(id), site);
-  assert.equal(next.leaves.size, 100);
-  assert.equal(next.leaves.get(16), undefined);
-  assert.deepEqual(buildTree(validateTree(plain(tree)), today).vertices, base.vertices);
+  const coordinates = leaves => leaves.map(({id,x,y,angle}) => ({id,x,y,angle}));
+  assert.deepEqual(coordinates(buildPaintedTree(edited,today).leaves.slice(0,100)), coordinates(base.leaves));
+  assert.deepEqual(buildPaintedTree(validateTree(plain(tree)), today), base);
+  const removed = buildPaintedTree({...edited, memories: edited.memories.filter(m => m.slot!==15)}, today);
+  assert.equal(removed.leaves.length,100);
+  assert.ok(!removed.leaves.some(leaf => leaf.slot===15));
 });
 
-test('species alter geometry, seasons alter color, and mature memory colors use the actual date', () => {
+test('species change the shapes and colors follow seasons and memory dates', () => {
   const tree = fixture(10);
-  const variant = settings => buildTree({ ...tree, settings: { ...tree.settings, ...settings } }, today);
+  const variant = settings => buildPaintedTree({ ...tree, settings: { ...tree.settings, ...settings } }, today);
   const cherry = variant({});
-  for (const species of ['oak', 'willow']) assert.notDeepEqual(variant({ species }).leaves.get(8).tip, cherry.leaves.get(8).tip);
-  assert.deepEqual(variant({ season: 'winter' }).leaves.get(8), cherry.leaves.get(8));
-  assert.notDeepEqual(variant({ season: 'winter' }).vertices, cherry.vertices);
-  assert.deepEqual(variant({ garden: 'rain' }).vertices, cherry.vertices);
-  assert.ok(leafColor('2026-11-19', today, 'summer', 'oak')[1] > leafColor('2016-11-19', today, 'summer', 'oak')[1]);
+  for (const species of ['oak', 'willow']) assert.notDeepEqual(variant({ species }).leaves, cherry.leaves);
+  assert.deepEqual(variant({ season: 'winter' }).leaves, cherry.leaves);
+  assert.notDeepEqual(leafPalette({ ...tree.settings, season: 'winter' }, today), leafPalette(tree.settings, today));
+  assert.deepEqual(variant({ garden: 'rain' }), cherry);
+  const recolored = buildPaintedTree({...tree, memories: tree.memories.map(m=>({...m,date:today}))},today);
+  assert.equal(recolored.leaves[0].palette, 0);
+  assert.ok(cherry.leaves[0].palette > 0);
   assert.equal(activeSeason({ ...initialSettings, south: true }, '2026-12-01'), 'summer');
 });
-
 test('local date and anniversary math handles boundaries and leap day', () => {
   assert.equal(localDay(new Date(2026, 10, 19, 0, 5)), today);
   assert.ok(validDay('2000-02-29'));

@@ -94,7 +94,11 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
   const [mode,setMode]=useState<DialogMode|null>(null),[editing,setEditing]=useState<{id?:string;input:MemoryInput}|null>(null);
   const [query,setQuery]=useState(''),[chapter,setChapter]=useState(''),[favorites,setFavorites]=useState(false),[milestones,setMilestones]=useState(false);
   const [demoPaused,setDemoPaused]=useState(false);
+  const [detailRequest,requestDetail]=useState(0);
+  const detail=useRef<HTMLHeadingElement>(null);
   const match=useMemo(()=>findMemories(tree,query,chapter,favorites,milestones),[tree,query,chapter,favorites,milestones]);
+  const leafMatches=useMemo(()=>query.trim()||chapter||favorites||milestones?
+    new Set(match.map(memory=>memory.id)):null,[query,chapter,favorites,milestones,match]);
   const selection=ordered.find(m=>m.id===selected);
   const selectionIndex=selection?ordered.indexOf(selection):-1;
   const inDay=(date:string)=>ordered.filter(m=>m.date===date || (m.annual&&date>=m.date&&
@@ -105,12 +109,17 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
     setSelected(memory?.id??'');setFocus(memory?{id:memory.id}:null);
   }
   function choose(m:Memory,bringToTree=false,displayDate=m.date){
-    setSelected(m.id);setDay(displayDate);setMonth(displayDate.slice(0,7));setFocus({id:m.id});
+    setSelected(m.id);setDay(displayDate);setMonth(displayDate.slice(0,7));setFocus({id:m.id,reveal:bringToTree});
     if(bringToTree){
       if(view==='tree')stageAnchor.current?.scrollIntoView({block:'start'});
       else {scrollToStage.current=true;changeView('tree');}
     }
   }
+  useEffect(()=>{
+    if(!detailRequest)return;
+    detail.current?.focus({preventScroll:true});
+    detail.current?.scrollIntoView({block:'center'});
+  },[detailRequest]);
   function changeView(v:View){
     if(view===v)return;
     setView(v);
@@ -166,21 +175,27 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
             {treeActions}
           </div>
         </details>}
-        {editable&&<button className="mt-primary" disabled={busy} onClick={()=>open()}>{planted?'Add a memory':'Plant a tree'}</button>}
+        {editable&&(planted||view!=='tree')&&<button className="mt-primary" disabled={busy} onClick={()=>open()}>{planted?'Add a memory':'Plant a tree'}</button>}
       </div>
     </div>
     {!mode&&displayError}
     <div id="mt-tree-stage" ref={stageAnchor} hidden={view!=='tree'}>
-      <TreeStage tree={screenTree} today={today} focus={focus} selected={selected}
-        onChoose={id=>{const m=ordered.find(m=>m.id===id);if(m)choose(m);}} onBranch={id=>setChapter(id)}
-        controls={demo||planted} onPause={()=>{if(demo)setDemoPaused(!demoPaused);
+      <TreeStage tree={screenTree} today={today} focus={focus} selected={selected} planted={planted}
+        matches={leafMatches} onRead={()=>requestDetail(n=>n+1)}
+        onChoose={id=>{
+          const memory=ordered.find(item=>item.id===id);
+          if(memory){choose(memory);requestDetail(n=>n+1);}
+        }}
+        onPause={()=>{if(demo)setDemoPaused(!demoPaused);
           else if(!busy)void commit({...tree,settings:{...tree.settings,paused:!tree.settings.paused}});}}/>
       {!tree.memories.length&&<div className="mt-seed-note">
-        <p>{planted?'Your first memory will grow the first leaf.':'Every tree begins with a seed.'}</p>
-        {planted&&<button className="mt-link" onClick={()=>setFocus({id:'seed',grow:true})}>Replay planting</button>}
+        <h2>{planted?'A seed is waiting.':'Every story begins somewhere.'}</h2>
+        <p>{planted?'Your first memory will grow the first leaf.':'Plant a seed and give your memories somewhere to grow.'}</p>
+        {planted?<button className="mt-link" onClick={()=>setFocus({id:'seed',grow:true})}>Replay planting</button>:
+          editable&&<button className="mt-primary" disabled={busy} onClick={()=>open()}>Plant a tree</button>}
       </div>}
     </div>
-    <div className="mt-journal">
+    <div className="mt-journal" data-view={view} hidden={view==='tree'&&!ordered.length}>
       <section className="mt-index" aria-label={view==='calendar'?'Calendar and day memories':'Browse memories'}>
         {view==='calendar'?<>
           <Calendar tree={tree} today={today} day={day} month={month} selectDay={selectDate} selectMonth={m=>selectDate(m+'-01')}/>
@@ -191,7 +206,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
           <h2>{view==='timeline'?'Your timeline':'Find a memory'}</h2>
           {tree.memories.length>0?<><div className="mt-filters">
             <label>Search<input type="search" value={query} placeholder="Title, story or tag" onChange={e=>setQuery(e.target.value)}/></label>
-            <label>Chapter<select value={chapter} onChange={e=>{setChapter(e.target.value);if(view==='tree'&&e.target.value)setFocus({id:e.target.value,chapter:true});}}><option value="">All chapters</option>
+            <label>Chapter<select value={chapter} onChange={e=>setChapter(e.target.value)}><option value="">All chapters</option>
               {tree.chapters.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}<option value="unassigned">Unassigned</option></select></label>
             <label className="mt-check"><input type="checkbox" checked={favorites} onChange={e=>setFavorites(e.target.checked)}/>Favorites</label>
             <label className="mt-check"><input type="checkbox" checked={milestones} onChange={e=>setMilestones(e.target.checked)}/>Milestones</label>
@@ -202,7 +217,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
       {selection&&<article className="mt-keepsake" aria-labelledby="mt-selected-title">
         <div className="mt-keepsake-meta"><time dateTime={selection.date+(selection.time?'T'+selection.time:'')}>{displayDay(selection.date)}</time>
           {selection.favorite&&<span aria-label="Favorite">♥</span>}{selection.milestone&&<span>✦ Milestone</span>}</div>
-        <h2 id="mt-selected-title" tabIndex={-1}>{selection.title}</h2>
+        <h2 id="mt-selected-title" ref={detail} tabIndex={-1}>{selection.title}</h2>
         <p className="mt-chapter-name">{[tree.chapters.find(c=>c.id===selection.chapterId)?.name,selection.time,selection.location].filter(Boolean).join(' · ')}</p>
         {selection.story&&<p className="mt-story">{selection.story}</p>}
         {!!selection.photos.length&&<Photos memory={selection}/>}

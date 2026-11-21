@@ -12,7 +12,7 @@ The three walkthroughs were captured in the running Dear Tomorrow app with separ
 | Chapter | What the recording shows | Duration |
 | --- | --- | ---: |
 | [Letters](../public/guide/letters.mp4) | Write on paper, change the stationery and wax, seal the envelope, and open the finished letter | 27.5 s |
-| [Memory Tree](../public/guide/memory-tree.mp4) | Plant a seed, save a dated memory, watch its leaf emerge, rotate and click the leaf, and revisit the timeline | 28.0 s |
+| [Memory Tree](../public/guide/memory-tree.mp4) | Plant a seed, save a dated memory, watch the illustrated tree grow, and select a leaf to read its story | 28.0 s |
 | [Memory Books](../public/guide/memory-books.mp4) | Choose a cover, add writing and place a photo in Studio, open the cover, and turn a real page | 29.0 s |
 
 The guide uses silent MP4 files with WebP posters and tighter phone crops. A video loads when its chapter comes into view or a visitor presses play. Only one video plays at a time. The controls offer play, pause, replay, seeking, and fullscreen. Videos pause offscreen and await manual play when reduced motion is enabled.

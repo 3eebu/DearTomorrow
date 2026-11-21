@@ -6,312 +6,229 @@ const { chromium } = require(process.env.MEMORY_TREE_PLAYWRIGHT || 'playwright')
 const load = require('./load-book-model.cjs');
 const { initialSettings, newTree } = load('./memory-tree');
 const base = process.env.MEMORY_TREE_URL || 'http://127.0.0.1:3002';
+const shots = process.env.MEMORY_TREE_SCREENSHOTS;
+
+const btn = (where,name) => where.getByRole('button',{name,exact:true});
+const painting = page => page.getByRole('group',{name:'Illustrated Memory Tree'});
+const leaves = page => page.locator('.mt-ink-leaf');
+const detail = page => page.locator('#mt-selected-title');
+const leafAt = (page,slot) => page.locator('.mt-ink-leaf[data-slot="'+slot+'"]');
+
+async function shot(page,name,selector) {
+  if (!shots) return;
+  await fs.mkdir(shots,{recursive:true});
+  const options = {path:path.join(shots,name+'.png')};
+  if (selector) await page.locator(selector).screenshot(options);
+  else await page.screenshot(options);
+}
+
+async function openOptions(page) {
+  const summary = page.locator('summary').filter({hasText:'Tree options'});
+  if (!await summary.evaluate(el=>el.parentElement.open)) await summary.click();
+}
+
+async function importBackup(page,tree) {
+  await page.getByLabel('Import Memory Tree backup').setInputFiles({
+    name:'orchard.json', mimeType:'application/json', buffer:Buffer.from(JSON.stringify(tree)),
+  });
+  await page.getByRole('heading',{name:tree.settings.name,exact:true}).waitFor();
+}
+
+function sample(count) {
+  const tree = newTree({...initialSettings,name:'Illustrated orchard '+count,season:'spring'},'performance',524289);
+  tree.nextLeaf=count;
+  tree.memories=Array.from({length:count},(_,slot)=>({
+    id:'leaf-'+slot,slot,title:'Synthetic memory '+slot,date:new Date(Date.UTC(2020,0,1)+
+      Math.floor(2420-((count-slot)/count)**2*2380)*86_400_000).toISOString().slice(0,10),
+    time:'',location:'',story:'A walk near the river.',chapterId:'branch-'+slot%6,tags:[],photos:[],
+    favorite:false,milestone:slot%11===0,annual:false,
+  }));
+  return tree;
+}
 
 async function run() {
-  const browser = await chromium.launch({
-    executablePath: process.env.MEMORY_TREE_CHROMIUM,
-    args: ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-gpu-sandbox'],
-  });
-  const errors = [];
+  const browser=await chromium.launch({ executablePath:process.env.MEMORY_TREE_CHROMIUM, args:['--disable-webgl'] });
+  const errors=[];
+  async function session(options={}) {
+    const page=await browser.newPage({ viewport:{width:1440,height:1030}, ...options });
+    page.setDefaultTimeout(9000);
+    page.on('pageerror',error=>errors.push(error.message));
+    assert.equal((await page.goto(base+'/memory-tree')).status(),200);
+    await page.evaluate(()=>document.fonts.ready);
+    return page;
+  }
   try {
-    async function session(options = {}, disableGraphics = false) {
-      const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, ...options });
-      await context.addInitScript(() => {
-        const prototype = WebGLRenderingContext.prototype;
-        const read = prototype.readPixels;
-        const draw = prototype.drawArrays;
-        const drawIndexed = prototype.drawElements;
-        window.gardenPicks = [];
-        window.gardenFrames = [];
-        window.gardenTriangles = [];
-        function frame(gl, count) {
-          if (gl.getParameter(gl.FRAMEBUFFER_BINDING)) return;
-          window.gardenFrames.push(performance.now());
-          window.gardenTriangles.push(count / 3);
-        }
-        prototype.readPixels = function (...args) {
-          read.apply(this, args);
-          const bytes = args.at(-1);
-          window.gardenPicks.push(bytes[0] + 256 * bytes[1] + 65536 * bytes[2]);
-        };
-        prototype.drawArrays = function (...args) {
-          draw.apply(this, args);
-          frame(this, args[2]);
-        };
-        prototype.drawElements = function (...args) {
-          drawIndexed.apply(this, args);
-          frame(this, args[1]);
-        };
-      });
-      const page = await context.newPage();
-      if (disableGraphics) await page.addInitScript(() => {
-        const getContext = HTMLCanvasElement.prototype.getContext;
-        HTMLCanvasElement.prototype.getContext = function (type, ...args) {
-          return type === 'webgl' ? null : getContext.call(this, type, ...args);
-        };
-      });
-      page.setDefaultTimeout(8000);
-      page.on('pageerror', error => errors.push(error.message));
-      page.on('console', message => {
-        if (message.type() === 'error' && /webgl|hydration/i.test(message.text())) errors.push(message.text());
-      });
-      const response = await page.goto(base + '/memory-tree');
-      assert.equal(response.status(), 200);
-      return page;
-    }
+    const page=await session();
+    const dialogue=page.getByRole('dialog');
+    await btn(page,'Plant a tree').waitFor();
+    await page.getByRole('heading',{name:'Every story begins somewhere.'}).waitFor();
+    assert.equal(await leaves(page).count(),0);
+    await shot(page,'empty-desktop');
+    await btn(page,'Plant a tree').click();
+    await dialogue.getByLabel('Tree name').fill('Isolated orchard');
+    await dialogue.getByLabel('When your story began').fill('2020-02-29');
+    await btn(dialogue,'Plant this tree').click();
+    const seed=page.locator('.mt-ink-seed [data-growing=true]');
+    await seed.waitFor();
+    assert.ok(await seed.evaluate(el=>el.getAnimations().length>0));
+    await seed.waitFor({state:'hidden'});
+    await btn(page,'Replay planting').waitFor();
+    await shot(page,'seed-desktop');
 
-    const page = await session();
-    const btn = (name, scope = page) => scope.getByRole('button', { name, exact: true });
-    const dialog = page.getByRole('dialog');
-    const heading = page.locator('#mt-selected-title');
-    const canvas = page.locator('.mt-stage canvas');
-    async function openMenu(name) {
-      const summary = page.locator('summary').filter({hasText:name});
-      if (!await summary.evaluate(el => el.parentElement.open)) await summary.click();
-    }
-    async function centeredLeaf(expected, via) {
-      await canvas.scrollIntoViewIfNeeded();
-      await page.waitForTimeout(1000);
-      const rect = await canvas.boundingBox();
-      const picks = [];
-      // The live blade sways by a few pixels even while its attachment remains centered.
-      for (const [x,y] of [[0,0],[8,0],[-8,0],[0,8],[0,-8],[8,8],[-8,-8],[8,-8],[-8,8]]) {
-        await page.evaluate(() => {window.gardenPicks.length=0;});
-        await canvas.dispatchEvent('pointermove', {pointerType:'mouse',clientX:rect.x+rect.width/2+x,clientY:rect.y+rect.height/2+y});
-        picks.push(await page.evaluate(() => window.gardenPicks.at(-1)));
-        if (picks.at(-1)===expected) return;
-        await page.waitForTimeout(118);
+    async function add(title,date,photo=false) {
+      await btn(page,'Add a memory').click();
+      await dialogue.getByLabel('Title',{exact:true}).fill(title);
+      await dialogue.getByLabel('Date',{exact:true}).fill(date);
+      await dialogue.getByLabel('Story',{exact:true}).fill('A small moment worth keeping.');
+      await dialogue.getByLabel(/^Chapter/).selectOption('branch-0');
+      if(photo){
+        await dialogue.locator('summary').click();
+        await dialogue.getByLabel('Special milestone').check();
+        await dialogue.getByLabel('Repeat annually').check();
+        await dialogue.getByLabel('Photographs').setInputFiles(path.join(__dirname,'fixtures','book-photo.png'));
+        await dialogue.locator('img').waitFor();
       }
-      if (process.env.MEMORY_TREE_SCREENSHOTS) await canvas.screenshot({path:path.join(process.env.MEMORY_TREE_SCREENSHOTS,'studio-focus-'+via+'.png')});
-      assert.fail(via+' should move the selected leaf to the center of the rendered view. Picks: '+picks.join(', '));
+      await btn(dialogue,'Save memory').click();
+      await detail(page).filter({hasText:title}).waitFor();
     }
-    const waitView = async name => {
-      await btn(name).click();
-      await page.waitForFunction(name => document.querySelector('.mt-toolbar [aria-pressed=true]')?.textContent === name, name);
-      await page.waitForFunction(() => !document.querySelector('.mt-toolbar button:disabled'));
-    };
-    await btn('Plant a tree').click();
-    await dialog.getByLabel('Tree name').fill('Isolated orchard');
-    await dialog.getByLabel('When your story began').fill('2020-02-29');
-    await btn('Plant this tree', dialog).click();
-    await btn('Replay planting').waitFor();
-    await page.getByText('Seed · Flowering cherry').waitFor();
-    await btn('Skip growth').click();
-
-    async function add(title, date, withPhoto = false) {
-      await btn('Add a memory').click();
-      await dialog.getByLabel('Title', { exact: true }).fill(title);
-      await dialog.getByLabel('Date', { exact: true }).fill(date);
-      await dialog.getByLabel('Story', { exact: true }).fill('A synthetic memory for the garden.');
-      await dialog.getByLabel(/^Chapter/).selectOption('branch-0');
-      if (withPhoto) {
-        await dialog.locator('summary').click();
-        await dialog.getByLabel('Special milestone').check();
-        await dialog.getByLabel('Repeat annually').check();
-        await dialog.getByLabel('Photographs').setInputFiles(path.join(__dirname, 'fixtures', 'book-photo.png'));
-        await dialog.locator('img').waitFor();
-      }
-      await btn('Save memory', dialog).click();
-      await heading.and(page.getByRole('heading', { name:title,exact:true })).waitFor();
-    }
-    await add('Leap day picnic', '2020-02-29', true);
-    await page.getByText('Sprout · Flowering cherry').waitFor();
-    await btn('Skip growth').click();
-    await add('Another cup of tea', '2020-02-29');
-    await btn('Skip growth').click();
-    await waitView('Calendar');
-    assert.equal(await page.getByRole('button', { name: 'February 29, 2020, 2 memories' }).getAttribute('aria-pressed'), 'true');
-    const calendarList = page.getByRole('region', { name: 'Calendar and day memories' });
-    await calendarList.getByRole('button', { name: /Leap day picnic/ }).click();
-    await heading.filter({hasText:'Leap day picnic'}).waitFor();
+    await add('Leap day picnic','2020-02-29',true);
+    await leafAt(page,0).locator('[data-growing=true]').waitFor();
+    assert.ok(await leafAt(page,0).locator('[data-growing=true]').evaluate(el=>el.getAnimations().length>0));
+    await btn(page,'Skip growth').click();
+    assert.equal(await leaves(page).count(),1);
+    await shot(page,'first-leaf','.mt-stage');
+    await add('Another cup of tea','2020-02-29');
+    await btn(page,'Skip growth').click();
+    assert.equal(await leaves(page).count(),2);
+    await leafAt(page,0).locator('.mt-leaf-pigment').click();
+    assert.equal(await leafAt(page,0).getAttribute('aria-pressed'),'true');
+    assert.equal(await detail(page).textContent(),'Leap day picnic');
+    await page.waitForFunction(()=>document.activeElement?.id==='mt-selected-title');
     await page.locator('.mt-keepsake img').waitFor();
-    await calendarList.getByRole('button', { name: /Another cup of tea/ }).click();
-    await page.locator('.mt-keepsake').getByRole('button', { name:'Find this leaf ↗', exact:true }).click();
-    await centeredLeaf(2,'Calendar');
-    await waitView('Calendar');
+
+    await btn(page,'Calendar').click();
+    assert.equal(await btn(page,'February 29, 2020, 2 memories').getAttribute('aria-pressed'),'true');
+    await page.getByRole('region',{name:'Calendar and day memories'}).getByRole('button',{name:/Another cup of tea/}).click();
+    const keepsake=page.locator('.mt-keepsake');
+    await btn(keepsake,'Find this leaf ↗').click();
+    await painting(page).waitFor();
+    assert.equal(await leafAt(page,1).getAttribute('aria-pressed'),'true');
+    assert.equal(await leafAt(page,1).evaluate(el=>el===document.activeElement),true);
+    await leafAt(page,1).press('ArrowLeft');
+    assert.equal(await leafAt(page,0).evaluate(el=>el===document.activeElement),true);
+    await leafAt(page,0).press('Enter');
+    assert.equal(await detail(page).textContent(),'Leap day picnic');
+
+    await btn(page,'Calendar').click();
     await page.locator('.mt-calendar').getByLabel('Year').selectOption('2026');
-    await page.getByRole('button', { name: 'February 28, 2026, 1 memory' }).click();
-    assert.equal(await page.getByRole('button', { name: 'February 28, 2026, 1 memory' }).getAttribute('aria-pressed'), 'true');
-    await waitView('Timeline');
-    await page.locator('.mt-timeline-memory').getByRole('button', { name: 'Find this leaf ↗', exact: true }).first().click();
-    await btn('Zoom in').waitFor();
-    await centeredLeaf(1,'Timeline');
-    await btn('Edit').click();
-    await dialog.getByLabel('Title', { exact: true }).fill('Renamed picnic');
-    await btn('Save memory', dialog).click();
-    await heading.filter({hasText:'Renamed picnic'}).waitFor();
-    await btn('Duplicate').click();
-    await btn('Save memory', dialog).click();
-    await heading.filter({hasText:'Renamed picnic (copy)'}).waitFor();
-    await btn('Skip growth').click();
-    await btn('Delete').click();
-    await btn('Delete memory', dialog).click();
-    await dialog.waitFor({ state: 'hidden' });
-    assert.equal(await page.locator('.mt-rows').getByText('Renamed picnic (copy)', { exact: true }).count(), 0);
+    await btn(page,'February 28, 2026, 1 memory').click();
+    assert.equal(await detail(page).textContent(),'Leap day picnic');
+    await btn(page,'Timeline').click();
+    await page.locator('.mt-timeline-memory').getByRole('button',{name:'Find this leaf ↗',exact:true}).first().click();
+    await painting(page).waitFor();
+    assert.equal(await leafAt(page,0).getAttribute('aria-pressed'),'true');
 
-    await openMenu('Tree options');
-    await btn('Chapters').click();
-    await dialog.getByLabel('Chapter 1 name').fill('The beginnings');
-    await btn('Move The beginnings down', dialog).click();
-    await btn('Add a chapter', dialog).click();
-    await btn('Save chapters', dialog).click();
-    await dialog.waitFor({ state: 'hidden' });
-    await openMenu('Tree options');
-    await btn('Appearance').click();
-    await dialog.getByLabel('Tree species').selectOption('willow');
-    await dialog.getByLabel('Season').selectOption('winter');
-    assert.equal(await dialog.getByLabel('Garden', {exact:true}).count(),0);
-    await btn('Save appearance', dialog).click();
+    await btn(page,'Edit').click();
+    await dialogue.getByLabel('Title',{exact:true}).fill('Renamed picnic');
+    await btn(dialogue,'Save memory').click();
+    await detail(page).filter({hasText:'Renamed picnic'}).waitFor();
+    await btn(page,'Duplicate').click();
+    await btn(dialogue,'Save memory').click();
+    await detail(page).filter({hasText:'Renamed picnic (copy)'}).waitFor();
+    await btn(page,'Skip growth').click();
+    await btn(page,'Delete').click();
+    await btn(dialogue,'Delete memory').click();
+    await dialogue.waitFor({state:'hidden'});
+    assert.equal(await leaves(page).count(),2);
+
+    await openOptions(page);
+    await btn(page,'Chapters').click();
+    await dialogue.getByLabel('Chapter 1 name').fill('The beginnings');
+    await btn(dialogue,'Move The beginnings down').click();
+    await btn(dialogue,'Add a chapter').click();
+    await btn(dialogue,'Save chapters').click();
+    await dialogue.waitFor({state:'hidden'});
+    await openOptions(page);
+    await btn(page,'Appearance').click();
+    await dialogue.getByLabel('Tree species').selectOption('willow');
+    await dialogue.getByLabel('Season').selectOption('winter');
+    await btn(dialogue,'Save appearance').click();
     await page.getByText('Sapling · Weeping willow').waitFor();
-    await openMenu('View options');
-    await btn('Pause motion').click();
-    await btn('Resume motion').waitFor();
+    await btn(page,'Pause motion').click();
+    await btn(page,'Resume motion').waitFor();
     await page.reload();
-    await page.getByRole('heading', { name: 'Isolated orchard' }).waitFor();
-    await openMenu('View options');
-    await btn('Resume motion').waitFor();
-    await page.locator('.mt-rows').getByText('Renamed picnic').waitFor();
-    assert.equal(await page.locator('.mt-rows li').count(), 2);
-    assert.equal(await page.locator('.mt-filters select option').filter({hasText:'The beginnings'}).count(), 1);
-    await openMenu('Tree options');
-    const pending = page.waitForEvent('download');
-    await btn('Export tree').click();
-    const download = await pending;
-    const backup = JSON.parse(await fs.readFile(await download.path(), 'utf8'));
-    assert.equal(backup.memories.length, 2);
-    assert.equal(backup.memories.find(m => m.title === 'Renamed picnic').photos.length, 1);
-    assert.equal(backup.settings.species, 'willow');
-    assert.equal(backup.settings.season, 'winter');
-    assert.equal(backup.settings.paused, true);
-    await page.getByLabel('Import Memory Tree backup').setInputFiles({
-      name: 'garden.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({...backup,
-        settings:{...backup.settings,garden:'rain',name:'Imported orchard'}})),
-    });
-    await page.getByRole('heading', { name: 'Imported orchard' }).waitFor();
-    assert.equal(await page.getByLabel('Choose a saved tree').locator('option').count(), 2);
-    await page.locator('.mt-specimen canvas').waitFor();
-    assert.equal(await page.locator('.mt-rain,.mt-stars,.mt-sky').count(),0);
-    await openMenu('Tree options');
-    const legacy = page.waitForEvent('download');
-    await btn('Export tree').click();
+    await btn(page,'Resume motion').waitFor();
+    assert.equal(await leaves(page).count(),2);
+    await detail(page).filter({hasText:'Renamed picnic'}).waitFor();
+
+    await openOptions(page);
+    const pending=page.waitForEvent('download');
+    await btn(page,'Export tree').click();
+    const backup=JSON.parse(await fs.readFile(await (await pending).path(),'utf8'));
+    assert.equal(backup.memories.length,2);
+    assert.equal(backup.memories.find(m=>m.title==='Renamed picnic').photos.length,1);
+    assert.equal(backup.settings.species,'willow');
+    assert.equal(backup.settings.season,'winter');
+    assert.equal(backup.settings.paused,true);
+    await importBackup(page,{...backup,settings:{...backup.settings,garden:'rain',name:'Imported orchard'}});
+    await openOptions(page);
+    assert.equal(await page.getByLabel('Choose a saved tree').locator('option').count(),2);
+    const legacy=page.waitForEvent('download');
+    await btn(page,'Export tree').click();
     assert.equal(JSON.parse(await fs.readFile(await (await legacy).path(),'utf8')).settings.garden,'rain');
+    await btn(page,'Explore the example').click();
+    await page.getByRole('heading',{name:'The Orchard Years'}).waitFor();
+    assert.equal(await leaves(page).count(),32);
+    const search=page.locator('.mt-filters input[type=search]');
+    await search.fill('The long way home');
+    assert.equal(await page.locator('.mt-ink-leaf[data-muted=true]').count(),31);
+    await search.clear();
+    assert.equal(await page.locator('.mt-ink-leaf[data-muted=true]').count(),0);
+    assert.equal(await painting(page).locator('canvas').count(),0);
+    await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+    await shot(page,'example-desktop');
+    console.log('Planting, leaf growth, pointer and keyboard selection, calendar, timeline, photos, edit, delete, chapters, appearance, reload, and backup verified.');
 
-    // The example runs in isolated state. A real pointer hits rendered geometry.
-    await btn('Explore the example').click();
-    await page.getByRole('heading', { name: 'The Orchard Years' }).waitFor();
-    await openMenu('View options');
-    await btn('Pause motion').click();
-    await page.locator('summary').filter({hasText:'View options'}).click();
-    await canvas.scrollIntoViewIfNeeded();
-    await page.waitForFunction(() => window.gardenFrames.length > 0);
-    let picked = 0;
-    for (const angle of [0, 1]) {
-      if (angle) {
-        await btn('Reset').click();
-        await btn('Rotate right').click(); await btn('Rotate right').click();
-        await canvas.scrollIntoViewIfNeeded();
+    for(const [width,height] of [[820,1180],[390,844],[320,760]]) {
+      const device=await session({viewport:{width,height},hasTouch:width<600,isMobile:width<600,reducedMotion:'reduce'});
+      await btn(device,'Explore the example').click();
+      await painting(device).waitFor();
+      assert.equal(await device.evaluate(()=>document.documentElement.scrollWidth),width);
+      assert.equal(await device.locator('.mt-stage').getAttribute('data-motion'),'false');
+      assert.equal(await painting(device).evaluate(el=>el.getAnimations({subtree:true}).length),0);
+      await shot(device,'example-'+width);
+      if(width<600) {
+        const target=leafAt(device,29);
+        const title=await target.locator('title').textContent();
+        await target.locator('.mt-leaf-pigment').tap();
+        await detail(device).filter({hasText:title}).waitFor();
       }
-      const size = await canvas.boundingBox();
-      let hits = 0;
-      const tip = page.locator('.mt-tooltip');
-      for (let y=.26; y<=.67 && !hits; y+=.035) {
-        for (let x=.30; x<=.70 && !hits; x+=.026) {
-          await page.evaluate(() => {window.gardenPicks.length = 0;});
-          await canvas.dispatchEvent('pointermove', {pointerType:'mouse',clientX:size.x+size.width*x,clientY:size.y+size.height*y});
-          const hit = await page.evaluate(() => window.gardenPicks.at(-1));
-          if (hit >= 1 && hit <= 32 && hit !== picked) {
-            const title = await tip.evaluate(el => el.firstChild.textContent);
-            await page.mouse.click(size.x+size.width*x,size.y+size.height*y);
-            await heading.and(page.getByRole('heading', {name:title,exact:true})).waitFor({timeout:2500});
-            picked = hit; hits++;
-          }
-          if (hit !== undefined) await page.waitForTimeout(114);
-        }
-      }
-      assert.ok(hits, 'expected a leaf hit at orbit angle ' + angle);
+      await btn(device,'Calendar').click();
+      assert.equal(await device.evaluate(()=>document.documentElement.scrollWidth),width);
+      await device.close();
     }
-    await btn('Reset').click();
-    if (process.env.MEMORY_TREE_SCREENSHOTS) await page.locator('.mt-stage').screenshot({path:path.join(process.env.MEMORY_TREE_SCREENSHOTS,'studio-interactive-desktop.png')});
-    console.log('Desktop planting, leaf picks from two angles, calendar/anniversary, timeline, photo, editing, duplication, deletion, chapters, appearance, persistence, backup verified.');
+    console.log('Tablet, 390 and 320 px phone layouts, touch selection, and reduced motion verified without WebGL.');
 
-    const tablet = await session({ viewport: { width: 820, height: 1180 } });
-    const phone = await session({ viewport: { width: 390, height: 844 }, isMobile:true, hasTouch:true, reducedMotion:'reduce' });
-    for (const device of [tablet, phone]) {
-      await btn('Explore the example', device).click();
-      await btn('Zoom in', device).waitFor();
-      assert.ok(await device.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
-      await btn('Calendar', device).click();
-      assert.ok(await device.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
-      await btn('Tree', device).click();
-      const stage=device.locator('.mt-stage');
-      if(device===phone){
-        assert.equal(await stage.getAttribute('data-motion'),'false');
-        const touchSession=await device.context().newCDPSession(device), drawing=stage.locator('canvas');
-        await drawing.scrollIntoViewIfNeeded();
-        const before=await drawing.screenshot();
-        const area=await drawing.boundingBox(), start=buffer=>touchSession.send('Input.dispatchTouchEvent',{type:buffer.type,touchPoints:buffer.points});
-        const y=Math.round(area.y+area.height*.45),x=Math.round(area.x+area.width*.5);
-        await start({type:'touchStart',points:[{x:x-35,y,id:1},{x:x+35,y,id:2}]});
-        await start({type:'touchMove',points:[{x:x-80,y:y+14,id:1},{x:x+77,y:y+18,id:2}]});
-        await start({type:'touchEnd',points:[]});
-        await device.waitForTimeout(60);
-        const after=await stage.locator('canvas').screenshot();
-        assert.ok(!before.equals(after), 'two-finger gesture should move the camera');
-        await btn('Reset',device).click();
-      }
-      if (process.env.MEMORY_TREE_SCREENSHOTS) await stage.screenshot({path:path.join(process.env.MEMORY_TREE_SCREENSHOTS,device===phone?'studio-interactive-mobile.png':'studio-interactive-tablet.png')});
-    }
-    console.log('Tablet and mobile viewports, calendar layout, touch pinch and pan input, reduced motion verified.');
-
-    const fallback=await session({},true);
-    await btn('Explore the example',fallback).click();
-    await fallback.getByText(/3D graphics are unavailable/).waitFor();
-    await fallback.locator('.mt-rows').getByRole('button',{name:/The long way home/}).click();
-    await fallback.locator('#mt-selected-title').filter({hasText:'The long way home'}).waitFor();
-    assert.equal(await btn('Zoom in',fallback).count(),0);
-    console.log('The journal remains usable when WebGL is disabled.');
-
-    const profile = await session({ viewport:{width:1000,height:750} });
-    for (const count of [1,10,50,100,500,1000]) {
-      const tree = newTree({...initialSettings,name:'Profile '+count,season:'spring'},'performance',524289);
-      tree.nextLeaf=count;
-      tree.memories=Array.from({length:count},(_,slot)=>({
-        id:'leaf-'+slot,slot,title:'Synthetic memory '+slot,date:'2024-06-'+String(1+slot%28).padStart(2,'0'),
-        time:'',location:'',story:'A walk near the river',chapterId:'branch-'+slot%6,tags:[],photos:[],
-        favorite:false,milestone:slot%11===0,annual:false,
-      }));
-      const started=performance.now();
-      await profile.getByLabel('Import Memory Tree backup').setInputFiles({
-        name:'profile.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(tree)),
-      });
-      await profile.getByRole('heading',{name:'Profile '+count,exact:true}).waitFor();
-      await btn('Rotate right',profile).waitFor();
-      const loaded=performance.now()-started;
-      await profile.evaluate(()=>{window.gardenFrames.length=0;});
-      await btn('Rotate right',profile).click();
-      await profile.waitForTimeout(650);
-      const metrics=await profile.evaluate(()=>{
-        const times=window.gardenFrames,intervals=times.slice(1).map((t,i)=>t-times[i]).sort((a,b)=>a-b);
-        return {frames:times.length,triangles:window.gardenTriangles.at(-1),
-          p95:intervals[Math.min(intervals.length-1,Math.floor(intervals.length*.95))]};
-      });
-      assert.ok(metrics.frames>=3);
-      console.log(count+' memories: '+loaded.toFixed(0)+' ms import to viewer, '+metrics.frames+' draw submissions in sample, p95 '+metrics.p95?.toFixed(1)+' ms.');
-      if(count===1000) {
-        const search=profile.locator('.mt-filters input[type=search]');
-        await search.fill('Synthetic memory 930');
-        await profile.locator('.mt-rows').getByRole('button',{name:/Synthetic memory 930/}).click();
-        await profile.locator('.mt-keepsake').getByRole('button',{name:'Find this leaf ↗',exact:true}).click();
-        await profile.waitForFunction(base=>window.gardenTriangles.at(-1)>base,metrics.triangles);
-        await profile.waitForTimeout(750);
-        const nearby=await profile.evaluate(()=>window.gardenTriangles.at(-1));
-        assert.ok(nearby>metrics.triangles && nearby<metrics.triangles*3.2);
-        console.log('1,000-memory mesh: '+metrics.triangles+' overview triangles, '+nearby+' triangles with a detailed leaf in focus.');
+    const profile=await session({viewport:{width:1440,height:1030},reducedMotion:'reduce'});
+    for(const count of [1,5,20,100,500,1000,2400]) {
+      const start=performance.now();
+      await importBackup(profile,sample(count));
+      await profile.waitForFunction(total=>document.querySelectorAll('.mt-ink-leaf').length===total,count);
+      await profile.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      const time=Math.round(performance.now()-start);
+      console.log(count+' memories: '+time+' ms from backup selection to SVG paint.');
+      if([1,5,20,100,1000].includes(count)) await shot(profile,'stage-'+count,'.mt-stage');
+      if(count===2400) {
+        await profile.locator('.mt-filters input[type=search]').fill('Synthetic memory 2399');
+        await profile.locator('.mt-rows').getByRole('button',{name:/Synthetic memory 2399/}).click();
+        await btn(profile.locator('.mt-keepsake'),'Find this leaf ↗').click();
+        assert.equal(await leafAt(profile,2399).getAttribute('aria-pressed'),'true');
+        assert.equal(await leafAt(profile,2399).evaluate(el=>el===document.activeElement),true);
       }
     }
-    assert.deepEqual(errors, []);
+    assert.deepEqual(errors,[]);
   } finally {
     await browser.close();
   }
 }
-run().catch(error => {console.error(error);process.exitCode=1;});
+run().catch(error=>{console.error(error);process.exitCode=1;});

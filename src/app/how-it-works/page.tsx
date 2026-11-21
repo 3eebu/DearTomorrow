@@ -25,9 +25,9 @@ const chapters = [
     number: "02",
     name: "Memory Tree",
     title: "Watch your memories grow.",
-    description: "Each memory becomes a leaf. Turn the tree to find it again, or revisit the date in your timeline or calendar.",
+    description: "Each memory becomes a leaf. Choose one on the illustrated tree, or revisit the date in your timeline or calendar.",
     steps: ["Plant your tree.", "Add the moments that matter.", "Return to every memory as your tree grows."],
-    filmDescription: "A seed is planted, a dated memory is added, and a leaf opens. The tree turns, a leaf is selected, and the timeline shows the saved memory.",
+    filmDescription: "A seed settles into the soil. A dated memory grows the first leaf, more memories fill the young tree, and a leaf is selected to read its story.",
   },
   {
     id: "memory-books",

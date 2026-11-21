@@ -1,51 +1,26 @@
-
 # Memory Tree
 
-Open `/memory-tree` to plant a tree or explore The Orchard Years, a fictional tree with 32 memories. A new personal tree starts as a seed. Each saved memory adds one selectable leaf. The journal can open every memory by keyboard, including leaves hidden behind other foliage.
+Open `/memory-tree` to plant your own seed or explore The Orchard Years, a fictional example with 32 memories. Planting gives you a seed. Saving the first memory opens its first leaf. As you add memories, more boughs and leaves fill in the illustration.
 
-## Botanical direction
+## Using the tree
 
-The earlier illustration gave the tree room to stand on its own. The refined page brings back that clarity with a centered title, cream backdrop, soft contact shadow, and a quiet caption below the tree. Rotation, zoom, and reset sit below the sculpture. Appearance, chapter management, and backups are grouped under **Tree options**. Pan, fit, fullscreen, and motion controls live under **View options**.
+- A leaf opens its memory in the reading panel. From the keyboard, tab into the tree, move through leaves with the arrow keys, and press Enter or Space to read the selected memory.
+- Browse through the journal, Timeline, or Calendar. **Find this leaf** returns you to the illustration and focuses that memory’s leaf. Search, chapter, favorite, and milestone filters quiet the other leaves.
+- Select **Add a memory** to save a date, title, story, or photograph. The reading panel includes editing, duplication, and export. **Tree options** includes appearance, chapters, and backup controls.
+- **Pause motion** stops the illustration’s movement. The page also follows the system reduced motion preference.
 
-The tree grows from a slender sprout into a twisting trunk with flared roots and a broad, layered crown. Older, established, and new memories draw from a continuous palette of olive, green, and young spring tones. Warm olive and amber appear on the oldest leaves. Each leaf has a curled blade, gently serrated edge, shaded midrib, and forked veins. Milestones add cupped ivory blossoms beside their leaves.
+## Illustration and saved data
 
-## Implementation
+The painted SVG uses curved, tapered boughs, a textured trunk, seasonal washes, and shapes specific to cherry, oak, and willow. Every saved memory has one individually identified leaf. Younger leaves range from fresh greens through the deeper olives and golds of earlier memories. Milestone blossoms appear on the smaller trees and beside the selected milestone in dense crowns.
 
-- `src/lib/memory-tree-geometry.ts` uses the saved seed and memory slots to place the limbs and leaves. Sculpted trunk and root cross-sections follow the bends in the wood. Lower boughs sweep outward, upper forks climb more steeply, and smaller shoots fill the crown in later growth stages. Previously planted trees retain their memory IDs, slots, and growth history. Chapter filters still focus a chapter's branch.
-- `src/lib/memory-tree-renderer.ts` draws the tree in indexed WebGL batches. Bark shading follows the wood grain, and leaf shading adds pigmentation, venation, and transmitted light. Mature trees use a lighter mesh at wide angles and restore detailed blades around the focus point when zoomed in. The depth-aware color-ID pass uses the same geometry for selection. The camera supplies 360-degree orbit, zoom, and pan. New shoots and leaves unfold in sequence, and reduced motion and the pause preference control movement. The journal remains available if graphics fail.
-- `src/lib/memory-tree.ts` keeps the version 1 tree, chapter, memory, and photo records. Earlier backup files can still carry the garden preference for compatibility. All trees appear on the cream backdrop. Species, season, and age still influence the form or color.
-- `src/lib/memory-tree-storage.ts` commits validated records to IndexedDB and detects stale writes from other tabs. Failed writes preserve the last committed record and the workspace can export the pending draft. Backup imports get a new library identity and retain memory slots. Photos are resized in the browser and embedded in backups.
-- Tree, Timeline, and Calendar share the same document. The calendar supports multiple memories per day and recurring dates. February 29 anniversaries appear on February 28 in common years. Search, chapter filters, and browsing leave the sculpture intact.
+A saved tree’s seed and memory slots determine placement. Edits and additions keep existing attachment coordinates. Deleting leaves can let the remaining canopy redistribute. The model chooses spaced positions on an ordered set of boughs and uses simpler leaf detail in dense canopies. The journal remains an easier way to find an individual memory when there are hundreds of leaves.
 
-## Verification
+The existing version 1 model, IndexedDB store, and import and export formats are used for personal trees. Earlier backups retain their memory IDs, dates, chapters, photos, and appearance preferences. The calendar supports multiple memories on the same day and recurring dates, including February 29 anniversaries on February 28 in common years.
 
-Run `node --test tests/*.test.cjs` for the Memory Tree and site regression suites. These tests cover one selectable leaf per memory at counts through 1,000, stable sites through growth and edits, date-based colors, species, seasons, backup validation, and compatibility with saved scene preferences.
+## Review
 
-The isolated Chromium test is `node tests/memory-tree.browser.cjs`. It expects the preview at `http://127.0.0.1:3002` by default. Set `MEMORY_TREE_URL` to use another preview. Playwright and Chromium can be provided using `MEMORY_TREE_PLAYWRIGHT` and `MEMORY_TREE_CHROMIUM`. Set `MEMORY_TREE_SCREENSHOTS` to save captures. The tests use a fresh browser profile and synthetic data.
+[Watch the recorded progression from bare earth to leaf selection](../public/guide/memory-tree.mp4). The 28-second clip uses fictional memories in an isolated browser profile.
 
-Browser coverage includes planting, growth, pointer selection after orbiting, Calendar and Timeline links that position the selected leaf in the rendered view, chapter organization, photo attachment, edit and delete, refresh persistence, backup import and export, touch pinch and pan, reduced motion, and the journal with WebGL disabled. Viewports are 1440 × 1000, 820 × 1180, and 390 × 844. Mobile touch is emulated.
+Run `node --test tests/*.test.cjs` for the model and site regression tests. Run `node tests/memory-tree.browser.cjs` against the preview to exercise planting, growth, pointer and keyboard selection, filters, calendar, timeline, editing, photos, saving, and old backups. The script accepts `MEMORY_TREE_URL`, `MEMORY_TREE_PLAYWRIGHT`, `MEMORY_TREE_CHROMIUM`, and `MEMORY_TREE_SCREENSHOTS` for the preview address, browser tooling, and optional screenshots.
 
-All 64 automated tests passed, along with lint, type checking, the production build, and the production Chromium scenarios. At 1,000 × 750 in Chromium with SwiftShader, the 1,000-memory backup reached the production viewer in 395 ms. A short wide orbit sample submitted 13 draws at a 68.5 ms 95th-percentile interval. The visible pass drew 67,899 triangles at the wide fit and 154,843 when focused on a particular leaf. A separate seeded mesh test had about 247,000 full-detail triangles available.
-
-In a like-for-like development preview comparison at 1,000 memories, the initial indexed renderer brought the 95th-percentile draw interval from 70.2 ms to 55.0 ms and import-to-viewer time from 498 ms to 414 ms. These short software-rendered samples measure draw submissions on one machine.
-
-Three.js supports indexed geometry, custom attributes, and more general-purpose physically based materials. The refinement retains native WebGL because the tree can batch shared vertices, shade its materials, and use the same geometry for leaf picking. The figures above compare versions of the native renderer. [Three.js BufferGeometry](https://threejs.org/docs/pages/BufferGeometry.html) · [Three.js MeshPhysicalMaterial](https://threejs.org/docs/pages/MeshPhysicalMaterial.html)
-
-## Visual review
-
-The supplied botanical reference guided the S-curve of the trunk, the ribs that continue into spreading roots, the longer lower branches, and the mix of green, olive, and gold around the ivory blossoms. The browser captures show those features against the site's plain cream stage. The first memory has a single leaf and a small root flare. Gaps between branches remain visible as the crown thickens, especially around the outer boughs.
-
-| Memories | Front | Turned |
-| --- | --- | --- |
-| 1 | [Front](memory-tree-preview/botanical/botanical-1.jpg) | [Turned](memory-tree-preview/botanical/botanical-1-side.jpg) |
-| 10 | [Front](memory-tree-preview/botanical/botanical-10.jpg) | [Turned](memory-tree-preview/botanical/botanical-10-side.jpg) |
-| 50 | [Front](memory-tree-preview/botanical/botanical-50.jpg) | [Turned](memory-tree-preview/botanical/botanical-50-side.jpg) |
-| 100 | [Front](memory-tree-preview/botanical/botanical-100.jpg) | [Turned](memory-tree-preview/botanical/botanical-100-side.jpg) |
-| 500 | [Front](memory-tree-preview/botanical/botanical-500.jpg) | [Turned](memory-tree-preview/botanical/botanical-500-side.jpg) |
-| 1,000 | [Front](memory-tree-preview/botanical/botanical-1000.jpg) | [Turned](memory-tree-preview/botanical/botanical-1000-side.jpg) |
-
-[Desktop](memory-tree-preview/botanical/botanical-desktop.jpg) · [Tablet](memory-tree-preview/botanical/botanical-tablet.jpg) · [Phone](memory-tree-preview/botanical/botanical-phone.jpg) · [Example from behind](memory-tree-preview/botanical/botanical-back.jpg) · [Leaf detail](memory-tree-preview/botanical/botanical-leaf.jpg) · [Detail at 1,000 memories](memory-tree-preview/botanical/botanical-1000-leaf.jpg)
-
-## Remaining device checks
-
-Physical phones, Safari, Firefox, and long-running graphics sessions still need hands-on coverage. Surrounding leaves can obscure a leaf in a mature crown. Search, Timeline, Calendar, and the journal give access to each memory.
+The production browser run used Edge at widths of 1440, 820, 390, and 320 pixels. It checked reduced motion and touch selection at phone widths with WebGL disabled. Synthetic backups with 1, 5, 20, 100, 500, 1,000, and 2,400 memories rendered one selectable SVG leaf per memory. In one local desktop run, backup selection through two animation frames after the leaves mounted took 137 ms at 100 memories, 303 ms at 1,000, and 656 ms at 2,400. These timings include import and rendering.

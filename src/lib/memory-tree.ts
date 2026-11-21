@@ -39,8 +39,10 @@ export function dayNumber(day: string) {
   const [year, month, date] = day.split('-').map(Number);
   return Date.UTC(year, month - 1, date) / 86_400_000;
 }
+const calendarDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 export function displayDay(day: string) {
-  return new Date(day + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const date = new Date(day + 'T12:00:00');
+  return Number.isNaN(date.valueOf()) ? 'Invalid Date' : calendarDate.format(date);
 }
 export function activeSeason(settings: Pick<Settings,'season'|'south'>, today: string): Exclude<Season, 'automatic'> {
   if (settings.season !== 'automatic') return settings.season;
