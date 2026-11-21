@@ -14,9 +14,9 @@ type Tool = 'Writing' | 'Paper' | 'Envelope' | 'Extras';
 const tools:Tool[]=['Writing','Paper','Envelope','Extras'];
 const message=(reason:unknown)=>reason instanceof Error?reason.message:'Unable to save this letter.';
 
-export function LetterStudio({initial,collections,save,exit,sealed,backup}:{
+export function LetterStudio({initial,collections,save,exit,sealed,backup,journey=false}:{
   initial:Letter; collections:Collection[];save:(doc:Letter)=>Promise<void>;exit:()=>void;
-  sealed:(doc:Letter)=>void;backup:(doc:Letter)=>void;
+  sealed:(doc:Letter)=>void;backup:(doc:Letter)=>void;journey?:boolean;
 }){
   const [letter,setLetter]=useState(initial);
   const [index,setIndex]=useState(0),[tool,setTool]=useState<Tool>('Writing'),[face,setFace]=useState<Face>('front');
@@ -132,7 +132,7 @@ export function LetterStudio({initial,collections,save,exit,sealed,backup}:{
     <div className="lt-workbench-heading">
       <div><h1 id="lt-studio-title" tabIndex={-1} data-letters-heading>Letter Studio</h1><p role="status">{status==='saved'?'Draft saved on this device':status==='typing'?'Unsaved changes…':status==='saving'?'Saving draft…':'Draft needs saving'}</p></div>
       <div className="lt-actions">
-        <button disabled={pending} onClick={()=>void finish(false)}>Save and return to box</button>
+        <button disabled={pending} onClick={()=>void finish(false)}>{journey?'Save and return to journey':'Save and return to box'}</button>
         <button className="lt-primary" disabled={pending} onClick={()=>void finish(true)}>Seal letter <span aria-hidden="true">↗</span></button>
       </div>
     </div>
@@ -182,12 +182,12 @@ export function LetterStudio({initial,collections,save,exit,sealed,backup}:{
         <fieldset className="lt-fields" disabled={finalizing}>
         {tool==='Writing'&&<>
           <label>Letter title<input value={letter.title} maxLength={120} onChange={e=>field({title:e.target.value})}/></label>
-          <label>Letter type<select value={letter.kind} onChange={e=>field({kind:e.target.value as Letter['kind']})}>
+          {!journey&&<><label>Letter type<select value={letter.kind} onChange={e=>field({kind:e.target.value as Letter['kind']})}>
             {Object.entries(kinds).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
           <label>Collection<select value={letter.collectionId} onChange={e=>field({collectionId:e.target.value})}><option value="">No collection</option>
             {collections.map(collection=><option key={collection.id} value={collection.id}>{collection.name}</option>)}</select></label>
           {letter.kind==='when'&&<label>Open when… <input value={letter.label} maxLength={120} onChange={e=>field({label:e.target.value})} placeholder="you miss me"/></label>}
-          {letter.kind==='tomorrow'&&<Schedule letter={letter} change={timing=>field({timing})}/>}
+          {letter.kind==='tomorrow'&&<Schedule letter={letter} change={timing=>field({timing})}/>}</>}
           <details open><summary>Writing style</summary><div className="lt-fields">
             <label>Font<select value={page.font} onChange={e=>pageFields({font:e.target.value as Page['font']})}>
               {Object.entries(letterFonts).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>

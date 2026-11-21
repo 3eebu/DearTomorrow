@@ -2,6 +2,8 @@
 
 Open `/letters` to write on paper, lift the Letter Box lid, or open the anniversary example. The example uses fictional writing and stays outside the personal collection.
 
+The Letters page also leads to [Journey Letters](JOURNEY_LETTERS.md), where each itinerary has six scheduled envelopes. Journeys use the same Studio and Reader and have their own local library and backup format.
+
 ## What you can do
 
 - Keep drafts, sealed letters, Letter to Tomorrow schedules, opened letters, favorites, and archived letters. The box shows up to three recent envelopes. Choose an envelope gallery or a list, search by title, address, label, collection, or writing excerpt, and sort by date or title. Organize a letter from its menu, or duplicate it as a draft.

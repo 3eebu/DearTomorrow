@@ -5,9 +5,10 @@ import { canOpen, scenes, type Letter, type Preferences } from '@/lib/letters';
 import { countdown, releaseLabel } from '@/lib/letter-time';
 import { EnvelopeObject, InkDrawing, motionMs, PagePhoto, PageWords, PaperSurface, useReducedMotion, type Face, type Phase } from './letter-objects';
 
-export function LetterReader({letter,preferences,savePreferences,opened,example=false,arriving=false,finishArrival}:{
+export function LetterReader({letter,preferences,savePreferences,opened,example=false,arriving=false,finishArrival,opening}:{
   letter:Letter;preferences:Preferences;savePreferences:(patch:Partial<Preferences>)=>void;
   opened:()=>Promise<boolean>;example?:boolean;arriving?:boolean;finishArrival:()=>void;
+  opening?:{instant:number;label:string};
 }){
   const [phase,setPhase]=useState<Phase>(arriving?'sealing':'rest');
   const [face,setFace]=useState<Face>(arriving?'back':'front');
@@ -33,14 +34,18 @@ export function LetterReader({letter,preferences,savePreferences,opened,example=
     if(focusNext.current==='envelope')envAction.current?.focus({preventScroll:true});
     focusNext.current=null;
   },[phase,reading]);
-  const available=canOpen(letter,now);
+  const release=opening??(letter.release?{instant:letter.release.instant,label:releaseLabel(letter.release)}:undefined);
+  const releaseInstant = release?.instant;
+  const gate=opening&&letter.state!=='opened'?opening.instant:undefined;
+  const available=canOpen(letter,now)&&(gate===undefined||now>=gate);
   useEffect(()=>{
-    if(!letter.release||available)return;
+    if(releaseInstant===undefined||available)return;
     const timeout=window.setInterval(()=>setNow(Date.now()),1000);
     return()=>window.clearInterval(timeout);
-  },[available,letter.release]);
+  },[available,releaseInstant]);
   async function open(animate:boolean){
-    if(waiting||phase!=='rest'||!canOpen(letter,Date.now()))return;
+    const today=Date.now();
+    if(waiting||phase!=='rest'||!canOpen(letter,today)||(gate!==undefined&&today<gate))return;
     setWaiting(true);
     try{
       if (await opened()) {
@@ -72,9 +77,9 @@ export function LetterReader({letter,preferences,savePreferences,opened,example=
         onClick={()=>savePreferences({scene})}>{scenes[scene]}</button>)}
       <button disabled={reduced} onClick={()=>savePreferences({paused:!preferences.paused})}>{reduced?'Reduced motion':preferences.paused?'Resume scene motion':'Pause scene motion'}</button>
     </div>}
-    {letter.release&&<div className="lt-release">
-      <span>{releaseLabel(letter.release)}</span>
-      {!available&&<strong data-countdown>{countdown(letter.release.instant,now)}</strong>}
+    {release&&<div className="lt-release">
+      <span>{release.label}</span>
+      {!available&&<strong data-countdown>{countdown(release.instant,now)}</strong>}
       <small>{available?'Ready to open on this device.':'Local schedule preview. It follows this device clock.'}</small>
     </div>}
     {!reading?<div className="lt-table-object-wrap">

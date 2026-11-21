@@ -169,6 +169,7 @@
 .dt-journey-intro{text-align:center;max-width:740px;margin:auto}
 .dt-journey-intro h2{margin:23px 0}
 .dt-journey-intro p{max-width:520px;margin:0 auto;color:#786b60;font-size:15px}
+.dt-journey-intro .dt-button{margin-top:20px}
 .dt-journey-route{display:flex;align-items:center;justify-content:center;gap:28px;max-width:920px;margin:73px auto 47px}
 .dt-route-city{display:flex;flex-direction:column;gap:11px}
 .dt-route-city strong{font-size:12px;letter-spacing:.19em}

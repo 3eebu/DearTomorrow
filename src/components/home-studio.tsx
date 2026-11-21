@@ -12,15 +12,6 @@ const pages = [
   { chapter: 'III', eyebrow: 'THE ADVENTURES', title: 'Every road led us here.', text: 'The places mattered, but the best part was always who I got to share them with.', footer: 'Postcards from our story' },
   { chapter: 'IV', eyebrow: 'TO BE CONTINUED', title: 'There is still so much ahead.', text: 'May we never run out of new beginnings, unlikely adventures, and quiet moments to call our own.', footer: 'With love, for tomorrow' },
 ];
-const journeyStops = [
-  { name: 'Before you leave', clock: 'Before departure', note: 'A little reminder to carry with you.' },
-  { name: 'Takeoff', clock: 'At departure', note: 'For the moment the world begins to get smaller beneath you.' },
-  { name: 'Above the clouds', clock: 'Along the way', note: 'A familiar voice for an unfamiliar sky.' },
-  { name: 'Halfway home', clock: 'Journey midpoint', note: 'Every mile is another mile closer.' },
-  { name: 'Almost there', clock: 'Before arrival', note: 'The happiest part is nearly here.' },
-  { name: 'Welcome back', clock: 'At arrival', note: 'You made it. The rest of the story starts here.' },
-];
-
 function useReveals() {
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
@@ -73,30 +64,17 @@ function Dialog({ title, onClose, children }: { title: string; onClose: () => vo
 }
 
 function JourneyLetters() {
-  const [selected, setSelected] = useState(0);
   return <section id="journey-letters" className="dt-journey-section dt-section" aria-labelledby="journey-heading">
     <div className="dt-journey-intro" data-reveal>
       <span className="dt-overline">LETTERS FOR THE JOURNEY</span>
       <h2 id="journey-heading">A little closer,<br /><em>with every mile.</em></h2>
-      <p>Six letters for the journey between goodbye and hello again. They are all part of the same story: words sent with love.</p>
+      <p>Six little letters for the distance between goodbye and hello.</p>
+      <Link href="/journey-letters" className="dt-button">Explore Journey Letters <span aria-hidden="true">↗</span></Link>
     </div>
     <div className="dt-journey-route" data-reveal>
       <div className="dt-route-city"><strong>LAHORE</strong><span>Where the journey begins</span></div>
       <div className="dt-route-path" aria-hidden="true"><span className="dt-route-track"/><span className="dt-route-plane">✈</span></div>
       <div className="dt-route-city dt-route-end"><strong>LONDON</strong><span>One moment closer</span></div>
-    </div>
-    <div className="dt-checkpoints" data-reveal role="group" aria-label="Six journey letter moments">
-      {journeyStops.map((checkpoint, index) => <button type="button" key={checkpoint.name}
-        aria-pressed={selected === index} className={'dt-checkpoint ' + (selected === index ? 'dt-checkpoint-active' : '')}
-        onClick={() => setSelected(index)}>
-        <span className="dt-checkpoint-index">0{index + 1}</span>
-        <span className="dt-checkpoint-envelope" aria-hidden="true"><span/></span>
-        <strong>{checkpoint.name}</strong>
-        <small>{checkpoint.clock}</small>
-      </button>)}
-    </div>
-    <div className="dt-journey-readout" aria-live="polite"><span className="dt-overline">LETTER 0{selected + 1} / A PREVIEW</span>
-      <p>{journeyStops[selected].note}</p><span>These checkpoint times are illustrative. Real online scheduling and delivery are not available yet.</span>
     </div>
   </section>;
 }
@@ -197,6 +175,7 @@ export default function HomeStudio({ page = 'home', tree, letters }: { page?: Wo
       <p className="dt-dialog-intro">Just start with one small thing. The rest can come later.</p>
       <div className="dt-create-choices">
         <Link href="/letters" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">✉</span><span><strong>Write a letter</strong><small>Something meaningful, in your own words</small></span><span aria-hidden="true">↗</span></Link>
+        <Link href="/journey-letters" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">↗</span><span><strong>Create a journey</strong><small>Six letters for someone on their way</small></span><span aria-hidden="true">↗</span></Link>
         <Link href="/memory-books" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">▤</span><span><strong>Make a Memory Book</strong><small>Give your story its very own cover</small></span><span aria-hidden="true">↗</span></Link>
         <Link href="/memory-tree" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">♧</span><span><strong>Add a memory</strong><small>Let a new leaf grow on your tree</small></span><span aria-hidden="true">↗</span></Link>
       </div><p className="dt-inline-note">This is a demo. Nothing is shared or stored online.</p>

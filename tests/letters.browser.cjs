@@ -267,9 +267,11 @@ async function run() {
     await writing().waitFor();
     assert.equal(await writing().inputValue(),'Enjoy this day, even when it begins twice.');
     await button('Save and return to box').click();
-    await page.getByRole('button',{name:/Almost there/}).click();
-    await page.getByText('The happiest part is nearly here.',{exact:true}).waitFor();
-    console.log('Desktop letter and collection workflows, timed release, backup import, and the six-checkpoint Journey section passed.');
+    const journeyLink=page.getByRole('link',{name:'Explore Journey Letters'});
+    assert.equal(await journeyLink.getAttribute('href'),'/journey-letters');
+    await journeyLink.click();
+    await page.getByRole('heading',{name:'Until We Meet Again.'}).waitFor();
+    console.log('Desktop letter and collection workflows, timed release, backup import, and the Journey Letters entry passed.');
 
     // Separate browser contexts keep every synthetic letter away from the workspace owner's storage.
     const tablet=await windowAt({viewport:{width:820,height:1180}});
