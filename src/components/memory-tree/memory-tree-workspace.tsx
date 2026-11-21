@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import {cloudTrees} from '@/lib/accounts/cloud-client';
+import type {CloudScope} from '@/lib/accounts/documents';
 import { chronological, displayDay, findMemories, localDay, newTree, nextAnniversary, putMemory, removeChapter, validDay,
   type Chapter, type Grove, type Memory, type MemoryInput, type Settings, type Tree, type View } from '@/lib/memory-tree';
 import { downloadTree, importTree, loadGarden, saveGarden, type SavedGrove } from '@/lib/memory-tree-storage';
@@ -12,7 +14,8 @@ import './memory-tree.css';
 const errorMessage=(error:unknown)=>error instanceof Error?error.message:'The change could not be saved.';
 type DialogMode='plant'|'appearance'|'chapters'|'memory'|'delete';
 type Commit=(tree:Tree)=>Promise<boolean>;
-export default function MemoryTreeWorkspace(){
+export default function MemoryTreeWorkspace({scope}:{scope?:CloudScope}={}){
+  const store=useMemo(()=>scope?cloudTrees(scope):{loadGarden,saveGarden},[scope]);
   const [saved,setSaved]=useState<SavedGrove|null>(null),[demo,setDemo]=useState(false),[loading,setLoading]=useState(true);
   const [error,setError]=useState(''),[draft,setDraft]=useState<Tree|null>(null),[busy,setBusy]=useState(false);
   const [startupFocus,setStartupFocus]=useState<Focus|null>(null);
@@ -20,10 +23,10 @@ export default function MemoryTreeWorkspace(){
   function show(records:SavedGrove){snapshot.current=records;setSaved(records);}
   useEffect(()=>{
     let current=true;
-    loadGarden().then(records=>{if(current)show(records);},failure=>{if(current)setError(errorMessage(failure));})
+    store.loadGarden().then(records=>{if(current)show(records);},failure=>{if(current)setError(errorMessage(failure));})
       .finally(()=>{if(current)setLoading(false);});
     return()=>{current=false;};
-  },[]);
+  },[store]);
   const active=saved?.grove.trees.find(t=>t.id===saved.grove.activeId);
   async function transact(change:(grove:Grove)=>Grove,backup?:Tree){
     if(pending.current||!snapshot.current)return false;
@@ -31,7 +34,7 @@ export default function MemoryTreeWorkspace(){
     const records=snapshot.current;
     try{
       const proposed=change(records.grove);
-      const committed=await saveGarden(proposed,records.revision);
+      const committed=await store.saveGarden(proposed,records.revision);
       show({revision:committed.revision,grove:proposed});setDraft(null);return true;
     }catch(failure){setError(errorMessage(failure));if(backup)setDraft(backup);return false;}
     finally{pending.current=false;setBusy(false);}
@@ -57,6 +60,7 @@ export default function MemoryTreeWorkspace(){
       <p>{tree.settings.start?<><time dateTime={tree.settings.start}>{displayDay(tree.settings.start)}</time><span aria-hidden="true"> · </span></>:null}
         {demo?'A fictional example':active?tree.memories.length+' '+(tree.memories.length===1?'memory':'memories'):'A place for the moments you keep.'}</p>
     </div>
+    {busy&&scope&&<p className="mt-status" role="status">Syncing your tree…</p>}
     {!demo&&saved&&<input ref={fileInput} hidden type="file" accept=".json,application/json" aria-label="Import Memory Tree backup"
       onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';if(file)void restore(file);}}/>}
     {loading&&!demo?<p className="mt-status" role="status">Opening your Memory Tree…</p>:
@@ -71,6 +75,13 @@ export default function MemoryTreeWorkspace(){
           </select></label>}
         </>}
         onPlant={async settings=>{const planted=newTree(settings);if(await commit(planted)){setStartupFocus({id:'seed',grow:true});return true;}return false;}}/>}
+  </section>;
+}
+
+export function SharedTree({tree}:{tree:Tree}) {
+  return <section className="mt-workspace" aria-label="Shared Memory Tree">
+    <TreeExperience tree={tree} planted demo={false} editable={false} busy={false} error="" draft={null}
+      commit={async()=>false} initialFocus={null} onError={()=>{}} onPlant={async()=>false} exampleAction={null} treeActions={null}/>
   </section>;
 }
 
@@ -156,7 +167,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
       setMode(null);
     }
   }
-  const screenTree=demo?{...tree,settings:{...tree.settings,paused:demoPaused}}:tree;
+  const screenTree=demo||!editable?{...tree,settings:{...tree.settings,paused:demoPaused}}:tree;
   const calendarMemories=view==='calendar'?inDay(day):[];
   const displayError=error&&<div role="alert" className="mt-error">{error}
     {draft&&<button type="button" onClick={()=>downloadTree(draft,(draft.settings.name||'Memory Tree')+' draft')}>Export draft</button>}</div>;
@@ -186,7 +197,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
           const memory=ordered.find(item=>item.id===id);
           if(memory){choose(memory);requestDetail(n=>n+1);}
         }}
-        onPause={()=>{if(demo)setDemoPaused(!demoPaused);
+        onPause={()=>{if(demo||!editable)setDemoPaused(!demoPaused);
           else if(!busy)void commit({...tree,settings:{...tree.settings,paused:!tree.settings.paused}});}}/>
       {!tree.memories.length&&<div className="mt-seed-note">
         <h2>{planted?'A seed is waiting.':'Every story begins somewhere.'}</h2>

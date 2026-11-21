@@ -1,7 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import {cloudJourneys} from '@/lib/accounts/cloud-client';
+import type {CloudScope} from '@/lib/accounts/documents';
 import { LetterReader } from '@/components/letters/letter-reader';
 import { LetterStudio } from '@/components/letters/letter-studio';
 import { countdown } from '@/lib/letter-time';
@@ -56,15 +58,16 @@ function TinyEnvelope({index,letter,ready=false,opened=false}: {index:number;let
   </span>;
 }
 
-function LocalNote() {
+function LocalNote({cloud=false}:{cloud?:boolean}) {
+  if(cloud)return <aside className="jl-local-note"><strong>Kept in My Space</strong><p>Share a journey from My Space. Shared opening times are checked by the server. Automatic delivery is unavailable.</p></aside>;
   return <aside className="jl-local-note">
     <strong>Kept on this device</strong>
     <p>This browser saves your journeys. Opening times follow its clock and can be bypassed. A backup carries the complete letters, so share it privately. Automatic delivery is unavailable.</p>
   </aside>;
 }
 
-function JourneyLibrary({items,loading,busy,create,pick,importFile}: {
-  items:JourneySummary[];loading:boolean;busy:boolean;create:()=>void;pick:(id:string)=>void;importFile:()=>void;
+function JourneyLibrary({items,loading,busy,create,pick,importFile,cloud}: {
+  items:JourneySummary[];loading:boolean;busy:boolean;create:()=>void;pick:(id:string)=>void;importFile:()=>void;cloud:boolean;
 }) {
   const now = useJourneyClock();
   return <>
@@ -85,7 +88,7 @@ function JourneyLibrary({items,loading,busy,create,pick,importFile}: {
       </div>
     </section>
     <section className="jl-library" aria-labelledby="jl-library-title">
-      <p className="jl-small">{items.length?'Saved on this device':'Journey Letters'}</p>
+      <p className="jl-small">{items.length?(cloud?'Saved in My Space':'Saved on this device'):'Journey Letters'}</p>
       <h2 id="jl-library-title">{items.length?'Your journeys':'Even the distance can hold a little love.'}</h2>
       {loading?<p role="status">Opening your local journey library…</p>:items.length?
         <ul className="jl-library-list">{items.map(item=><li key={item.id}>
@@ -97,14 +100,14 @@ function JourneyLibrary({items,loading,busy,create,pick,importFile}: {
           </button>
         </li>)}</ul>:<p>Prepare a letter for takeoff, another for the quiet miles, and one to welcome them when they arrive.</p>}
     </section>
-    <LocalNote/>
+    <LocalNote cloud={cloud}/>
   </>;
 }
 
-function JourneyOverview({ journey,intro,recipient,busy,showRecipient,back,edit,schedule,pick,duplicate,download,remove }: {
+function JourneyOverview({ journey,intro,recipient,busy,showRecipient,back,edit,schedule,pick,duplicate,download,remove,cloud }: {
   journey:Journey;intro:boolean;recipient:boolean;busy:boolean;showRecipient:(value:boolean)=>void;
   back:()=>void;edit:()=>void;schedule:()=>void;pick:(index:number)=>void;
-  duplicate:()=>void;download:()=>void;remove:()=>void;
+  duplicate:()=>void;download:()=>void;remove:()=>void;cloud:boolean;
 }) {
   const wallClock = useJourneyClock();
   const now = wallClock ?? journey.departure.instant-1;
@@ -160,7 +163,7 @@ function JourneyOverview({ journey,intro,recipient,busy,showRecipient,back,edit,
         })}
       </ol>
     </section>
-    <LocalNote/>
+    <LocalNote cloud={cloud}/>
     {!recipient&&<div className="jl-manage" aria-label="Manage this journey">
       <button className="jl-link" disabled={busy} onClick={edit}>Edit journey details</button>
       <button className="jl-link" disabled={busy} onClick={duplicate}>Duplicate as drafts</button>
@@ -186,7 +189,8 @@ function JourneyDialog({ title,close,busy,children }: {title:string;close:()=>vo
   </dialog>;
 }
 
-export default function JourneyWorkspace() {
+export default function JourneyWorkspace({scope}:{scope?:CloudScope}={}) {
+  const store=useMemo(()=>scope?cloudJourneys(scope):{listJourneys,loadJourney,saveJourney,deleteJourney},[scope]);
   const [items,setItems] = useState<JourneySummary[]>([]);
   const [entry,setEntry] = useState<SavedJourney|null>(null);
   const [view,setView] = useState<View>({kind:'library'});
@@ -202,13 +206,13 @@ export default function JourneyWorkspace() {
 
   useEffect(() => {
     let active = true;
-    listJourneys().then(result=>{
+    store.listJourneys().then(result=>{
       if(active){setItems(result);setLoadError(false);}
     },error=>{
       if(active){setError(message(error));setLoadError(true);}
     }).finally(()=>{if(active)setLoading(false);});
     return () => {active=false;};
-  },[retry]);
+  },[retry,store]);
   useEffect(() => {
     if (!focused.current) {focused.current=true;return;}
     const target = restoreId ? root.current?.querySelector<HTMLElement>(`[data-stop-id="${restoreId}"]`) :
@@ -221,7 +225,7 @@ export default function JourneyWorkspace() {
   function go(next:View) {setError('');setConfirm(null);setView(next);}
   function workspace(next:SavedJourney) {latest.current=next;setEntry(next);}
   async function commit(next:Journey, previous = latest.current?.revision ?? 0) {
-    const saved = await saveJourney(next, previous);
+    const saved = await store.saveJourney(next, previous);
     workspace(saved);
     const summary = summarizeJourney(saved.journey);
     setItems(items=>[summary,...items.filter(item=>item.id!==summary.id)]);
@@ -238,7 +242,7 @@ export default function JourneyWorkspace() {
     setLoading(true);setRetry(n=>n+1);
   }
   function pickJourney(id:string) {
-    void act(async()=>{workspace(await loadJourney(id));setRecipient(false);go({kind:'journey',intro:true});});
+    void act(async()=>{workspace(await store.loadJourney(id));setRecipient(false);go({kind:'journey',intro:true});});
   }
   function savePlan(plan:JourneyPlan) {
     void act(async()=>{
@@ -291,7 +295,7 @@ export default function JourneyWorkspace() {
     const current=latest.current;
     if(!current||!confirm)return;
     if(confirm.action==='delete') {
-      void act(async()=>{await deleteJourney(current);latest.current=null;setEntry(null);loadLibrary();});
+      void act(async()=>{await store.deleteJourney(current);latest.current=null;setEntry(null);loadLibrary();});
     } else if(confirm.action==='unseal') {
       const {index}=confirm;
       void act(async()=>{
@@ -314,11 +318,12 @@ export default function JourneyWorkspace() {
     <input ref={upload} type="file" hidden accept=".json,application/json" aria-label="Import Journey Letters backup"
       onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value='';if(file)importFile(file);}}/>
     {!confirm&&alert}
-    {view.kind==='library'&&<JourneyLibrary items={items} loading={loading} busy={busy||loadError}
+    {busy&&scope&&<p className="jl-small" role="status">Syncing journey…</p>}
+    {view.kind==='library'&&<JourneyLibrary items={items} loading={loading} busy={busy||loadError} cloud={!!scope}
       pick={pickJourney} create={()=>{setRecipient(false);go({kind:'new'});}} importFile={()=>upload.current?.click()}/>}
     {(view.kind==='new'||view.kind==='edit')&&<JourneySetup key={view.kind} original={view.kind==='edit'?journey:undefined}
       busy={busy} cancel={()=>go({kind:view.kind==='edit'?'journey':'library'})} save={savePlan}/>}
-    {view.kind==='journey'&&journey&&<JourneyOverview journey={journey} intro={!!view.intro} recipient={recipient} busy={busy}
+    {view.kind==='journey'&&journey&&<JourneyOverview journey={journey} intro={!!view.intro} recipient={recipient} busy={busy} cloud={!!scope}
       showRecipient={setRecipient} back={loadLibrary} edit={()=>go({kind:'edit'})} schedule={()=>go({kind:'schedule'})} pick={choose}
       duplicate={()=>void act(async()=>{await commit(copyJourney(journey,true),0);go({kind:'journey',intro:true});})}
       download={()=>{try{downloadJourney(journey);}catch(error){setError(message(error));}}}
@@ -327,7 +332,7 @@ export default function JourneyWorkspace() {
       save={next=>void act(async()=>{await commit({...next,updatedAt:Math.max(Date.now(),next.createdAt)});go({kind:'journey'});})}/>}
     {view.kind==='studio'&&activeLetter&&<div className="lt-workspace jl-letter-stage">
       <p className="jl-small">{journey?.name} · Envelope {view.index+1}</p>
-      <LetterStudio key={activeLetter.id} initial={activeLetter} collections={[]} journey save={letter=>saveLetter(letter,view.index)}
+      <LetterStudio key={activeLetter.id} initial={activeLetter} collections={[]} journey cloud={!!scope} save={letter=>saveLetter(letter,view.index)}
         exit={()=>returnFrom(view.index)} backup={letter=>exportDraft(letter,view.index)}
         sealed={()=>{setRecipient(true);go({kind:'reader',index:view.index,arriving:true});}}/>
     </div>}

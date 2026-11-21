@@ -1,0 +1,63 @@
+.dt-account-nav{display:flex;justify-content:flex-end;align-items:center;gap:18px;padding:0 clamp(20px,5vw,80px);background:#efe5da;color:#642f40;border-bottom:1px solid #e1d4ca;font-size:.75rem;min-height:42px;position:relative;z-index:40}
+.dt-account-nav :is(a,summary,button){min-height:40px;display:inline-flex;align-items:center}
+.dt-account-nav summary{cursor:pointer;max-width:min(28vw,180px);overflow:hidden;white-space:nowrap}
+.dt-account-nav details>div{position:absolute;right:clamp(20px,5vw,80px);top:100%;padding:6px 18px;background:#fbf4e9;border:1px solid #dbc9bb;min-width:145px}
+.dt-account-nav details>div>a{display:flex}
+.dt-account-nav button{background:none;color:inherit;border:0;padding:0}
+.dt-account-nav :is(a,summary,button):is(:focus-visible,:hover){text-decoration:underline;text-underline-offset:.25em}
+.dt-space-note{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;color:#624449;background:#f0e5da;padding:11px 18px;margin:0;font-size:.83rem}
+.dt-space-note a{text-decoration:underline;text-underline-offset:.2em}
+.dt-account{--a-wine:#642f40;--a-text:#493735;--a-line:#d9c9ba;--a-muted:#715b51;--a-serif:'Playfair Display',Georgia,serif;width:min(1190px,100%);padding:clamp(42px,7vw,96px) clamp(20px,6vw,80px);margin:auto;color:var(--a-text);overflow-wrap:anywhere}
+.dt-account h1,.dt-account h2,.dt-account p{margin:0}
+.info-root .dt-account h1{font-size:clamp(2.75rem,6.1vw,5.65rem);letter-spacing:-.055em;line-height:1.05;max-width:15ch}
+.info-root .dt-account h2{font-size:clamp(1.5rem,3vw,2.45rem);line-height:1.15}
+.dt-account p{color:var(--a-muted);line-height:1.7}
+.dt-account a{color:var(--a-wine);text-decoration:underline;text-decoration-color:#b99887;text-underline-offset:.27em}
+.dt-account a:hover{text-decoration-color:currentColor}
+.dt-account .dt-account-primary{background:var(--a-wine);color:#fff6ed;border:1px solid var(--a-wine);padding:10px 16px;min-height:46px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:.84rem;font-weight:600;justify-self:start}
+.dt-account-secondary,.dt-account button.dt-account-link{display:inline-flex;align-items:center;min-height:44px;background:transparent;border:1px solid #baa397;color:var(--a-wine);padding:6px 13px;font-size:.83rem}
+.dt-account button.dt-account-link{border-color:transparent;text-decoration:underline;text-underline-offset:.25em;padding-inline:0}
+.dt-account .dt-account-primary:hover:not(:disabled){background:#794858}
+.dt-auth-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.85fr);gap:clamp(26px,7vw,110px);align-items:center}
+.dt-auth-intro svg{display:block;margin-bottom:18px}
+.dt-auth-intro>p{margin-top:18px;max-width:40ch;font:1.1rem/1.65 var(--a-serif)}
+.dt-auth-letter{padding:clamp(20px,4vw,38px);background:#faf3e9;border:1px solid var(--a-line);border-top:3px solid #a77d79;box-shadow:0 12px 27px #51362b0f}
+.dt-auth-letter h2{margin-bottom:18px}
+.dt-account-form{display:grid;gap:13px;max-width:500px;margin:15px 0}
+.dt-account-form label{display:grid;gap:6px;font-size:.83rem;font-weight:600;color:var(--a-text)}
+.dt-account-form :is(input,textarea){min-height:44px;width:100%;min-width:0;border:1px solid #b8a298;border-radius:0;padding:8px 10px;background:#fff9f0;color:#382a2a;font:1rem/1.4 'DM Sans',sans-serif}
+.dt-account-form small,.dt-account-list small{color:var(--a-muted);font-size:.82rem}
+.dt-account-actions{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;margin-top:12px;font-size:.84rem}
+.dt-account-actions a{min-height:44px;display:inline-flex;align-items:center}
+.dt-account .dt-account-notice{border-left:2px solid #ae8571;background:#efe4d7;padding:9px 11px;font-size:.86rem;margin:10px 0}
+.dt-account-heading{margin-bottom:30px}
+.dt-account-heading p{max-width:52ch;margin-top:10px}
+.dt-account-section{padding:24px 0;border-top:1px solid var(--a-line);margin-top:22px}
+.dt-account-section h2{margin-bottom:12px}
+.dt-account-section>p+p{margin-top:10px}
+.dt-account-portrait{display:grid;place-items:center;width:66px;aspect-ratio:1;border:1px solid #c09b85;outline:1px solid #ded0c3;outline-offset:4px;background:#efe5d6;border-radius:50%;color:var(--a-wine);font:italic 1.75rem var(--a-serif);overflow:hidden;margin-bottom:14px}
+.dt-account-portrait img{display:block;width:100%;height:100%;object-fit:cover}
+.dt-account-code{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.dt-account-code code{font-size:clamp(.8rem,3.5vw,1.05rem);padding:7px 9px;border:1px solid var(--a-line);background:#f5ebdb;color:#512b36}
+.dt-account-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px clamp(20px,5vw,58px)}
+.dt-account-rooms{list-style:none;margin:0;padding:0}
+.dt-account-rooms li{border-top:1px solid var(--a-line)}
+.dt-account-rooms a{display:grid;gap:3px;padding:15px 2px;text-decoration:none}
+.dt-account-rooms strong,.dt-account-list strong{font:1.25rem/1.22 var(--a-serif);color:var(--a-wine)}
+.dt-account-rooms span{font-size:.85rem;color:var(--a-muted)}
+.dt-account-list{list-style:none;padding:0;margin:9px 0}
+.dt-account-list li{display:flex;align-items:center;justify-content:space-between;gap:10px 15px;flex-wrap:wrap;border-bottom:1px solid var(--a-line);padding:14px 0}
+.dt-account-list li>div:first-child{display:grid;gap:5px}
+.dt-account-card{background:#f3e8dc;border:1px solid var(--a-line);padding:20px;margin:16px 0}
+.dt-account-pair{max-width:650px;border-bottom:1px solid var(--a-line);padding-bottom:20px}
+.dt-account-pair svg{display:block;width:min(240px,100%);height:auto;margin:15px 0;color:#98725f}
+.dt-account-pair path{stroke-dasharray:260;animation:dt-meet 1.6s ease both}
+@keyframes dt-meet{from{stroke-dashoffset:210}to{stroke-dashoffset:0}}
+.dt-account-reader{margin:25px auto;max-width:1200px}
+.dt-account-reader .dt-account-list button{min-height:44px}
+.dt-account-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.dt-account-danger summary{color:var(--a-wine);padding:10px 0;cursor:pointer}
+.dt-cloud-content[hidden]{display:none!important}
+@media(max-width:740px){.dt-auth-layout{grid-template-columns:1fr;gap:25px}.dt-auth-intro svg{width:80px;height:auto;margin-bottom:10px}}
+@media(max-width:540px){.dt-account-grid{grid-template-columns:1fr;gap:8px}.dt-account-nav{gap:12px;padding-inline:17px}.dt-account-heading{margin-bottom:20px}}
+@media(prefers-reduced-motion:reduce){.dt-account-pair path{animation:none}}

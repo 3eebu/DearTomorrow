@@ -1,5 +1,7 @@
 'use client';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import {cloudLetters} from '@/lib/accounts/cloud-client';
+import type {CloudScope} from '@/lib/accounts/documents';
 import { downloadBackup, loadLetter, loadShelf, readBackup, saveShelf, type Shelf } from '@/lib/letter-storage';
 import { canOpen, createLetter, defaultPreferences, duplicateLetter, editLetter, importCopies, makeBackup,
   occasionNames, sealLetter, stateLabel, type Collection, type Kind, type Letter, type LetterSummary, type Preferences } from '@/lib/letters';
@@ -22,7 +24,8 @@ function exampleLetter(){
     hidden:'I kept the little paper bag. It’s in the top drawer.'},Date.now());
 }
 
-export default function LettersWorkspace(){
+export default function LettersWorkspace({scope}:{scope?:CloudScope}={}){
+  const store=useMemo(()=>scope?cloudLetters(scope):{loadShelf,loadLetter,saveShelf},[scope]);
   const [shelf,setShelf]=useState<Shelf|null>(null),[screen,setScreen]=useState<Screen>({mode:'box'});
   const [loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState('');
   const [modal,setModal]=useState<Modal|null>(null),[retry,setRetry]=useState(0);
@@ -31,10 +34,10 @@ export default function LettersWorkspace(){
   const anchor=useRef<HTMLElement>(null),seen=useRef<'box'|'studio'|'reader'>('box');
   useEffect(()=>{
     let active=true;
-    loadShelf().then(result=>{if(active){latest.current=result;setShelf(result);}},reason=>{if(active)setError(explanation(reason));})
+    store.loadShelf().then(result=>{if(active){latest.current=result;setShelf(result);}},reason=>{if(active)setError(explanation(reason));})
       .finally(()=>{if(active)setLoading(false);});
     return()=>{active=false;};
-  },[retry]);
+  },[retry,store]);
   useEffect(()=>{
     if(seen.current!==screen.mode){
       seen.current=screen.mode;
@@ -46,7 +49,7 @@ export default function LettersWorkspace(){
     const result=queue.current.then(async()=>{
       const snapshot=latest.current;
       if(!snapshot)throw new Error('Your browser storage is unavailable.');
-      const next=await saveShelf(snapshot,change(snapshot));
+      const next=await store.saveShelf(snapshot,change(snapshot));
       latest.current=next;setShelf(next);
     });
     queue.current=result.catch(()=>{});
@@ -74,7 +77,7 @@ export default function LettersWorkspace(){
   }
   function pick(item:LetterSummary,organize=false){
     void act(async()=>{
-      const letter=await loadLetter(item.id);
+      const letter=await store.loadLetter(item.id);
       if(organize)setModal({kind:'organize',letter});
       else go({mode:letter.state==='draft'?'studio':'reader',letter});
     });
@@ -99,7 +102,7 @@ export default function LettersWorkspace(){
       if(!latest.current)return;
       const group=latest.current.collections.find(c=>c.id===id);
       const docs=[];
-      for(const row of latest.current.summaries.filter(item=>item.collectionId===id))docs.push(await loadLetter(row.id));
+      for(const row of latest.current.summaries.filter(item=>item.collectionId===id))docs.push(await store.loadLetter(row.id));
       if(group&&docs.length)downloadBackup(makeBackup(docs,[group]),group.name);
     });
   }
@@ -125,7 +128,7 @@ export default function LettersWorkspace(){
       importFile={()=>input.current?.click()} manage={()=>{setError('');setModal({kind:'collection'});}}
       occasion={()=>{setError('');setModal({kind:'occasion'});}} preferences={preferences} exportGroup={exportGroup}/>}
     {screen.mode==='studio'&&shelf&&<LetterStudio key={screen.letter.id} initial={screen.letter} collections={shelf.collections}
-      save={commit} backup={writeBackup} exit={()=>go({mode:'box'})} sealed={letter=>go({mode:'reader',letter,arriving:true})}/>}
+      cloud={!!scope} save={commit} backup={writeBackup} exit={()=>go({mode:'box'})} sealed={letter=>go({mode:'reader',letter,arriving:true})}/>}
     {screen.mode==='reader'&&<section className="lt-reading-room">
       <div className="lt-room-nav">
         <button type="button" disabled={busy} onClick={()=>go({mode:'box'})}>← Back to Letter Box</button>

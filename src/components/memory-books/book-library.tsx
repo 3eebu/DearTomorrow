@@ -1,5 +1,7 @@
 'use client';
-import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import {cloudBooks} from '@/lib/accounts/cloud-client';
+import type {CloudScope} from '@/lib/accounts/documents';
 import { createBook, formats, LIMITS, uid, validateBook, type MemoryBookDocument } from '@/lib/memory-books';
 import { exportBook, loadLibrary, saveLibrary } from '@/lib/memory-book-storage';
 import { Cover } from './cover-renderer';
@@ -13,13 +15,15 @@ import { profileBook } from '@/lib/book-perf';
 import { FrameProbe } from './frame-probe';
 import s from './memory-books.module.css';
 
-export function BookLibrary() {
+export function BookLibrary({scope}:{scope?:CloudScope}={}) {
+  const store=useMemo(()=>scope?cloudBooks(scope):{loadLibrary,saveLibrary},[scope]);
+  const savedLabel=scope?'Saved to My Space':'Saved on this device';
   const [books, setBooks] = useState<MemoryBookDocument[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [loadError, setLoadError] = useState('');
   const [loadMs, setLoadMs] = useState<number | undefined>();
   const [notice, setNotice] = useState('');
-  const [status, setStatus] = useState('Loading local drafts…');
+  const [status, setStatus] = useState(scope?'Loading My Space…':'Loading local drafts…');
   const [activeId, setActiveId] = useState<string | null>(null);
   const [mode, setMode] = useState<'library' | 'studio' | 'read' | 'cover' | 'organize' | 'gift' | 'example'>('library');
   const [creating, setCreating] = useState(false);
@@ -45,22 +49,22 @@ export function BookLibrary() {
     if (current <= savedRevision.current || current <= queuedRevision.current) return;
     const snapshot = drafts.current;
     queuedRevision.current = current;
-    setStatus('Saving…');
-    saveQueue.current = saveQueue.current.then(() => saveLibrary(snapshot, savedBooks.current)).then(() => {
+    setStatus(scope?'Syncing…':'Saving…');
+    saveQueue.current = saveQueue.current.then(() => store.saveLibrary(snapshot, savedBooks.current)).then(() => {
       savedBooks.current = snapshot;
       savedRevision.current = current;
-      if (revision.current === current) setStatus('Saved on this device');
+      if (revision.current === current) setStatus(savedLabel);
     }).catch(error => {
       if (queuedRevision.current === current) queuedRevision.current = savedRevision.current;
       if (revision.current === current) { setStatus('Unable to save'); setNotice(error.message); }
     });
-  }, []);
+  }, [store,scope,savedLabel]);
   useEffect(() => {
     let cancelled = false;
     const began = performance.now();
-    loadLibrary().then(data => { if (!cancelled) { setLoadMs(performance.now() - began); drafts.current = data; savedBooks.current = data; setBooks(data); setLoaded(true); setLoadError(''); setStatus('Saved on this device'); } }).catch(error => { if (!cancelled) setLoadError(String(error.message)); });
+    store.loadLibrary().then(data => { if (!cancelled) { setLoadMs(performance.now() - began); drafts.current = data; savedBooks.current = data; setBooks(data); setLoaded(true); setLoadError(''); setStatus(savedLabel); } }).catch(error => { if (!cancelled) setLoadError(String(error.message)); });
     return () => { cancelled = true; };
-  }, []);
+  }, [store,savedLabel]);
   useEffect(() => {
     const leave = (event: BeforeUnloadEvent) => {
       if (revision.current === savedRevision.current) return;
@@ -148,7 +152,7 @@ export function BookLibrary() {
             <p>{[book.bookmaking.collection, book.bookmaking.series, book.bookmaking.volume && `Volume ${book.bookmaking.volume}`].filter(Boolean).join(' · ')}</p>}
           <div className={s.bookActions}><button onClick={() => open(book, 'read')}>Read ↗</button><button onClick={() => open(book, 'studio')}>Studio ↗</button><details><summary aria-label={`Options for ${book.title}`}>•••</summary><div><button onClick={() => { const copy = structuredClone(book); copy.id = uid(); copy.title = (book.title + ' — copy').slice(0, 120); copy.createdAt = copy.updatedAt = new Date().toISOString(); add(copy); }}>Duplicate</button><button onClick={() => open(book, 'cover')}>Cover Studio</button><button onClick={() => open(book, 'organize')}>Chapters & pages</button><button onClick={() => open(book, 'gift')}>Wrap as a gift</button><button onClick={() => exportBook(book)}>Export backup</button><button onClick={() => update({ ...book, archived: !book.archived })}>{book.archived ? 'Restore' : 'Archive'}</button><button onClick={() => { if (window.confirm(`Delete “${book.title}” from this device? Export a backup first if you want to keep it. This cannot be undone.`)) change(current => current.filter(b => b.id !== book.id)); }}>Delete…</button></div></details></div>
         </article>)}</div>
-        <p className={s.storageNote}>Saved only in this browser on this device. Clearing browser data removes drafts. Export a project backup to keep a separate copy. Photos stay on your device.</p>
+        <p className={s.storageNote}>{scope?'Books in this library save to My Space. Export a project backup to keep a separate copy.':'Saved only in this browser on this device. Clearing browser data removes drafts. Export a project backup to keep a separate copy. Photos stay on your device.'}</p>
       </main>
     </>}
     {active && mode === 'studio' && <BookStudio key={active.id} book={active} onChange={update} status={status}

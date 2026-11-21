@@ -1,0 +1,42 @@
+project_id = "dear-tomorrow-dev"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+
+[db]
+port = 54322
+major_version = 17
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+
+[storage]
+enabled = true
+file_size_limit = "6MB"
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3002"
+additional_redirect_urls = ["http://127.0.0.1:3002/auth/confirm"]
+minimum_password_length = 10
+
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+secure_password_change = true
+
+[auth.email.template.confirmation]
+subject = "Confirm your Dear Tomorrow email"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Find your way back to Dear Tomorrow"
+content_path = "./supabase/templates/recovery.html"

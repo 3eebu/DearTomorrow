@@ -1,5 +1,9 @@
 # Dear Tomorrow — Phase 1 build progress
 
+## Accounts and private spaces
+
+Auth integration, personal cloud workspaces, optional guest migration, and one-to-one sharing are implemented. The database policies were tested locally. Email delivery, sign-in, and cloud round trips still require a configured Supabase environment and release verification. [Accounts setup and test coverage](ACCOUNTS.md)
+
 ## Memory Book Project Realism checkpoint
 The reader now has a custom curved CSS 3D surface, dimensional covers and separate thickness-driven stacks, interruptible drag/settling, consistent note state, responsive single-page reading, and measured development diagnostics. See `docs/MEMORY_BOOK_REALISM.md` for the implementation choice, actual measurements, browser checks and remaining device/physics limitations. The document model and local persistence format are unchanged.
 

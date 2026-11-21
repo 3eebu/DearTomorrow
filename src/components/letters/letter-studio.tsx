@@ -14,9 +14,9 @@ type Tool = 'Writing' | 'Paper' | 'Envelope' | 'Extras';
 const tools:Tool[]=['Writing','Paper','Envelope','Extras'];
 const message=(reason:unknown)=>reason instanceof Error?reason.message:'Unable to save this letter.';
 
-export function LetterStudio({initial,collections,save,exit,sealed,backup,journey=false}:{
+export function LetterStudio({initial,collections,save,exit,sealed,backup,journey=false,cloud=false}:{
   initial:Letter; collections:Collection[];save:(doc:Letter)=>Promise<void>;exit:()=>void;
-  sealed:(doc:Letter)=>void;backup:(doc:Letter)=>void;journey?:boolean;
+  sealed:(doc:Letter)=>void;backup:(doc:Letter)=>void;journey?:boolean;cloud?:boolean;
 }){
   const [letter,setLetter]=useState(initial);
   const [index,setIndex]=useState(0),[tool,setTool]=useState<Tool>('Writing'),[face,setFace]=useState<Face>('front');
@@ -130,7 +130,7 @@ export function LetterStudio({initial,collections,save,exit,sealed,backup,journe
   }
   return <section className="lt-studio" aria-labelledby="lt-studio-title">
     <div className="lt-workbench-heading">
-      <div><h1 id="lt-studio-title" tabIndex={-1} data-letters-heading>Letter Studio</h1><p role="status">{status==='saved'?'Draft saved on this device':status==='typing'?'Unsaved changes…':status==='saving'?'Saving draft…':'Draft needs saving'}</p></div>
+      <div><h1 id="lt-studio-title" tabIndex={-1} data-letters-heading>Letter Studio</h1><p role="status">{status==='saved'?(cloud?'Draft saved to My Space':'Draft saved on this device'):status==='typing'?'Unsaved changes…':status==='saving'?(cloud?'Syncing draft…':'Saving draft…'):'Draft needs saving'}</p></div>
       <div className="lt-actions">
         <button disabled={pending} onClick={()=>void finish(false)}>{journey?'Save and return to journey':'Save and return to box'}</button>
         <button className="lt-primary" disabled={pending} onClick={()=>void finish(true)}>Seal letter <span aria-hidden="true">↗</span></button>
