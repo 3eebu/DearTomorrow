@@ -6,7 +6,7 @@ import styles from "./about-keepsake.module.css";
 const recording = {
   title: "Javeda Zindagi",
   credit: "Violin cover by Elena Blinova",
-  url: "https://youtu.be/AVh5PNsOg1U?si=_iRL8HqfSSk6bkia",
+  source: "/about/javeda-zindagi.mp3",
 };
 
 const petals = [
@@ -98,7 +98,10 @@ function Watercolor() {
 
 function MusicKeepsake() {
   const card = useRef<HTMLElement>(null);
+  const audio = useRef<HTMLAudioElement>(null);
   const [introduced, setIntroduced] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     if (!card.current || !("IntersectionObserver" in window)) return;
@@ -111,9 +114,29 @@ function MusicKeepsake() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const player = audio.current;
+    return () => player?.pause();
+  }, []);
+
+  async function togglePlayback() {
+    const player = audio.current;
+    if (!player) return;
+    if (!player.paused) {
+      player.pause();
+      return;
+    }
+    setStarted(true);
+    try {
+      await player.play();
+    } catch {
+      setPlaying(false);
+    }
+  }
+
   return (
     <aside ref={card} className={styles.music} aria-label="A song for her"
-      data-introduced={introduced}>
+      data-introduced={introduced} data-playing={playing}>
       <svg className={styles.ink} viewBox="0 0 180 110" fill="none" aria-hidden="true">
         <path pathLength="1" d="M108 22c6-2 13-9 19-5 7 5-2 16-8 22-5-6-19-10-17-17 1-3 5-6 9-2l7 5"/>
         <path pathLength="1" d="M144 46c5 2 9 4 13 5m-9-10 2 16m-8-8 15-4"/>
@@ -125,16 +148,26 @@ function MusicKeepsake() {
         <h2>{recording.title}</h2>
         <p className={styles.credit}>{recording.credit}</p>
       </div>
+      <audio ref={audio} src={recording.source} preload="none"
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+        controls={started}
+        aria-label="Javeda Zindagi, violin cover by Elena Blinova" />
       <div className={styles.actions}>
-        <a href={recording.url} target="_blank" rel="noreferrer">
+        <button type="button" onClick={togglePlayback} aria-label={playing ? "Pause Javeda Zindagi" : "Play Javeda Zindagi"}
+          aria-pressed={playing}>
           <span className={styles.playMark} aria-hidden="true">
             <svg viewBox="0 0 38 38" fill="none">
-              <path d="M16 13.5v11l9-5.5-9-5.5Z" fill="currentColor" />
+              {playing
+                ? <path d="M14 13h4v12h-4zm7 0h4v12h-4z" fill="currentColor" />
+                : <path d="M16 13.5v11l9-5.5-9-5.5Z" fill="currentColor" />}
               <path pathLength="1" d="M32 27C38 16 31 6 21 5 10 3 4 10 4 19c1 11 8 16 18 14 4-1 7-3 10-6Z" />
             </svg>
           </span>
-          Listen on YouTube <span aria-hidden="true">↗</span>
-        </a>
+          {playing ? "Pause song" : "Play song"}
+        </button>
+        <span className={styles.wave} aria-hidden="true"><i/><i/><i/><i/></span>
       </div>
     </aside>
   );
