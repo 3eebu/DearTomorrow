@@ -12,8 +12,8 @@ export default async function Page({searchParams}:{searchParams:{message?:string
   const {data,error}=await client.rpc('dt_connection_view');
   const view=data as ConnectionView|null;
   return <AccountShell><CloudBoundary scope={{owner:user.id,kind:'letters',path:'/connect'}} navigation={false}>
-    <div className="dt-account-heading"><h1>Find your person.</h1>
-      <p>Enter their Dear Tomorrow ID to find them and ask if they&apos;d like to connect.</p></div>
+    <div className="dt-account-heading dt-connect-heading"><p className="dt-connect-kicker">A private invitation</p><h1>Find your person.</h1>
+      <p>Enter their permanent Dear Tomorrow ID to send a quiet invitation to connect.</p></div>
     <AccountNotice message={searchParams.message??(error?'try':undefined)}/>
     {view&&!view.partner&&<ConnectionFinder/>}
     {view&&<ConnectionDetails view={view} path="connect"/>}

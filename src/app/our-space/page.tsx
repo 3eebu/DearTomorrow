@@ -29,8 +29,10 @@ export default async function Page({searchParams}:{searchParams:{welcome?:string
       <p>Connected on {new Date(partner.since).toLocaleDateString('en-US',{dateStyle:'long',timeZone:'UTC'})}</p>
     </div>
     <section className="dt-account-section"><h2>Shared memories</h2><AccountNotice message={shared.error?'try':undefined}/>
-      {items.length?<SpaceItems items={items} ours/>:<p>When either of you chooses to share a keepsake, it will appear here.</p>}
-      <div className="dt-account-actions"><Link href="/my-space">Choose something from My Space</Link><Link href="/settings">Connection settings</Link></div>
+      {items.length?<SpaceItems items={items} ours/>:<div className="dt-space-empty dt-shared-empty"><span aria-hidden="true">✧</span><h3>A shared page, still waiting for its first story.</h3>
+        <p>{profile.display_name} and {partner.name}, your memories stay yours until you choose one to share. When you’re ready, open My Space and share a keepsake here.</p>
+        <div className="dt-account-actions"><Link href="/my-space">Open My Space</Link></div></div>}
+      {items.length>0&&<div className="dt-account-actions"><Link href="/my-space">Choose something from My Space</Link><Link href="/settings">Connection settings</Link></div>}
     </section>
   </CloudBoundary></AccountShell>;
 }

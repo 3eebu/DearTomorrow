@@ -28,7 +28,12 @@ export default async function Page() {
         <li key={space.path}><Link href={space.path+'?space=mine'}><strong>{space.name} <span aria-hidden="true">↗</span></strong><span>{space.note}</span></Link></li>
       )}</ul></section>
       <section className="dt-account-section"><h2>Recent creations</h2>
-        {items.length?<SpaceItems items={items.slice(0,8)}/>:<p>Your cloud library is ready for its first keepsake.</p>}
+        {items.length?<SpaceItems items={items.slice(0,8)}/>:<div className="dt-space-empty"><span aria-hidden="true">✦</span><h3>Your first keepsake starts here.</h3><p>Choose a way to hold on to a little piece of your story.</p><nav aria-label="Create a keepsake">
+          <Link href="/letters"><strong>Write a Letter</strong><span>Put something into words</span></Link>
+          <Link href="/memory-books"><strong>Make a Memory Book</strong><span>Gather moments together</span></Link>
+          <Link href="/memory-tree"><strong>Grow your Memory Tree</strong><span>Give each memory a leaf</span></Link>
+          <Link href="/journey-letters"><strong>Begin a Journey Letter</strong><span>Write for a moment ahead</span></Link>
+        </nav></div>}
         {drafts.length>0&&<details><summary>Saved drafts · {drafts.length}</summary><SpaceItems items={drafts}/></details>}
       </section>
     </div>

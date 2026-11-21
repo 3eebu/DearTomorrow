@@ -45,17 +45,18 @@ export function ConnectionFinder() {
   return <section aria-label="Find someone by ID">
     {alert&&<p className="dt-account-notice" role="alert">{alert}</p>}
     {sent&&<p className="dt-account-notice" role="status">{sent}</p>}
-    {match?<div className="dt-account-card">
+    {pending&&<p className="dt-account-notice" role="status" aria-live="polite">{match?'Sending your invitation…':'Looking for that account…'}</p>}
+    {match?<div className="dt-account-card dt-account-match">
       <Portrait name={match.name}/><h2 id="dt-match" tabIndex={-1}>{match.name}</h2>
       <p>Is this the person you&apos;re looking for?</p>
       <div className="dt-account-actions">
         <button className="dt-account-primary" disabled={pending} onClick={send}>Send connection request</button>
         <button className="dt-account-secondary" disabled={pending} onClick={()=>{setMatch(null);setAlert('');requestAnimationFrame(()=>document.getElementById('dt-find-id')?.focus());}}>Go back</button>
       </div>
-    </div>:<form className="dt-account-form" onSubmit={find}>
+    </div>:<form className="dt-account-form dt-connect-form" onSubmit={find}>
       <label>Dear Tomorrow ID<input id="dt-find-id" value={code} onChange={event=>setCode(event.target.value)} maxLength={80}
         placeholder="7F8E6H3A-G9264BCH-53DE8F7A" autoComplete="off" autoCapitalize="characters" spellCheck={false} required/></label>
-      <button className="dt-account-primary" disabled={pending}>Find account</button>
+      <button className="dt-account-primary" disabled={pending}>{pending?'Looking…':'Find account'}</button>
     </form>}
   </section>;
 }
@@ -74,8 +75,8 @@ export function ConnectionDetails({view,path}:{view:ConnectionView;path:'setting
           <button className="dt-account-secondary">Confirm disconnect</button>
         </form>
       </details></>:<p>{requests.some(request=>request.status==='pending')?'A request is waiting for a decision.':'You can connect with one person when you’re ready.'}</p>}
-    {requests.length>0&&<ul className="dt-account-list">{requests.map(request=><li key={request.id}>
-      <div><strong>{request.name}</strong><small>{request.incoming?'Incoming':'Sent'} · {request.status}</small></div>
+    {requests.length>0&&<ul className="dt-account-list dt-connection-list">{requests.map(request=><li key={request.id} data-status={request.status}>
+      <div><strong>{request.name}</strong><small>{request.status==='pending'?(request.incoming?'They reached out to you':'Your invitation is on its way'):request.status==='accepted'?'You’re connected':request.status==='declined'?'This invitation was declined':request.status==='canceled'?'This invitation was canceled':'This invitation has expired'}</small></div>
       {request.status==='pending'&&<form action={manageConnection} className="dt-account-actions">
         <input type="hidden" name="reference" value={request.id}/><input type="hidden" name="path" value={path}/>
         {request.incoming?<><button className="dt-account-primary" name="operation" value="accept">Accept</button>

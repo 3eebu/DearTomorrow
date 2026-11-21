@@ -79,11 +79,11 @@ export function GuestMigration({owner}:{owner:string}) {
   }
   return <section className="dt-account-card" aria-labelledby="dt-import-title">
     <h2 id="dt-import-title">{memories?'We found memories saved on this device.':'Some local libraries need attention.'}</h2>
-    {memories>0&&<p>Bring {memories} {memories===1?'item':'items'} into My Space. A matching cloud document keeps its own copy.</p>}
+    {memories>0&&<p>Your browser-saved memories can be copied into My Space. The originals stay saved on this device, and you can bring them over one by one.</p>}
     {guest.errors.length>0&&<p>Could not read {guest.errors.join(', ')}. Open those local libraries to recover or export their contents.</p>}
     {status&&<p role="status">{status}</p>}
     <div className="dt-account-actions">
-      {!!memories&&<button className="dt-account-primary" onClick={()=>void migrate()} disabled={pending}>{status?'Retry import':'Bring my memories'}</button>}
+      {!!memories&&<button className="dt-account-primary" onClick={()=>void migrate()} disabled={pending}>{pending?'Copying your memories…':status?'Retry copy':'Copy memories to My Space'}</button>}
       <button className="dt-account-secondary" onClick={()=>setHidden(true)} disabled={pending}>Maybe later</button>
       {status&&!pending&&<a href="/my-space">Refresh My Space</a>}
     </div>
