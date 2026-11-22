@@ -5,12 +5,14 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { appOrigin, supabaseConfig } from './config';
 import { spaces, type SpaceKind } from './identity';
+import { withoutProviderTokens } from './oauth';
 
-export function accountClient() {
+export function accountClient({oauthExchange=false}:{oauthExchange?:boolean}={}) {
   const config = supabaseConfig();
   if (!config) return null;
   const store = cookies();
   return createServerClient(config.url,config.key,{
+    global:oauthExchange?{fetch:withoutProviderTokens(config.url)}:undefined,
     cookieOptions:{httpOnly:true,sameSite:'lax',secure:appOrigin().startsWith('https:')},
     cookies:{
       getAll:()=>store.getAll(),
@@ -20,6 +22,13 @@ export function accountClient() {
       },
     },
   });
+}
+
+export async function accountLanding(client:NonNullable<ReturnType<typeof accountClient>>, userId:string) {
+  const {data,error} = await client.from('dt_profiles').select('onboarded,deleting_at').eq('id',userId).single();
+  if (error || !data) return null;
+  if (data.deleting_at) return '/settings';
+  return data.onboarded ? '/my-space' : '/welcome';
 }
 
 export function privateStorage() {

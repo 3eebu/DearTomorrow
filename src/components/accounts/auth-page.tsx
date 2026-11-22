@@ -1,6 +1,8 @@
 import Link from 'next/link';
-import {requestRecovery,resetPassword,signIn,signUp} from '@/lib/accounts/actions';
+import Image from 'next/image';
+import {requestRecovery,resetPassword,signIn,signInWithProvider,signUp} from '@/lib/accounts/actions';
 import {supabaseConfig} from '@/lib/accounts/config';
+import {availableSocialProviders} from '@/lib/accounts/social-providers';
 import {AccountNotice,AccountShell} from './account-shell';
 
 const forms={
@@ -10,9 +12,10 @@ const forms={
   reset:{label:'Set a new password',title:'A fresh start.',action:resetPassword,button:'Save new password'},
 };
 
-export function AuthPage({mode,message}:{mode:keyof typeof forms;message?:string}) {
+export async function AuthPage({mode,message}:{mode:keyof typeof forms;message?:string}) {
   const form=forms[mode];
   const enabled=!!supabaseConfig();
+  const providers=mode==='signup'||mode==='login' ? await availableSocialProviders() : [];
   return <AccountShell><div className="dt-auth-layout">
     <div className="dt-auth-intro">
       <svg viewBox="0 0 164 102" width="122" height="76" aria-hidden="true">
@@ -27,6 +30,18 @@ export function AuthPage({mode,message}:{mode:keyof typeof forms;message?:string
     <section className="dt-auth-letter" aria-label={form.label}>
       <h2>{form.label}</h2>
       <AccountNotice message={message??(!enabled?'unavailable':undefined)}/>
+      {providers.length>0&&<>
+        <form action={signInWithProvider} className="dt-social-form" aria-label="Other ways to sign in">
+          {providers.includes('google')&&<button type="submit" name="provider" value="google" className="dt-social-google">
+            <Image src="/auth/google-g.png" width={18} height={18} alt="" unoptimized/>
+            <span>Continue with Google</span>
+          </button>}
+          {providers.includes('apple')&&<button type="submit" name="provider" value="apple" className="dt-social-apple" aria-label="Continue with Apple">
+            <Image src="/auth/apple-continue.png" width={260} height={48} alt="" unoptimized/>
+          </button>}
+        </form>
+        <p className="dt-auth-divider">or continue with email</p>
+      </>}
       <form action={form.action} className="dt-account-form">
         {mode==='signup'&&<label>Display name<input name="name" required maxLength={60} autoComplete="nickname"/></label>}
         {mode!=='reset'&&<label>Email address<input name="email" required type="email" maxLength={254} autoComplete="email"/></label>}

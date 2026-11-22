@@ -22,6 +22,7 @@ async function run() {
         assert.equal(await page.getByLabel('Email address').evaluate(element=>element===document.activeElement),true);
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
         assert.equal(await page.locator('main input[name=username]').count(),0);
+        assert.equal(await page.getByRole('button',{name:/Continue with (Google|Apple)/}).count(),0);
         if(shots&&route!=='/forgot-password') {
           await fs.mkdir(shots,{recursive:true});
           await page.evaluate(()=>{document.activeElement?.blur();return document.fonts.ready;});
@@ -52,6 +53,26 @@ async function run() {
     const callback=await page.request.get(base+'/auth/confirm?type=unsupported&token_hash=fictional&next=https://example.test',{maxRedirects:0});
     assert.equal(new URL(callback.headers().location).origin,new URL(base).origin);
     assert.equal(new URL(callback.headers().location).pathname,'/login');
+    for(const [query,message] of [
+      ['next=https://example.test','social-expired'],
+      ['code=one&code=two','social-expired'],
+      ['error=access_denied&error_description=untrusted&next=https://example.test','social-cancelled'],
+      ['error_code=server_error','social-failed'],
+    ]) {
+      const result=await page.request.get(base+'/auth/callback?'+query,{maxRedirects:0});
+      assert.equal(result.status(),307);
+      assert.equal(result.headers().location,base+'/login?message='+message);
+      assert.match(result.headers()['cache-control'],/no-store/);
+      assert.equal(result.headers()['referrer-policy'],'no-referrer');
+      assert.equal(result.headers()['set-cookie'],undefined);
+    }
+    const withoutVerifier=await page.request.get(base+'/auth/callback?code=00000000-0000-4000-8000-000000000000',{
+      maxRedirects:0,
+    });
+    assert.equal(withoutVerifier.status(),307);
+    assert.match(withoutVerifier.headers().location,/\/login\?message=social-(expired|unavailable)$/);
+    assert.equal(new URL(withoutVerifier.headers().location).origin,new URL(base).origin);
+    assert.equal(withoutVerifier.headers()['set-cookie'],undefined);
     assert.deepEqual(errors,[]);
     console.log('Guest and authenticated-route boundaries, fixed callback origin, and responsive signup, login, and recovery checked.');
   } finally {await browser.close();}

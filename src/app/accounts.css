@@ -28,6 +28,15 @@
 .dt-auth-letter:after{content:"";position:absolute;inset:8px;pointer-events:none;border:1px solid #eadfd4}
 .dt-auth-letter>*{position:relative;z-index:1}
 .dt-auth-letter h2{margin-bottom:24px;font-size:clamp(1.55rem,2.7vw,2.05rem);letter-spacing:-.025em;color:#553b3d}
+.dt-social-form{display:grid;gap:10px;justify-items:center;margin-block:20px}
+.dt-social-form button{width:min(260px,100%);min-height:48px;border-radius:4px}
+.dt-social-form .dt-social-google{background:#fff;border:1px solid #747775;color:#1f1f1f;display:flex;justify-content:center;align-items:center;gap:10px;padding:8px 12px;font:500 14px/20px 'Google Sans',Arial,sans-serif}
+.dt-social-google img{flex:none}
+.dt-social-form .dt-social-apple{padding:0;border:0;background:transparent}
+.dt-social-apple img{display:block;max-width:100%;height:auto}
+.dt-social-form button:hover{box-shadow:0 0 0 1px #765c5533}
+.dt-auth-letter .dt-auth-divider{display:flex;align-items:center;gap:12px;margin:0;color:#715b51;font-size:.8rem;text-align:center}
+.dt-auth-divider::before,.dt-auth-divider::after{content:"";height:1px;flex:1;background:#d9c7b7}
 .dt-account-form{display:grid;gap:17px;max-width:500px;margin:20px 0 12px}
 .dt-account-form label{display:grid;gap:8px;font-size:.78rem;font-weight:600;letter-spacing:.025em;color:#594742}
 .dt-account-form :is(input,textarea){min-height:50px;width:100%;min-width:0;border:1px solid #cdb9ab;border-radius:2px;padding:11px 13px;background:#fffdf8;color:#382a2a;font:1rem/1.4 'DM Sans',sans-serif;transition:border-color .18s ease,box-shadow .18s ease,background-color .18s ease}

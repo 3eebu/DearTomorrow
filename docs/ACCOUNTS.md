@@ -18,6 +18,33 @@ The official Supabase SSR client stores server-managed cookies and refreshes the
 - One database transaction accepts a pending request, inserts two membership rows, and cancels other pending requests for those people. Membership is unique per account. Transition locking and that constraint work together even if two requests arrive together.
 - Sharing grants read access to one document for the current connection. Revocation deletes the grant. Disconnect removes active membership, and grants attached to that connection stop authorizing reads. The owners keep their private copies. A subsequent connection starts with its own permissions.
 
+## Google and Apple sign-in
+
+The sign-in and signup pages show a provider only when its server-side feature flag is `true` and Supabase reports that provider enabled. The server initiates sign-in with Supabase's PKCE client. Supabase handles the provider state check. The app exchanges the one-time code using the same browser's HTTP-only cookie, filters Google and Apple API tokens out before the SDK writes the session cookie, and uses `getUser()` to check the resulting account and its verified email. The app sends new accounts to Welcome and returning accounts to My Space. The existing email verification and password recovery routes still use `/auth/confirm`. [Supabase PKCE flow](https://supabase.com/docs/guides/auth/sessions/pkce-flow)
+
+### Google development setup
+
+1. In a Google Cloud project you control, open **Google Auth Platform**. Set the app name to **Dear Tomorrow**, provide the requested support and contact emails, and choose **External** with a private testing audience if this is for personal Google accounts. Add the Google accounts you will use under **Audience → Test users**. Keep the scopes to basic identity information (`openid`, email, and profile). [Google consent and Supabase setup](https://supabase.com/docs/guides/auth/social-sign-in/auth-google)
+2. Under **Clients**, create a **Web application** OAuth client. Set **Authorized redirect URIs** to `https://ryubhqpqfwuwrtyomsmz.supabase.co/auth/v1/callback` exactly. For local sign-in add `http://127.0.0.1:3002` under **Authorized JavaScript origins**. The Google redirect goes to Supabase, which then sends the browser to Dear Tomorrow. A custom domain is unnecessary for this development flow.
+3. In Supabase, open **Authentication → Sign In / Providers → Google**. Enable Google and paste the client ID and secret directly into the provider fields. Keep the secret in Supabase. The development Auth allowlist contains `http://127.0.0.1:3002/auth/callback` and the existing `http://127.0.0.1:3002/auth/confirm` URL. Add exact HTTPS callbacks for any future preview origins in use.
+4. Set `DEAR_TOMORROW_GOOGLE_SIGN_IN=true` in the ignored local environment, restart the preview, and test in the same browser using the exact configured origin. Use an approved test Google account. Test signup and onboarding, sign out and return, then confirm the ID, library and partner relationship are unchanged. Use a separate verified password account for the same-email linking check.
+
+### Apple setup
+
+1. Sign in to an existing Apple Developer Program team. Configure a primary App ID with Sign in with Apple, then create a **Services ID** and associate it with that App ID. Register the website domain and the HTTPS return URL `https://ryubhqpqfwuwrtyomsmz.supabase.co/auth/v1/callback` on the Services ID. Apple requires a registered domain for web sign-in. Loopback URLs cannot be registered as Apple's return URL. [Apple's web setup requirements](https://developer.apple.com/help/account/capabilities/configure-sign-in-with-apple-for-the-web/)
+2. Create the Sign in with Apple key and generate the Apple OAuth client secret from the team's private `.p8` signing key. Use the Services ID as client ID and the generated secret in **Authentication → Sign In / Providers → Apple** in Supabase. The signing key stays with its owner. Rotate the generated secret before its six-month expiry. [Supabase Apple setup and secret rotation](https://supabase.com/docs/guides/auth/social-sign-in/auth-apple)
+3. Test the provider on an isolated preview before setting `DEAR_TOMORROW_APPLE_SIGN_IN=true` for ordinary visitors. Verify both **Share My Email** and **Hide My Email** where available. Register the sending domains with Apple Private Email Relay before relying on future email delivery to relay addresses. [Apple Private Email Relay setup](https://developer.apple.com/help/account/capabilities/configure-private-email-relay-service/)
+
+### Account linking
+
+Supabase handles automatic linking for eligible matching verified emails. The application looks up the Supabase Auth UUID and uses the existing database trigger for a new UUID, so linked sign-ins keep the same permanent Dear Tomorrow ID, memories, and connection. Apple private relay addresses are valid account addresses in their own right. An address that differs from an existing verified account can result in a separate account. If the same person needs both sign-ins on one account, a future linking flow can start from the already signed-in account and use Supabase's authenticated `linkIdentity()` with proof of the provider account. Existing separate accounts need a distinct ownership review before any transfer. [Supabase identity linking](https://supabase.com/docs/guides/auth/auth-identity-linking)
+
+### Social sign-in verification
+
+An isolated browser run with a simulated Supabase Auth endpoint checked provider availability, button layout at 1440, 820, 390 and 320 pixels, S256 PKCE, HTTP-only session cookies, session renewal, provider token removal, and routing to Welcome or My Space. The regular browser suite checked cancelled and malformed callbacks and a callback without the browser's PKCE state. Both hosted integration suites passed again, including generated email links, password recovery and login, pairing, private media, sharing revocation, and guest migration.
+
+Google and Apple are disabled in the hosted development project pending provider setup. Live consent, provider account linking, Apple relay, and inbox delivery remain unverified.
+
 ## Documents, media, and migration
 
 - My Space opens the existing editors in an explicit cloud scope. The four document models use their existing validators. Supabase writes the workspace revision and modified documents in one transaction. Cross-tab conflicts preserve the newer server version and offer draft export or retry from the relevant editor.

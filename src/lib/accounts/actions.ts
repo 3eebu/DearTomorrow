@@ -1,8 +1,10 @@
 'use server';
 
 import {redirect} from 'next/navigation';
-import {account,accountClient,privateStorage} from './server';
-import {appOrigin} from './config';
+import {account,accountClient,accountLanding,privateStorage} from './server';
+import {appOrigin,supabaseConfig} from './config';
+import {oauthAuthorizeUrl,oauthCallbackPath} from './oauth';
+import {availableSocialProviders} from './social-providers';
 import {displayName,normalizeDearId} from './identity';
 import {uuidPattern} from './documents';
 import {removeOwnedMedia,saveImage} from './media';
@@ -19,9 +21,22 @@ function email(form:FormData) {
 }
 const validPassword=(value:string)=>value.length>=10&&value.length<=128;
 async function landing(user:User) {
-  const result=await accountClient()!.from('dt_profiles').select('onboarded,deleting_at').eq('id',user.id).single();
-  if(result.data?.deleting_at)redirect('/settings');
-  redirect(result.data?.onboarded?'/my-space':'/welcome');
+  redirect(await accountLanding(accountClient()!,user.id) ?? '/welcome');
+}
+
+export async function signInWithProvider(form:FormData) {
+  const requested = field(form,'provider');
+  const provider = (await availableSocialProviders()).find(value=>value===requested);
+  const config = supabaseConfig();
+  const client = accountClient();
+  if (!provider || !config || !client) redirect('/login?message=social-unavailable');
+  const {data,error} = await client.auth.signInWithOAuth({
+    provider,
+    options:{redirectTo:new URL(oauthCallbackPath,appOrigin()).href,skipBrowserRedirect:true},
+  });
+  const destination = !error && data.url ? oauthAuthorizeUrl(config.url,data.url) : null;
+  if (!destination) redirect('/login?message=social-failed');
+  redirect(destination);
 }
 
 export async function signUp(form:FormData) {
