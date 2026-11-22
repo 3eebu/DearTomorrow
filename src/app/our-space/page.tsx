@@ -9,7 +9,7 @@ import type {LibraryItem} from '@/lib/accounts/documents';
 
 export const metadata={title:'Our Space — Dear Tomorrow'};
 export const dynamic='force-dynamic';
-export default async function Page({searchParams}:{searchParams:{welcome?:string}}) {
+export default async function Page({searchParams}:{searchParams:Promise<{welcome?:string}>}) {
   const {profile,user,client}=await requireAccount();
   if(profile.deleting_at)redirect('/settings');
   const connection=await client.rpc('dt_connection_view');
@@ -25,7 +25,7 @@ export default async function Page({searchParams}:{searchParams:{welcome?:string
         <path d="M4 22c39-28 65 9 112-3 29-7 42-16 83-6 15 4 23 2 37-3M4 13c45 20 70-21 116 5 37 20 65 7 116 1" stroke="currentColor" fill="none"/>
         <circle cx="119" cy="19" r="3.1" fill="#804852"/>
       </svg>
-      <h1>{searchParams.welcome==='1'?'Your stories are now connected.':'All the little things that make us, us.'}</h1>
+      <h1>{(await searchParams).welcome==='1'?'Your stories are now connected.':'All the little things that make us, us.'}</h1>
       <p>Connected on {new Date(partner.since).toLocaleDateString('en-US',{dateStyle:'long',timeZone:'UTC'})}</p>
     </div>
     <section className="dt-account-section"><h2>Shared memories</h2><AccountNotice message={shared.error?'try':undefined}/>

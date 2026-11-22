@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'Write on personalized stationery, seal your letters, and keep them in a browser-local Letter Box.'
 };
 
-export default async function LettersPage({searchParams}:{searchParams:{space?:string}}) {
-  const scope=await workspaceScope('letters',searchParams.space);
+export default async function LettersPage({searchParams}:{searchParams:Promise<{space?:string}>}) {
+  const scope=await workspaceScope('letters',(await searchParams).space);
   return <HomeStudio page="letters" letters={<CloudBoundary key={scope?.owner??'guest'} scope={scope}><LettersWorkspace scope={scope}/></CloudBoundary>} />;
 }

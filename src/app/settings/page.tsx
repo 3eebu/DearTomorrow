@@ -10,7 +10,7 @@ import {CloudBoundary} from '@/components/accounts/cloud-boundary';
 
 export const metadata={title:'Account settings — Dear Tomorrow'};
 export const dynamic='force-dynamic';
-export default async function Page({searchParams}:{searchParams:{message?:string}}) {
+export default async function Page({searchParams}:{searchParams:Promise<{message?:string}>}) {
   const {profile,user,client}=await requireAccount();
   const view=profile.deleting_at?null:(await client.rpc('dt_connection_view')).data as ConnectionView|null;
   let photo:string|null=null;
@@ -20,7 +20,7 @@ export default async function Page({searchParams}:{searchParams:{message?:string
   }
   return <AccountShell><CloudBoundary scope={{owner:user.id,kind:'letters',path:'/settings'}} navigation={false}>
     <div className="dt-account-heading"><h1>Account settings.</h1></div>
-    <AccountNotice message={searchParams.message??(profile.deleting_at?'deletion_pending':undefined)}/>
+    <AccountNotice message={(await searchParams).message??(profile.deleting_at?'deletion_pending':undefined)}/>
     {!profile.deleting_at&&<>
       <div className="dt-account-grid">
         <section className="dt-account-section">

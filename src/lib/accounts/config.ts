@@ -5,5 +5,18 @@ export function supabaseConfig() {
 }
 
 export function appOrigin() {
-  return new URL(process.env.DEAR_TOMORROW_APP_URL || 'http://127.0.0.1:3002').origin;
+  const hosted=process.env.VERCEL==='1';
+  const configured=process.env.DEAR_TOMORROW_APP_URL;
+  if(hosted&&!configured)throw new Error('Set DEAR_TOMORROW_APP_URL for this Vercel environment.');
+  const url=new URL(configured||'http://127.0.0.1:3002');
+  const loopback=['127.0.0.1','localhost','[::1]'].includes(url.hostname);
+  if(url.username||url.password||url.pathname!=='/'||url.search||url.hash||
+    (url.protocol!=='https:'&&(!loopback||url.protocol!=='http:'))||(hosted&&loopback)) {
+    throw new Error('DEAR_TOMORROW_APP_URL must be an HTTPS origin for staging. Loopback HTTP is supported locally.');
+  }
+  return url.origin;
+}
+
+export function matchesHostedOrigin(host:string|null) {
+  return process.env.VERCEL!=='1'||host?.toLowerCase()===new URL(appOrigin()).host;
 }

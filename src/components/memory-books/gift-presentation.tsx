@@ -38,7 +38,7 @@ export function GiftActions({ releasing, unwrap, skip }: { releasing: boolean; u
 export function useGiftPresentation(startWrapped: boolean, bookId: string) {
   const [step, setStep] = useState<'wrapped' | 'releasing' | 'revealed'>(startWrapped ? 'wrapped' : 'revealed');
   const [presented, setPresented] = useState(startWrapped);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), [bookId]);
   function skip() {
     clearTimeout(timer.current);

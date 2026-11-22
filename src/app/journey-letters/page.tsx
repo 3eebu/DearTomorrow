@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'Six little letters for the distance between goodbye and hello. Write and seal a journey in Dear Tomorrow.',
 };
 
-export default async function JourneyLettersPage({searchParams}:{searchParams:{space?:string}}) {
-  const scope=await workspaceScope('journeys',searchParams.space);
+export default async function JourneyLettersPage({searchParams}:{searchParams:Promise<{space?:string}>}) {
+  const scope=await workspaceScope('journeys',(await searchParams).space);
   return <InformationShell showPreviewLink={false}><CloudBoundary key={scope?.owner??'guest'} scope={scope}><JourneyWorkspace scope={scope}/></CloudBoundary></InformationShell>;
 }

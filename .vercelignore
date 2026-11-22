@@ -1,0 +1,8 @@
+.env*
+.private-about/
+.next/
+.vercel/
+node_modules/
+public/about/javeda-zindagi.mp3
+supabase/.temp/
+*.tsbuildinfo

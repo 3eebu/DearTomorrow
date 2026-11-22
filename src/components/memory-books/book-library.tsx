@@ -41,7 +41,7 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
   const drafts = useRef<MemoryBookDocument[]>([]);
   const savedBooks = useRef<MemoryBookDocument[]>([]);
   const saveQueue = useRef(Promise.resolve());
-  const saveTimer = useRef<ReturnType<typeof setTimeout>>();
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const importRef = useRef<HTMLInputElement>(null);
   const save = useCallback(() => {
     clearTimeout(saveTimer.current);

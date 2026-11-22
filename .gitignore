@@ -5,3 +5,4 @@ node_modules
 *.tsbuildinfo
 /.private-about/javeda-zindagi.mp3
 /public/about/javeda-zindagi.mp3
+/.vercel/

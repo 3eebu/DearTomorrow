@@ -7,27 +7,68 @@ import type {MemoryBookDocument} from '../memory-books';
 import {validateJourneySummary, type Journey} from '../journey-letters';
 import {validateDocument,type CloudScope,type ScopeResult,type CloudDocument} from './documents';
 import type {SpaceKind} from './identity';
+import {cloudChunkBytes,cloudRequestBytes,directCloudRequestBytes} from './cloud-transport';
 
-export async function requestCloud<T>(owner:string,fields:Record<string,unknown>):Promise<T> {
+async function cloudPost<T>(owner:string,body:BodyInit,headers:Record<string,string>):Promise<T> {
   if(typeof navigator!=='undefined'&&!navigator.onLine)throw new Error('Offline. Keep this draft open or export a backup before leaving.');
   let response:Response;
   try {
     response=await fetch('/api/private-space',{method:'POST',cache:'no-store',credentials:'same-origin',
-      headers:{'Content-Type':'application/json','X-Dear-Account':owner},body:JSON.stringify(fields)});
+      headers:{...headers,'X-Dear-Account':owner},body});
   } catch {throw new Error('Couldn’t sync. Check your connection and retry, or export your draft.');}
   const result=await response.json().catch(()=>null);
-  if(!response.ok||!result)throw new Error(result?.error || 'The cloud could not confirm this request.');
+  if(!response.ok||!result)throw new Error(result?.error || (response.status===413
+    ? 'This upload exceeded the transport limit. Keep this draft open or export a backup.'
+    : 'The cloud could not confirm this request. Keep this draft open or export a backup.'));
   return result as T;
 }
 
-export const readCloud = (owner:string,kind:SpaceKind,content=false,id?:string) =>
-  requestCloud<ScopeResult>(owner,{action:'scope',kind,content,id});
+export function requestCloud<T>(owner:string,fields:Record<string,unknown>):Promise<T> {
+  return cloudPost<T>(owner,JSON.stringify(fields),{'Content-Type':'application/json'});
+}
+
+export async function readCloud(owner:string,kind:SpaceKind,content=false,id?:string):Promise<ScopeResult> {
+  if(!content||id!==undefined)return requestCloud(owner,{action:'scope',kind,content,id});
+  const snapshot=await requestCloud<ScopeResult>(owner,{action:'scope',kind,content:false});
+  const documents:ScopeResult['documents']=[];
+  for(let first=0;first<snapshot.documents.length;first+=4) {
+    const batch=await Promise.all(snapshot.documents.slice(first,first+4).map(entry=>
+      requestCloud<ScopeResult>(owner,{action:'scope',kind,content:true,id:entry.id})));
+    for(const result of batch) {
+      if(result.revision!==snapshot.revision||result.documents.length!==1) {
+        throw new Error('Your library changed while it was opening. Reopen it to see the latest version.');
+      }
+      documents.push(result.documents[0]);
+    }
+  }
+  return {...snapshot,documents};
+}
 export const readDocument = (owner:string,document:string) =>
   requestCloud<Omit<CloudDocument,'ownerId'>>(owner,{action:'read',document});
 type CommitResult = {revision:number;imported?:boolean;sourceId?:string};
-export const commitCloud = (owner:string,kind:SpaceKind,expected:number,changes:unknown[],removals:string[],
-  metadata:Record<string,unknown>,receipt?:string) =>
-  requestCloud<CommitResult>(owner,{action:'save',kind,expected,changes,removals,metadata,importing:!!receipt,receipt});
+export async function commitCloud(owner:string,kind:SpaceKind,expected:number,changes:unknown[],removals:string[],
+  metadata:Record<string,unknown>,receipt?:string):Promise<CommitResult> {
+  const payload=new Blob([JSON.stringify({action:'save',kind,expected,changes,removals,metadata,importing:!!receipt,receipt})],
+    {type:'application/json'});
+  if(payload.size>cloudRequestBytes)throw new Error('This save exceeds the 54 MB request limit. Save smaller batches or export a backup.');
+  const local=typeof location!=='undefined'&&['127.0.0.1','localhost','[::1]'].includes(location.hostname);
+  if(local||payload.size<=directCloudRequestBytes)return cloudPost(owner,payload,{'Content-Type':'application/json'});
+
+  const upload=crypto.randomUUID();
+  const parts=Math.ceil(payload.size/cloudChunkBytes);
+  try {
+    for(let index=0;index<parts;index++) {
+      const offset=index*cloudChunkBytes;
+      await cloudPost(owner,payload.slice(offset,offset+cloudChunkBytes),{
+        'Content-Type':'application/octet-stream','X-Dear-Transfer':upload,'X-Dear-Part':String(index),
+      });
+    }
+    return await requestCloud(owner,{action:'complete-upload',upload,parts});
+  } catch(error) {
+    await requestCloud(owner,{action:'cancel-upload',upload}).catch(()=>{});
+    throw error;
+  }
+}
 const payloads = <K extends SpaceKind>(kind:K,scope:ScopeResult) => scope.documents.map(item=>validateDocument(kind,item.payload));
 
 export function cloudLetters({owner}:CloudScope) {

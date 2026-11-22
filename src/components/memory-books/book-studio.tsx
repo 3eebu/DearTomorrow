@@ -35,7 +35,7 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, on
   const [zoom, setZoom] = useState(1), [grid, setGrid] = useState(false), [safe, setSafe] = useState(false), [gutter, setGutter] = useState(false), [snap, setSnap] = useState(true), [bleed, setBleed] = useState(true);
   const [fitWidth, setFitWidth] = useState(400);
   const [readyMs, setReadyMs] = useState<number>();
-  const mountedAt = useRef<number>();
+  const mountedAt = useRef<number>(undefined);
   const [search, setSearch] = useState(''), [category, setCategory] = useState('all'), [inline, setInline] = useState<string | null>(null), [overflow, setOverflow] = useState(false);
   const [historyTick, setHistoryTick] = useState(0), [uploading, setUploading] = useState(false);
   const [groupScale, setGroupScale] = useState(100), [groupAngle, setGroupAngle] = useState(0);
@@ -44,7 +44,7 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, on
   const [drawTool, setDrawTool] = useState<DrawingStroke['tool'] | 'eraser'>('pen'), [drawColor, setDrawColor] = useState('#643e4a'), [drawWidth, setDrawWidth] = useState(.5), [drawOpacity, setDrawOpacity] = useState(1);
   const latest = useRef(book); latest.current = book;
   const history = useRef(new StudioHistory()), clipboard = useRef<BookElement[]>([]), photoInput = useRef<HTMLInputElement>(null), replaceTarget = useRef<PhotoTarget | null>(null);
-  const clipboardVoice = useRef<MemoryBookDocument['voiceAssets']>();
+  const clipboardVoice = useRef<MemoryBookDocument['voiceAssets']>(undefined);
   const canvas = useRef<HTMLDivElement>(null), viewport = useRef<HTMLDivElement>(null), draft = useRef<SVGPathElement>(null), guides = useRef<HTMLDivElement>(null);
   const frame = useRef(0), gesture = useRef<Gesture | null>(null), drawing = useRef<DrawingStroke | null>(null), erased = useRef(new Set<string>()), layerDrag = useRef('');
   const pan = useRef<{ x: number; y: number; left: number; top: number } | null>(null), pointers = useRef(new Map<number, { x: number; y: number }>()), pinch = useRef<{ distance: number; zoom: number } | null>(null);

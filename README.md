@@ -1,16 +1,16 @@
 # Dear Tomorrow
 
-An interactive Phase 1 Next.js website prototype. No real sending, authentication, cloud persistence, subscriptions or offline access.
+Dear Tomorrow is a Next.js website for private letters, books, trees and journeys. Guest libraries save in the browser. Configured development environments also support Supabase accounts and private cloud workspaces.
 
 ## Run locally
 
-Install Node.js 20+ then:
+Use Node.js 22 and the checked-in npm lockfile.
 
 ```bash
-npm install
-npm run dev
+npm ci
+npm run dev -- --hostname 127.0.0.1 --port 3002
 ```
 
-Visit http://localhost:3000. Verify with `npm run typecheck`, `npm run lint`, `npm run build`.
+Open `http://127.0.0.1:3002`. Verify with `node --test tests/*.test.cjs`, `npm run typecheck`, `npm run lint` and `npm run build`.
 
-The demo includes a click-to-open envelope, guest letter draft, book title and color personalization, animated page changes, Our Dates timeline/calendar with local milestone creation, and six interactive journey checkpoints. Changes disappear on refresh. See docs/PROGRESS.md.
+See [project progress](docs/PROGRESS.md), [account setup](docs/ACCOUNTS.md) and the [Vercel staging runbook](docs/VERCEL_STAGING.md).

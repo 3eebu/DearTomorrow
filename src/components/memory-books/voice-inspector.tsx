@@ -24,7 +24,7 @@ export function VoiceInspector({ element, book, onChange, onRecording }: {
   const voice = element.voice!;
   const asset = voice.assetId ? book.voiceAssets?.[voice.assetId] : undefined;
   const input = useRef<HTMLInputElement>(null);
-  const capture = useRef<Recording>();
+  const capture = useRef<Recording>(undefined);
   const job = useRef(0);
   const [phase, setPhase] = useState<Phase>('idle');
   const [previewOpen, setPreviewOpen] = useState(false);

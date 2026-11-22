@@ -9,14 +9,14 @@ import {CloudBoundary} from '@/components/accounts/cloud-boundary';
 
 export const metadata={title:'Welcome — Dear Tomorrow'};
 export const dynamic='force-dynamic';
-export default async function Page({searchParams}:{searchParams:{message?:string}}) {
+export default async function Page({searchParams}:{searchParams:Promise<{message?:string}>}) {
   const {profile,user}=await requireAccount();
   if(profile.deleting_at)redirect('/settings');
   return <AccountShell><CloudBoundary scope={{owner:user.id,kind:'letters',path:'/welcome'}} navigation={false}>
     <div className="dt-account-heading"><Portrait name={profile.display_name}/>
       <h1>Welcome to your little corner of Dear Tomorrow.</h1>
       <p>My Space is yours. You can connect with someone special whenever you feel ready.</p></div>
-    <AccountNotice message={searchParams.message}/>
+    <AccountNotice message={(await searchParams).message}/>
     <form className="dt-account-form" action={saveDisplayName}>
       <input type="hidden" name="onboard" value="yes"/>
       <label>Display name<input name="name" required maxLength={60} defaultValue={profile.display_name} autoComplete="nickname"/></label>

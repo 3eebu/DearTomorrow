@@ -20,15 +20,15 @@ function email(form:FormData) {
   return value.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)?value:null;
 }
 const validPassword=(value:string)=>value.length>=10&&value.length<=128;
-async function landing(user:User) {
-  redirect(await accountLanding(accountClient()!,user.id) ?? '/welcome');
+async function landing(client:NonNullable<Awaited<ReturnType<typeof accountClient>>>,user:User) {
+  redirect(await accountLanding(client,user.id) ?? '/welcome');
 }
 
 export async function signInWithProvider(form:FormData) {
   const requested = field(form,'provider');
   const provider = (await availableSocialProviders()).find(value=>value===requested);
   const config = supabaseConfig();
-  const client = accountClient();
+  const client = await accountClient();
   if (!provider || !config || !client) redirect('/login?message=social-unavailable');
   const {data,error} = await client.auth.signInWithOAuth({
     provider,
@@ -40,7 +40,7 @@ export async function signInWithProvider(form:FormData) {
 }
 
 export async function signUp(form:FormData) {
-  const client=accountClient();
+  const client=await accountClient();
   if(!client)redirect('/signup?message=unavailable');
   const name=displayName(field(form,'name')),address=email(form),password=field(form,'password');
   if(!name||!address||!validPassword(password))redirect('/signup?message=details');
@@ -49,21 +49,21 @@ export async function signUp(form:FormData) {
   }});
   if(error?.status===429)redirect('/signup?message=rate');
   if(error && error.status!==422)redirect('/signup?message=try');
-  if(data.session&&data.user?.email_confirmed_at)await landing(data.user);
+  if(data.session&&data.user?.email_confirmed_at)await landing(client,data.user);
   redirect('/login?message=verification');
 }
 export async function signIn(form:FormData) {
-  const client=accountClient();
+  const client=await accountClient();
   if(!client)redirect('/login?message=unavailable');
   const address=email(form),password=field(form,'password');
   if(!address||!password||password.length>128)redirect('/login?message=credentials');
   const {data,error}=await client.auth.signInWithPassword({email:address,password});
   if(error?.status===429)redirect('/login?message=rate');
   if(error||!data.user?.email_confirmed_at)redirect('/login?message=credentials');
-  await landing(data.user);
+  await landing(client,data.user);
 }
 export async function requestRecovery(form:FormData) {
-  const client=accountClient();
+  const client=await accountClient();
   if(!client)redirect('/forgot-password?message=unavailable');
   const address=email(form);
   if(!address)redirect('/forgot-password?message=details');
@@ -82,7 +82,7 @@ export async function resetPassword(form:FormData) {
   redirect('/login?message=changed');
 }
 export async function signOut() {
-  const client=accountClient();
+  const client=await accountClient();
   await client?.auth.signOut({scope:'local'});
   redirect('/');
 }

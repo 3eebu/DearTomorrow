@@ -1,4 +1,4 @@
 import {MemoryPage} from '@/components/accounts/memory-page';
-export default function Page({params}:{params:{id:string}}) {
-  return <MemoryPage id={params.id} ours/>;
+export default async function Page({params}:{params:Promise<{id:string}>}) {
+  return <MemoryPage id={(await params).id} ours/>;
 }

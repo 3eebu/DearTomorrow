@@ -199,3 +199,29 @@ test('PostgreSQL withholds timed and draft content and blocks direct reads from 
   assert.equal((await fn(ids.b,'dt_connection_view')).partner,null);
   assert.equal((await act(ids.a,'select * from public.dt_documents')).length,0);
 }));
+
+test('staged cloud uploads are bounded, private, ordered and disposable',()=>sandbox(async({db,ids,fn})=>{
+  const upload=randomUUID(),other=randomUUID();
+  const stage=(owner,id,part,content)=>fn(null,'dt_stage_cloud_chunk',[owner,id,part,content],'service_role');
+  const read=(owner,id,part,parts)=>fn(null,'dt_read_cloud_chunk',[owner,id,part,parts],'service_role');
+  const drop=(owner,id)=>fn(null,'dt_drop_cloud_transfer',[owner,id],'service_role');
+  await assert.rejects(fn(ids.a,'dt_stage_cloud_chunk',[ids.a,upload,0,'YQ==']),/permission denied/);
+  await assert.rejects(fn(ids.b,'dt_read_cloud_chunk',[ids.a,upload,0,2]),/permission denied/);
+  await stage(ids.a,upload,1,'Yg==');
+  assert.equal(await read(ids.a,upload,1,2),null);
+  await stage(ids.a,upload,0,'YQ==');
+  await stage(ids.a,upload,0,'YQ==');
+  await assert.rejects(stage(ids.a,upload,0,'Yw=='),/differs/);
+  assert.equal(await read(ids.a,upload,0,2),'YQ==');
+  assert.equal(await read(ids.a,upload,1,2),'Yg==');
+  assert.equal(await read(ids.b,upload,1,2),null);
+  await drop(ids.b,upload);
+  assert.equal(await read(ids.a,upload,1,2),'Yg==');
+  await stage(ids.a,other,0,'YQ==');
+  await assert.rejects(stage(ids.a,randomUUID(),0,'YQ=='),/Too many pending transfers/);
+  await drop(ids.a,upload);
+  assert.equal(await read(ids.a,upload,1,2),null);
+  await db.query("update dt_private.cloud_chunks set expires_at=now()-interval '1 second' where transfer_id=$1",[other]);
+  await stage(ids.a,randomUUID(),0,'YQ==');
+  assert.equal((await db.query('select count(*)::int as count from dt_private.cloud_chunks where transfer_id=$1',[other])).rows[0].count,0);
+}));

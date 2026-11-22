@@ -1,5 +1,7 @@
 # Accounts and private spaces
 
+For an HTTPS preview, follow the [Vercel staging runbook](VERCEL_STAGING.md).
+
 Dear Tomorrow uses Supabase Auth, PostgreSQL, and private Storage for signed-in workspaces. Guest editors use their existing IndexedDB stores. The public homepage, Our Story, How It Works, and the existing guest URLs work without a configured Supabase project.
 
 ## Start a disposable development backend

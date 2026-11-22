@@ -44,7 +44,7 @@ function Scratch({ card, book, state, setState, interactive }: {
 }) {
   const id = useId(), stroke = useRef<SVGPathElement>(null);
   const hasInkCut = interactive || !!state.scratches;
-  const active = useRef<{ id: number; path: string; x: number; y: number }>();
+  const active = useRef<{ id: number; path: string; x: number; y: number }>(undefined);
   function scratch(event: PointerEvent<SVGSVGElement>, begin: boolean) {
     if (begin && (active.current || event.button !== 0)) return;
     if (begin && (state.scratches?.length ?? 0) >= allowedScratchLength) return;

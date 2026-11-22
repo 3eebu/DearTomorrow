@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'A dedicated space for the memories and moments that help your story grow.'
 };
 
-export default async function MemoryTreePage({searchParams}:{searchParams:{space?:string}}) {
-  const scope=await workspaceScope('trees',searchParams.space);
+export default async function MemoryTreePage({searchParams}:{searchParams:Promise<{space?:string}>}) {
+  const scope=await workspaceScope('trees',(await searchParams).space);
   return <HomeStudio page="memory-tree" tree={<CloudBoundary key={scope?.owner??'guest'} scope={scope}><MemoryTreeWorkspace scope={scope}/></CloudBoundary>} />;
 }

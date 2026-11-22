@@ -7,10 +7,10 @@ import { appOrigin, supabaseConfig } from './config';
 import { spaces, type SpaceKind } from './identity';
 import { withoutProviderTokens } from './oauth';
 
-export function accountClient({oauthExchange=false}:{oauthExchange?:boolean}={}) {
+export async function accountClient({oauthExchange=false}:{oauthExchange?:boolean}={}) {
   const config = supabaseConfig();
   if (!config) return null;
-  const store = cookies();
+  const store = await cookies();
   return createServerClient(config.url,config.key,{
     global:oauthExchange?{fetch:withoutProviderTokens(config.url)}:undefined,
     cookieOptions:{httpOnly:true,sameSite:'lax',secure:appOrigin().startsWith('https:')},
@@ -24,7 +24,7 @@ export function accountClient({oauthExchange=false}:{oauthExchange?:boolean}={})
   });
 }
 
-export async function accountLanding(client:NonNullable<ReturnType<typeof accountClient>>, userId:string) {
+export async function accountLanding(client:NonNullable<Awaited<ReturnType<typeof accountClient>>>, userId:string) {
   const {data,error} = await client.from('dt_profiles').select('onboarded,deleting_at').eq('id',userId).single();
   if (error || !data) return null;
   if (data.deleting_at) return '/settings';
@@ -39,7 +39,7 @@ export function privateStorage() {
 
 export type Profile = {display_name:string; dear_id:string; onboarded:boolean; deleting_at:string|null; avatar:string|null};
 export async function account() {
-  const client = accountClient();
+  const client = await accountClient();
   if(!client)return null;
   const {data:{user}} = await client.auth.getUser();
   if(!user?.email_confirmed_at)return null;

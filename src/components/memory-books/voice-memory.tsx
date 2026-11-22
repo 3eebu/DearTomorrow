@@ -13,7 +13,7 @@ const VoicePlayback = createContext<Playback | null>(null);
 
 export function VoicePlayer({ scope, children }: { scope: string; children: ReactNode }) {
   const audio = useRef<HTMLAudioElement>(null);
-  const active = useRef<{ key: string; data: string }>();
+  const active = useRef<{ key: string; data: string }>(undefined);
   const request = useRef(0);
   const [id, setId] = useState<string>();
   const [playing, setPlaying] = useState(false);

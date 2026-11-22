@@ -1,8 +1,15 @@
 import {createServerClient} from '@supabase/ssr';
 import {NextResponse,type NextRequest} from 'next/server';
-import {appOrigin,supabaseConfig} from './lib/accounts/config';
+import {appOrigin,matchesHostedOrigin,supabaseConfig} from './lib/accounts/config';
 
-export async function middleware(request:NextRequest) {
+export async function proxy(request:NextRequest) {
+  if(!matchesHostedOrigin(request.headers.get('host'))) {
+    const headers={'Cache-Control':'private, no-store','Referrer-Policy':'no-referrer'};
+    if(request.method!=='GET'&&request.method!=='HEAD')return new NextResponse('Open the configured staging address.',{status:421,headers});
+    const canonical=new URL(appOrigin());
+    canonical.pathname=request.nextUrl.pathname;
+    return NextResponse.redirect(canonical,{headers});
+  }
   const config=supabaseConfig();
   let response=NextResponse.next({request});
   if(!config || !request.cookies.getAll().some(cookie=>cookie.name.startsWith('sb-')))return response;
