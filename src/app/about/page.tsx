@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type { Metadata } from "next";
 import { InformationShell } from "@/components/information-shell";
 import { AboutKeepsake } from "@/components/about-keepsake";
@@ -10,6 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const recording = "about/javeda-zindagi.mp3";
+  const audioSource = existsSync(join(process.cwd(), "public", recording)) ? `/${recording}` : undefined;
+
   return (
     <InformationShell>
       <article className={styles.dedication} aria-labelledby="dedication-title">
@@ -17,7 +22,7 @@ export default function AboutPage() {
           <p className={styles.kicker}>The reason Dear Tomorrow began</p>
           <h1 id="dedication-title">Made For A <em>Very Special Woman.</em></h1>
         </div>
-        <AboutKeepsake />
+        <AboutKeepsake audioSource={audioSource} />
         <div className={styles.letter}>
           <div className={styles.story}>
             <p>I created Dear Tomorrow because I&apos;m deeply in love with an incredible woman. I wanted to make something just for her. Somewhere we could keep our memories, remember all our little firsts, and create something beautiful that would always belong to us.</p>

@@ -6,7 +6,6 @@ import styles from "./about-keepsake.module.css";
 const recording = {
   title: "Javeda Zindagi",
   credit: "Violin cover by Elena Blinova",
-  listen: "https://www.youtube.com/watch?v=AVh5PNsOg1U&t=22s",
 };
 
 const petals = [
@@ -116,7 +115,32 @@ function Watercolor() {
   );
 }
 
-function MusicKeepsake() {
+function MusicKeepsake({ source }: { source: string }) {
+  const audio = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const player = audio.current;
+    return () => player?.pause();
+  }, []);
+
+  async function togglePlayback() {
+    const player = audio.current;
+    if (!player) return;
+    if (!player.paused) {
+      player.pause();
+      return;
+    }
+    setFailed(false);
+    if (player.error) player.load();
+    try {
+      await player.play();
+    } catch (error) {
+      if (!(error instanceof DOMException && error.name === "AbortError")) setFailed(true);
+    }
+  }
+
   return (
     <aside className={styles.music} aria-label="A song for her">
       <svg className={styles.ink} viewBox="0 0 180 110" fill="none" aria-hidden="true">
@@ -130,27 +154,36 @@ function MusicKeepsake() {
         <h2>{recording.title}</h2>
         <p className={styles.credit}>{recording.credit}</p>
       </div>
+      <audio ref={audio} src={source} preload="none"
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+        onError={() => {
+          setPlaying(false);
+          setFailed(true);
+        }}
+      />
       <div className={styles.actions}>
-        <a href={recording.listen} target="_blank" rel="noopener noreferrer"
-          aria-label="Listen to Javeda Zindagi on YouTube (opens in a new tab)">
+        <button type="button" onClick={togglePlayback}>
           <span className={styles.playMark} aria-hidden="true">
             <svg viewBox="0 0 38 38" fill="none">
-              <path d="M16 13.5v11l9-5.5-9-5.5Z" fill="currentColor" />
+              <path d={playing ? "M14.5 13.5h3.5v11h-3.5Zm6.5 0h3.5v11H21Z" : "M16 13.5v11l9-5.5-9-5.5Z"} fill="currentColor" />
               <path pathLength="1" d="M32 27C38 16 31 6 21 5 10 3 4 10 4 19c1 11 8 16 18 14 4-1 7-3 10-6Z" />
             </svg>
           </span>
-          Listen on YouTube <span aria-hidden="true">↗</span>
-        </a>
+          {playing ? "Pause song" : failed ? "Try again" : "Play song"}
+        </button>
+        {failed && <p className={styles.audioError} role="status">The song couldn’t play.</p>}
       </div>
     </aside>
   );
 }
 
-export function AboutKeepsake() {
+export function AboutKeepsake({ audioSource }: { audioSource?: string }) {
   return (
     <div className={styles.keepsake}>
       <Watercolor />
-      <MusicKeepsake />
+      {audioSource && <MusicKeepsake source={audioSource} />}
     </div>
   );
 }

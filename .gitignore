@@ -4,3 +4,4 @@ node_modules
 !.env.example
 *.tsbuildinfo
 /.private-about/javeda-zindagi.mp3
+/public/about/javeda-zindagi.mp3

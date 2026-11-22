@@ -108,21 +108,27 @@
 }
 
 .actions { margin-top: 12px; }
-.actions a {
+.actions button {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   gap: 7px;
+  padding: 0;
+  border: 0;
+  background: none;
   color: #f3ddc6;
+  font-family: inherit;
   font-size: .76rem;
   font-weight: 600;
+  cursor: pointer;
 }
-.actions a:hover { color: #fff4dd; }
-.actions a:focus-visible {
+.actions button:hover { color: #fff4dd; }
+.actions button:focus-visible {
   outline: 2px solid #f0c987;
   outline-offset: 4px;
   border-radius: 3px;
 }
+.music .audioError { margin: 4px 0 0; color: #dfc4b8; font-size: .77rem; }
 .playMark {
   display: block;
   width: 34px;
@@ -131,13 +137,13 @@
   transition: transform .25s ease-out;
 }
 .playMark svg { display: block; width: 100%; }
-.actions a:is(:hover,:focus-visible) .playMark path:last-child { animation: keepsakeInk .55s ease-out both; }
-.actions a:active .playMark { transform: scale(.91); }
+.actions button:is(:hover,:focus-visible) .playMark path:last-child { animation: keepsakeInk .55s ease-out both; }
+.actions button:active .playMark { transform: scale(.91); }
 
 @media (max-width: 880px) {
   .keepsake { padding-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .actions a:is(:hover,:focus-visible) .playMark path:last-child { animation: none !important; }
+  .actions button:is(:hover,:focus-visible) .playMark path:last-child { animation: none !important; }
   .playMark { transition: none; }
 }

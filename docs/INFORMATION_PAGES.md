@@ -23,7 +23,7 @@ The production guide was verified in Chromium at 1440, 820, 390, and 320 pixels.
 
 The original lossless WebP supplies both the still painting and eight decorative layers. Complementary masks blend six local areas into the fixed painting, including parts of both blossoms, individual petals, an upper bud, and a hair curl. Two detached petals have their own clipped outlines. The eyes, lids, lashes, and brows stay on the fixed layer. The layers have independent timings, pause offscreen or in a hidden tab, and resume from the same position. Reduced motion displays the original still artwork.
 
-The dark keepsake links to [Elena Blinova’s upload of “Javeda Zindagi”](https://www.youtube.com/watch?v=AVh5PNsOg1U&t=22s), starting at 22 seconds in a new tab. The public build uses this listening link because redistribution rights for the supplied MP3 could not be verified. A private copy of the trimmed recording was preserved outside the served directory during the change.
+The dark keepsake plays Elena Blinova’s violin cover of “Javeda Zindagi” in the page. Playback starts on request, and the supplied recording is trimmed by 22 seconds. The preview uses the ignored asset at `public/about/javeda-zindagi.mp3`. A build without that asset omits the song card. Provide a recording cleared for public distribution at that path before building a public deployment with the player.
 
 The homepage still uses the fictional newspaper montage and its replay controls.
 
@@ -31,6 +31,6 @@ The homepage still uses the fictional newspaper montage and its replay controls.
 
 - Review the full-page layout at 1440, 820, 390, and 320 pixels wide. The page uses the original story text, keeps the shared navigation and footer, and places the keepsake under the painting.
 - Check the protected eye and brow regions at different animation phases, including before and after the loop boundary. Scroll the artwork out of view and back to verify that its decorative motion resumes from its paused position.
-- With reduced motion enabled, verify that the SVG shows the still artwork. Activate the listening link with the keyboard or a touch, and check that it opens the timestamped recording in a new tab.
+- With reduced motion enabled, verify that the SVG shows the still artwork. Use the keyboard or touch to start the recording, pause it, and resume from the same point.
 
 The production Our Story page was checked in Edge at all four widths. The protected eye regions matched pixel for pixel at sampled phases on desktop and phone. The review included two real cycles of every layer, offscreen pause and resume, and a simulated 250-cycle repeat. How It Works matched its previous desktop screenshot byte for byte, and all three guide films played. The Letters and Memory Tree browser suites passed. The Memory Books sample opened, turned a page, and saved an editable copy in an isolated profile. Lint, type checking, the production build, and all 65 automated tests passed.
