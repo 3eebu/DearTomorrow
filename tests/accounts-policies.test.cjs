@@ -166,9 +166,14 @@ test('PostgreSQL withholds timed and draft content and blocks direct reads from 
       letter:{state:i===0?'draft':'sealed',media:{'$dearMedia':'attachment-'+i}}}))};
   await commit(ids.a,'letters',0,[entry(locked)]);
   await commit(ids.a,'journeys',0,[entry(journey)]);
+  await commit(ids.a,'books',0,[entry({id:'book-a',secret:'Private book'})]);
+  await commit(ids.a,'trees',0,[entry({id:'tree-a',secret:'Private tree'})]);
+  const docs=await listing(ids.a);
+  assert.equal(docs.length,4);
+  for(const {id} of docs) assert.equal(await fn(ids.b,'dt_read_document',[id]),null);
   const pending=await request(ids.a,ids.b);
   await fn(ids.b,'dt_connection_action',['accept',pending.id]);
-  const docs=await listing(ids.a);
+  for(const {id} of docs) assert.equal(await fn(ids.b,'dt_read_document',[id]),null);
   const letterId=docs.find(doc=>doc.kind==='letters').id;
   const journeyId=docs.find(doc=>doc.kind==='journeys').id;
   await fn(ids.a,'dt_share',[letterId,true]);
@@ -184,6 +189,8 @@ test('PostgreSQL withholds timed and draft content and blocks direct reads from 
   assert.ok(shared.payload.checkpoints[1].letter.media);
   assert.equal(shared.payload.checkpoints[5].letter,null);
   assert.ok(!JSON.stringify(shared).includes('attachment-5'));
+  assert.deepEqual((await listing(ids.b,true)).map(doc=>doc.kind).sort(),['journeys','letters']);
+  for(const {id} of docs) assert.equal(await fn(ids.c,'dt_read_document',[id]),null);
   await db.exec("insert into storage.objects values ('dear-tomorrow-private','secret'),('existing-bucket','existing')");
   assert.deepEqual((await act(ids.b,'select name from storage.objects')).map(row=>row.name),['existing']);
   await assert.rejects(fn(ids.a,'dt_begin_delete',[ids.a]),/permission denied/);

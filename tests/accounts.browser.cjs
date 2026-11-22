@@ -5,6 +5,7 @@ const path=require('node:path');
 
 const base=process.env.ACCOUNTS_URL||'http://127.0.0.1:3002';
 const shots=process.env.ACCOUNTS_SHOTS;
+const expectGoogle=process.env.ACCOUNTS_EXPECT_GOOGLE==='true';
 
 async function run() {
   const browser=await chromium.launch({executablePath:process.env.ACCOUNTS_CHROMIUM});
@@ -22,7 +23,10 @@ async function run() {
         assert.equal(await page.getByLabel('Email address').evaluate(element=>element===document.activeElement),true);
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
         assert.equal(await page.locator('main input[name=username]').count(),0);
-        assert.equal(await page.getByRole('button',{name:/Continue with (Google|Apple)/}).count(),0);
+        const google=page.getByRole('button',{name:'Continue with Google',exact:true});
+        assert.equal(await google.count(),expectGoogle&&route!=='/forgot-password'?1:0);
+        if(expectGoogle&&route!=='/forgot-password') assert.ok(await google.isVisible());
+        assert.equal(await page.getByRole('button',{name:'Continue with Apple',exact:true}).count(),0);
         if(shots&&route!=='/forgot-password') {
           await fs.mkdir(shots,{recursive:true});
           await page.evaluate(()=>{document.activeElement?.blur();return document.fonts.ready;});
