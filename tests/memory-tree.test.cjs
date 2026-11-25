@@ -4,7 +4,7 @@ const { performance } = require('node:perf_hooks');
 const load = require('./load-book-model.cjs');
 const { activeSeason, findMemories, initialSettings, localDay, newTree, nextAnniversary, putMemory,
   removeChapter, stage, validDay, validateGrove, validateTree } = load('./memory-tree');
-const { buildPaintedTree, leafPalette } = load('./memory-tree-illustration');
+const { bladeBreadth, bladeLength, buildPaintedTree, leafPalette } = load('./memory-tree-illustration');
 const today = '2026-11-19';
 const fixture = count => {
   const tree = newTree({ ...initialSettings, name: 'Synthetic orchard', season: 'spring' }, 'test-tree', 881134);
@@ -49,6 +49,23 @@ for (const count of [1, 5, 20, 100, 500, 1000, 2400]) {
     t.diagnostic(elapsed.toFixed(1) + ' ms for ' + count + ' painted leaf positions');
   });
 }
+
+test('the full canopy leaves a gap between every pair of memory blades for each species', () => {
+  const tree = fixture(2400);
+  for (const species of ['cherry', 'oak', 'willow']) {
+    const leaves = buildPaintedTree({...tree,settings:{...tree.settings,species}}, today).leaves;
+    assert.equal(leaves.length, 2400);
+    const bounds = leaves.map(leaf=>({...leaf,c:Math.cos(leaf.angle*Math.PI/180),s:Math.sin(leaf.angle*Math.PI/180)}));
+    for (let i=0;i<bounds.length;i++) for (let j=i+1;j<bounds.length;j++) {
+      const a=bounds[i], b=bounds[j], dx=b.x-a.x, dy=b.y-a.y;
+      const distance=dx*dx+dy*dy;
+      const reach=(a.size+b.size)*bladeLength;
+      if (distance>reach*reach) continue;
+      const project = leaf => leaf.size*Math.hypot(bladeLength*(leaf.c*dx+leaf.s*dy), bladeBreadth*(leaf.c*dy-leaf.s*dx));
+      assert.ok(distance > project(a)+project(b), species+' slots '+a.slot+' and '+b.slot+' touch');
+    }
+  }
+});
 
 test('leaf positions follow saved slots and do not jump on edits or additions', () => {
   const tree = fixture(100);

@@ -57,6 +57,8 @@
 }
 .mt-stage:is([data-stage=empty],[data-stage=seed]) .mt-specimen {max-width:53rem;}
 .mt-painting {display:block;max-width:100%;width:min(100%,60rem);height:auto;overflow:visible;}
+.mt-specimen[data-zoomed=true] {display:block;place-items:normal;max-height:min(65svh,38rem);overflow:auto;border:1px solid var(--mt-line);}
+.mt-specimen[data-zoomed=true] .mt-painting {width:180rem;max-width:none;}
 .mt-ink-leaf {cursor:pointer;outline:0;transition:opacity .22s ease;}
 .mt-ink-leaf[data-muted=true]:not([aria-pressed=true]):not(:hover):not(:focus-visible) {opacity:.27;}
 .mt-leaf-pigment {stroke:#675937;stroke-width:.6;stroke-opacity:.25;stroke-linejoin:round;}
@@ -102,6 +104,7 @@
 .mt-selected-leaf span:last-child {font-size:.73rem;}
 .mt-growth-actions {display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;}
 .mt-growth-actions button {font-size:.73rem;}
+.mt-growth-actions button[aria-pressed=true] {background:#eee7dc;border-color:var(--mt-line);}
 .mt-seed-note {display:grid;gap:.8rem;justify-items:center;text-align:center;color:var(--mt-muted);padding:0 0 1.9rem;}
 .mt-seed-note h2 {font-size:clamp(1.65rem,3vw,2.76rem);color:var(--mt-ink);}
 .mt-seed-note p {max-width:30rem;font-size:.9rem;}

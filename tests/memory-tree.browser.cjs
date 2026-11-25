@@ -219,11 +219,25 @@ async function run() {
       console.log(count+' memories: '+time+' ms from backup selection to SVG paint.');
       if([1,5,20,100,1000].includes(count)) await shot(profile,'stage-'+count,'.mt-stage');
       if(count===2400) {
+        const zoom=btn(profile,'Zoom canopy');
+        await zoom.click();
+        const pane=profile.getByRole('region',{name:'Zoomed tree. Scroll to explore the canopy.'});
+        await pane.waitFor();
+        assert.ok(await pane.evaluate(el=>el.scrollWidth>=el.querySelector('svg').getBoundingClientRect().width&&el.scrollHeight>el.clientHeight));
+        const selectedInPane=()=>{
+          const pane=document.querySelector('.mt-specimen').getBoundingClientRect();
+          const leaf=document.querySelector('.mt-ink-leaf[aria-pressed=true]').getBoundingClientRect();
+          return leaf.left>=pane.left && leaf.top>=pane.top && leaf.right<=pane.right && leaf.bottom<=pane.bottom;
+        };
+        await profile.waitForFunction(selectedInPane);
         await profile.locator('.mt-filters input[type=search]').fill('Synthetic memory 2399');
         await profile.locator('.mt-rows').getByRole('button',{name:/Synthetic memory 2399/}).click();
         await btn(profile.locator('.mt-keepsake'),'Find this leaf ↗').click();
         assert.equal(await leafAt(profile,2399).getAttribute('aria-pressed'),'true');
         assert.equal(await leafAt(profile,2399).evaluate(el=>el===document.activeElement),true);
+        await profile.waitForFunction(selectedInPane);
+        await zoom.click();
+        assert.equal(await zoom.getAttribute('aria-pressed'),'false');
       }
     }
     assert.deepEqual(errors,[]);

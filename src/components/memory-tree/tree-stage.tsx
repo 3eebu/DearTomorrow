@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
-import { buildPaintedTree, gardenBaseline, gardenMiddle, leafPalette } from '@/lib/memory-tree-illustration';
+import { buildPaintedTree, gardenBaseline, gardenMiddle, leafCenter, leafPalette } from '@/lib/memory-tree-illustration';
 import { displayDay, stage, type Tree } from '@/lib/memory-tree';
 
 export type Focus = { id: string; grow?: boolean; reveal?: boolean };
@@ -23,13 +23,12 @@ const cherryVariants = [
   'M0 0Q6-8 12-11Q22-16 32-10Q39-6 47-6Q44-2 37 5Q29 14 18 13Q7 12 0 0Z',
   'M0 0Q5-7 13-10C23-19 32-15 38-8L47 0Q40 4 35 9Q26 17 16 12Q7 11 0 0Z',
 ];
+const veins = 'M2 0Q20-2 43-2M12-1 17-8m2 7 7-9m0 9 7-6M12 0l6 7m2-7 8 8m0-9 7 4';
 
-const root = 'M397 470C406 485 404 495 394 502C378 514 350 515 327 526C360 523 389 527 410 518C415 516 414 523 400 531C421 529 427 521 431 513C440 520 460 523 485 526C469 518 457 511 450 504C444 497 437 484 433 475Z';
-const grain = [
-  'M407 514C431 478 384 456 393 420C400 393 428 367 425 340C424 316 411 286 420 258',
-  'M432 508C414 485 409 464 408 446C401 417 433 382 431 359',
-  'M393 514C408 502 412 496 411 487C407 471 393 464 390 445',
-  'M433 378C441 346 421 316 413 288C404 253 424 243 420 219',
+const root = 'M402 462C402 485 395 493 381 503C367 513 347 510 331 527C357 521 370 526 393 519C404 515 407 517 398 524L386 533C410 532 421 519 428 510C430 519 444 524 457 526L483 532C474 521 460 518 452 508C442 496 436 483 434 464Z';
+const rootGrain = [
+  'M407 478C406 493 397 510 363 521', 'M418 485C414 503 414 512 399 528',
+  'M429 479C431 493 436 509 467 526', 'M439 486C439 503 449 510 462 518',
 ];
 
 type Props = {
@@ -51,13 +50,16 @@ const tint = (rgb: number[], tone: number, amount: number) =>
 export function TreeStage({ tree, today, selected, focus, matches, planted, onChoose, onRead, onPause }: Props) {
   const id = useId();
   const frame = useRef<HTMLDivElement>(null);
+  const specimen = useRef<HTMLDivElement>(null);
   const leafNodes = useRef(new Map<string, SVGElement>());
   const [visible, setVisible] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [growth, setGrowth] = useState<{ id: string; key: number } | null>(null);
+  const [zoomedTree, setZoomedTree] = useState<string>();
   const serial = useRef(0);
   const { seed, settings, memories } = tree;
   const count = memories.length;
+  const zoomed = count > 0 && zoomedTree === tree.id;
   const { species, season, south } = settings;
   const paused = reduced || settings.paused;
   const model = useMemo(() => buildPaintedTree({ seed, settings: { species, season, south }, memories }, today),
@@ -112,6 +114,22 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
     if (focus?.reveal) leafNodes.current.get(focus.id)?.focus({ preventScroll: true });
   }, [focus]);
 
+  useEffect(() => {
+    const scroller = specimen.current;
+    if (!zoomed || !scroller || !selected) return;
+    const frame = requestAnimationFrame(() => {
+      const leaf = scroller.querySelector('.mt-ink-leaf[aria-pressed=true]');
+      if (!leaf) return;
+      const pane = scroller.getBoundingClientRect(), target = leaf.getBoundingClientRect();
+      scroller.scrollTo({
+        left:scroller.scrollLeft + target.left - pane.left + (target.width - pane.width) / 2,
+        top:scroller.scrollTop + target.top - pane.top + (target.height - pane.height) / 2,
+        behavior:'instant',
+      });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [zoomed, selected]);
+
   function keyOnLeaf(event: KeyboardEvent<SVGElement>, index: number) {
     const leaf = model.leaves[index];
     if (event.key === ' ' || event.key === 'Enter') {
@@ -131,7 +149,8 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
 
   return (
     <div className="mt-stage" ref={frame} data-stage={artStage} data-motion={!paused && visible}>
-      <div className="mt-specimen">
+      <div className="mt-specimen" ref={specimen} data-zoomed={zoomed} tabIndex={zoomed ? 0 : undefined}
+        role={zoomed ? 'region' : undefined} aria-label={zoomed ? 'Zoomed tree. Scroll to explore the canopy.' : undefined}>
         <svg className="mt-painting" viewBox={(840 - width) / 2 + ' ' + top + ' ' + width + ' ' + height}
           width={width} height={height} role="group" aria-label={count ? 'Illustrated Memory Tree' : planted ? 'A seed resting in the earth' : 'Earth ready for a seed'}>
           <defs>
@@ -140,21 +159,30 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
               <stop offset=".57" stopColor="#c5b88e" stopOpacity=".21"/>
               <stop offset="1" stopColor="#d5c7a7" stopOpacity="0"/>
             </radialGradient>
-            <linearGradient id={id+'wood'} x1="7%" y1="64%" x2="100%" y2="20%">
-              <stop stopColor="#71583f"/><stop offset=".26" stopColor="#9e7952"/>
-              <stop offset=".49" stopColor="#bf9a66"/><stop offset=".65" stopColor="#a27c54"/>
-              <stop offset=".87" stopColor="#846143"/><stop offset="1" stopColor="#a58e64"/>
+            <linearGradient id={id+'wood'} x1="0%" y1="44%" x2="100%" y2="35%">
+              <stop stopColor="#775137"/><stop offset=".24" stopColor="#ad8052"/>
+              <stop offset=".43" stopColor="#93704c"/><stop offset=".61" stopColor="#654a35"/>
+              <stop offset=".83" stopColor="#4e3a2c"/><stop offset="1" stopColor="#75614a"/>
             </linearGradient>
             <linearGradient id={id+'seed'} x1="30%" y1="0%" x2="62%" y2="100%">
               <stop stopColor="#bf9867"/><stop offset=".6" stopColor="#8e6949"/><stop offset="1" stopColor="#69543e"/>
             </linearGradient>
-            {tones.map((tone, index) => (
-              <linearGradient key={index} id={id+'leaf'+index} x1="0%" y1="5%" x2="82%" y2="100%">
-                <stop stopColor={tint(tone, 243, .44)} stopOpacity=".78"/>
-                <stop offset=".34" stopColor={pigment(tone)} stopOpacity=".93"/>
-                <stop offset=".72" stopColor={tint(tone, 61, .17)} stopOpacity=".9"/>
-                <stop offset="1" stopColor={tint(tone, 244, .22)} stopOpacity=".84"/>
-              </linearGradient>
+            {tones.flatMap((tone, index) => [-1,0,1].map(light => {
+              const color = tone.map((channel,i) => channel + light*[17,14,7][i]);
+              const key = 'leaf'+index+'-'+light;
+              return <linearGradient key={key} id={id+key} x1="0%" y1="5%" x2="82%" y2="100%">
+                <stop stopColor={tint(color, 243, .41)} stopOpacity=".86"/>
+                <stop offset=".34" stopColor={pigment(color)}/>
+                <stop offset=".72" stopColor={tint(color, 49, .23)} stopOpacity=".96"/>
+                <stop offset="1" stopColor={tint(color, 240, .24)} stopOpacity=".91"/>
+              </linearGradient>;
+            }))}
+            {zoomed && (species === 'cherry' ? cherryVariants : [blades[species]]).map((blade,index) => (
+              <g key={index} id={id+'close-leaf'+index}>
+                <path className="mt-leaf-pigment" d={blade}/>
+                <path d={washes[species]} fill="#fff6ce" opacity=".31"/>
+                <path d={veins} className="mt-leaf-veins" fill="none"/>
+              </g>
             ))}
             <g id={id+'flower'}>
               <path d="M0-2C-7-9-1-13 3-8C6-13 11-8 6-3C14-3 13 3 6 3C9 11 1 11 1 5C-5 11-10 5-4 1C-11-2-7-7 0-2Z" fill="#fff3df" stroke="#b98d73" strokeWidth=".65"/>
@@ -163,6 +191,7 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
             <clipPath id={id+'bark-edge'}>
               {count > 3 && <path d={root}/>}
               {model.trunk.map(d => <path key={d} d={d}/>)}
+              {model.boughs.map(d => <path key={d} d={d}/>)}
             </clipPath>
             <filter id={id+'paper-grain'} x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency=".54" numOctaves="3" seed="4" stitchTiles="stitch"/>
@@ -195,17 +224,20 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
               {model.boughs.map((d, index) => <path key={index} d={d} fill={wash('wood')} opacity=".92"/>)}
               {model.trunk.map((d, index) => <path key={index} d={d} fill={wash('wood')}/>)}
               <g clipPath={wash('bark-edge')}>
-                {model.bark.map((d, index) => (
-                  <path key={index} d={d} fill="none" stroke="#e2be89" strokeWidth={index ? 1.5 : 2.2} opacity=".52"/>
+                {model.bark.map(({path,width,light}, index) => (
+                  <path key={index} d={path} fill="none" stroke={light ? '#e4bc85' : '#3b271e'} strokeWidth={width} opacity=".62"/>
                 ))}
-                {count > 4 && species === 'cherry' && grain.map((d,index) => (
-                  <path key={index} d={d} fill="none" stroke={index % 2 ? '#71533e' : '#d7ad7f'} strokeWidth="1.25" opacity=".5"/>
+                {count > 3 && rootGrain.map(d => (
+                  <path key={d} d={d} fill="none" stroke="#d7ad7f" strokeWidth="1.25" opacity=".52"/>
                 ))}
-                <rect x="300" y="37" width="236" height="499" filter={wash('paper-grain')} opacity=".14" className="mt-paper-grain"/>
+                <rect x="85" y="37" width="675" height="499" filter={wash('paper-grain')} opacity=".17" className="mt-paper-grain"/>
+              </g>
+              <g fill="#866b4e" opacity=".79">
+                {model.sprays.map((path,index) => <path key={index} d={path}/>)}
               </g>
               <g fill="none" stroke="#967953" strokeLinecap="round" opacity=".78">
-                {model.sprays.map(({path,width},index) => <path key={index} d={path} strokeWidth={width}/>)}
-                {model.leaves.map(leaf => <path key={leaf.id} d={leaf.stem} strokeWidth="1.45"/>)}
+                {model.twigs.map(({path,width},index) => <path key={index} d={path} strokeWidth={width} opacity=".66"/>)}
+                <path d={model.leaves.map(leaf=>leaf.stem).join('')} strokeWidth={count > 150 ? '.42' : '1.05'} opacity={count > 150 ? '.58' : '1'}/>
               </g>
             </g>
             {paintOrder.map(({ leaf,index }) => {
@@ -213,8 +245,12 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
               const isSelected = selected === leaf.id;
               const activeGrowth = growth?.id === leaf.id;
               const sways = count >= 5 && leaf.slot % Math.max(6,Math.ceil(count / 8)) === 0;
-              const detailed = count <= 360 || isSelected;
-              const blade = species === 'cherry' ? cherryVariants[Math.floor(leaf.wash * 3)] : blades[species];
+              const detailed = count <= 360 || isSelected || (zoomed && leaf.flower);
+              const variant = species === 'cherry' ? Math.floor(leaf.wash * 3) : 0;
+              const blade = species === 'cherry' ? cherryVariants[variant] : blades[species];
+              const exposure = Math.sin(leaf.x*.036+leaf.y*.018)*.51 + Math.cos(leaf.y*.053)*.31 + (220-leaf.y)/370;
+              const light = exposure > .32 ? 1 : exposure < -.26 ? -1 : 0;
+              const leafFill = wash('leaf'+leaf.palette+'-'+light);
               const bindLeaf = (node: SVGElement | null) => {
                 if (node) leafNodes.current.set(leaf.id, node);
                 else leafNodes.current.delete(leaf.id);
@@ -228,13 +264,15 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
                 'aria-label': memory.title + ', ' + displayDay(memory.date) + (memory.milestone ? ', milestone' : ''),
                 'aria-pressed': isSelected,
                 tabIndex: isSelected || (!selectedMemory && index === 0) ? 0 : -1,
-                transform: 'translate(' + leaf.x + ' ' + leaf.y + ') rotate(' + leaf.angle + ') scale(' + leaf.size + ')',
+                transform: 'translate(' + leaf.x + ' ' + leaf.y + ') rotate(' + leaf.angle + ') scale(' + leaf.size + ') translate(' + -leafCenter + ' 0)',
                 onClick: () => onChoose(leaf.id),
                 onKeyDown: (event: KeyboardEvent<SVGElement>) => keyOnLeaf(event,index),
               };
               if (!detailed && !activeGrowth) {
+                if (zoomed) return <use key={leaf.id} {...interaction} className="mt-ink-leaf mt-compact-leaf"
+                  href={'#'+id+'close-leaf'+variant} fill={leafFill}/>;
                 return <path key={leaf.id} {...interaction} className="mt-ink-leaf mt-leaf-pigment mt-compact-leaf"
-                  d={blade} fill={wash('leaf'+leaf.palette)}/>;
+                  d={blade} fill={leafFill}/>;
               }
               return (
                 <g key={leaf.id} {...interaction} className="mt-ink-leaf">
@@ -242,15 +280,15 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
                   <g className="mt-ink-leaf-pose" key={activeGrowth ? growth.key : 'leaf'} data-growing={activeGrowth}>
                     <g className={sways ? 'mt-ink-sway' : undefined} style={{ '--mt-drift': (leaf.wash * -8) + 's' } as CSSProperties}>
                       <path className="mt-leaf-halo" d={blade}/>
-                      <path className="mt-leaf-pigment" d={blade} fill={wash('leaf'+leaf.palette)}/>
+                      <path className="mt-leaf-pigment" d={blade} fill={leafFill}/>
                       {detailed && <>
                         <path className="mt-leaf-wash" d={washes[species]} fill="#fff6ce" opacity={.18 + leaf.wash * .24}/>
-                        <path d="M2 0Q20-2 43-2M12-1 17-8m2 7 7-9m0 9 7-6M12 0l6 7m2-7 8 8m0-9 7 4"
+                        <path d={veins}
                           className="mt-leaf-veins" fill="none" aria-hidden="true"/>
                       </>}
                     </g>
                   </g>
-                  {leaf.flower && (count < 190 || isSelected) && <use href={'#'+id+'flower'} transform="translate(0 -9) scale(.88)" className="mt-leaf-flower" aria-hidden="true"/>}
+                  {leaf.flower && (count < 190 || zoomed || isSelected) && <use href={'#'+id+'flower'} transform="translate(15 -8) scale(.72)" className="mt-leaf-flower" aria-hidden="true"/>}
                 </g>
               );
             })}
@@ -267,6 +305,8 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
       )}
       {(count > 0 || planted) && (
         <div className="mt-growth-actions">
+          {count >= 20 && <button type="button" className="mt-link" aria-pressed={zoomed}
+            onClick={() => setZoomedTree(zoomed ? undefined : tree.id)}>Zoom canopy</button>}
           {growth && <button className="mt-link" onClick={() => setGrowth(null)}>Skip growth</button>}
           <button className="mt-link" disabled={reduced} onClick={onPause}>
             {reduced ? 'Reduced motion' : settings.paused ? 'Resume motion' : 'Pause motion'}
