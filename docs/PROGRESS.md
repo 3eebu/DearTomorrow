@@ -12,7 +12,7 @@ The reader now has a custom curved CSS 3D surface, dimensional covers and separa
 - Homepage hero newspaper montage with fictional editorial clippings, replay control and a separate mobile arrangement.
 - Create flow with three beginner-first choices and the browser-local Letters workspace. The Letter Box, Studio, dimensional reader, attachments and local countdowns are documented in `docs/LETTERS.md`.
 - Memory Books: homepage sample plus a local multi-book library at `/memory-books`, separate flat Studio and immersive Reading, personal photo/Polaroid/text editing, chapters/pages and IndexedDB autosave. See `docs/MEMORY_BOOKS.md` for the first review checkpoint.
-- Memory Tree: a procedural botanical sculpture on a cream backdrop with one leaf per saved memory, three species, linked journal, timeline and calendar, and local storage for memories and photos. See `docs/MEMORY_TREE.md`.
+- Memory Tree has a static Landscape View of the approved mountain painting and a separate interactive illustrated Tree View with one leaf per saved memory, three species, linked journal, timeline and calendar. The [foundation report](MEMORY_TREE_ENVIRONMENT.md) and [art manifest](MEMORY_TREE_ASSETS.md) describe the next artist handoff.
 - Journey Letters: route animation and six selectable demonstration checkpoints.
 - About and How It Works pages, with navigation updated for Memory Tree.
 - Responsive mobile navigation, reduced-motion rules, modal keyboard focus cycling, basic semantic controls.
@@ -20,7 +20,7 @@ The reader now has a custom curved CSS 3D surface, dimensional covers and separa
 ## Not yet done or verified
 - No live accounts, server database, cloud uploads, real letter sending, subscriptions, secure scheduled unlocks or email notifications. Letters to Tomorrow simulate an opening time using the device clock.
 - Letters, Memory Books and personal Memory Trees persist in this browser via separate IndexedDB databases. Backups can be exported from each workspace.
-- Memory Tree passed synthetic tests through 1,000 memories. Physical-device and cross-browser graphics profiling remains open.
+- Memory Tree passed synthetic browser tests through 2,400 memories. Physical-device and cross-browser profiling remains open.
 - The Memory Book first review checkpoint is functional, with a curved segmented-sheet approximation. The full master vision, measured performance, real-device touch and cross-browser polish remain unfinished.
 - No images have been added to the homepage; in the future users can opt to upload their own photos.
 - Memory Book browser journeys were inspected at 390px and 1440px. Real-device inspection has not been performed.

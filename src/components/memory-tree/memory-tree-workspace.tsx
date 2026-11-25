@@ -3,18 +3,19 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {cloudTrees} from '@/lib/accounts/cloud-client';
 import type {CloudScope} from '@/lib/accounts/documents';
-import { chronological, displayDay, findMemories, localDay, newTree, nextAnniversary, putMemory, removeChapter, validDay,
+import { chronological, displayDay, findMemories, localDay, newTree, nextAnniversary, putMemory, removeChapter, stage, validDay,
   type Chapter, type Grove, type Memory, type MemoryInput, type Settings, type Tree, type View } from '@/lib/memory-tree';
 import { downloadTree, importTree, loadGarden, saveGarden, type SavedGrove } from '@/lib/memory-tree-storage';
 import { blankMemory, ChaptersForm, GardenDialog, MemoryForm, SettingsForm } from './tree-dialogs';
 import { Calendar, MemoryIndex, MemoryRows, Photos, RelationshipNotes, sampleTree, seedling } from './tree-journal';
 import { TreeStage, type Focus } from './tree-stage';
+import { Landscape } from './landscape';
 import './memory-tree.css';
 
 const errorMessage=(error:unknown)=>error instanceof Error?error.message:'The change could not be saved.';
 type DialogMode='plant'|'appearance'|'chapters'|'memory'|'delete';
 type Commit=(tree:Tree)=>Promise<boolean>;
-export default function MemoryTreeWorkspace({scope}:{scope?:CloudScope}={}){
+export default function MemoryTreeWorkspace({scope,environmentStudio=false}:{scope?:CloudScope;environmentStudio?:boolean}={}){
   const store=useMemo(()=>scope?cloudTrees(scope):{loadGarden,saveGarden},[scope]);
   const [saved,setSaved]=useState<SavedGrove|null>(null),[demo,setDemo]=useState(false),[loading,setLoading]=useState(true);
   const [error,setError]=useState(''),[draft,setDraft]=useState<Tree|null>(null),[busy,setBusy]=useState(false);
@@ -64,7 +65,7 @@ export default function MemoryTreeWorkspace({scope}:{scope?:CloudScope}={}){
     {!demo&&saved&&<input ref={fileInput} hidden type="file" accept=".json,application/json" aria-label="Import Memory Tree backup"
       onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';if(file)void restore(file);}}/>}
     {loading&&!demo?<p className="mt-status" role="status">Opening your Memory Tree…</p>:
-      <TreeExperience key={tree.id} tree={tree} demo={demo} planted={!!active&&!demo} editable={!demo&&!!saved} busy={busy}
+      <TreeExperience key={tree.id} tree={tree} demo={demo} planted={!!active&&!demo} editable={!demo&&!!saved} busy={busy} environmentStudio={environmentStudio}
         error={error} draft={draft} commit={commit} initialFocus={startupFocus} onError={setError}
         exampleAction={<button className="mt-example-link" onClick={()=>{setDemo(!demo);setStartupFocus(null);}}>{demo?'Back to my tree':'Explore the example'}</button>}
         treeActions={!demo&&saved&&<>
@@ -85,20 +86,23 @@ export function SharedTree({tree}:{tree:Tree}) {
   </section>;
 }
 
-function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,initialFocus,onError,onPlant,exampleAction,treeActions}:{
+function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,initialFocus,onError,onPlant,exampleAction,treeActions,environmentStudio=false}:{
   tree:Tree;demo:boolean;planted:boolean;editable:boolean;busy:boolean;error:string;draft:Tree|null;commit:Commit;
   initialFocus:Focus|null;onError:(s:string)=>void;onPlant:(s:Settings)=>Promise<boolean>;
-  exampleAction:ReactNode;treeActions:ReactNode;
+  exampleAction:ReactNode;treeActions:ReactNode;environmentStudio?:boolean;
 }){
   const [today]=useState(localDay);
   const ordered=useMemo(()=>chronological(tree.memories),[tree.memories]);
   const [view,setView]=useState<View>(tree.settings.view);
+  // Landscape is a viewing choice, outside the versioned settings in every saved tree.
+  const [landscape,setLandscape]=useState(!demo&&!planted);
+  const screenView=landscape?'landscape':view;
   const stageAnchor=useRef<HTMLDivElement>(null),scrollToStage=useRef(false);
   useEffect(()=>{
-    if(view==='tree'&&scrollToStage.current){
+    if(screenView==='tree'&&scrollToStage.current){
       scrollToStage.current=false;stageAnchor.current?.scrollIntoView({block:'start'});
     }
-  },[view]);
+  },[screenView]);
   const [selected,setSelected]=useState(ordered[0]?.id??''),[day,setDay]=useState(ordered[0]?.date??today);
   const [month,setMonth]=useState((ordered[0]?.date??today).slice(0,7));
   const [focus,setFocus]=useState<Focus|null>(initialFocus);
@@ -122,7 +126,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
   function choose(m:Memory,bringToTree=false,displayDate=m.date){
     setSelected(m.id);setDay(displayDate);setMonth(displayDate.slice(0,7));setFocus({id:m.id,reveal:bringToTree});
     if(bringToTree){
-      if(view==='tree')stageAnchor.current?.scrollIntoView({block:'start'});
+      if(screenView==='tree')stageAnchor.current?.scrollIntoView({block:'start'});
       else {scrollToStage.current=true;changeView('tree');}
     }
   }
@@ -131,7 +135,9 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
     detail.current?.focus({preventScroll:true});
     detail.current?.scrollIntoView({block:'center'});
   },[detailRequest]);
-  function changeView(v:View){
+  function changeView(v:View|'landscape'){
+    setLandscape(v==='landscape');
+    if(v==='landscape')return;
     if(view===v)return;
     setView(v);
     if(editable&&planted&&!busy)void commit({...tree,settings:{...tree.settings,view:v}});
@@ -149,6 +155,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
         choose(saved);
         if(!editing?.id){
           setFocus({id:saved.id,grow:true});
+          setLandscape(false);
           setView('tree');
         }
         setMode(null);
@@ -174,7 +181,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
   return <>
     <div className="mt-toolbar">
       <div className="mt-toolbar-aside">{exampleAction}</div>
-      <nav aria-label="Memory Tree views">{(['tree','timeline','calendar'] as const).map(v=><button aria-pressed={view===v} key={v}
+      <nav aria-label="Memory Tree views">{(['landscape','tree','timeline','calendar'] as const).map(v=><button aria-pressed={screenView===v} key={v}
         disabled={busy} onClick={()=>changeView(v)}>{v[0].toUpperCase()+v.slice(1)}</button>)}</nav>
       <div className="mt-toolbar-actions">
         {editable&&<details className="mt-menu mt-tree-menu">
@@ -186,11 +193,12 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
             {treeActions}
           </div>
         </details>}
-        {editable&&(planted||view!=='tree')&&<button className="mt-primary" disabled={busy} onClick={()=>open()}>{planted?'Add a memory':'Plant a tree'}</button>}
+        {editable&&(planted||screenView==='timeline'||screenView==='calendar')&&<button className="mt-primary" disabled={busy} onClick={()=>open()}>{planted?'Add a memory':'Plant a tree'}</button>}
       </div>
     </div>
     {!mode&&displayError}
-    <div id="mt-tree-stage" ref={stageAnchor} hidden={view!=='tree'}>
+    {landscape&&<Landscape studio={environmentStudio} growthStage={stage(ordered.length)}/>}
+    <div id="mt-tree-stage" ref={stageAnchor} hidden={screenView!=='tree'}>
       <TreeStage tree={screenTree} today={today} focus={focus} selected={selected} planted={planted}
         matches={leafMatches} onRead={()=>requestDetail(n=>n+1)}
         onChoose={id=>{
@@ -199,14 +207,14 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
         }}
         onPause={()=>{if(demo||!editable)setDemoPaused(!demoPaused);
           else if(!busy)void commit({...tree,settings:{...tree.settings,paused:!tree.settings.paused}});}}/>
-      {!tree.memories.length&&<div className="mt-seed-note">
+    </div>
+      {!tree.memories.length&&(screenView==='tree'||landscape)&&<div className="mt-seed-note">
         <h2>{planted?'A seed is waiting.':'Every story begins somewhere.'}</h2>
         <p>{planted?'Your first memory will grow the first leaf.':'Plant a seed and give your memories somewhere to grow.'}</p>
-        {planted?<button className="mt-link" onClick={()=>setFocus({id:'seed',grow:true})}>Replay planting</button>:
+        {planted?<button className="mt-link" onClick={()=>{changeView('tree');setFocus({id:'seed',grow:true});}}>Replay planting</button>:
           editable&&<button className="mt-primary" disabled={busy} onClick={()=>open()}>Plant a tree</button>}
       </div>}
-    </div>
-    <div className="mt-journal" data-view={view} hidden={view==='tree'&&!ordered.length}>
+    <div className="mt-journal" data-view={view} hidden={landscape||(view==='tree'&&!ordered.length)}>
       <section className="mt-index" aria-label={view==='calendar'?'Calendar and day memories':'Browse memories'}>
         {view==='calendar'?<>
           <Calendar tree={tree} today={today} day={day} month={month} selectDay={selectDate} selectMonth={m=>selectDate(m+'-01')}/>

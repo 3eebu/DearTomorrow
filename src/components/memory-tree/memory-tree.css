@@ -192,6 +192,8 @@
 .mt-dialog .mt-form details { padding: 9px 12px; border: 1px solid #dbcab9; border-radius: var(--sheet-panel-radius); }
 .mt-dialog .mt-form label { min-width: 0; }
 @media (max-width: 480px) {
+  .mt-toolbar nav {display:grid;grid-template-columns:repeat(4,max-content);justify-content:space-between;gap:0;}
+  .mt-toolbar nav button {padding-inline:.32rem;}
   .mt-dialog .mt-fields { grid-template-columns: minmax(0, 1fr); }
   .mt-dialog .mt-form > .mt-primary { justify-self: stretch; }
   .mt-dialog .mt-chapter-row { grid-template-columns: minmax(0,1fr) 44px; }

@@ -1,0 +1,10 @@
+.studio { margin-block-start: 1rem; border-block: 1px solid var(--mt-line); }
+.studio summary { min-height: 44px; padding-block: .75rem; font-size: .88rem; }
+.body { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; padding-block: .25rem 1rem; }
+.body > p { grid-column: 1/-1; }
+.body p { font-size: .85rem; line-height: 1.5; color: var(--mt-muted); }
+.body fieldset { min-width: 0; align-self: start; display: grid; gap: .6rem; padding: .8rem; border: 1px solid var(--mt-line); }
+.body legend { padding-inline: .25rem; font: 1.05rem var(--mt-serif); }
+.body label.check { display: flex; align-items: center; gap: .45rem; min-height: 2rem; }
+.check small { margin-inline-start: auto; color: var(--mt-muted); }
+.body input[type=range] { padding: 0; border: 0; accent-color: var(--mt-plum); }

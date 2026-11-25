@@ -2,6 +2,8 @@
 
 Open `/memory-tree` to plant your own seed or explore The Orchard Years, a fictional example with 32 memories. Planting gives you a seed. Saving the first memory opens its first leaf. As you add memories, more boughs and leaves fill in the illustration.
 
+**Landscape** opens the approved mountain painting. **Tree** opens the interactive tree at its actual growth stage. See the [Living Memory Tree foundation and developer studio](MEMORY_TREE_ENVIRONMENT.md).
+
 ## Using the tree
 
 - A leaf opens its memory in the reading panel. From the keyboard, tab into the tree, move through leaves with the arrow keys, and press Enter or Space to read the selected memory.
