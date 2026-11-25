@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
+import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import { buildPaintedTree, gardenBaseline, gardenMiddle, leafCenter, leafPalette } from '@/lib/memory-tree-illustration';
 import { displayDay, stage, type Tree } from '@/lib/memory-tree';
 
@@ -114,15 +114,21 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
     if (focus?.reveal) leafNodes.current.get(focus.id)?.focus({ preventScroll: true });
   }, [focus]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const scroller = specimen.current;
-    if (!zoomed || !scroller || !selected) return;
-    const leaf = scroller.querySelector('.mt-ink-leaf[aria-pressed=true]');
-    if (!leaf) return;
-    const pane = scroller.getBoundingClientRect(), target = leaf.getBoundingClientRect();
-    scroller.scrollLeft += target.left - pane.left + (target.width - pane.width) / 2;
-    scroller.scrollTop += target.top - pane.top + (target.height - pane.height) / 2;
-  }, [zoomed, selected]);
+    const painting = scroller?.querySelector('svg');
+    if (!zoomed || !scroller || !painting || !selected) return;
+    const observer = new ResizeObserver(() => {
+      const leaf = scroller.querySelector('.mt-ink-leaf[aria-pressed=true]');
+      if (!leaf || !scroller.clientWidth) return;
+      const pane = scroller.getBoundingClientRect(), target = leaf.getBoundingClientRect();
+      scroller.scrollLeft += target.left - pane.left + (target.width - pane.width) / 2;
+      scroller.scrollTop += target.top - pane.top + (target.height - pane.height) / 2;
+    });
+    observer.observe(painting);
+    observer.observe(scroller);
+    return () => observer.disconnect();
+  }, [zoomed, selected, focus]);
 
   function keyOnLeaf(event: KeyboardEvent<SVGElement>, index: number) {
     const leaf = model.leaves[index];
