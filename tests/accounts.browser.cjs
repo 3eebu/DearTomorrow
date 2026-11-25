@@ -15,7 +15,7 @@ async function run() {
       const profile=await browser.newContext({viewport:{width,height},isMobile:width<500,hasTouch:width<500,reducedMotion:'reduce'});
       const page=await profile.newPage();
       page.on('pageerror',error=>errors.push(error.message));
-      for(const [route,title] of [['/signup','Some memories deserve a place of their own.'],['/login','Welcome back.'],['/forgot-password','Find your way back.']]) {
+      for(const [route,title] of [['/signup','Create your account'],['/login','Welcome back.'],['/forgot-password','Find your way back.']]) {
         const response=await page.goto(base+route,{waitUntil:'networkidle'});
         assert.equal(response.status(),200);
         await page.getByRole('heading',{name:title,exact:true}).waitFor();
@@ -25,7 +25,16 @@ async function run() {
         assert.equal(await page.locator('main input[name=username]').count(),0);
         const google=page.getByRole('button',{name:'Continue with Google',exact:true});
         assert.equal(await google.count(),expectGoogle&&route!=='/forgot-password'?1:0);
-        if(expectGoogle&&route!=='/forgot-password') assert.ok(await google.isVisible());
+        const divider=page.getByText('or continue with',{exact:true});
+        assert.equal(await divider.count(),await google.count());
+        if(expectGoogle&&route!=='/forgot-password') {
+          assert.ok(await google.isVisible());
+          const primary=page.locator('main .dt-account-form button[type=submit]');
+          assert.ok(await primary.evaluate(button=>{
+            const provider=document.querySelector('.dt-social-google');
+            return button.form!==provider.form && Boolean(button.compareDocumentPosition(provider)&Node.DOCUMENT_POSITION_FOLLOWING);
+          }));
+        }
         assert.equal(await page.getByRole('button',{name:'Continue with Apple',exact:true}).count(),0);
         if(shots&&route!=='/forgot-password') {
           await fs.mkdir(shots,{recursive:true});

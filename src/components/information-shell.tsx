@@ -1,9 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-export function InformationShell({children, showPreviewLink = true}:{children:ReactNode; showPreviewLink?: boolean}) {
+export function InformationShell({children, showPreviewLink = true, className}:{children:ReactNode; showPreviewLink?: boolean; className?: string}) {
   return (
-    <div className="info-root">
+    <div className={className ? `info-root ${className}` : 'info-root'}>
       <a className="info-skip" href="#main-content">Skip to content</a>
       <div className="info-topline">DEAR TOMORROW · AN INTERACTIVE PREVIEW</div>
       <header className="info-header">

@@ -29,6 +29,6 @@ export function AccountNotice({message}:{message?:string}) {
   return text?<p className="dt-account-notice" role="status">{text}</p>:null;
 }
 
-export function AccountShell({children}:{children:ReactNode}) {
-  return <InformationShell showPreviewLink={false}><div className="dt-account">{children}</div></InformationShell>;
+export function AccountShell({children, authentication=false}:{children:ReactNode;authentication?:boolean}) {
+  return <InformationShell showPreviewLink={false} className={authentication?'dt-auth-page':undefined}><div className="dt-account">{children}</div></InformationShell>;
 }
