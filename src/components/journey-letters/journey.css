@@ -301,11 +301,6 @@
 .jl-default-time { color: var(--jl-muted); font-size: .85rem; }
 .jl-notice { padding: 14px 16px; margin: 12px 0; background: #f7e6df; color: #703239; border: 1px solid #c89a90; }
 .jl-notice button { margin-left: 10px; }
-.jl-dialog { max-width: min(520px, calc(100% - 32px)); color: var(--jl-ink); border: 1px solid #cbb797; background: #fcf6eb; padding: 22px; }
-.jl-dialog::backdrop { background: #32232486; }
-.jl-dialog header { position: static; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; height: auto; padding: 0; border: 0; background: transparent; }
-.jl-root .jl-dialog h2 { font-size: clamp(1.6rem,5vw,2.45rem); margin: 0; }
-.jl-dialog p { margin-block: 10px; }
 .jl-letter-stage { margin: 20px calc(clamp(20px,5vw,82px) * -.5) 0; }
 .jl-letter-stage > .jl-small { margin: 0 22px 10px; }
 
@@ -355,3 +350,8 @@
 @media (prefers-reduced-motion:reduce) {
   .jl-root .jl-envelope-list button:is(:hover,:focus-visible) .jl-envelope { transform: none; }
 }
+
+.jl-dialog .dt-sheet-scroll > p { margin: 0 0 16px; }
+.jl-inset .jl-setup-form { gap: 20px; }
+.jl-setup-form .jl-city-fields { border-radius: var(--sheet-panel-radius); }
+.jl-inset .jl-schedule .jl-city-fields { border-radius: var(--sheet-panel-radius); }

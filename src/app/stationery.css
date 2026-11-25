@@ -1,0 +1,177 @@
+.dt-sheet,
+.dt-stationery {
+  --sheet-paper: #faf4ea;
+  --sheet-light: #fffcf6;
+  --sheet-edge: #d8c7b5;
+  --sheet-line: #cdbbab;
+  --sheet-control-line: #9b8375;
+  --sheet-ink: #44342e;
+  --sheet-wine: #643e4a;
+  --sheet-focus: #9b704d;
+  --sheet-radius: 27px;
+  --sheet-panel-radius: 14px;
+  --sheet-control-radius: 10px;
+  --sheet-padding: clamp(18px, 3.3vw, 37px);
+  --sheet-ease: cubic-bezier(.2, .72, .28, 1);
+}
+
+html:has(.dt-sheet[open]) { overflow: hidden; }
+
+.dt-sheet {
+  --sheet-width: 38rem;
+  --sheet-gap: 20px;
+  box-sizing: border-box;
+  inline-size: min(var(--sheet-width), calc(100% - 2 * var(--sheet-gap)));
+  max-inline-size: none;
+  inset-block-start: var(--sheet-viewport-top, 0px);
+  inset-block-end: calc(100dvh - var(--sheet-viewport-height, 100dvh) - var(--sheet-viewport-top, 0px));
+  max-block-size: calc(var(--sheet-viewport-height, 100dvh) - 2 * var(--sheet-gap) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  color: var(--sheet-ink);
+  border: 1px solid var(--sheet-edge);
+  border-radius: var(--sheet-radius);
+  background: linear-gradient(145deg, #fdf9f1 2%, var(--sheet-paper) 56%, #f1e7da 100%);
+  box-shadow: inset 1px 1px 0 1px #fffef5d9, inset -1px -2px 0 #ba9e8952,
+    0 5px 0 -1px #c9b5a4, 0 6px 4px -2px #4a302c54, 0 19px 34px -12px #402b285e,
+    0 43px 84px -29px #2c1b1d80;
+}
+.dt-sheet[data-size='small'] { --sheet-width: 33rem; --sheet-radius: 23px; }
+.dt-sheet[data-size='wide'] { --sheet-width: 59rem; }
+.dt-sheet[open] { animation: dt-sheet-in 260ms var(--sheet-ease) both; }
+.dt-sheet[data-closing] { animation: dt-sheet-out 200ms var(--sheet-ease) both; }
+.dt-sheet[data-closing] .dt-sheet-shell { pointer-events: none; }
+.dt-sheet::backdrop { background: #34282c76; backdrop-filter: blur(3px); animation: dt-sheet-shade-in 260ms ease-out both; }
+.dt-sheet[data-closing]::backdrop { animation: dt-sheet-shade-out 200ms ease-in both; }
+.dt-sheet-shell { display: flex; flex-direction: column; width: 100%; max-block-size: inherit; min-width: 0; }
+.dt-sheet-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  align-items: start;
+  gap: clamp(9px, 2vw, 20px);
+  padding: var(--sheet-padding) var(--sheet-padding) clamp(12px, 2vw, 20px);
+  flex: none;
+}
+.dt-sheet .dt-sheet-header h2 {
+  margin: 0;
+  font-size: clamp(1.65rem, 3.3vw, 2.65rem);
+  line-height: 1.12;
+  letter-spacing: -.035em;
+  color: var(--sheet-ink);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.dt-sheet-header > div > span { display: block; margin-bottom: 8px; }
+.dt-sheet-scroll {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scroll-padding: 14px;
+  padding: 2px var(--sheet-padding) var(--sheet-padding);
+}
+.dt-sheet .dt-sheet-close {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  min-block-size: 44px;
+  padding: 0;
+  border-radius: 50%;
+  color: var(--sheet-wine);
+  border: 1px solid var(--sheet-edge);
+  background: linear-gradient(150deg, var(--sheet-light), #eee2d5);
+  box-shadow: inset 0 1px 0 white, 0 2px 0 #d6c1b0, 0 4px 8px #53392920;
+}
+
+:is(.dt-sheet .dt-sheet-scroll, .dt-stationery.dt-stationery-card :is(label, fieldset)) :is(input:not([type='checkbox'], [type='radio'], [type='hidden'], [type='range']), select, textarea) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: 44px;
+  padding: 9px 12px;
+  border: 1px solid var(--sheet-control-line);
+  border-radius: var(--sheet-control-radius);
+  background: var(--sheet-light);
+  color: var(--sheet-ink);
+  box-shadow: inset 0 2px 3px #664b3815, 0 1px 0 #ffffffad;
+}
+:is(.dt-sheet .dt-sheet-scroll, .dt-stationery) :is(input,textarea)::placeholder { color: #77675c; opacity: 1; }
+:is(.dt-sheet .dt-sheet-scroll, .dt-stationery) input[type='color'] { padding: 5px; }
+:is(.dt-sheet .dt-sheet-scroll, .dt-stationery) input[type='date'] { min-inline-size: 0; }
+:is(.dt-sheet .dt-sheet-scroll, .dt-stationery) input:is([type='date'], [type='datetime-local'])::-webkit-calendar-picker-indicator {
+  background: center / 17px 17px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23744955' stroke-width='1.7' stroke-linecap='round'%3E%3Crect x='4' y='6' width='16' height='15' rx='2'/%3E%3Cpath d='M4 10h16M8 4v4m8-4v4'/%3E%3C/svg%3E");
+  cursor: pointer;
+}
+.dt-sheet :focus-visible,
+.dt-stationery :focus-visible { outline: 2px solid var(--sheet-focus); outline-offset: 3px; }
+.dt-sheet .dt-sheet-scroll :is(.mt-primary,.jl-primary,.lt-primary,.dt-tactile-primary),
+.dt-stationery .dt-tactile-primary {
+  padding: 10px 16px;
+  min-block-size: 44px;
+  border: 1px solid #633c48;
+  border-radius: var(--sheet-control-radius);
+  background: linear-gradient(165deg, #754d57, var(--sheet-wine) 63%);
+  color: #fffbf4;
+  box-shadow: inset 0 1px 0 #f0cfc955, 0 2px 0 #492b36, 0 5px 11px #492b3629;
+  white-space: normal;
+}
+.dt-sheet .dt-sheet-scroll :is(.dt-tactile-secondary,.jl-secondary),
+.dt-stationery .dt-tactile-secondary {
+  padding: 10px 14px;
+  min-block-size: 44px;
+  border: 1px solid var(--sheet-line);
+  border-radius: var(--sheet-control-radius);
+  color: var(--sheet-wine);
+  background: #fff9ef;
+  box-shadow: inset 0 1px #fffefb, 0 2px 3px #60433216;
+}
+.dt-sheet .dt-sheet-scroll .dt-relief-card,
+.dt-stationery .dt-relief-card {
+  border: 1px solid #dbcab9;
+  border-radius: var(--sheet-panel-radius);
+  background: linear-gradient(145deg, #fffbf4, #f8efe3);
+  box-shadow: inset 0 1px #fffdf8, 0 2px 0 #ddcdbd, 0 5px 9px #59403113;
+}
+.dt-stationery.dt-stationery-card {
+  padding: clamp(15px, 2.5vw, 25px);
+  border: 1px solid var(--sheet-edge);
+  border-radius: var(--sheet-panel-radius);
+  background: linear-gradient(145deg, #fcf7ee, #f6eddf);
+  box-shadow: inset 0 1px #fffcf7, 0 3px 0 -1px #e0cdbb, 0 7px 16px #53382d15;
+}
+.dt-sheet-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.dt-sheet .dt-sheet-scroll .dt-dialog-field { display: grid; gap: 6px; font-size: 13px; }
+.dt-sheet .dt-sheet-scroll .dt-relief-card[aria-pressed='true'] {
+  border-color: #9c7480;
+  background: #f6e8e2;
+  box-shadow: inset 0 2px 4px #60364826, 0 1px #fffdf8;
+}
+.dt-sheet .dt-relief-card[aria-pressed='true'] .dt-option-mark { visibility: visible; }
+.dt-option-mark { visibility: hidden; font-weight: 700; color: var(--sheet-wine); }
+.dt-sheet .dt-sheet-close,
+:is(.dt-sheet .dt-sheet-scroll, .dt-stationery) :is(.dt-relief-card,.dt-tactile-primary,.dt-tactile-secondary,.mt-primary,.lt-primary,.jl-primary,.jl-secondary) {
+  transition: transform 150ms var(--sheet-ease), box-shadow 160ms ease;
+}
+@media (hover: hover) {
+  .dt-sheet .dt-sheet-close:hover:not(:disabled),
+  :is(.dt-sheet .dt-sheet-scroll, .dt-stationery) :is(.dt-relief-card,.dt-tactile-primary,.dt-tactile-secondary,.mt-primary,.lt-primary,.jl-primary,.jl-secondary):hover:not(:disabled) { transform: translateY(-1px); }
+}
+.dt-sheet .dt-sheet-close:active:not(:disabled),
+:is(.dt-sheet .dt-sheet-scroll, .dt-stationery) :is(.dt-relief-card,.dt-tactile-primary,.dt-tactile-secondary,.mt-primary,.lt-primary,.jl-primary,.jl-secondary):active:not(:disabled) { transform: translateY(1px); }
+
+@keyframes dt-sheet-in { from { opacity: 0; transform: translateY(9px) scale(.983); } to { opacity: 1; transform: none; } }
+@keyframes dt-sheet-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(5px) scale(.988); } }
+@keyframes dt-sheet-shade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dt-sheet-shade-out { from { opacity: 1; } to { opacity: 0; } }
+
+@media (max-width: 540px) {
+  .dt-sheet { --sheet-gap: 12px; --sheet-radius: 23px; }
+  .dt-sheet::backdrop { backdrop-filter: none; }
+  :is(.dt-sheet .dt-sheet-scroll, .dt-stationery.dt-stationery-card :is(label, fieldset)) :is(input:not([type='color'],[type='file'],[type='hidden']),select,textarea) { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dt-sheet[open], .dt-sheet::backdrop { animation: none; }
+  .dt-sheet .dt-sheet-close,
+  :is(.dt-sheet .dt-sheet-scroll, .dt-stationery) :is(.dt-relief-card,.dt-tactile-primary,.dt-tactile-secondary,.mt-primary,.lt-primary,.jl-primary,.jl-secondary) { transition: none; transform: none !important; }
+}

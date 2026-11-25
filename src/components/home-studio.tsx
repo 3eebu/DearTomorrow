@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { AboutNewspaperMontage } from './about-newspaper-montage';
-import { useEffect, useRef, useState } from 'react';
+import { StationeryDialog } from './stationery-dialog';
+import { useEffect, useState } from 'react';
 import type { CSSProperties, ReactNode, TouchEvent } from 'react';
 
 type WorkspacePage = 'home' | 'memory-tree' | 'letters';
@@ -30,37 +31,6 @@ function useReveals() {
     elements.forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-}
-
-function Dialog({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const onCloseRef = useRef(onClose);
-  useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
-  useEffect(() => {
-    const before = document.activeElement as HTMLElement | null;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    const first = ref.current?.querySelector<HTMLElement>('button, input, select, textarea, a[href]');
-    first?.focus();
-    function keyboard(event: KeyboardEvent) {
-      if (event.key === 'Escape') onCloseRef.current();
-      if (event.key !== 'Tab' || !ref.current) return;
-      const focusable = Array.from(ref.current.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), textarea:not(:disabled), select:not(:disabled), a[href]'));
-      const start = focusable[0];
-      const end = focusable[focusable.length - 1];
-      if (!start || !end) return;
-      if (event.shiftKey && document.activeElement === start) { event.preventDefault(); end.focus(); }
-      if (!event.shiftKey && document.activeElement === end) { event.preventDefault(); start.focus(); }
-    }
-    document.addEventListener('keydown', keyboard);
-    return () => { document.body.style.overflow = originalOverflow; document.removeEventListener('keydown', keyboard); before?.focus(); };
-  }, []);
-  return <div className="dt-overlay" onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
-    <div ref={ref} className="dt-dialog" role="dialog" aria-modal="true" aria-label={title}>
-      <button className="dt-dialog-close" type="button" onClick={onClose} aria-label="Close window">×</button>
-      {children}
-    </div>
-  </div>;
 }
 
 function JourneyLetters() {
@@ -169,17 +139,17 @@ export default function HomeStudio({ page = 'home', tree, letters }: { page?: Wo
       <Link href="/letters"><span aria-hidden="true">✉</span>Letters</Link>
     </nav>}
 
-    {createOpen && <Dialog title="What would you like to make?" onClose={() => setCreateOpen(false)}>
-      <span className="dt-overline">THE START OF SOMETHING LOVELY</span>
-      <h2 className="dt-dialog-title">What would you like <em>to make?</em></h2>
+    {createOpen && <StationeryDialog className="dt-create-sheet" closeLabel="Close window" dismissOnBackdrop
+      title={<>What would you like <em>to make?</em></>} onClose={() => setCreateOpen(false)}
+      eyebrow={<span className="dt-overline">THE START OF SOMETHING LOVELY</span>}>
       <p className="dt-dialog-intro">Just start with one small thing. The rest can come later.</p>
       <div className="dt-create-choices">
-        <Link href="/letters" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">✉</span><span><strong>Write a letter</strong><small>Something meaningful, in your own words</small></span><span aria-hidden="true">↗</span></Link>
-        <Link href="/journey-letters" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">↗</span><span><strong>Create a journey</strong><small>Six letters for someone on their way</small></span><span aria-hidden="true">↗</span></Link>
-        <Link href="/memory-books" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">▤</span><span><strong>Make a Memory Book</strong><small>Give your story its very own cover</small></span><span aria-hidden="true">↗</span></Link>
-        <Link href="/memory-tree" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament">♧</span><span><strong>Add a memory</strong><small>Let a new leaf grow on your tree</small></span><span aria-hidden="true">↗</span></Link>
+        <Link className="dt-relief-card" href="/letters" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament" aria-hidden="true">✉</span><span><strong>Write a letter</strong><small>Something meaningful, in your own words</small></span><span aria-hidden="true">↗</span></Link>
+        <Link className="dt-relief-card" href="/journey-letters" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament" aria-hidden="true">↗</span><span><strong>Create a journey</strong><small>Six letters for someone on their way</small></span><span aria-hidden="true">↗</span></Link>
+        <Link className="dt-relief-card" href="/memory-books" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament" aria-hidden="true">▤</span><span><strong>Make a Memory Book</strong><small>Give your story its very own cover</small></span><span aria-hidden="true">↗</span></Link>
+        <Link className="dt-relief-card" href="/memory-tree" onClick={() => setCreateOpen(false)}><span className="dt-choice-ornament" aria-hidden="true">♧</span><span><strong>Add a memory</strong><small>Let a new leaf grow on your tree</small></span><span aria-hidden="true">↗</span></Link>
       </div><p className="dt-inline-note">This is a demo. Nothing is shared or stored online.</p>
-    </Dialog>}
+    </StationeryDialog>}
 
   </div>;
 }

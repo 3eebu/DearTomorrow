@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import { StationeryConfirm, StationeryDialog } from '@/components/stationery-dialog';
 import {cloudBooks} from '@/lib/accounts/cloud-client';
 import type {CloudScope} from '@/lib/accounts/documents';
 import { createBook, formats, LIMITS, uid, validateBook, type MemoryBookDocument } from '@/lib/memory-books';
@@ -27,6 +28,7 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [mode, setMode] = useState<'library' | 'studio' | 'read' | 'cover' | 'organize' | 'gift' | 'example'>('library');
   const [creating, setCreating] = useState(false);
+  const [deleting, setDeleting] = useState<MemoryBookDocument | null>(null);
   const [guide, setGuide] = useState(false);
   const [example, setExample] = useState<MemoryBookDocument>();
   const [exampleLoading, setExampleLoading] = useState(false);
@@ -150,7 +152,7 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
           <h2>{book.title}</h2><p>{book.pages.length} pages · {book.chapters.length} {book.chapters.length === 1 ? 'chapter' : 'chapters'} · {book.widthMm} × {book.heightMm} mm</p>
           {(book.bookmaking?.collection || book.bookmaking?.series || book.bookmaking?.volume) &&
             <p>{[book.bookmaking.collection, book.bookmaking.series, book.bookmaking.volume && `Volume ${book.bookmaking.volume}`].filter(Boolean).join(' · ')}</p>}
-          <div className={s.bookActions}><button onClick={() => open(book, 'read')}>Read ↗</button><button onClick={() => open(book, 'studio')}>Studio ↗</button><details><summary aria-label={`Options for ${book.title}`}>•••</summary><div><button onClick={() => { const copy = structuredClone(book); copy.id = uid(); copy.title = (book.title + ' — copy').slice(0, 120); copy.createdAt = copy.updatedAt = new Date().toISOString(); add(copy); }}>Duplicate</button><button onClick={() => open(book, 'cover')}>Cover Studio</button><button onClick={() => open(book, 'organize')}>Chapters & pages</button><button onClick={() => open(book, 'gift')}>Wrap as a gift</button><button onClick={() => exportBook(book)}>Export backup</button><button onClick={() => update({ ...book, archived: !book.archived })}>{book.archived ? 'Restore' : 'Archive'}</button><button onClick={() => { if (window.confirm(`Delete “${book.title}” from this device? Export a backup first if you want to keep it. This cannot be undone.`)) change(current => current.filter(b => b.id !== book.id)); }}>Delete…</button></div></details></div>
+          <div className={s.bookActions}><button onClick={() => open(book, 'read')}>Read ↗</button><button onClick={() => open(book, 'studio')}>Studio ↗</button><details><summary aria-label={`Options for ${book.title}`}>•••</summary><div><button onClick={() => { const copy = structuredClone(book); copy.id = uid(); copy.title = (book.title + ' — copy').slice(0, 120); copy.createdAt = copy.updatedAt = new Date().toISOString(); add(copy); }}>Duplicate</button><button onClick={() => open(book, 'cover')}>Cover Studio</button><button onClick={() => open(book, 'organize')}>Chapters & pages</button><button onClick={() => open(book, 'gift')}>Wrap as a gift</button><button onClick={() => exportBook(book)}>Export backup</button><button onClick={() => update({ ...book, archived: !book.archived })}>{book.archived ? 'Restore' : 'Archive'}</button><button onClick={() => setDeleting(book)}>Delete…</button></div></details></div>
         </article>)}</div>
         <p className={s.storageNote}>{scope?'Books in this library save to My Space. Export a project backup to keep a separate copy.':'Saved only in this browser on this device. Clearing browser data removes drafts. Export a project backup to keep a separate copy. Photos stay on your device.'}</p>
       </main>
@@ -170,6 +172,13 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
     }}/>}
     {notice && <div className={s.toast} role="alert"><span>{notice}</span><button onClick={() => setNotice('')}>Dismiss</button>{status === 'Unable to save' && <><button onClick={save}>Retry saving</button>{active && <button onClick={() => exportBook(active)}>Export current book</button>}</>}</div>}
     <input hidden ref={importRef} type="file" accept=".json,application/json" onChange={async event => { const file = event.target.files?.[0]; event.target.value = ''; if (!file) return; try { if (file.size > LIMITS.projectBytes) throw new Error('Choose a project smaller than 30 MB.'); const book = structuredClone(validateBook(JSON.parse(await file.text()))); book.id = uid(); book.title = (book.title + ' — imported').slice(0, 120); book.archived = false; book.createdAt = book.updatedAt = new Date().toISOString(); add(book); } catch (error) { setNotice(error instanceof Error ? error.message : 'Unable to import this project.'); } }}/>
+    {deleting && <StationeryConfirm title={`Delete “${deleting.title}”?`}
+      message={scope ? 'This removes the book from My Space. Export a backup first if you want to keep a copy.' :
+        'This removes the book from this device. Export a backup first if you want to keep a copy.'}
+      action="Delete book" onClose={() => setDeleting(null)} onConfirm={() => {
+        change(current => current.filter(book => book.id !== deleting.id));
+        setDeleting(null);
+      }}/>}
     {creating && <CreateBook onCreate={book => add(book, 'studio')} onClose={() => setCreating(false)}/>}
     {guide && <BookGuide onClose={() => setGuide(false)} onExample={() => void browseExample()} onCreate={loaded ? () => {
       setGuide(false); setCreating(true);
@@ -178,24 +187,21 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
 }
 
 function BookGuide({ onClose, onExample, onCreate }: { onClose: () => void; onExample: () => void; onCreate?: () => void }) {
-  const dialog = useRef<HTMLDialogElement>(null);
-  useEffect(() => { dialog.current?.showModal(); }, []);
-  return <dialog ref={dialog} className={s.guide} aria-labelledby="first-book-title" onCancel={onClose}>
-    <button className={s.closeDialog} type="button" aria-label="Close first book guide" onClick={onClose}>×</button>
-    <h2 id="first-book-title">Make your first Memory Book</h2>
+  return <StationeryDialog className={s.guide} size="small" title="Make your first Memory Book"
+    closeLabel="Close first book guide" onClose={onClose}>
     <ol>
       <li><strong>Give it a shape.</strong> Name the book and choose a size for each page.</li>
       <li><strong>Make the cover yours.</strong> Open Cover Studio to add initials, a message or a ribbon.</li>
       <li><strong>Start with one memory.</strong> In Studio, choose Photographs to add a picture and Writing to tell its story.</li>
       <li><strong>Turn the page.</strong> Choose Add page to keep going, then Read my book to open the finished cover.</li>
     </ol>
-    <div className={s.dialogActions}><button onClick={onExample}>Explore the example</button>{onCreate &&
-      <button className={s.primary} onClick={onCreate}>Make a book ↗</button>}</div>
-  </dialog>;
+    <div className={s.dialogActions}><button className="dt-tactile-secondary" onClick={onExample}>Explore the example</button>{onCreate &&
+      <button className="dt-tactile-primary" onClick={onCreate}>Make a book ↗</button>}</div>
+  </StationeryDialog>;
 }
 
 function CreateBook({ onCreate, onClose }: { onCreate: (book: MemoryBookDocument) => void; onClose: () => void }) {
-  const dialog = useRef<HTMLDialogElement>(null);
+  const form = useRef<HTMLFormElement>(null);
   const [step, setStep] = useState(0);
   const [title, setTitle] = useState('Our Little Forever');
   const [subtitle, setSubtitle] = useState('A book of moments');
@@ -205,16 +211,26 @@ function CreateBook({ onCreate, onClose }: { onCreate: (book: MemoryBookDocument
   const [color, setColor] = useState('#643e4a');
   const [material, setMaterial] = useState<MemoryBookDocument['cover']['material']>('linen');
   const [blank, setBlank] = useState(false);
-  useEffect(() => { dialog.current?.showModal(); }, []);
   const preview = { title, subtitle, cover: { color, material } } as MemoryBookDocument;
-  function submit(event: FormEvent) { event.preventDefault(); if (step < 2) setStep(v => v + 1); else { const book = createBook(title, width, height, color, material, blank); book.subtitle = subtitle; onCreate(book); } }
-  return <dialog ref={dialog} className={s.createDialog} onCancel={onClose}><form onSubmit={submit}>
-    <button className={s.closeDialog} type="button" aria-label="Close book setup" onClick={onClose}>×</button>
-    <div><span className={s.eyebrow}>A NEW LITTLE FOREVER · {step + 1} OF 3</span><h2>{['Begin with a feeling.', 'Give your story a shape.', 'Make it yours.'][step]}</h2>
-      {step === 0 && <><label>Book title<input required maxLength={120} value={title} onChange={e => setTitle(e.target.value)}/></label><label>Subtitle (optional)<input maxLength={200} value={subtitle} onChange={e => setSubtitle(e.target.value)}/></label><div className={s.startChoices}><button type="button" aria-pressed={!blank} onClick={() => setBlank(false)}>A gentle starting layout<small>Editable words & an empty Polaroid</small></button><button type="button" aria-pressed={blank} onClick={() => setBlank(true)}>A beautifully blank book<small>Room for your own beginning</small></button></div></>}
+  function moveStep(next: number) {
+    setStep(next);
+    requestAnimationFrame(() => {
+      const element = form.current?.closest('dialog');
+      element?.querySelector('.dt-sheet-scroll')?.scrollTo(0, 0);
+      element?.querySelector('h2')?.focus({ preventScroll: true });
+    });
+  }
+  function submit(event: FormEvent) { event.preventDefault(); if (step < 2) moveStep(step + 1); else { const book = createBook(title, width, height, color, material, blank); book.subtitle = subtitle; onCreate(book); } }
+  const ratio = Math.max(100, width) / Math.max(100, height);
+  return <StationeryDialog className={s.createDialog} size="wide" closeLabel="Close book setup" onClose={onClose}
+    title={['Begin with a feeling.', 'Give your story a shape.', 'Make it yours.'][step]}
+    eyebrow={<span className={s.eyebrow}>A NEW LITTLE FOREVER · {step + 1} OF 3</span>}>
+    <form ref={form} className={s.setupForm} onSubmit={submit}>
+    <div className={s.setupFields}>
+      {step === 0 && <><label>Book title<input required maxLength={120} value={title} onChange={e => setTitle(e.target.value)}/></label><label>Subtitle (optional)<input maxLength={200} value={subtitle} onChange={e => setSubtitle(e.target.value)}/></label><div className={s.startChoices}><button className="dt-relief-card" type="button" aria-pressed={!blank} onClick={() => setBlank(false)}><span>A gentle starting layout<small>Editable words & an empty Polaroid</small></span><span className="dt-option-mark" aria-hidden="true">✓</span></button><button className="dt-relief-card" type="button" aria-pressed={blank} onClick={() => setBlank(true)}><span>A beautifully blank book<small>Room for your own beginning</small></span><span className="dt-option-mark" aria-hidden="true">✓</span></button></div></>}
       {step === 1 && <><label>Format<select value={format} onChange={e => { const f = formats.find(v => v[0] === e.target.value)!; setFormat(f[0]); setWidth(f[1]); setHeight(f[2]); }}>{formats.map(f => <option key={f[0]}>{f[0]}</option>)}</select></label><label>Units<select value={unit} onChange={e => setUnit(e.target.value)}><option value="mm">Millimetres</option><option value="in">Inches</option></select></label><div className={s.twoFields}>{([['Width', width, setWidth], ['Height', height, setHeight]] as const).map(([name, value, setter]) => <label key={name}>{name} ({unit})<input type="number" min={unit === 'mm' ? 100 : 3.94} max={unit === 'mm' ? 320 : 12.59} step="0.01" required value={Number((value / (unit === 'in' ? 25.4 : 1)).toFixed(2))} onChange={e => { setter(Number(e.target.value) * (unit === 'in' ? 25.4 : 1)); setFormat('Custom'); }}/></label>)}</div><p className={s.help}>Dimensions describe one page. Supported: 100–320 mm per side. The canvas and reading book use these exact proportions.</p></>}
       {step === 2 && <><label>Cover material<select value={material} onChange={e => setMaterial(e.target.value as typeof material)}><option value="linen">Woven linen</option><option value="leather">Leather inspired</option><option value="smooth">Smooth hardcover</option></select></label><label>Cover colour<input type="color" value={color} onChange={e => setColor(e.target.value)}/></label><p className={s.help}>Your book begins with two pages. Add more whenever a memory needs a home.</p></>}
-      <div className={s.dialogActions}>{step > 0 && <button type="button" onClick={() => setStep(v => v - 1)}>Back</button>}<button className={s.primary} type="submit">{step === 2 ? 'Create & edit my book ↗' : 'Continue ↗'}</button></div>
-    </div><div className={s.setupPreview}><div style={{ aspectRatio: Math.max(100, width) / Math.max(100, height) }}><Cover book={preview}/></div><span>{Math.round(width)} × {Math.round(height)} mm per page · 2 pages</span></div>
-  </form></dialog>;
+      <div className={s.dialogActions}>{step > 0 && <button className="dt-tactile-secondary" type="button" onClick={() => moveStep(step - 1)}>Back</button>}<button className="dt-tactile-primary" type="submit">{step === 2 ? 'Create & edit my book ↗' : 'Continue ↗'}</button></div>
+    </div><div className={s.setupPreview}><div style={{ aspectRatio: ratio, width: `min(100%, ${340 * ratio}px)` }}><Cover book={preview}/></div><span>{Math.round(width)} × {Math.round(height)} mm per page · 2 pages</span></div>
+  </form></StationeryDialog>;
 }

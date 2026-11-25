@@ -1,5 +1,6 @@
 'use client';
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { StationeryDialog } from '@/components/stationery-dialog';
 import {cloudLetters} from '@/lib/accounts/cloud-client';
 import type {CloudScope} from '@/lib/accounts/documents';
 import { downloadBackup, loadLetter, loadShelf, readBackup, saveShelf, type Shelf } from '@/lib/letter-storage';
@@ -142,13 +143,13 @@ export default function LettersWorkspace({scope}:{scope?:CloudScope}={}){
         savePreferences={preferences} opened={()=>recordOpening(screen.letter,!!screen.example)} example={screen.example} arriving={screen.arriving}
         finishArrival={()=>setScreen(value=>value.mode==='reader'?{...value,arriving:false}:value)}/>
     </section>}
-    {modal&&<LetterDialog key={modal.kind} busy={busy} close={()=>setModal(null)}
+    {modal&&<StationeryDialog className="lt-dialog" size="small" key={modal.kind} busy={busy} onClose={()=>setModal(null)}
       title={modal.kind==='collection'?'Your collections':modal.kind==='occasion'?'Occasion stationery':modal.kind==='unseal'?'Unseal this letter?':'Organize this letter'}>
       {alert}
       {modal.kind==='collection'&&shelf&&<CollectionsEditor initial={shelf.collections} busy={busy} save={values=>
         void act(async()=>{await transact(()=>({collections:values}));setModal(null);})}/>}
       {modal.kind==='occasion'&&<div className="lt-occasion-list">
-        {occasionNames.map(name=><button key={name} disabled={busy} onClick={()=>begin('occasion',name)}>{name[0].toUpperCase()+name.slice(1)} <span aria-hidden="true">↗</span></button>)}
+        {occasionNames.map(name=><button className="dt-relief-card" key={name} disabled={busy} onClick={()=>begin('occasion',name)}>{name[0].toUpperCase()+name.slice(1)} <span aria-hidden="true">↗</span></button>)}
       </div>}
       {modal.kind==='unseal'&&<><p>The letter will return to Drafts. Seal it again when it’s ready{modal.letter.release?', and choose its opening time again':''}.</p>
         <button className="lt-primary" disabled={busy} onClick={()=>void act(async()=>{
@@ -160,18 +161,8 @@ export default function LettersWorkspace({scope}:{scope?:CloudScope}={}){
         })} copy={()=>void act(async()=>{
           const letter=duplicateLetter(modal.letter);await commit(letter);go({mode:'studio',letter});
         })} backup={()=>writeBackup(modal.letter)}/>}
-    </LetterDialog>}
+    </StationeryDialog>}
   </section>;
-}
-
-function LetterDialog({title,children,busy,close}:{title:string;children:ReactNode;busy:boolean;close:()=>void}){
-  const ref=useRef<HTMLDialogElement>(null);
-  useEffect(()=>{const dialog=ref.current;dialog?.showModal();return()=>dialog?.close();},[]);
-  return <dialog ref={ref} className="lt-dialog" aria-labelledby="lt-dialog-title"
-    onCancel={event=>{event.preventDefault();if(!busy)close();}}>
-    <header><h2 id="lt-dialog-title">{title}</h2><button type="button" disabled={busy} onClick={close} aria-label="Close dialog">×</button></header>
-    {children}
-  </dialog>;
 }
 
 function Organize({letter,groups,busy,save,copy,backup}:{letter:Letter;groups:Collection[];busy:boolean;

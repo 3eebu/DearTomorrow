@@ -1,17 +1,14 @@
 'use client';
 
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
+import { StationeryDialog } from '@/components/stationery-dialog';
 import { seasons, species, MAX_PHOTOS, type Chapter, type MemoryInput, type Photo, type Settings } from '@/lib/memory-tree';
 import { preparePhoto } from '@/lib/memory-tree-storage';
 
 export function GardenDialog({title,children,close,busy=false}:{title:string;children:ReactNode;close:()=>void;busy?:boolean}) {
-  const dialog=useRef<HTMLDialogElement>(null),label=useId();
-  useEffect(()=>{const el=dialog.current;el?.showModal();return()=>el?.close();},[]);
-  return <dialog className="mt-dialog" ref={dialog} aria-labelledby={label}
-    onCancel={e=>{e.preventDefault();if(!busy)close();}}>
-    <header><h2 id={label}>{title}</h2><button type="button" aria-label="Close dialog" disabled={busy} onClick={close}>×</button></header>
+  return <StationeryDialog className="mt-dialog" title={title} onClose={close} busy={busy}>
     {children}
-  </dialog>;
+  </StationeryDialog>;
 }
 const speciesLabels={cherry:'Flowering cherry',oak:'English oak',willow:'Weeping willow'};
 export function SettingsForm({initial,plant,busy,save}:{initial:Settings;plant:boolean;busy:boolean;save:(s:Settings)=>void}){

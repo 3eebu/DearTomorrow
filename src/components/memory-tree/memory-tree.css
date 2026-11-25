@@ -157,9 +157,9 @@
 .mt-notes dl {max-width:42rem;}
 .mt-notes dl>div {grid-column:1/-1;}
 .mt-notes dd {margin:0;}
-.mt-dialog {color:var(--mt-ink);background:var(--mt-paper);border:1px solid var(--mt-line);width:min(94vw,38rem);max-height:calc(100dvh - 1.5rem);overflow:auto;padding:1.4rem;}
-.mt-dialog::backdrop {background:#2b24269c;}
-.mt-dialog header {display:flex;gap:1rem;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;}
+
+
+
 .mt-form {display:grid;gap:.7rem;}
 .mt-form details .mt-fields {margin-top:.65rem;}
 .mt-form input[type=file] {max-width:100%;}
@@ -178,6 +178,19 @@
   .mt-stage-caption p {letter-spacing:.09em;}
   .mt-journal[data-view=tree] .mt-keepsake {grid-row:1;}
   .mt-days button {min-height:45px;}
-  .mt-dialog {margin:auto 0 0;width:100%;max-width:none;padding:1rem 1rem max(1rem,env(safe-area-inset-bottom));}
+
   #mt-tree-stage {scroll-margin-top:4.6rem;}
+}
+
+.mt-workspace .mt-dialog .dt-sheet-header h2 { font-size: clamp(1.75rem, 4.3vw, 2.8rem); line-height: 1.12; }
+.mt-dialog .mt-form { padding-top: 15px; border-top: 1px solid #dbc9b6; gap: 13px; }
+.mt-dialog .mt-fields { column-gap: 15px; row-gap: 13px; margin-bottom: 0; }
+.mt-dialog .mt-form > .mt-primary { justify-self: start; margin-top: 6px; }
+.mt-dialog .mt-form details { padding: 9px 12px; border: 1px solid #dbcab9; border-radius: var(--sheet-panel-radius); }
+.mt-dialog .mt-form label { min-width: 0; }
+@media (max-width: 480px) {
+  .mt-dialog .mt-fields { grid-template-columns: minmax(0, 1fr); }
+  .mt-dialog .mt-form > .mt-primary { justify-self: stretch; }
+  .mt-dialog .mt-chapter-row { grid-template-columns: minmax(0,1fr) 44px; }
+  .mt-dialog .mt-chapter-row button { justify-self: stretch; }
 }

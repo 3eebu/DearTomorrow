@@ -53,12 +53,12 @@ export default async function Page({searchParams}:{searchParams:Promise<{message
     <section className="dt-account-section">
       <h2>Account access</h2>
       <form action={signOut}><button className="dt-account-secondary">Sign out</button></form>
-      <details className="dt-account-danger" open={!!profile.deleting_at||undefined}><summary>{profile.deleting_at?'Finish deleting account':'Delete account'}</summary>
+      <details className="dt-account-danger dt-stationery dt-stationery-card" open={!!profile.deleting_at||undefined}><summary>{profile.deleting_at?'Finish deleting account':'Delete account'}</summary>
         <p>This permanently deletes your profile, owned cloud memories, uploaded files, and partner connection. Guest memories and previously downloaded copies stay on their devices.</p>
         <form action={deleteAccount} className="dt-account-form">
           <label>Current password<input name="password" required type="password" autoComplete="current-password" maxLength={128}/></label>
           <label>Type DELETE to confirm<input name="confirmation" required pattern="DELETE" autoComplete="off"/></label>
-          <button className="dt-account-primary">Permanently delete account</button>
+          <button className="dt-account-primary dt-tactile-primary">Permanently delete account</button>
         </form>
       </details>
     </section>

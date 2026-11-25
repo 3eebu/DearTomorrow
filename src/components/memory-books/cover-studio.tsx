@@ -103,7 +103,7 @@ export function CoverStudio({ book, onChange, onDone, status, onError, exitLabel
         <div style={{ aspectRatio: book.widthMm / book.heightMm }}><BookSurface book={designPreview} surface={surface}/></div>
         <p>{book.widthMm} × {book.heightMm} mm · {book.pages.length} numbered pages</p>
       </main>
-      <aside className={s.controls}>
+      <aside className={`${s.controls} dt-stationery dt-stationery-card`}>
         <details>
           <summary>Editable starting covers</summary>
           {templates.map(name => <button key={name} onClick={() =>

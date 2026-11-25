@@ -26,13 +26,13 @@ export async function MemoryPage({id,ours,message}:{id:string;ours:boolean;messa
     <div className="dt-account-heading"><h1>{item.title}</h1>
       <p>{ours?`From ${item.ownerName}`:item.shared?'Shared with your partner':'Private in My Space'}</p></div>
     <AccountNotice message={message}/>
-    {item.owned&&!ours&&<section className="dt-account-card">
+    {item.owned&&!ours&&<section className="dt-account-card dt-stationery dt-stationery-card">
       <h2>Who can see this?</h2>
       {partner?<><p>{item.shared?`${partner.name} can view this keepsake.`:
         `Sharing gives ${partner.name} permission to view this keepsake. Timed envelopes open when their server-checked opening time arrives.`}</p>
         <form action={shareMemory} className="dt-account-actions">
           <input type="hidden" name="document" value={item.id}/>
-          <button className={item.shared?'dt-account-secondary':'dt-account-primary'} name="share" value={item.shared?'no':'yes'}>
+          <button className={item.shared?'dt-account-secondary dt-tactile-secondary':'dt-account-primary dt-tactile-primary'} name="share" value={item.shared?'no':'yes'}>
             {item.shared?'Keep private':'Share with my partner'}</button>
         </form></>:<p>Only you can view this keepsake. <Link href="/connect">Connect with someone</Link> to share it.</p>}
     </section>}

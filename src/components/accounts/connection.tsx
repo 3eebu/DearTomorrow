@@ -67,12 +67,12 @@ export function ConnectionDetails({view,path}:{view:ConnectionView;path:'setting
     <h2>Your connection</h2>
     {view.partner?<><p>Connected with <strong>{view.partner.name}</strong>.</p>
       <div className="dt-account-actions"><Link href="/our-space">Open Our Space</Link></div>
-      <details className="dt-account-danger">
+      <details className="dt-account-danger dt-stationery dt-stationery-card">
         <summary>Disconnect from {view.partner.name}</summary>
         <p>Sharing ends for this connection. Each person keeps the memories they own. Copies they already exported or saved will still be available to them.</p>
         <form action={manageConnection} className="dt-account-actions">
           <input type="hidden" name="operation" value="disconnect"/><input type="hidden" name="path" value={path}/>
-          <button className="dt-account-secondary">Confirm disconnect</button>
+          <button className="dt-account-secondary dt-tactile-secondary">Confirm disconnect</button>
         </form>
       </details></>:<p>{requests.some(request=>request.status==='pending')?'A request is waiting for a decision.':'You can connect with one person when you’re ready.'}</p>}
     {requests.length>0&&<ul className="dt-account-list dt-connection-list">{requests.map(request=><li key={request.id} data-status={request.status}>

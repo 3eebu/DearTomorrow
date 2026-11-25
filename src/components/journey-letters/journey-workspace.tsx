@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { StationeryDialog } from '@/components/stationery-dialog';
 import {cloudJourneys} from '@/lib/accounts/cloud-client';
 import type {CloudScope} from '@/lib/accounts/documents';
 import { LetterReader } from '@/components/letters/letter-reader';
@@ -174,21 +175,6 @@ function JourneyOverview({ journey,intro,recipient,busy,showRecipient,back,edit,
   </>;
 }
 
-function JourneyDialog({ title,close,busy,children }: {title:string;close:()=>void;busy:boolean;children:ReactNode}) {
-  const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const dialog = ref.current;
-    dialog?.showModal();
-    return () => dialog?.close();
-  },[]);
-  return <dialog ref={ref} className="jl-dialog" aria-labelledby="jl-dialog-title" onCancel={event=>{
-    event.preventDefault();if(!busy)close();
-  }}>
-    <header><h2 id="jl-dialog-title">{title}</h2><button className="jl-link" aria-label="Close dialog" disabled={busy} onClick={close}>×</button></header>
-    {children}
-  </dialog>;
-}
-
 export default function JourneyWorkspace({scope}:{scope?:CloudScope}={}) {
   const store=useMemo(()=>scope?cloudJourneys(scope):{listJourneys,loadJourney,saveJourney,deleteJourney},[scope]);
   const [items,setItems] = useState<JourneySummary[]>([]);
@@ -349,7 +335,7 @@ export default function JourneyWorkspace({scope}:{scope?:CloudScope}={}) {
           finishArrival={()=>setView(v=>v.kind==='reader'?{...v,arriving:false}:v)}/>
       </section>
     </div>}
-    {confirm&&journey&&<JourneyDialog busy={busy} close={()=>setConfirm(null)}
+    {confirm&&journey&&<StationeryDialog className="jl-dialog" size="small" busy={busy} onClose={()=>setConfirm(null)}
       title={confirm.action==='delete'?'Delete this journey?':journey.checkpoints[confirm.index].label}>
       {alert}
       {confirm.action==='delete'?<>
@@ -366,7 +352,7 @@ export default function JourneyWorkspace({scope}:{scope?:CloudScope}={}) {
         }}>Preview opening view</button>
           <button className="jl-primary" disabled={busy} onClick={confirmAction}>Unseal and edit</button></div>
       </>}
-    </JourneyDialog>}
+    </StationeryDialog>}
     <div className="jl-foot-link"><Link href="/letters">← Back to Letters</Link></div>
   </section>;
 }

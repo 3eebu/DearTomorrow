@@ -89,7 +89,7 @@ export function JourneySetup({original,busy,cancel,save}:{
   }
   return <section className="jl-inset">
     <button className="jl-link" onClick={cancel} disabled={busy}>← {original?'Back to journey':'Back to journeys'}</button>
-    {review?<div className="jl-setup-review">
+    {review?<div className="jl-setup-review dt-stationery dt-stationery-card">
       <header className="jl-heading">
         <p className="jl-small">Six letters · One journey</p>
         <h1 id="jl-review" tabIndex={-1}>{review.name}</h1>
@@ -97,13 +97,13 @@ export function JourneySetup({original,busy,cancel,save}:{
       </header>
       <JourneyMap from={review.from} to={review.to} progress={0}/>
       <RouteTimes plan={review}/>
-      <div className="jl-actions"><button className="jl-secondary" onClick={()=>setReview(null)} disabled={busy}>Edit details</button>
-        <button className="jl-primary" onClick={()=>save(review)} disabled={busy}>{original?'Save journey details':'Save journey'}</button></div>
+      <div className="jl-actions"><button className="jl-secondary dt-tactile-secondary" onClick={()=>setReview(null)} disabled={busy}>Edit details</button>
+        <button className="jl-primary dt-tactile-primary" onClick={()=>save(review)} disabled={busy}>{original?'Save journey details':'Save journey'}</button></div>
     </div>:<>
       <header className="jl-heading"><p className="jl-small">Journey Letters</p>
         <h1 data-jl-focus tabIndex={-1}>{original?'Edit your journey.':'Where are they headed?'}</h1>
         <p>Use each city’s local date and time.</p></header>
-      <form className="jl-setup-form" onSubmit={submit}>
+      <form className="jl-setup-form dt-stationery dt-stationery-card" onSubmit={submit}>
         {error&&<p className="jl-notice" role="alert">{error}</p>}
         <div className="jl-fields">
           <label>Journey name<input required maxLength={100} value={name} onChange={e=>setName(e.target.value)} placeholder="The long way back"/></label>
@@ -111,7 +111,7 @@ export function JourneySetup({original,busy,cancel,save}:{
         </div>
         <div className="jl-pair"><CityFields prefix="Departure" value={from} change={setFrom}/>
           <CityFields prefix="Arrival" value={to} change={setTo}/></div>
-        <button className="jl-primary">Review journey</button>
+        <button className="jl-primary dt-tactile-primary">Review journey</button>
       </form>
     </>}
   </section>;
@@ -158,7 +158,7 @@ export function JourneySchedule({journey,busy,cancel,save}: {
       <h1 data-jl-focus tabIndex={-1}>When each letter opens.</h1>
       <p>Default times follow your flight schedule. Custom times stay as you set them, in the time zone you choose.</p>
     </header>
-    <form className="jl-schedule" onSubmit={submit}>
+    <form className="jl-schedule dt-stationery dt-stationery-card" onSubmit={submit}>
       {error&&<p className="jl-notice" role="alert">{error}</p>}
       {stops.map((stop,index)=><fieldset className="jl-city-fields" key={journey.checkpoints[index].id}>
         <legend>Envelope {index+1}</legend>
@@ -169,7 +169,7 @@ export function JourneySchedule({journey,busy,cancel,save}: {
         })}/> Set a custom opening time</label>
         {stop.timing&&<TimingFields prefix="Opening" value={stop.timing} change={timing=>change(index,{timing})}/>}
       </fieldset>)}
-      <button className="jl-primary" disabled={busy}>Save opening times</button>
+      <button className="jl-primary dt-tactile-primary" disabled={busy}>Save opening times</button>
     </form>
   </section>;
 }
