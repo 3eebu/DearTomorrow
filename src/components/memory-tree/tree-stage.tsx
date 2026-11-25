@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import { buildPaintedTree, gardenBaseline, gardenMiddle, leafCenter, leafPalette } from '@/lib/memory-tree-illustration';
 import { displayDay, stage, type Tree } from '@/lib/memory-tree';
 
@@ -114,20 +114,14 @@ export function TreeStage({ tree, today, selected, focus, matches, planted, onCh
     if (focus?.reveal) leafNodes.current.get(focus.id)?.focus({ preventScroll: true });
   }, [focus]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const scroller = specimen.current;
     if (!zoomed || !scroller || !selected) return;
-    const frame = requestAnimationFrame(() => {
-      const leaf = scroller.querySelector('.mt-ink-leaf[aria-pressed=true]');
-      if (!leaf) return;
-      const pane = scroller.getBoundingClientRect(), target = leaf.getBoundingClientRect();
-      scroller.scrollTo({
-        left:scroller.scrollLeft + target.left - pane.left + (target.width - pane.width) / 2,
-        top:scroller.scrollTop + target.top - pane.top + (target.height - pane.height) / 2,
-        behavior:'instant',
-      });
-    });
-    return () => cancelAnimationFrame(frame);
+    const leaf = scroller.querySelector('.mt-ink-leaf[aria-pressed=true]');
+    if (!leaf) return;
+    const pane = scroller.getBoundingClientRect(), target = leaf.getBoundingClientRect();
+    scroller.scrollLeft += target.left - pane.left + (target.width - pane.width) / 2;
+    scroller.scrollTop += target.top - pane.top + (target.height - pane.height) / 2;
   }, [zoomed, selected]);
 
   function keyOnLeaf(event: KeyboardEvent<SVGElement>, index: number) {
