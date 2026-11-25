@@ -63,27 +63,32 @@ export function Landscape({ studio, growthStage, liveLayers }: {
   return <div className={styles.landscape}>
     <figure>
       <div className={styles.frame} ref={frame} role="group" aria-label="Memory Tree landscape">
-        <div className={styles.world} style={{ aspectRatio: `${environmentWorld.width} / ${environmentWorld.height}` }}>
-          {!showAssembly && !hidden.has('master') && !failedMaster &&
-            <Plate plate={masterPlate} alt={description} onError={() => setFailedMaster(true)}/>}
-          {assembled && !failedPlate && <div className={styles.stack} style={{visibility: showAssembly ? 'visible' : 'hidden'}}
-            role="group" aria-label={description}>
-            {environmentLayers.map(({ id }) => {
-              if (!isPaintedLayer(id)) return <div key={id} className={styles.live} data-layer={id}
-                hidden={hidden.has(id)}>{liveLayers?.[id]}</div>;
-              const plate = suppliedPlates[id];
-              return plate && <div key={id} data-layer={id} hidden={hidden.has(id)}>
-                <Plate plate={plate} onError={() => setFailedPlate(true)}
-                  onLoad={() => setLoaded(previous => new Set(previous).add(id))}/>
-              </div>;
-            })}
-          </div>}
-          {studio && showAnchors && <div className={styles.anchors} aria-hidden="true">
-            {Object.entries(environmentAnchors).map(([key, anchor]) =>
-              <span key={key} data-anchor={key} style={{ left: `${anchor.x * 100}%`, top: `${anchor.y * 100}%` }}>
-                <span>{anchor.label}</span>
-              </span>)}
-          </div>}
+        <div className={styles.scene}>
+          <div className={styles.world} style={{
+            '--scene-ratio': environmentWorld.width / environmentWorld.height,
+            aspectRatio: `${environmentWorld.width} / ${environmentWorld.height}`,
+          } as CSSProperties}>
+            {!showAssembly && !hidden.has('master') && !failedMaster &&
+              <Plate plate={masterPlate} alt={description} onError={() => setFailedMaster(true)}/>}
+            {assembled && !failedPlate && <div className={styles.stack} style={{visibility: showAssembly ? 'visible' : 'hidden'}}
+              role="group" aria-label={description}>
+              {environmentLayers.map(({ id }) => {
+                if (!isPaintedLayer(id)) return <div key={id} className={styles.live} data-layer={id}
+                  hidden={hidden.has(id)}>{liveLayers?.[id]}</div>;
+                const plate = suppliedPlates[id];
+                return plate && <div key={id} data-layer={id} hidden={hidden.has(id)}>
+                  <Plate plate={plate} onError={() => setFailedPlate(true)}
+                    onLoad={() => setLoaded(previous => new Set(previous).add(id))}/>
+                </div>;
+              })}
+            </div>}
+            {studio && showAnchors && <div className={styles.anchors} aria-hidden="true">
+              {Object.entries(environmentAnchors).map(([key, anchor]) =>
+                <span key={key} data-anchor={key} style={{ left: `${anchor.x * 100}%`, top: `${anchor.y * 100}%` }}>
+                  <span>{anchor.label}</span>
+                </span>)}
+            </div>}
+          </div>
         </div>
         {failedMaster && !showAssembly && <p className={styles.failure} role="status">
           The landscape couldn’t load. You can still open your memories in Tree View.
@@ -91,7 +96,9 @@ export function Landscape({ studio, growthStage, liveLayers }: {
       </div>
       <figcaption className={styles.caption}>The Memory Tree in full growth.</figcaption>
     </figure>
-    {studio && Studio && <Studio layers={studioLayers} showAnchors={showAnchors} onShowAnchors={setShowAnchors}
-      hiddenLayers={hidden} onToggleLayer={toggleLayer} growthStage={growthStage} sceneRef={frame}/>}
+    {studio && Studio && <div className={styles.inspector}>
+      <Studio layers={studioLayers} showAnchors={showAnchors} onShowAnchors={setShowAnchors}
+        hiddenLayers={hidden} onToggleLayer={toggleLayer} growthStage={growthStage} sceneRef={frame}/>
+    </div>}
   </div>;
 }

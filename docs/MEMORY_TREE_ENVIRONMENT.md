@@ -20,7 +20,7 @@ Developers can open `/memory-tree?studio=environment`, select Landscape, and exp
 
 ## Renderer decision
 
-Use a layered DOM compositor for the supplied painting. Desktop displays its full 1672 × 941 composition. Phones crop the two sides around the tree, retaining its crown and root flare. The artwork, alpha mattes, live slots and registration guides all use the same world. A single frame clips the world after placement. Independent cover-cropping of individual assets would make branch tips, leaves and future perches slide apart at different widths.
+Use a layered DOM compositor for the supplied painting. On the Memory Tree page the scene spans the viewport, while the heading and controls stay within the workspace gutters. The desktop scene targets 65–80% of viewport height and can grow taller on wide screens to keep the crown and roots in frame. Tablet and phone crops center the tree. The artwork, alpha mattes, live slots and registration guides share one world. After placement, one paper-edge mask feathers the compositor into the page. Exporting the art into independent, cropped layers would make branch tips, leaves and future perches slide apart at different widths.
 
 Ordinary image decoding leaves the static scene idle between paints. SVG remains appropriate for the already-interactive Tree View. Canvas or WebGL would introduce a render surface, rasterization budget and additional interaction work with no visual benefit for this single plate. Local mesh deformation can later be evaluated against real separated foliage on representative devices. There is no runtime renderer dependency or animation benchmark implying a particular frame rate.
 

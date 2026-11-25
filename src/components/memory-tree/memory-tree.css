@@ -1,7 +1,8 @@
 .mt-workspace {
   --mt-cream:#f8f5ee;--mt-paper:#fbf8f0;--mt-ink:#382f28;--mt-muted:#6d6255;
   --mt-line:#ded4c6;--mt-plum:#563c46;--mt-serif:'Playfair Display',Georgia,serif;
-  background:var(--mt-cream);color:var(--mt-ink);padding:clamp(2rem,5vw,4.3rem) clamp(1rem,6vw,6rem);
+  --mt-gutter:clamp(1rem,6vw,6rem);
+  background:var(--mt-cream);color:var(--mt-ink);padding:clamp(2rem,5vw,4.3rem) var(--mt-gutter);
 }
 .mt-workspace > * {max-width:75rem;margin-inline:auto;}
 .mt-workspace [hidden] {display:none!important;}

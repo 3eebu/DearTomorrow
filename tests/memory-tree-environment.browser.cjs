@@ -14,7 +14,7 @@ async function run() {
   const errors = [];
   try {
     if (screenshots) await fs.mkdir(screenshots, { recursive: true });
-    for (const [width, height] of [[1440, 1000], [820, 1180], [390, 844], [320, 760]]) {
+    for (const [width, height] of [[1920, 1080], [1440, 900], [1280, 800], [820, 1180], [390, 844], [320, 760]]) {
       const page = await browser.newPage({ viewport: { width, height }, hasTouch: width < 600,
         isMobile: width < 600, deviceScaleFactor: 1, reducedMotion: 'reduce' });
       page.on('pageerror', error => errors.push(error.message));
@@ -28,14 +28,22 @@ async function run() {
         const img = el.querySelector('img');
         const crop = el.getBoundingClientRect(), world = img.getBoundingClientRect();
         const asset = performance.getEntriesByName(img.currentSrc)[0];
-        return { asset: new URL(img.currentSrc).pathname.split('/').pop(), width: crop.width,
+        const style = getComputedStyle(el);
+        return { asset: new URL(img.currentSrc).pathname.split('/').pop(), width: crop.width, left: crop.left,
           height: crop.height, pixels: [img.naturalWidth, img.naturalHeight], ms: asset?.duration,
           bytes: asset?.encodedBodySize, overflow: document.documentElement.scrollWidth > innerWidth,
-          crownFits: world.left + world.width * .17 >= crop.left && world.left + world.width * .81 <= crop.right,
+          crownFits: world.left + world.width * .17 >= crop.left && world.left + world.width * .81 <= crop.right
+            && world.top + world.height * .09 >= crop.top && world.top + world.height * .86 <= crop.bottom,
+          mask: getComputedStyle(el.firstElementChild).maskImage.includes('paper-edge.svg'),
+          unframed: style.outlineStyle === 'none' && style.borderRadius === '0px' && style.boxShadow === 'none',
           aspect: world.width / world.height, animations: el.getAnimations({subtree:true}).length };
       });
       assert.equal(image.asset, width <= 600 ? 'master-960.webp' : 'master.webp');
       assert.ok(image.crownFits && !image.overflow);
+      assert.equal(image.width, width);
+      assert.equal(image.left, 0);
+      assert.ok(image.mask && image.unframed);
+      if (width >= 1280) assert.ok(image.height / height >= .65 && image.height / height <= .84);
       assert.ok(Math.abs(image.aspect - 1672 / 941) < .002);
       assert.equal(image.animations, 0);
       console.log(width + 'px landscape:', JSON.stringify(image));
@@ -46,8 +54,7 @@ async function run() {
       }
       if (screenshots && !dev) {
         await page.evaluate(() => document.fonts.ready);
-        await page.screenshot({ path: path.join(screenshots, 'landscape-' + width + '.png') });
-        await page.locator('#memory-tree').screenshot({ path: path.join(screenshots, 'workspace-' + width + '.png') });
+        await page.screenshot({ path: path.join(screenshots, 'landscape-' + width + '.png'), fullPage: true });
         await frame.screenshot({ path: path.join(screenshots, 'painting-' + width + '.png') });
       }
       await button(page, 'Tree').click();
