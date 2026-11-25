@@ -3,9 +3,9 @@
 import dynamic from 'next/dynamic';
 import { useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import {
-  environmentAnchors, environmentLayers, environmentWorld, hasCompletePainting,
-  isPaintedLayer, masterPlate, suppliedPlates, type EnvironmentPlate,
-  type LiveLayerId, type PaintedLayerId,
+  environmentAnchors, environmentLayers, frameEnvironment, hasCompletePainting,
+  isPaintedLayer, masterPlate, originalWorldBounds, suppliedPlates, type EnvironmentPlate,
+  type LiveLayerId, type PaintedLayerId, type WorldBounds,
 } from '@/lib/memory-tree-environment';
 import styles from './landscape.module.css';
 
@@ -21,15 +21,21 @@ const studioLayers = [
   })),
 ];
 
+function position({ x, y, width, height }: WorldBounds): CSSProperties {
+  return { left: `${x * 100}%`, top: `${y * 100}%`, width: `${width * 100}%`, height: `${height * 100}%` };
+}
+
 function placement(plate: EnvironmentPlate): CSSProperties {
-  const { x, y, width, height } = plate.bounds ?? { x: 0, y: 0, width: 1, height: 1 };
+  const { x, y, width, height } = plate.bounds ?? originalWorldBounds;
   return {
-    left: `${x * 100}%`, top: `${y * 100}%`, width: `${width * 100}%`, height: `${height * 100}%`,
+    ...position({ x, y, width, height }),
     transformOrigin: plate.pivot
       ? `${(plate.pivot.x - x) / width * 100}% ${(plate.pivot.y - y) / height * 100}%` : undefined,
     maskImage: plate.mask ? `url("${plate.mask}")` : undefined,
   };
 }
+
+const framing = frameEnvironment(masterPlate.bounds);
 
 function Plate({ plate, alt = '', onLoad, onError }: {
   plate: EnvironmentPlate; alt?: string; onLoad?: () => void; onError?: () => void;
@@ -62,32 +68,32 @@ export function Landscape({ studio, growthStage, liveLayers }: {
   const description = 'A golden-green tree opens its branches above a wildflower meadow, with snowy mountains beyond.';
   return <div className={styles.landscape}>
     <figure>
-      <div className={styles.frame} ref={frame} role="group" aria-label="Memory Tree landscape">
+      <div className={styles.frame} ref={frame} role="group" aria-label="Memory Tree landscape"
+        style={{ '--scene-ratio': framing.aspect } as CSSProperties}>
         <div className={styles.scene}>
-          <div className={styles.world} style={{
-            '--scene-ratio': environmentWorld.width / environmentWorld.height,
-            aspectRatio: `${environmentWorld.width} / ${environmentWorld.height}`,
-          } as CSSProperties}>
-            {!showAssembly && !hidden.has('master') && !failedMaster &&
-              <Plate plate={masterPlate} alt={description} onError={() => setFailedMaster(true)}/>}
-            {assembled && !failedPlate && <div className={styles.stack} style={{visibility: showAssembly ? 'visible' : 'hidden'}}
-              role="group" aria-label={description}>
-              {environmentLayers.map(({ id }) => {
-                if (!isPaintedLayer(id)) return <div key={id} className={styles.live} data-layer={id}
-                  hidden={hidden.has(id)}>{liveLayers?.[id]}</div>;
-                const plate = suppliedPlates[id];
-                return plate && <div key={id} data-layer={id} hidden={hidden.has(id)}>
-                  <Plate plate={plate} onError={() => setFailedPlate(true)}
-                    onLoad={() => setLoaded(previous => new Set(previous).add(id))}/>
-                </div>;
-              })}
-            </div>}
-            {studio && showAnchors && <div className={styles.anchors} aria-hidden="true">
-              {Object.entries(environmentAnchors).map(([key, anchor]) =>
-                <span key={key} data-anchor={key} style={{ left: `${anchor.x * 100}%`, top: `${anchor.y * 100}%` }}>
-                  <span>{anchor.label}</span>
-                </span>)}
-            </div>}
+          <div className={styles.artwork}>
+            <div className={styles.world} style={position(framing.registration)}>
+              {!showAssembly && !hidden.has('master') && !failedMaster &&
+                <Plate plate={masterPlate} alt={description} onError={() => setFailedMaster(true)}/>}
+              {assembled && !failedPlate && <div className={styles.stack} style={{visibility: showAssembly ? 'visible' : 'hidden'}}
+                role="group" aria-label={description}>
+                {environmentLayers.map(({ id }) => {
+                  if (!isPaintedLayer(id)) return <div key={id} className={styles.live} data-layer={id}
+                    hidden={hidden.has(id)}>{liveLayers?.[id]}</div>;
+                  const plate = suppliedPlates[id];
+                  return plate && <div key={id} data-layer={id} hidden={hidden.has(id)}>
+                    <Plate plate={plate} onError={() => setFailedPlate(true)}
+                      onLoad={() => setLoaded(previous => new Set(previous).add(id))}/>
+                  </div>;
+                })}
+              </div>}
+              {studio && showAnchors && <div className={styles.anchors} aria-hidden="true">
+                {Object.entries(environmentAnchors).map(([key, anchor]) =>
+                  <span key={key} data-anchor={key} style={{ left: `${anchor.x * 100}%`, top: `${anchor.y * 100}%` }}>
+                    <span>{anchor.label}</span>
+                  </span>)}
+              </div>}
+            </div>
           </div>
         </div>
         {failedMaster && !showAssembly && <p className={styles.failure} role="status">

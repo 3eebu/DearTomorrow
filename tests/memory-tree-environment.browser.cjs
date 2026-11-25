@@ -14,7 +14,7 @@ async function run() {
   const errors = [];
   try {
     if (screenshots) await fs.mkdir(screenshots, { recursive: true });
-    for (const [width, height] of [[1920, 1080], [1440, 900], [1280, 800], [820, 1180], [390, 844], [320, 760]]) {
+    for (const [width, height] of [[1920, 1080], [1672, 941], [1440, 900], [1280, 800], [820, 1180], [390, 844], [320, 760]]) {
       const page = await browser.newPage({ viewport: { width, height }, hasTouch: width < 600,
         isMobile: width < 600, deviceScaleFactor: 1, reducedMotion: 'reduce' });
       page.on('pageerror', error => errors.push(error.message));
@@ -30,7 +30,9 @@ async function run() {
         const asset = performance.getEntriesByName(img.currentSrc)[0];
         const style = getComputedStyle(el);
         return { asset: new URL(img.currentSrc).pathname.split('/').pop(), width: crop.width, left: crop.left,
-          height: crop.height, pixels: [img.naturalWidth, img.naturalHeight], ms: asset?.duration,
+          height: crop.height, worldHeight: world.height, topTrim: crop.top - world.top,
+          summitRightMargin: crop.right - (world.left + world.width * .927),
+          pixels: [img.naturalWidth, img.naturalHeight], ms: asset?.duration,
           bytes: asset?.encodedBodySize, overflow: document.documentElement.scrollWidth > innerWidth,
           crownFits: world.left + world.width * .17 >= crop.left && world.left + world.width * .81 <= crop.right
             && world.top + world.height * .09 >= crop.top && world.top + world.height * .86 <= crop.bottom,
@@ -43,7 +45,11 @@ async function run() {
       assert.equal(image.width, width);
       assert.equal(image.left, 0);
       assert.ok(image.mask && image.unframed);
-      if (width >= 1280) assert.ok(image.height / height >= .65 && image.height / height <= .84);
+      assert.ok(Math.abs(image.topTrim) < 1 && Math.abs(image.worldHeight - image.height) < 1,
+        'The full height of the painting must fit.');
+      if (width >= 820) assert.ok(image.summitRightMargin > 15, 'The right summit must clear the feathered edge.');
+      if (width >= 1280) assert.ok(image.height > .55 * width);
+      if (width === 820) assert.ok(image.height > .68 * width);
       assert.ok(Math.abs(image.aspect - 1672 / 941) < .002);
       assert.equal(image.animations, 0);
       console.log(width + 'px landscape:', JSON.stringify(image));
@@ -80,6 +86,13 @@ async function run() {
       await studio.locator('summary').click();
       await studio.getByLabel('Show anchor points').check();
       assert.equal(await landscape(page).locator('[data-anchor]').count(), 7);
+      const rootError = await landscape(page).evaluate(el => {
+        const root = el.querySelector('[data-anchor=root]').getBoundingClientRect();
+        const art = el.querySelector('img').getBoundingClientRect();
+        return Math.hypot(root.x + root.width / 2 - (art.x + .486 * art.width),
+          root.y + root.height / 2 - (art.y + .842 * art.height));
+      });
+      assert.ok(rootError < 1, 'The studio root anchor must remain registered to the painting.');
       await studio.getByLabel('Approved master painting').uncheck();
       assert.equal(await landscape(page).locator('img').count(), 0);
       await studio.getByLabel('Approved master painting').check();

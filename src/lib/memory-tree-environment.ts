@@ -36,6 +36,16 @@ export type LayerId = typeof environmentLayers[number]['id'];
 export type LiveLayerId = 'finches' | 'memory-markers';
 export type PaintedLayerId = Exclude<LayerId, LiveLayerId>;
 export type WorldBounds = { x: number; y: number; width: number; height: number };
+export const originalWorldBounds: WorldBounds = { x: 0, y: 0, width: 1, height: 1 };
+
+// Fit the painted extent while keeping the original coordinate space for every layer.
+export function frameEnvironment(bounds = originalWorldBounds) {
+  const { x, y, width, height } = bounds;
+  return {
+    aspect: (environmentWorld.width * width) / (environmentWorld.height * height),
+    registration: { x: -x / width, y: -y / height, width: 1 / width, height: 1 / height },
+  };
+}
 
 export type EnvironmentPlate = {
   src: string;

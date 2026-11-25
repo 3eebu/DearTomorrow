@@ -1,16 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" preserveAspectRatio="none">
   <defs>
     <filter id="feather" x="-10%" y="-10%" width="120%" height="120%">
-      <feTurbulence type="fractalNoise" baseFrequency=".041 .084" numOctaves="2" seed="7" result="grain"/>
-      <feDisplacementMap in="SourceGraphic" in2="grain" scale="11" xChannelSelector="R" yChannelSelector="G"/>
-      <feGaussianBlur stdDeviation="4 4.8"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".115 .185" numOctaves="2" seed="7" result="grain"/>
+      <feDisplacementMap in="SourceGraphic" in2="grain" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+      <feGaussianBlur stdDeviation="1.8 2"/>
     </filter>
   </defs>
-  <path filter="url(#feather)" d="M10 18
-    C53 9 84 17 127 12 S208 12 247 15 S315 8 366 12 S443 17 491 12
-    S560 12 610 15 S688 8 742 13 S825 15 867 10 S944 15 988 12
-    C993 53 986 78 990 119 S994 176 989 220 S995 298 990 343 S987 422 992 482
-    C952 489 913 485 860 488 S786 483 732 488 S649 486 598 489 S513 484 461 488
-    S372 487 310 489 S245 483 194 488 S111 484 70 487 S26 486 10 484
-    C15 438 7 413 11 370 S8 302 13 260 S7 184 10 143 S14 67 10 18Z"/>
+  <path filter="url(#feather)" d="M15 42
+    C22 23 57 18 102 17 S168 8 210 8 S281 3 323 5 S392 7 440 4
+    S538 2 578 5 S654 8 706 6 S771 5 825 9 S903 2 942 10
+    C972 16 988 14 991 37 S986 97 992 127 S999 174 997 206
+    S988 265 993 301 S1002 354 997 385 S992 434 996 457
+    C1000 478 984 483 963 487 S924 489 895 493 S824 498 788 496
+    S718 492 677 496 S590 499 545 497 S459 495 413 497
+    S339 498 285 495 S221 499 162 497 S90 490 43 493
+    C21 495 9 489 6 477 S10 440 6 417 S-1 374 3 349
+    S11 301 7 275 S-2 229 4 202 S11 156 7 128 S7 65 15 42Z"/>
 </svg>

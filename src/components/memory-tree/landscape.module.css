@@ -5,11 +5,13 @@
 }
 
 .frame {
+  --framing-width: 1;
+  --horizontal-alignment: 50%;
   position: relative;
   isolation: isolate;
   overflow: hidden;
   container-type: size;
-  height: max(46.5vw, clamp(65svh, 56.28vw, 80svh));
+  aspect-ratio: calc(var(--scene-ratio) * var(--framing-width));
 }
 
 .scene {
@@ -18,14 +20,16 @@
   mask: url('/memory-tree/environment/paper-edge.svg') center / 100% 100% no-repeat;
 }
 
-/* Crop the registered world once. Every painted plate and anchor follows it. */
-.world {
+/* Fit the complete painted extent before mapping back to the original world. */
+.artwork {
   position: absolute;
   width: max(100%, 100cqh * var(--scene-ratio));
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  aspect-ratio: var(--scene-ratio);
+  left: var(--horizontal-alignment);
+  transform: translateX(calc(-1 * var(--horizontal-alignment)));
 }
+
+.world { position: absolute; }
 
 .stack, .live, .anchors, .plate {
   position: absolute;
@@ -78,10 +82,26 @@
   padding: .08rem .3rem;
 }
 
+@media (min-width: 601px) {
+  :global(#memory-tree):has(> .landscape) {
+    padding-block-start: clamp(2rem, 3.2vw, 3.35rem);
+  }
+
+  :global(#memory-tree):has(> .landscape) > :global(.mt-origin) {
+    padding-block-end: clamp(1.2rem, 2vw, 1.7rem);
+  }
+}
+
 @media (max-width: 1000px) {
-  .frame { height: 62.5vw; }
+  .frame {
+    --framing-width: .81;
+    --horizontal-alignment: 75%;
+  }
 }
 
 @media (max-width: 600px) {
-  .frame { height: calc(100vw / 1.24); }
+  .frame {
+    --framing-width: .698;
+    --horizontal-alignment: 50%;
+  }
 }
