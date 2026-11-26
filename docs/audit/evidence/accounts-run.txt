@@ -1,0 +1,1 @@
+Guest and authenticated-route boundaries, fixed callback origin, and responsive signup, login, and recovery checked.

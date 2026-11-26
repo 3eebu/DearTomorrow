@@ -1,0 +1,19 @@
+{
+  "headlineOnLoad": true,
+  "webkitDirect": [],
+  "webkitTransition": [
+    {
+      "name": "Fetch API cannot load http",
+      "type": "access control"
+    },
+    {
+      "name": "Fetch API cannot load http",
+      "type": "access control"
+    },
+    {
+      "name": "Fetch API cannot load http",
+      "type": "access control"
+    }
+  ],
+  "directHeading": "Until We\nMeet Again."
+}

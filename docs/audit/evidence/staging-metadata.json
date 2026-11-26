@@ -1,0 +1,8 @@
+{
+  "domain": "deartomorrow.site",
+  "state": "READY",
+  "target": "preview",
+  "gitRef": "staging",
+  "gitSha": "8f1dce45366214c6a19f1ed617699d024f13617e",
+  "protection": "all"
+}

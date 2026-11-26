@@ -1,0 +1,11 @@
+{
+  "personal letter cloud save": "pass",
+  "personal journey cloud save": "pass",
+  "personal tree cloud save": "pass",
+  "second session letters": true,
+  "second session trees": true,
+  "second session journeys": true,
+  "independent browser session retrieves three documents": "pass",
+  "loss of session returns to login": "pass",
+  "owner password account closure through UI": "pass"
+}

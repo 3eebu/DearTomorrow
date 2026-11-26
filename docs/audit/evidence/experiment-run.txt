@@ -1,0 +1,53 @@
+[
+  {
+    "label": "desktop",
+    "gpu": "ANGLE (Intel, Intel(R) Graphics (0x00007D67) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "pixels": [
+      1440,
+      811
+    ],
+    "samples": 743,
+    "drawn": 744,
+    "fps": 165.2635553877252,
+    "gpuSamples": 62,
+    "gpuMedianMs": 2.37026,
+    "medianMs": 6.099999999999454,
+    "p95Ms": 6.100000000000364,
+    "geometry": "6,761 leaves · 1,117 foliage clusters · 1,503 woody segments · 5,700 meadow instances · 11 draw calls · 1440 × 811 pixels",
+    "stages": [
+      "0 leaves · 0 foliage clusters · 1 woody segments · 5,700 meadow instances · 10 draw calls · 1440 × 811 pixels",
+      "2 leaves · 0 foliage clusters · 3 woody segments · 5,700 meadow instances · 10 draw calls · 1440 × 811 pixels",
+      "7 leaves · 0 foliage clusters · 8 woody segments · 5,700 meadow instances · 10 draw calls · 1440 × 811 pixels",
+      "2,360 leaves · 390 foliage clusters · 537 woody segments · 5,700 meadow instances · 12 draw calls · 1440 × 811 pixels",
+      "5,187 leaves · 880 foliage clusters · 1,197 woody segments · 5,700 meadow instances · 12 draw calls · 1440 × 811 pixels",
+      "5,320 leaves · 891 foliage clusters · 1,206 woody segments · 5,700 meadow instances · 12 draw calls · 1440 × 811 pixels",
+      "6,761 leaves · 1,117 foliage clusters · 1,503 woody segments · 5,700 meadow instances · 12 draw calls · 1440 × 811 pixels"
+    ]
+  },
+  {
+    "label": "phone",
+    "gpu": "ANGLE (Intel, Intel(R) Graphics (0x00007D67) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "pixels": [
+      585,
+      461
+    ],
+    "samples": 743,
+    "drawn": 744,
+    "fps": 165.2635553877252,
+    "gpuSamples": 62,
+    "gpuMedianMs": 1.215104,
+    "medianMs": 6.099999999999454,
+    "p95Ms": 6.100000000000364,
+    "geometry": "6,761 leaves · 1,117 foliage clusters · 1,503 woody segments · 5,700 meadow instances · 11 draw calls · 585 × 461 pixels",
+    "stages": [
+      "0 leaves · 0 foliage clusters · 1 woody segments · 5,700 meadow instances · 10 draw calls · 585 × 461 pixels",
+      "2 leaves · 0 foliage clusters · 3 woody segments · 5,700 meadow instances · 10 draw calls · 585 × 461 pixels",
+      "7 leaves · 0 foliage clusters · 8 woody segments · 5,700 meadow instances · 10 draw calls · 585 × 461 pixels",
+      "2,360 leaves · 390 foliage clusters · 537 woody segments · 5,700 meadow instances · 12 draw calls · 585 × 461 pixels",
+      "5,187 leaves · 880 foliage clusters · 1,197 woody segments · 5,700 meadow instances · 12 draw calls · 585 × 461 pixels",
+      "5,320 leaves · 891 foliage clusters · 1,206 woody segments · 5,700 meadow instances · 12 draw calls · 585 × 461 pixels",
+      "6,761 leaves · 1,117 foliage clusters · 1,503 woody segments · 5,700 meadow instances · 12 draw calls · 585 × 461 pixels"
+    ]
+  }
+]
+PASS: real renderer, lights, stages, pause/resume, reduced motion, fallback, and viewport bounds.

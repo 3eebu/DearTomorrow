@@ -1,0 +1,801 @@
+{
+  "routes": [
+    "/about",
+    "/api/account-session",
+    "/api/private-space",
+    "/auth/callback",
+    "/auth/confirm",
+    "/connect",
+    "/forgot-password",
+    "/how-it-works",
+    "/journey-letters",
+    "/letters",
+    "/login",
+    "/memory-books",
+    "/memory-tree/experiment",
+    "/memory-tree",
+    "/my-space/memory/[id]",
+    "/my-space",
+    "/our-space/memory/[id]",
+    "/our-space",
+    "/",
+    "/reset-password",
+    "/settings",
+    "/signup",
+    "/welcome"
+  ],
+  "components": [
+    "src/app/how-it-works/guide-film.tsx",
+    "src/components/about-keepsake.module.css",
+    "src/components/about-keepsake.tsx",
+    "src/components/about-newspaper-montage.module.css",
+    "src/components/about-newspaper-montage.tsx",
+    "src/components/accounts/account-nav.tsx",
+    "src/components/accounts/account-shell.tsx",
+    "src/components/accounts/auth-page.tsx",
+    "src/components/accounts/cloud-boundary.tsx",
+    "src/components/accounts/connection.tsx",
+    "src/components/accounts/copy-id.tsx",
+    "src/components/accounts/guest-migration.tsx",
+    "src/components/accounts/memory-page.tsx",
+    "src/components/accounts/memory-viewer.tsx",
+    "src/components/accounts/space-library.tsx",
+    "src/components/home-studio.tsx",
+    "src/components/information-shell.tsx",
+    "src/components/journey-letters/journey-forms.tsx",
+    "src/components/journey-letters/journey-map.tsx",
+    "src/components/journey-letters/journey-workspace.tsx",
+    "src/components/journey-letters/journey.css",
+    "src/components/letters/letter-attachments.tsx",
+    "src/components/letters/letter-box.tsx",
+    "src/components/letters/letter-objects.tsx",
+    "src/components/letters/letter-reader.tsx",
+    "src/components/letters/letter-studio.tsx",
+    "src/components/letters/letters-workspace.tsx",
+    "src/components/letters/letters.css",
+    "src/components/memory-books/book-library.tsx",
+    "src/components/memory-books/book-reader.module.css",
+    "src/components/memory-books/book-reader.tsx",
+    "src/components/memory-books/book-studio.tsx",
+    "src/components/memory-books/bookmaking.module.css",
+    "src/components/memory-books/chapter-organizer.tsx",
+    "src/components/memory-books/cover-renderer.tsx",
+    "src/components/memory-books/cover-studio.tsx",
+    "src/components/memory-books/creative-objects.tsx",
+    "src/components/memory-books/frame-probe.tsx",
+    "src/components/memory-books/gift-presentation.module.css",
+    "src/components/memory-books/gift-presentation.tsx",
+    "src/components/memory-books/gift-studio.tsx",
+    "src/components/memory-books/memory-books.module.css",
+    "src/components/memory-books/page-content.tsx",
+    "src/components/memory-books/paper-surprise.module.css",
+    "src/components/memory-books/paper-surprise.tsx",
+    "src/components/memory-books/reader-environment.module.css",
+    "src/components/memory-books/reader-environment.tsx",
+    "src/components/memory-books/reader-places.tsx",
+    "src/components/memory-books/studio-inspector.tsx",
+    "src/components/memory-books/studio-settings.tsx",
+    "src/components/memory-books/studio.module.css",
+    "src/components/memory-books/surprise-inspector.tsx",
+    "src/components/memory-books/voice-inspector.tsx",
+    "src/components/memory-books/voice-memory.module.css",
+    "src/components/memory-books/voice-memory.tsx",
+    "src/components/memory-tree-art.module.css",
+    "src/components/memory-tree-art.tsx",
+    "src/components/memory-tree/environment-studio.module.css",
+    "src/components/memory-tree/environment-studio.tsx",
+    "src/components/memory-tree/landscape.module.css",
+    "src/components/memory-tree/landscape.tsx",
+    "src/components/memory-tree/memory-tree-workspace.tsx",
+    "src/components/memory-tree/memory-tree.css",
+    "src/components/memory-tree/tree-dialogs.tsx",
+    "src/components/memory-tree/tree-journal.tsx",
+    "src/components/memory-tree/tree-stage.tsx",
+    "src/components/stationery-dialog.tsx"
+  ],
+  "applicationStateTypes": [
+    [
+      "src/components/accounts/connection.tsx",
+      "ConnectionView",
+      "{"
+    ],
+    [
+      "src/components/accounts/memory-viewer.tsx",
+      "View",
+      "Omit<CloudDocument,'ownerId'>"
+    ],
+    [
+      "src/components/letters/letter-attachments.tsx",
+      "Phase",
+      "'idle'|'permission'|'recording'|'preparing'"
+    ],
+    [
+      "src/components/letters/letter-objects.tsx",
+      "Phase",
+      "'rest' | 'sealing' | 'opening' | 'returning'"
+    ],
+    [
+      "src/components/letters/letter-studio.tsx",
+      "SaveStatus",
+      "'saved' | 'typing' | 'saving' | 'error'"
+    ],
+    [
+      "src/components/letters/letters-workspace.tsx",
+      "Screen",
+      "{mode:'box'} | {mode:'studio'|'reader'"
+    ],
+    [
+      "src/components/letters/letters-workspace.tsx",
+      "Modal",
+      "{kind:'collection'|'occasion'} | {kind:'organize'|'unseal'"
+    ],
+    [
+      "src/components/memory-books/voice-inspector.tsx",
+      "Phase",
+      "'idle' | 'requesting' | 'recording' | 'preparing'"
+    ],
+    [
+      "src/components/memory-tree/memory-tree-workspace.tsx",
+      "DialogMode",
+      "'plant'|'appearance'|'chapters'|'memory'|'delete'"
+    ],
+    [
+      "src/lib/letters.ts",
+      "State",
+      "'draft' | 'sealed' | 'scheduled' | 'opened'"
+    ],
+    [
+      "src/lib/memory-tree.ts",
+      "View",
+      "typeof views[number]"
+    ]
+  ],
+  "keyframes": [
+    [
+      "src/app/about/about.module.css",
+      "dedicationArrival"
+    ],
+    [
+      "src/app/accounts.css",
+      "dt-meet"
+    ],
+    [
+      "src/app/globals.css",
+      "float"
+    ],
+    [
+      "src/app/globals.css",
+      "turn"
+    ],
+    [
+      "src/app/globals.css",
+      "grow"
+    ],
+    [
+      "src/app/globals.css",
+      "route"
+    ],
+    [
+      "src/app/home-studio.css",
+      "dtTurnPage"
+    ],
+    [
+      "src/app/home-studio.css",
+      "dtTreeDraw"
+    ],
+    [
+      "src/app/home-studio.css",
+      "dtFadeLeaves"
+    ],
+    [
+      "src/app/home-studio.css",
+      "dtMarkerIn"
+    ],
+    [
+      "src/app/home-studio.css",
+      "dtFlight"
+    ],
+    [
+      "src/app/how-it-works/guide.module.css",
+      "arrive"
+    ],
+    [
+      "src/app/stationery.css",
+      "dt-sheet-in"
+    ],
+    [
+      "src/app/stationery.css",
+      "dt-sheet-out"
+    ],
+    [
+      "src/app/stationery.css",
+      "dt-sheet-shade-in"
+    ],
+    [
+      "src/app/stationery.css",
+      "dt-sheet-shade-out"
+    ],
+    [
+      "src/app/story-pages.css",
+      "infoGrow"
+    ],
+    [
+      "src/app/story-pages.css",
+      "infoLeaf"
+    ],
+    [
+      "src/components/about-keepsake.module.css",
+      "watercolorBreeze"
+    ],
+    [
+      "src/components/about-keepsake.module.css",
+      "watercolorPetal"
+    ],
+    [
+      "src/components/about-keepsake.module.css",
+      "keepsakeInk"
+    ],
+    [
+      "src/components/about-newspaper-montage.module.css",
+      "masthead-arrive"
+    ],
+    [
+      "src/components/about-newspaper-montage.module.css",
+      "paper-arrive"
+    ],
+    [
+      "src/components/about-newspaper-montage.module.css",
+      "paper-stir"
+    ],
+    [
+      "src/components/journey-letters/journey.css",
+      "jlAtlasIn"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-release-wax"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-lift-flap"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-release-sheet"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-unfold-top"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-expose-ink"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-unfold-bottom"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-tuck-sheet"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-fold-top"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-cover-ink"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-fold-bottom"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-close-flap"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-press-wax"
+    ],
+    [
+      "src/components/letters/letters.css",
+      "lt-object-weight"
+    ],
+    [
+      "src/components/memory-books/gift-presentation.module.css",
+      "untie"
+    ],
+    [
+      "src/components/memory-books/gift-presentation.module.css",
+      "side"
+    ],
+    [
+      "src/components/memory-books/gift-presentation.module.css",
+      "left"
+    ],
+    [
+      "src/components/memory-books/gift-presentation.module.css",
+      "top"
+    ],
+    [
+      "src/components/memory-books/gift-presentation.module.css",
+      "bottom"
+    ],
+    [
+      "src/components/memory-books/gift-presentation.module.css",
+      "disappear"
+    ],
+    [
+      "src/components/memory-books/paper-surprise.module.css",
+      "pull"
+    ],
+    [
+      "src/components/memory-books/reader-environment.module.css",
+      "flicker"
+    ],
+    [
+      "src/components/memory-books/reader-environment.module.css",
+      "warmth"
+    ],
+    [
+      "src/components/memory-books/reader-environment.module.css",
+      "rain"
+    ],
+    [
+      "src/components/memory-books/reader-environment.module.css",
+      "drift"
+    ],
+    [
+      "src/components/memory-books/studio.module.css",
+      "place"
+    ],
+    [
+      "src/components/memory-tree-art.module.css",
+      "branchGrow"
+    ],
+    [
+      "src/components/memory-tree-art.module.css",
+      "unfurl"
+    ],
+    [
+      "src/components/memory-tree/memory-tree.css",
+      "mt-drift"
+    ],
+    [
+      "src/components/memory-tree/memory-tree.css",
+      "mt-stem-in"
+    ],
+    [
+      "src/components/memory-tree/memory-tree.css",
+      "mt-unfold"
+    ],
+    [
+      "src/components/memory-tree/memory-tree.css",
+      "mt-plant"
+    ]
+  ],
+  "motionOwners": [
+    {
+      "file": "src/app/about/about.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/app/accounts.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/app/globals.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/app/home-studio.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/app/how-it-works/guide-film.tsx",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": true
+    },
+    {
+      "file": "src/app/how-it-works/guide.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/app/memory-tree/experiment/renderer.ts",
+      "reducedMotion": true,
+      "frameLoop": true,
+      "visibility": true
+    },
+    {
+      "file": "src/app/stationery.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/app/story-pages.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/about-keepsake.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/about-keepsake.tsx",
+      "reducedMotion": false,
+      "frameLoop": false,
+      "visibility": true
+    },
+    {
+      "file": "src/components/about-newspaper-montage.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/about-newspaper-montage.tsx",
+      "reducedMotion": true,
+      "frameLoop": true,
+      "visibility": true
+    },
+    {
+      "file": "src/components/accounts/connection.tsx",
+      "reducedMotion": false,
+      "frameLoop": true,
+      "visibility": false
+    },
+    {
+      "file": "src/components/home-studio.tsx",
+      "reducedMotion": false,
+      "frameLoop": false,
+      "visibility": true
+    },
+    {
+      "file": "src/components/journey-letters/journey-forms.tsx",
+      "reducedMotion": false,
+      "frameLoop": true,
+      "visibility": false
+    },
+    {
+      "file": "src/components/journey-letters/journey-map.tsx",
+      "reducedMotion": true,
+      "frameLoop": true,
+      "visibility": true
+    },
+    {
+      "file": "src/components/journey-letters/journey.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/letters/letter-studio.tsx",
+      "reducedMotion": false,
+      "frameLoop": true,
+      "visibility": true
+    },
+    {
+      "file": "src/components/letters/letters.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-books/book-library.tsx",
+      "reducedMotion": false,
+      "frameLoop": true,
+      "visibility": true
+    },
+    {
+      "file": "src/components/memory-books/book-reader.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-books/book-reader.tsx",
+      "reducedMotion": true,
+      "frameLoop": true,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-books/book-studio.tsx",
+      "reducedMotion": false,
+      "frameLoop": true,
+      "visibility": true
+    },
+    {
+      "file": "src/components/memory-books/frame-probe.tsx",
+      "reducedMotion": false,
+      "frameLoop": true,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-books/gift-presentation.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-books/memory-books.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-books/paper-surprise.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-books/reader-environment.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-books/studio.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-tree-art.module.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-tree/environment-studio.tsx",
+      "reducedMotion": false,
+      "frameLoop": true,
+      "visibility": true
+    },
+    {
+      "file": "src/components/memory-tree/memory-tree.css",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": false
+    },
+    {
+      "file": "src/components/memory-tree/tree-stage.tsx",
+      "reducedMotion": true,
+      "frameLoop": false,
+      "visibility": true
+    }
+  ],
+  "serverAndAdapterExports": [
+    [
+      "src/app/api/account-session/route.ts",
+      "GET"
+    ],
+    [
+      "src/app/api/private-space/route.ts",
+      "POST"
+    ],
+    [
+      "src/app/auth/callback/route.ts",
+      "GET"
+    ],
+    [
+      "src/app/auth/confirm/route.ts",
+      "GET"
+    ],
+    [
+      "src/components/accounts/auth-page.tsx",
+      "AuthPage"
+    ],
+    [
+      "src/components/accounts/memory-page.tsx",
+      "MemoryPage"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "signInWithProvider"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "signUp"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "signIn"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "requestRecovery"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "resetPassword"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "signOut"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "saveDisplayName"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "findAccount"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "sendRequest"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "manageConnection"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "shareMemory"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "saveAvatar"
+    ],
+    [
+      "src/lib/accounts/actions.ts",
+      "deleteAccount"
+    ],
+    [
+      "src/lib/accounts/cloud-client.ts",
+      "readCloud"
+    ],
+    [
+      "src/lib/accounts/cloud-client.ts",
+      "commitCloud"
+    ],
+    [
+      "src/lib/accounts/cloud-client.ts",
+      "sourceFingerprint"
+    ],
+    [
+      "src/lib/accounts/media.ts",
+      "saveImage"
+    ],
+    [
+      "src/lib/accounts/media.ts",
+      "packMedia"
+    ],
+    [
+      "src/lib/accounts/media.ts",
+      "removeOwnedMedia"
+    ],
+    [
+      "src/lib/accounts/server.ts",
+      "accountClient"
+    ],
+    [
+      "src/lib/accounts/server.ts",
+      "accountLanding"
+    ],
+    [
+      "src/lib/accounts/server.ts",
+      "account"
+    ],
+    [
+      "src/lib/accounts/server.ts",
+      "requireAccount"
+    ],
+    [
+      "src/lib/accounts/server.ts",
+      "workspaceScope"
+    ],
+    [
+      "src/lib/accounts/social-providers.ts",
+      "availableSocialProviders"
+    ]
+  ],
+  "externalHostLiterals": [
+    "fonts.googleapis.com",
+    "www.w3.org",
+    "127.0.0.1"
+  ],
+  "storageFiles": [
+    "src/components/accounts/cloud-boundary.tsx",
+    "src/lib/accounts/cloud-client.ts",
+    "src/lib/accounts/cloud-transport.ts",
+    "src/lib/journey-letter-storage.ts",
+    "src/lib/letter-storage.ts",
+    "src/lib/memory-book-storage.ts",
+    "src/lib/memory-tree-storage.ts"
+  ],
+  "sqlAndEmail": [
+    "supabase/.gitignore",
+    "supabase/config.toml",
+    "supabase/migrations/202611210001_identity.sql",
+    "supabase/migrations/202611210002_connections.sql",
+    "supabase/migrations/202611210003_spaces.sql",
+    "supabase/migrations/202611220001_cloud_transfers.sql",
+    "supabase/templates/confirmation.html",
+    "supabase/templates/recovery.html"
+  ],
+  "assetBytes": [
+    [
+      "public/about/watercolor-eyes.webp",
+      1830558
+    ],
+    [
+      "public/auth/apple-continue.png",
+      8504
+    ],
+    [
+      "public/auth/google-g.png",
+      33661
+    ],
+    [
+      "public/guide/letters-phone.mp4",
+      479973
+    ],
+    [
+      "public/guide/letters.mp4",
+      867256
+    ],
+    [
+      "public/guide/letters.webp",
+      25508
+    ],
+    [
+      "public/guide/memory-books-phone.mp4",
+      404922
+    ],
+    [
+      "public/guide/memory-books.mp4",
+      783587
+    ],
+    [
+      "public/guide/memory-books.webp",
+      28154
+    ],
+    [
+      "public/guide/memory-tree-phone.mp4",
+      256121
+    ],
+    [
+      "public/guide/memory-tree.mp4",
+      457258
+    ],
+    [
+      "public/guide/memory-tree.webp",
+      15856
+    ],
+    [
+      "public/journey-land.svg",
+      68807
+    ],
+    [
+      "public/memory-tree/environment/master-960.webp",
+      196210
+    ],
+    [
+      "public/memory-tree/environment/master.webp",
+      2268292
+    ],
+    [
+      "public/memory-tree/environment/paper-edge.svg",
+      1026
+    ]
+  ]
+}

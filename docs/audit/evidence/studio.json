@@ -1,0 +1,26 @@
+{
+  "steps": [
+    "resize photo using handle",
+    "group two objects, arrange, ungroup, lock and unlock",
+    "shape insertion",
+    "ink stroke on canvas",
+    "template inserts a new page",
+    "custom voice recording and written transcript",
+    "upload WAV",
+    "confirmed export with page/object/transcript checks",
+    "chapters and dividers",
+    "phone single page, rapid navigation and edge cancellation"
+  ],
+  "errors": [],
+  "initialLibraryMs": 18.5,
+  "studioMs": 33.3000000002794,
+  "exportCounts": {
+    "pages": 101,
+    "objects": 77,
+    "hasTranscript": true,
+    "hasAudio": 1
+  },
+  "dragCancelKeptPage": true,
+  "afterRapid": "Page 2 of 102",
+  "phoneOverflow": 0
+}

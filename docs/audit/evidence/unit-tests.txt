@@ -1,0 +1,581 @@
+TAP version 13
+# Subtest: private attachment sidecars preserve complete bytes, nested references, and repeat saves
+ok 1 - private attachment sidecars preserve complete bytes, nested references, and repeat saves
+  ---
+  duration_ms: 2.7259
+  type: 'test'
+  ...
+# Subtest: media lookups reject another owner, another document, and injected manifest fields before downloading
+ok 2 - media lookups reject another owner, another document, and injected manifest fields before downloading
+  ---
+  duration_ms: 1.5403
+  type: 'test'
+  ...
+# Subtest: media type is verified and missing Storage prevents a false save
+ok 3 - media type is verified and missing Storage prevents a false save
+  ---
+  duration_ms: 0.9257
+  type: 'test'
+  ...
+# Subtest: social initiation redirects to the configured Auth authorize endpoint only
+ok 4 - social initiation redirects to the configured Auth authorize endpoint only
+  ---
+  duration_ms: 2.2432
+  type: 'test'
+  ...
+# Subtest: PKCE exchange passes only Supabase session data to the cookie-writing SDK
+ok 5 - PKCE exchange passes only Supabase session data to the cookie-writing SDK
+  ---
+  duration_ms: 34.1075
+  type: 'test'
+  ...
+# Subtest: failed Auth exchanges and unrelated responses remain untouched
+ok 6 - failed Auth exchanges and unrelated responses remain untouched
+  ---
+  duration_ms: 0.8364
+  type: 'test'
+  ...
+# Subtest: verified identities have private profiles, stable permanent IDs, and capped ID-only lookups
+ok 7 - verified identities have private profiles, stable permanent IDs, and capped ID-only lookups
+  ---
+  duration_ms: 1360.341
+  type: 'test'
+  ...
+# Subtest: only the recipient can accept, decline or establish one connection, and new requests can be paused
+ok 8 - only the recipient can accept, decline or establish one connection, and new requests can be paused
+  ---
+  duration_ms: 796.1281
+  type: 'test'
+  ...
+# Subtest: lookup tickets cannot cross accounts, repeated requests stay singular, and expired requests cannot pair
+ok 9 - lookup tickets cannot cross accounts, repeated requests stay singular, and expired requests cannot pair
+  ---
+  duration_ms: 869.6958
+  type: 'test'
+  ...
+# Subtest: sharing is read-only, saved revisions and import receipts are atomic, and disconnect ends access
+ok 10 - sharing is read-only, saved revisions and import receipts are atomic, and disconnect ends access
+  ---
+  duration_ms: 957.487
+  type: 'test'
+  ...
+# Subtest: PostgreSQL withholds timed and draft content and blocks direct reads from private Storage
+ok 11 - PostgreSQL withholds timed and draft content and blocks direct reads from private Storage
+  ---
+  duration_ms: 949.3492
+  type: 'test'
+  ...
+# Subtest: staged cloud uploads are bounded, private, ordered and disposable
+ok 12 - staged cloud uploads are bounded, private, ordered and disposable
+  ---
+  duration_ms: 830.0702
+  type: 'test'
+  ...
+# Subtest: staged HTTPS saves retain the exact UTF-8 JSON and use bounded function requests
+ok 13 - staged HTTPS saves retain the exact UTF-8 JSON and use bounded function requests
+  ---
+  duration_ms: 207.5876
+  type: 'test'
+  ...
+# Subtest: a rejected fragment cancels the transfer without completing a save
+ok 14 - a rejected fragment cancels the transfer without completing a save
+  ---
+  duration_ms: 65.1329
+  type: 'test'
+  ...
+# Subtest: a library loads separately authorized documents and rejects a mixed revision
+ok 15 - a library loads separately authorized documents and rejects a mixed revision
+  ---
+  duration_ms: 47.5336
+  type: 'test'
+  ...
+# Subtest: Vercel requires a canonical HTTPS origin and local preview still accepts loopback
+ok 16 - Vercel requires a canonical HTTPS origin and local preview still accepts loopback
+  ---
+  duration_ms: 40.1894
+  type: 'test'
+  ...
+# Subtest: the private route consumes a large upload once and streams an authorized large read
+ok 17 - the private route consumes a large upload once and streams an authorized large read
+  ---
+  duration_ms: 117.4826
+  type: 'test'
+  ...
+# Subtest: reduced motion removes both cover and sheet animation duration
+ok 18 - reduced motion removes both cover and sheet animation duration
+  ---
+  duration_ms: 0.5336
+  type: 'test'
+  ...
+# Subtest: sheet endpoints are flat, with continuous, fixed-length segments and a pinned binding
+ok 19 - sheet endpoints are flat, with continuous, fixed-length segments and a pinned binding
+  ---
+  duration_ms: 1.5865
+  type: 'test'
+  ...
+# Subtest: every document page is visible once in resting spreads, including even and odd final pages
+ok 20 - every document page is visible once in resting spreads, including even and odd final pages
+  ---
+  duration_ms: 1.7607
+  type: 'test'
+  ...
+# Subtest: forward and backward sheets carry the same physical front and reverse in spreads
+ok 21 - forward and backward sheets carry the same physical front and reverse in spreads
+  ---
+  duration_ms: 0.1489
+  type: 'test'
+  ...
+# Subtest: short drags cancel, fresh forward momentum completes, stale flicks and explicit cancellation do not
+ok 22 - short drags cancel, fresh forward momentum completes, stale flicks and explicit cancellation do not
+  ---
+  duration_ms: 0.1489
+  type: 'test'
+  ...
+# Subtest: a new journey has its own six stable, empty envelopes and UTC opening times across midnight
+ok 23 - a new journey has its own six stable, empty envelopes and UTC opening times across midnight
+  ---
+  duration_ms: 42.1297
+  type: 'test'
+  ...
+# Subtest: manual cities may have no map point, invalid coordinates or backwards flight times fail
+ok 24 - manual cities may have no map point, invalid coordinates or backwards flight times fail
+  ---
+  duration_ms: 4.8371
+  type: 'test'
+  ...
+# Subtest: civil times reject spring gaps and distinguish the first and second occurrence of repeated hours
+ok 25 - civil times reject spring gaps and distinguish the first and second occurrence of repeated hours
+  ---
+  duration_ms: 2.5408
+  type: 'test'
+  ...
+# Subtest: edited flight times move the defaults while custom instants remain fixed and ordered
+ok 26 - edited flight times move the defaults while custom instants remain fixed and ordered
+  ---
+  duration_ms: 2.5602
+  type: 'test'
+  ...
+# Subtest: the existing Letter model seals a journey draft and the journey records an opening only when available
+ok 27 - the existing Letter model seals a journey draft and the journey records an opening only when available
+  ---
+  duration_ms: 3.3026
+  type: 'test'
+  ...
+# Subtest: backups validate version and identity, import preserves states, and duplicates get independent drafts
+ok 28 - backups validate version and identity, import preserves states, and duplicates get independent drafts
+  ---
+  duration_ms: 4.3962
+  type: 'test'
+  ...
+# Subtest: short and long routes follow a curved path, wrap the antimeridian, and have a city-name fallback
+ok 29 - short and long routes follow a curved path, wrap the antimeridian, and have a city-name fallback
+  ---
+  duration_ms: 1.9055
+  type: 'test'
+  ...
+# Subtest: ordinary, keepsake and future-self letters follow intentional draft, sealed and opened transitions
+ok 30 - ordinary, keepsake and future-self letters follow intentional draft, sealed and opened transitions
+  ---
+  duration_ms: 20.4944
+  type: 'test'
+  ...
+# Subtest: daylight-saving gaps reject; repeated hours select the earlier or later instant
+ok 31 - daylight-saving gaps reject; repeated hours select the earlier or later instant
+  ---
+  duration_ms: 3.2557
+  type: 'test'
+  ...
+# Subtest: time-zone conversion handles half-hour offsets and calendar boundaries
+ok 32 - time-zone conversion handles half-hour offsets and calendar boundaries
+  ---
+  duration_ms: 1.2775
+  type: 'test'
+  ...
+# Subtest: scheduled letters become locally readable at the exact resolved time
+ok 33 - scheduled letters become locally readable at the exact resolved time
+  ---
+  duration_ms: 1.5777
+  type: 'test'
+  ...
+# Subtest: a collection of seven custom Open When letters survives backup and imports as independent copies
+ok 34 - a collection of seven custom Open When letters survives backup and imports as independent copies
+  ---
+  duration_ms: 2.5628
+  type: 'test'
+  ...
+# Subtest: paper, envelope, strokes, mixed writing and local media round trip together
+ok 35 - paper, envelope, strokes, mixed writing and local media round trip together
+  ---
+  duration_ms: 3.5737
+  type: 'test'
+  ...
+# Subtest: validation rejects unsafe media, malformed drawings, format desynchronization and invalid document states
+ok 36 - validation rejects unsafe media, malformed drawings, format desynchronization and invalid document states
+  ---
+  duration_ms: 1.3715
+  type: 'test'
+  ...
+# Subtest: book creation produces independent, serializable documents
+ok 37 - book creation produces independent, serializable documents
+  ---
+  duration_ms: 6.6393
+  type: 'test'
+  ...
+# Subtest: square, landscape and portrait dimensions survive a backup round trip
+ok 38 - square, landscape and portrait dimensions survive a backup round trip
+  ---
+  duration_ms: 1.4272
+  type: 'test'
+  ...
+# Subtest: all 20, 50 and 100 pages and object order survive serialization
+ok 39 - all 20, 50 and 100 pages and object order survive serialization
+  ---
+  duration_ms: 3.3518
+  type: 'test'
+  ...
+# Subtest: positions, rotation, typography and embedded photo bytes survive export
+ok 40 - positions, rotation, typography and embedded photo bytes survive export
+  ---
+  duration_ms: 0.8764
+  type: 'test'
+  ...
+# Subtest: invalid version, missing assets, duplicate pages and off-page geometry are rejected
+ok 41 - invalid version, missing assets, duplicate pages and off-page geometry are rejected
+  ---
+  duration_ms: 0.7915
+  type: 'test'
+  ...
+# Subtest: executable and external image sources are rejected without mutating input
+ok 42 - executable and external image sources are rejected without mutating input
+  ---
+  duration_ms: 0.7194
+  type: 'test'
+  ...
+# Subtest: a slow short drag cancels, a long drag completes, and fresh flicks work in both directions
+ok 43 - a slow short drag cancels, a long drag completes, and fresh flicks work in both directions
+  ---
+  duration_ms: 0.2618
+  type: 'test'
+  ...
+# Subtest: local saving completes only after the transaction commits and reload restores the document
+ok 44 - local saving completes only after the transaction commits and reload restores the document
+  ---
+  duration_ms: 41.3366
+  type: 'test'
+  ...
+# Subtest: an aborted storage transaction rejects without claiming or storing a save
+ok 45 - an aborted storage transaction rejects without claiming or storing a save
+  ---
+  duration_ms: 17.5768
+  type: 'test'
+  ...
+# Subtest: another tab changing the library prevents stale data from overwriting it
+ok 46 - another tab changing the library prevents stale data from overwriting it
+  ---
+  duration_ms: 10.1004
+  type: 'test'
+  ...
+# Subtest: unavailable storage rejects initialization, clears the pending read, and never writes an empty library
+ok 47 - unavailable storage rejects initialization, clears the pending read, and never writes an empty library
+  ---
+  duration_ms: 9.536
+  type: 'test'
+  ...
+# Subtest: concurrent initialization shares one pending request without caching stale reads
+ok 48 - concurrent initialization shares one pending request without caching stale reads
+  ---
+  duration_ms: 19.1974
+  type: 'test'
+  ...
+# Subtest: invalid expanded content is rejected before replacing an existing saved library
+ok 49 - invalid expanded content is rejected before replacing an existing saved library
+  ---
+  duration_ms: 36.0101
+  type: 'test'
+  ...
+# Subtest: a stored version 1 book upgrades on read without rewriting the stored original
+ok 50 - a stored version 1 book upgrades on read without rewriting the stored original
+  ---
+  duration_ms: 46.5405
+  type: 'test'
+  ...
+# Subtest: partially separated art never composites over the trees or clouds in the master
+ok 51 - partially separated art never composites over the trees or clouds in the master
+  ---
+  duration_ms: 2.1478
+  type: 'test'
+  ...
+# Subtest: the painting can be assembled before birds and memory interactions are supplied
+ok 52 - the painting can be assembled before birds and memory interactions are supplied
+  ---
+  duration_ms: 1.8151
+  type: 'test'
+  ...
+# Subtest: vertical artwork expansion preserves the scale and registration of the original world
+ok 53 - vertical artwork expansion preserves the scale and registration of the original world
+  ---
+  duration_ms: 0.4426
+  type: 'test'
+  ...
+# Subtest: growth moves from bare earth to a sprout and extends into a mature crown
+ok 54 - growth moves from bare earth to a sprout and extends into a mature crown
+  ---
+  duration_ms: 167.6475
+  type: 'test'
+  ...
+# Subtest: one independently identified painted leaf per memory at 1
+ok 55 - one independently identified painted leaf per memory at 1
+  ---
+  duration_ms: 31.9373
+  type: 'test'
+  ...
+# 30.9 ms for 1 painted leaf positions
+# Subtest: one independently identified painted leaf per memory at 5
+ok 56 - one independently identified painted leaf per memory at 5
+  ---
+  duration_ms: 30.3154
+  type: 'test'
+  ...
+# 30.0 ms for 5 painted leaf positions
+# Subtest: one independently identified painted leaf per memory at 20
+ok 57 - one independently identified painted leaf per memory at 20
+  ---
+  duration_ms: 33.5505
+  type: 'test'
+  ...
+# 33.2 ms for 20 painted leaf positions
+# Subtest: one independently identified painted leaf per memory at 100
+ok 58 - one independently identified painted leaf per memory at 100
+  ---
+  duration_ms: 37.3645
+  type: 'test'
+  ...
+# 37.0 ms for 100 painted leaf positions
+# Subtest: one independently identified painted leaf per memory at 500
+ok 59 - one independently identified painted leaf per memory at 500
+  ---
+  duration_ms: 56.832
+  type: 'test'
+  ...
+# 56.1 ms for 500 painted leaf positions
+# Subtest: one independently identified painted leaf per memory at 1000
+ok 60 - one independently identified painted leaf per memory at 1000
+  ---
+  duration_ms: 78.1605
+  type: 'test'
+  ...
+# 76.8 ms for 1000 painted leaf positions
+# Subtest: one independently identified painted leaf per memory at 2400
+ok 61 - one independently identified painted leaf per memory at 2400
+  ---
+  duration_ms: 155.5239
+  type: 'test'
+  ...
+# 153.0 ms for 2400 painted leaf positions
+# Subtest: the full canopy leaves a gap between every pair of memory blades for each species
+ok 62 - the full canopy leaves a gap between every pair of memory blades for each species
+  ---
+  duration_ms: 548.6711
+  type: 'test'
+  ...
+# Subtest: leaf positions follow saved slots and do not jump on edits or additions
+ok 63 - leaf positions follow saved slots and do not jump on edits or additions
+  ---
+  duration_ms: 139.4129
+  type: 'test'
+  ...
+# Subtest: species change the shapes and colors follow seasons and memory dates
+ok 64 - species change the shapes and colors follow seasons and memory dates
+  ---
+  duration_ms: 177.7814
+  type: 'test'
+  ...
+# Subtest: local date and anniversary math handles boundaries and leap day
+ok 65 - local date and anniversary math handles boundaries and leap day
+  ---
+  duration_ms: 0.2105
+  type: 'test'
+  ...
+# Subtest: chapter removal preserves memories and filtered views do not mutate the tree
+ok 66 - chapter removal preserves memories and filtered views do not mutate the tree
+  ---
+  duration_ms: 1.3621
+  type: 'test'
+  ...
+# Subtest: validates backup identities, metadata, date-only values and image input
+ok 67 - validates backup identities, metadata, date-only values and image input
+  ---
+  duration_ms: 0.8951
+  type: 'test'
+  ...
+# Studio Node validation + round trip + shared SSR: 20 pages / 20 objects: median 5.14ms, max 6.10ms; 16184 bytes. Not a browser frame measurement.
+# Studio Node validation + round trip + shared SSR: 20 pages / 50 objects: median 11.16ms, max 12.87ms; 25961 bytes. Not a browser frame measurement.
+# Studio Node validation + round trip + shared SSR: 20 pages / 100 objects: median 20.89ms, max 24.43ms; 42258 bytes. Not a browser frame measurement.
+# Studio Node validation + round trip + shared SSR: 100 pages / 20 objects: median 4.00ms, max 5.05ms; 27944 bytes. Not a browser frame measurement.
+# Studio Node validation + round trip + shared SSR: 100 pages / 50 objects: median 1.99ms, max 2.50ms; 37721 bytes. Not a browser frame measurement.
+# Studio Node validation + round trip + shared SSR: 100 pages / 100 objects: median 4.79ms, max 5.21ms; 54018 bytes. Not a browser frame measurement.
+# Subtest: voice recordings survive a backup and reject wrong media, headers, durations, and references
+ok 68 - voice recordings survive a backup and reject wrong media, headers, durations, and references
+  ---
+  duration_ms: 12.366
+  type: 'test'
+  ...
+# Subtest: removing a voice honours shared copies, cleans the last asset, and remains undoable
+ok 69 - removing a voice honours shared copies, cleans the last asset, and remains undoable
+  ---
+  duration_ms: 0.7768
+  type: 'test'
+  ...
+# Subtest: a voice card renders without an audio player or play controls in a moving strip
+ok 70 - a voice card renders without an audio player or play controls in a moving strip
+  ---
+  duration_ms: 111.8232
+  type: 'test'
+  ...
+# Subtest: a new insert uses free paper when a default placement overlaps; example opens as an independent book
+ok 71 - a new insert uses free paper when a default placement overlaps; example opens as an independent book
+  ---
+  duration_ms: 149.3803
+  type: 'test'
+  ...
+# Subtest: anniversary project backups retain all seven surprises, independent photo faces, and wrapping
+ok 72 - anniversary project backups retain all seven surprises, independent photo faces, and wrapping
+  ---
+  duration_ms: 6.1209
+  type: 'test'
+  ...
+# Subtest: imports reject unsupported or unsafe surprise data before a project can be saved
+ok 73 - imports reject unsupported or unsafe surprise data before a project can be saved
+  ---
+  duration_ms: 5.4046
+  type: 'test'
+  ...
+# Subtest: hidden photo upload preserves front and newer copy; removed keepsake aborts without allocating an asset
+ok 74 - hidden photo upload preserves front and newer copy; removed keepsake aborts without allocating an asset
+  ---
+  duration_ms: 0.7523
+  type: 'test'
+  ...
+# Subtest: reader interaction keys stay isolated per page and curved strips never render duplicate controls
+ok 75 - reader interaction keys stay isolated per page and curved strips never render duplicate controls
+  ---
+  duration_ms: 3.4765
+  type: 'test'
+  ...
+# Subtest: bookmaking metadata and independent cover canvases survive a backup round trip
+ok 76 - bookmaking metadata and independent cover canvases survive a backup round trip
+  ---
+  duration_ms: 1.1225
+  type: 'test'
+  ...
+# Subtest: explicit chapter moves preserve every page and keep contents numbering in sync
+ok 77 - explicit chapter moves preserve every page and keep contents numbering in sync
+  ---
+  duration_ms: 1.0676
+  type: 'test'
+  ...
+# Subtest: version 1 upgrades in memory with stable IDs, photo bytes and object geometry, without mutating the input
+ok 78 - version 1 upgrades in memory with stable IDs, photo bytes and object geometry, without mutating the input
+  ---
+  duration_ms: 0.1988
+  type: 'test'
+  ...
+# Subtest: new properties, vector strokes, mixed writing and bleed survive a project round trip
+ok 79 - new properties, vector strokes, mixed writing and bleed survive a project round trip
+  ---
+  duration_ms: 0.3267
+  type: 'test'
+  ...
+# Subtest: unsafe markup sources and invalid new property values are rejected before rendering
+ok 80 - unsafe markup sources and invalid new property values are rejected before rendering
+  ---
+  duration_ms: 1.1599
+  type: 'test'
+  ...
+# Subtest: eight resize handles preserve the opposite physical anchor for rotated portrait and landscape objects at every zoom
+ok 81 - eight resize handles preserve the opposite physical anchor for rotated portrait and landscape objects at every zoom
+  ---
+  duration_ms: 2.3192
+  type: 'test'
+  ...
+# Subtest: aspect locking preserves physical proportions and rotated clipping is detected
+ok 82 - aspect locking preserves physical proportions and rotated clipping is detected
+  ---
+  duration_ms: 0.1823
+  type: 'test'
+  ...
+# Subtest: multi-object distribution preserves order and locked objects; snapping reports useful guides
+ok 83 - multi-object distribution preserves order and locked objects; snapping reports useful guides
+  ---
+  duration_ms: 0.393
+  type: 'test'
+  ...
+# Subtest: copying a group remaps IDs once and moving pages preserves object content without mutating either page
+ok 84 - copying a group remaps IDs once and moving pages preserves object content without mutating either page
+  ---
+  duration_ms: 0.2404
+  type: 'test'
+  ...
+# Subtest: late photo replacement keeps newer text and geometry, while removed or locked targets reject safely
+ok 85 - late photo replacement keeps newer text and geometry, while removed or locked targets reject safely
+  ---
+  duration_ms: 0.2507
+  type: 'test'
+  ...
+# Subtest: history groups typing, bounds snapshots, shares image strings and restores edits across page switches
+ok 86 - history groups typing, bounds snapshots, shares image strings and restores edits across page switches
+  ---
+  duration_ms: 0.254
+  type: 'test'
+  ...
+# Subtest: curated and personal layouts retain editable objects and independent IDs
+ok 87 - curated and personal layouts retain editable objects and independent IDs
+  ---
+  duration_ms: 0.8887
+  type: 'test'
+  ...
+# Subtest: selected-word formatting preserves all characters and safely limits styles to the chosen range
+ok 88 - selected-word formatting preserves all characters and safely limits styles to the chosen range
+  ---
+  duration_ms: 0.1789
+  type: 'test'
+  ...
+# Subtest: editing inside mixed writing preserves unaffected formatting and UTF-8 project budgets count emoji correctly
+ok 89 - editing inside mixed writing preserves unaffected formatting and UTF-8 project budgets count emoji correctly
+  ---
+  duration_ms: 0.3854
+  type: 'test'
+  ...
+# Subtest: group transformations rotate in physical page space and preserve relative scale
+ok 90 - group transformations rotate in physical page space and preserve relative scale
+  ---
+  duration_ms: 0.5214
+  type: 'test'
+  ...
+# Subtest: the vector eraser hits the middle of sparse segments after rotation, while distant strokes remain untouched
+ok 91 - the vector eraser hits the middle of sparse segments after rotation, while distant strokes remain untouched
+  ---
+  duration_ms: 0.2353
+  type: 'test'
+  ...
+# Subtest: 20, 50 and 100 object compositions in 20 and 100 page books validate, export and render within the supported budget
+ok 92 - 20, 50 and 100 object compositions in 20 and 100 page books validate, export and render within the supported budget
+  ---
+  duration_ms: 578.9064
+  type: 'test'
+  ...
+# Subtest: shared renderer includes every creative object and escapes writing rather than accepting HTML
+ok 93 - shared renderer includes every creative object and escapes writing rather than accepting HTML
+  ---
+  duration_ms: 0.6707
+  type: 'test'
+  ...
+1..93
+# tests 93
+# suites 0
+# pass 93
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5917.2126

@@ -1,0 +1,5 @@
+CSS animation frame callbacks at 1440 × 1050 {"sealing":{"frames":198,"p95":18},"opening":{"frames":180,"p95":18}}
+Desktop letter and collection workflows, timed release, backup import, and the Journey Letters entry passed.
+Tablet and phone writing, reading, wrapping, touch and reduced-motion flows passed.
+Explicit microphone capture passed using Chromium’s synthetic audio device.
+Conflicting browser writes kept the committed letter and exposed a recovery export.

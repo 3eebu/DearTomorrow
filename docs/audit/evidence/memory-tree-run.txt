@@ -1,0 +1,9 @@
+Planting, leaf growth, pointer and keyboard selection, calendar, timeline, photos, edit, delete, chapters, appearance, reload, and backup verified.
+Tablet, 390 and 320 px phone layouts, touch selection, and reduced motion verified without WebGL.
+1 memories: 112 ms from backup selection to SVG paint.
+5 memories: 48 ms from backup selection to SVG paint.
+20 memories: 55 ms from backup selection to SVG paint.
+100 memories: 61 ms from backup selection to SVG paint.
+500 memories: 96 ms from backup selection to SVG paint.
+1000 memories: 129 ms from backup selection to SVG paint.
+2400 memories: 293 ms from backup selection to SVG paint.

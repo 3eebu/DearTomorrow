@@ -1,0 +1,7 @@
+{
+  "active": true,
+  "last_cleanup": "succeeded",
+  "private_bucket": true,
+  "schedule": "*/10 * * * *",
+  "verified_migrations": 4
+}

@@ -1,0 +1,169 @@
+{
+  "engine": "158.0.4370.33",
+  "keyboard": {
+    "links": [
+      "/letters",
+      "/journey-letters",
+      "/memory-books",
+      "/memory-tree"
+    ],
+    "tabContained": true,
+    "restored": true
+  },
+  "storageFailure": {
+    "alert": "Browser storage unavailable Reload this page to retry. Your stored library has not been changed.",
+    "retryLoadMs": 15.800000000279397
+  },
+  "resumeBrowser": {
+    "survived": true
+  },
+  "zoom": {
+    "pinch": 2,
+    "cssZoom2Overflow": 0
+  },
+  "contrast": [
+    {
+      "route": "/",
+      "issues": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".dt-welcome-heading > .dt-overline"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.97 (foreground color: #a48e84, background color: #fdfaf5, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<span class=\"dt-overline\">COME IN. MAKE YOURSELF AT HOME.</span>"
+            },
+            {
+              "target": [
+                ".dt-welcome-copy > p:nth-child(1)"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.66 (foreground color: #8b8177, background color: #fdfaf5, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<p>Not everything meaningful needs to be posted, shared or announced. Some things are just for the two of you.</p>"
+            },
+            {
+              "target": [
+                ".dt-welcome-copy > p:nth-child(2)"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.66 (foreground color: #8b8177, background color: #fdfaf5, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<p>Dear Tomorrow is being made for those things — the words, the firsts, the ordinary afternoons that somehow become everything.</p>"
+            },
+            {
+              "target": [
+                ".dt-rooms-top > .dt-overline"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.69 (foreground color: #a28c81, background color: #f2ebe3, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<span class=\"dt-overline\">THERE IS A PLACE FOR EVERY PART OF YOUR STORY</span>"
+            }
+          ]
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "nodes": [
+            {
+              "target": [
+                ".auLUVq_replay"
+              ],
+              "summary": "Fix any of the following:\n  Text inside the element is not included in the accessible name",
+              "excerpt": "<button type=\"button\" class=\"auLUVq_replay\" aria-label=\"Replay the newspaper montage\">"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "/login",
+      "issues": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                "small"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<small>© Dear Tomorrow · Currently in preview</small>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "/memory-books",
+      "issues": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".f1o-2W_libraryIntro > div > .f1o-2W_eyebrow"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.63 (foreground color: #917b65, background color: #f7f3ec, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<span class=\"f1o-2W_eyebrow\">FOR THE THINGS THAT STAY</span>"
+            },
+            {
+              "target": [
+                ".f1o-2W_libraryIntro > div > p"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.89 (foreground color: #84786b, background color: #f7f3ec, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<p>A place for your photographs, your words, your wonderfully ordinary days.</p>"
+            },
+            {
+              "target": [
+                "div:nth-child(2) > .f1o-2W_eyebrow"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.19 (foreground color: #917b65, background color: #eee4d6, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<span class=\"f1o-2W_eyebrow\">A FICTIONAL KEEPSAKE · 18 PAGES</span>"
+            },
+            {
+              "target": [
+                ".f1o-2W_empty > p"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.89 (foreground color: #84786b, background color: #f7f3ec, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "excerpt": "<p>Choose a cover. Keep a moment. Make something that could only be yours.</p>"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "slowNetwork": [
+    {
+      "route": "/",
+      "dcl": 965,
+      "load": 1522,
+      "lcp": 956,
+      "longTasks": 1,
+      "longest": 119,
+      "jsBytes": 146728,
+      "fontBytes": 0,
+      "resources": 25,
+      "heapSampleMiB": 4
+    },
+    {
+      "route": "/memory-tree",
+      "dcl": 684,
+      "load": 1823,
+      "lcp": 692,
+      "longTasks": 2,
+      "longest": 129,
+      "jsBytes": 191236,
+      "fontBytes": 0,
+      "resources": 27,
+      "heapSampleMiB": 4
+    },
+    {
+      "route": "/memory-books",
+      "dcl": 644,
+      "load": 1878,
+      "lcp": 648,
+      "longTasks": 2,
+      "longest": 157,
+      "jsBytes": 207425,
+      "fontBytes": 0,
+      "resources": 20,
+      "heapSampleMiB": 4
+    }
+  ]
+}

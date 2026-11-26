@@ -1,0 +1,2 @@
+Desktop: two routes, opening times, Studio, sealing and opening, storage, backups, rollback and stale tabs, and Letter Box isolation.
+Tablet and phones: 820, 390, and 320 px without overflow, correct completed states in another time zone, touch, and reduced motion. Manual journey saved offline.

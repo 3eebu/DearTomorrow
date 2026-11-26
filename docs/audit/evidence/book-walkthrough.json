@@ -1,0 +1,140 @@
+{
+  "actions": [
+    "Untie ribbon",
+    "Replay and skip gift",
+    "Morning Sun",
+    "Candlelight",
+    "Rainy Afternoon",
+    "bookmark",
+    "physical reader fold",
+    "physical reader envelope",
+    "physical reader reverse",
+    "physical reader scratch",
+    "physical reader pocket",
+    "physical reader flap",
+    "voice play seek pause",
+    "physical reader popup",
+    "backward turn",
+    "simple reading 18 pages",
+    "write duplicate undo redo",
+    "photo upload and polaroid",
+    "open Decorations",
+    "open Drawing",
+    "open Paper",
+    "open Little Surprises",
+    "open Templates",
+    "open Layers",
+    "open Book settings",
+    "open Hand",
+    "cover surfaces, finish, spine and ribbon",
+    "rename save refresh and reopen"
+  ],
+  "turns": [
+    {
+      "frames": 139,
+      "median": 6,
+      "p95": 7.100000000093132,
+      "over33ms": 0,
+      "meanPaintMs": 0.1771428571415267
+    },
+    {
+      "frames": 90,
+      "median": 8.799999999813735,
+      "p95": 18.100000000093132,
+      "over33ms": 1,
+      "meanPaintMs": 0.2890109890242936
+    },
+    {
+      "frames": 65,
+      "median": 8.900000000372529,
+      "p95": 43,
+      "over33ms": 4,
+      "meanPaintMs": 0.2075757575997462
+    },
+    {
+      "frames": 124,
+      "median": 6.599999999627471,
+      "p95": 9,
+      "over33ms": 0,
+      "meanPaintMs": 0.18240000000223516
+    },
+    {
+      "frames": 82,
+      "median": 9.399999999906868,
+      "p95": 16.700000000186265,
+      "over33ms": 1,
+      "meanPaintMs": 0.18192771085571632
+    },
+    {
+      "frames": 109,
+      "median": 7.100000000093132,
+      "p95": 10.399999999906868,
+      "over33ms": 1,
+      "meanPaintMs": 0.1645454545463012
+    },
+    {
+      "frames": 138,
+      "median": 6,
+      "p95": 6.5,
+      "over33ms": 0,
+      "meanPaintMs": 0.1705035971403926
+    },
+    {
+      "frames": 127,
+      "median": 6.2999999998137355,
+      "p95": 8.899999999906868,
+      "over33ms": 0,
+      "meanPaintMs": 0.17968749998908606
+    },
+    {
+      "frames": 110,
+      "median": 6.2000000001862645,
+      "p95": 10.899999999906868,
+      "over33ms": 2,
+      "meanPaintMs": 0.1630630630555118
+    },
+    {
+      "frames": 131,
+      "median": 6.199999999720603,
+      "p95": 9.200000000186265,
+      "over33ms": 0,
+      "meanPaintMs": 0.18939393942921676
+    }
+  ],
+  "tools": [
+    "TWriting",
+    "▧Photographs",
+    "❧Decorations",
+    "〰Drawing",
+    "▱Paper",
+    "✉Little Surprises",
+    "▤Templates",
+    "▰Layers",
+    "⌑Book settings",
+    "✥Hand"
+  ],
+  "surprises": [
+    "fold",
+    "envelope",
+    "reverse",
+    "scratch",
+    "pocket",
+    "flap",
+    "popup"
+  ],
+  "issues": [],
+  "console": [],
+  "scratch": {
+    "elapsedMs": 239.70000000018626,
+    "frames": 36,
+    "p50": 6.099999999998545,
+    "p95": 6.199999999998909,
+    "max": 18.19999999999891
+  },
+  "covers": [
+    "Front cover",
+    "Back cover",
+    "Inside front",
+    "Inside back"
+  ]
+}

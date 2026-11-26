@@ -1,0 +1,144 @@
+{
+  "visible": {
+    "state": "running",
+    "animations": [
+      {
+        "state": "running",
+        "duration": 10600
+      },
+      {
+        "state": "running",
+        "duration": 8900
+      },
+      {
+        "state": "running",
+        "duration": 11800
+      },
+      {
+        "state": "running",
+        "duration": 9700
+      },
+      {
+        "state": "running",
+        "duration": 11100
+      },
+      {
+        "state": "running",
+        "duration": 12600
+      },
+      {
+        "state": "running",
+        "duration": 13400
+      },
+      {
+        "state": "running",
+        "duration": 13900
+      }
+    ],
+    "staticImageTransform": "none"
+  },
+  "twoCycles": {
+    "state": "running",
+    "animations": [
+      {
+        "state": "running",
+        "duration": 10600
+      },
+      {
+        "state": "running",
+        "duration": 8900
+      },
+      {
+        "state": "running",
+        "duration": 11800
+      },
+      {
+        "state": "running",
+        "duration": 9700
+      },
+      {
+        "state": "running",
+        "duration": 11100
+      },
+      {
+        "state": "running",
+        "duration": 12600
+      },
+      {
+        "state": "running",
+        "duration": 13400
+      },
+      {
+        "state": "running",
+        "duration": 13900
+      }
+    ],
+    "staticImageTransform": "none"
+  },
+  "offscreen": {
+    "state": "paused",
+    "animations": [
+      {
+        "state": "paused",
+        "duration": 10600
+      },
+      {
+        "state": "paused",
+        "duration": 8900
+      },
+      {
+        "state": "paused",
+        "duration": 11800
+      },
+      {
+        "state": "paused",
+        "duration": 9700
+      },
+      {
+        "state": "paused",
+        "duration": 11100
+      },
+      {
+        "state": "paused",
+        "duration": 12600
+      },
+      {
+        "state": "paused",
+        "duration": 13400
+      },
+      {
+        "state": "paused",
+        "duration": 13900
+      }
+    ],
+    "staticImageTransform": "none",
+    "rect": {
+      "bottom": -442.203125,
+      "viewport": 420
+    }
+  },
+  "reduced": {
+    "state": "paused",
+    "animations": [],
+    "staticImageTransform": "none"
+  },
+  "fonts": {
+    "registered": [],
+    "requested": [
+      "127.0.0.1"
+    ],
+    "heading": "\"Playfair Display\", Georgia, serif",
+    "rendered": [
+      {
+        "family": "Georgia",
+        "glyphs": 18,
+        "custom": false
+      },
+      {
+        "family": "Georgia",
+        "glyphs": 10,
+        "custom": false
+      }
+    ]
+  }
+}
