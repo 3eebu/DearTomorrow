@@ -12,5 +12,5 @@ export const metadata: Metadata = {
 
 export default async function LettersPage({searchParams}:{searchParams:Promise<{space?:string}>}) {
   const scope=await workspaceScope('letters',(await searchParams).space);
-  return <HomeStudio page="letters" letters={<CloudBoundary key={scope?.owner??'guest'} scope={scope}><LettersWorkspace scope={scope}/></CloudBoundary>} />;
+  return <HomeStudio page="letters" cloud={!!scope} letters={<CloudBoundary key={scope?.owner??'guest'} scope={scope}><LettersWorkspace scope={scope}/></CloudBoundary>} />;
 }

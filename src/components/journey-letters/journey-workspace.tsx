@@ -63,7 +63,7 @@ function LocalNote({cloud=false}:{cloud?:boolean}) {
   if(cloud)return <aside className="jl-local-note"><strong>Kept in My Space</strong><p>Share a journey from My Space. Shared opening times are checked by the server. Automatic delivery is unavailable.</p></aside>;
   return <aside className="jl-local-note">
     <strong>Kept on this device</strong>
-    <p>This browser saves your journeys. Opening times follow its clock and can be bypassed. A backup carries the complete letters, so share it privately. Automatic delivery is unavailable.</p>
+    <p>This browser saves your journeys. Clearing browser data can remove them. Use Export journey to download a copy with the complete letters. Guest opening times follow the browser’s clock and can be bypassed. Automatic delivery is unavailable.</p>
   </aside>;
 }
 
@@ -91,7 +91,7 @@ function JourneyLibrary({items,loading,busy,create,pick,importFile,cloud}: {
     <section className="jl-library" aria-labelledby="jl-library-title">
       <p className="jl-small">{items.length?(cloud?'Saved in My Space':'Saved on this device'):'Journey Letters'}</p>
       <h2 id="jl-library-title">{items.length?'Your journeys':'Even the distance can hold a little love.'}</h2>
-      {loading?<p role="status">Opening your local journey library…</p>:items.length?
+      {loading?<p role="status">Opening your journey library…</p>:items.length?
         <ul className="jl-library-list">{items.map(item=><li key={item.id}>
           <button type="button" disabled={busy} onClick={()=>pick(item.id)} aria-label={`Open journey ${item.name}`}>
             <span><strong>{item.name}</strong><span>{item.from.name} <span aria-hidden="true">→</span> {item.to.name}</span></span>

@@ -16,7 +16,8 @@ function stopTracks(recording?: Recording) {
   recording.stream.getTracks().forEach(track => track.stop());
 }
 
-export function VoiceInspector({ element, book, onChange, onRecording }: {
+export function VoiceInspector({ element, book, onChange, onRecording, cloud }: {
+  cloud: boolean;
   element: BookElement; book: MemoryBookDocument;
   onChange: (patch: Partial<BookElement>, group?: string) => void;
   onRecording: (asset?: VoiceAsset) => void;
@@ -133,8 +134,9 @@ export function VoiceInspector({ element, book, onChange, onRecording }: {
       event.target.value = '';
       if (file) { setError(''); void prepare(file, file.name, ++job.current); }
     }}/>
+    <p>{cloud ? "Recordings save with this book in My Space." : "Recordings save with this book in this browser."}</p>
     <p role="status">{{
-      idle: asset ? `${asset.name} · ${voiceTime(asset.durationMs / 1000)}` : 'Up to one minute. Recordings stay on this device.',
+      idle: asset ? `${asset.name} · ${voiceTime(asset.durationMs / 1000)}` : 'Up to one minute.',
       requesting: 'Waiting for microphone access…', recording: `Recording · ${voiceTime(elapsed)}`, preparing: 'Preparing local audio…',
     }[phase]}</p>
     {error && <p role="alert">{error}</p>}

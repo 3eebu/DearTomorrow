@@ -128,7 +128,7 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
   return <div className={s.app}>
     <FrameProbe/>
     {mode === 'library' && <>
-      <div className={s.topbar}><a href="/" className={s.brand}>Dear Tomorrow.</a><span className={s.localBadge}>YOUR PRIVATE LITTLE LIBRARY · ON THIS DEVICE</span><a href="/">Back to Dear Tomorrow ↗</a></div>
+      <div className={s.topbar}><a href="/" className={s.brand}>Dear Tomorrow.</a><span className={s.localBadge}>{scope ? 'PRIVATE IN MY SPACE' : 'SAVED IN THIS BROWSER'}</span><a href="/">Back to Dear Tomorrow ↗</a></div>
       <main className={s.library} data-library-load-ms={profileBook() ? loadMs : undefined}>
         <div className={s.libraryIntro}><div><span className={s.eyebrow}>FOR THE THINGS THAT STAY</span><h1>My Memory <em>Books.</em></h1><p>A place for your photographs, your words, your wonderfully ordinary days.</p></div><button className={s.primary} disabled={!loaded} onClick={() => setCreating(true)}>＋ Create a book</button></div>
         <section className={s.exampleInvitation} aria-label="An example Memory Book">
@@ -154,14 +154,14 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
             <p>{[book.bookmaking.collection, book.bookmaking.series, book.bookmaking.volume && `Volume ${book.bookmaking.volume}`].filter(Boolean).join(' · ')}</p>}
           <div className={s.bookActions}><button onClick={() => open(book, 'read')}>Read ↗</button><button onClick={() => open(book, 'studio')}>Studio ↗</button><details><summary aria-label={`Options for ${book.title}`}>•••</summary><div><button onClick={() => { const copy = structuredClone(book); copy.id = uid(); copy.title = (book.title + ' — copy').slice(0, 120); copy.createdAt = copy.updatedAt = new Date().toISOString(); add(copy); }}>Duplicate</button><button onClick={() => open(book, 'cover')}>Cover Studio</button><button onClick={() => open(book, 'organize')}>Chapters & pages</button><button onClick={() => open(book, 'gift')}>Wrap as a gift</button><button onClick={() => exportBook(book)}>Export backup</button><button onClick={() => update({ ...book, archived: !book.archived })}>{book.archived ? 'Restore' : 'Archive'}</button><button onClick={() => setDeleting(book)}>Delete…</button></div></details></div>
         </article>)}</div>
-        <p className={s.storageNote}>{scope?'Books in this library save to My Space. Export a project backup to keep a separate copy.':'Saved only in this browser on this device. Clearing browser data removes drafts. Export a project backup to keep a separate copy. Photos stay on your device.'}</p>
+        <p className={s.storageNote}>{scope?'Books and photos save privately in My Space. Share individual books from My Space. Choose Export backup in a book’s options to download a separate copy.':'Guest books and photos save in this browser. Clearing browser data can remove them. Choose Export backup in a book’s options to download a separate copy.'}</p>
       </main>
     </>}
-    {active && mode === 'studio' && <BookStudio key={active.id} book={active} onChange={update} status={status}
+    {active && mode === 'studio' && <BookStudio key={active.id} book={active} onChange={update} status={status} cloud={!!scope}
       onCover={() => { setFromStudio(true); go('cover'); }} onGift={() => { setFromStudio(true); go('gift'); }}
       onRead={() => go('read')} onDone={() => go('library')} onError={setNotice}/>}
     {active && mode === 'read' && <BookReader key={active.id} book={active} onEdit={() => go('studio')} onExit={() => go('library')}/>}
-    {active && mode === 'cover' && <CoverStudio book={active} onChange={update} status={status}
+    {active && mode === 'cover' && <CoverStudio book={active} onChange={update} status={status} cloud={!!scope}
       exitLabel={fromStudio ? '← Studio' : undefined} onDone={() => go(fromStudio ? 'studio' : 'library')} onError={setNotice}/>}
     {active && mode === 'organize' && <ChapterOrganizer book={active} onChange={update} onDone={() => go('library')} onError={setNotice}/>}
     {active && mode === 'gift' && <GiftStudio book={active} onChange={update} status={status}

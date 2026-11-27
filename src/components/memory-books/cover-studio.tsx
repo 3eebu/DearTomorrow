@@ -18,11 +18,12 @@ const palette = [
   ['Navy', '#374558'], ['Warm brown', '#765548'], ['Stone', '#aaa098'], ['Charcoal', '#393539'],
 ] as const;
 
-export function CoverStudio({ book, onChange, onDone, status, onError, exitLabel = '← Library' }: {
+export function CoverStudio({ book, onChange, onDone, status, onError, cloud, exitLabel = '← Library' }: {
   book: MemoryBookDocument;
   onChange: (book: MemoryBookDocument) => void;
   onDone: () => void;
   status: string;
+  cloud: boolean;
   onError: (message: string) => void;
   exitLabel?: string;
 }) {
@@ -71,7 +72,7 @@ export function CoverStudio({ book, onChange, onDone, status, onError, exitLabel
   if (mode === 'preview') return <BookReader book={book} onEdit={returnToCover} onExit={returnToCover}
     exitLabel="← Cover Studio" editLabel="Continue cover editing ↗"/>;
   if (mode === 'advanced') return <BookStudio
-    book={{ ...book, pages: [coverPage(book, surface)] }} surfaceMode status={status}
+    book={{ ...book, pages: [coverPage(book, surface)] }} surfaceMode status={status} cloud={cloud}
     onError={onError} onDone={returnToCover} onRead={() => setMode('preview')}
     onChange={next => commit({
       ...book, assets: next.assets, cover: { ...book.cover, design: {

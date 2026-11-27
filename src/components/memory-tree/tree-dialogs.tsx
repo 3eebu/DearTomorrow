@@ -31,7 +31,7 @@ export function SettingsForm({initial,plant,busy,save}:{initial:Settings;plant:b
 }
 
 export const blankMemory=(date:string):MemoryInput=>({title:'',date,time:'',story:'',location:'',chapterId:'',tags:[],favorite:false,milestone:false,annual:false,photos:[]});
-export function MemoryForm({initial,chapters,busy,save}:{initial:MemoryInput;chapters:Chapter[];busy:boolean;save:(m:MemoryInput)=>void}){
+export function MemoryForm({initial,chapters,busy,save,cloud}:{cloud:boolean;initial:MemoryInput;chapters:Chapter[];busy:boolean;save:(m:MemoryInput)=>void}){
   const [memory,setMemory]=useState(initial),[tags,setTags]=useState(initial.tags.join(', ')),[loading,setLoading]=useState(false),[error,setError]=useState('');
   function field<K extends keyof MemoryInput>(key:K,value:MemoryInput[K]){setMemory(m=>({...m,[key]:value}));}
   async function includePhotos(files:File[]){
@@ -53,7 +53,8 @@ export function MemoryForm({initial,chapters,busy,save}:{initial:MemoryInput;cha
     <label>Date<input required type="date" min="1900-01-01" max="2199-12-31" value={memory.date} onChange={e=>field('date',e.target.value)}/></label>
     <label>Story<textarea rows={5} maxLength={16000} value={memory.story} onChange={e=>field('story',e.target.value)}/></label>
     <label>Chapter<select value={memory.chapterId} onChange={e=>field('chapterId',e.target.value)}><option value="">Unassigned</option>{chapters.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
-    <label>Photographs<input type="file" accept="image/jpeg,image/png,image/webp" multiple disabled={loading||busy||memory.photos.length>=MAX_PHOTOS}
+    <small id="tree-photograph-storage">{cloud ? "Photographs save privately in My Space unless you share this tree." : "Photographs save with this tree in this browser."}</small>
+    <label>Photographs<input aria-describedby="tree-photograph-storage" type="file" accept="image/jpeg,image/png,image/webp" multiple disabled={loading||busy||memory.photos.length>=MAX_PHOTOS}
       onChange={e=>{const files=Array.from(e.currentTarget.files??[]);e.currentTarget.value='';if(files.length)void includePhotos(files);}}/></label>
     {loading&&<p role="status">Preparing your photographs…</p>}
     {memory.photos.length>0&&<div className="mt-photos">{memory.photos.map(p=><figure key={p.id}>

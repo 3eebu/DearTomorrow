@@ -65,7 +65,7 @@ export default function MemoryTreeWorkspace({scope,environmentStudio=false}:{sco
     {!demo&&saved&&<input ref={fileInput} hidden type="file" accept=".json,application/json" aria-label="Import Memory Tree backup"
       onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';if(file)void restore(file);}}/>}
     {loading&&!demo?<p className="mt-status" role="status">Opening your Memory Tree…</p>:
-      <TreeExperience key={tree.id} tree={tree} demo={demo} planted={!!active&&!demo} editable={!demo&&!!saved} busy={busy} environmentStudio={environmentStudio}
+      <TreeExperience key={tree.id} tree={tree} demo={demo} planted={!!active&&!demo} editable={!demo&&!!saved} busy={busy} environmentStudio={environmentStudio} cloud={!!scope}
         error={error} draft={draft} commit={commit} initialFocus={startupFocus} onError={setError}
         exampleAction={<button className="mt-example-link" onClick={()=>{setDemo(!demo);setStartupFocus(null);}}>{demo?'Back to my tree':'Explore the example'}</button>}
         treeActions={!demo&&saved&&<>
@@ -86,10 +86,10 @@ export function SharedTree({tree}:{tree:Tree}) {
   </section>;
 }
 
-function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,initialFocus,onError,onPlant,exampleAction,treeActions,environmentStudio=false}:{
+function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,initialFocus,onError,onPlant,exampleAction,treeActions,environmentStudio=false,cloud=false}:{
   tree:Tree;demo:boolean;planted:boolean;editable:boolean;busy:boolean;error:string;draft:Tree|null;commit:Commit;
   initialFocus:Focus|null;onError:(s:string)=>void;onPlant:(s:Settings)=>Promise<boolean>;
-  exampleAction:ReactNode;treeActions:ReactNode;environmentStudio?:boolean;
+  exampleAction:ReactNode;treeActions:ReactNode;environmentStudio?:boolean;cloud?:boolean;
 }){
   const [today]=useState(localDay);
   const ordered=useMemo(()=>chronological(tree.memories),[tree.memories]);
@@ -263,7 +263,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
         if(await commit({...tree,settings}))setMode(null);
       }}/>}
       {mode==='chapters'&&<ChaptersForm initial={tree.chapters} next={tree.nextBranch} busy={busy} save={(c,n)=>void saveChapters(c,n)}/>}
-      {mode==='memory'&&editing&&<MemoryForm initial={editing.input} chapters={tree.chapters} busy={busy} save={m=>void saveMemory(m)}/>}
+      {mode==='memory'&&editing&&<MemoryForm cloud={cloud} initial={editing.input} chapters={tree.chapters} busy={busy} save={m=>void saveMemory(m)}/>}
       {mode==='delete'&&<><p>“{selection?.title}” and its photographs will be removed from this tree.</p>
         <button disabled={busy} className="mt-primary" onClick={()=>void remove()}>Delete memory</button></>}
     </GardenDialog>}

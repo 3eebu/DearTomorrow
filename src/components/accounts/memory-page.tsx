@@ -35,6 +35,7 @@ export async function MemoryPage({id,ours,message}:{id:string;ours:boolean;messa
           <button className={item.shared?'dt-account-secondary dt-tactile-secondary':'dt-account-primary dt-tactile-primary'} name="share" value={item.shared?'no':'yes'}>
             {item.shared?'Keep private':'Share with my partner'}</button>
         </form></>:<p>Only you can view this keepsake. <Link href="/connect">Connect with someone</Link> to share it.</p>}
+      {item.shared&&<p>Keeping this private removes your partner’s access here. Downloaded copies stay with whoever saved them.</p>}
     </section>}
     <div className="dt-account-reader"><MemoryViewer owner={user.id} document={item.id} returnTo={back}/></div>
   </CloudBoundary></AccountShell>;

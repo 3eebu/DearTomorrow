@@ -14,7 +14,7 @@ export default async function MemoryTreePage({searchParams}:{searchParams:Promis
   const params=await searchParams;
   const scope=await workspaceScope('trees',params.space);
   const environmentStudio=process.env.NODE_ENV==='development' && params.studio==='environment';
-  return <HomeStudio page="memory-tree" tree={<CloudBoundary key={scope?.owner??'guest'} scope={scope}>
+  return <HomeStudio page="memory-tree" cloud={!!scope} tree={<CloudBoundary key={scope?.owner??'guest'} scope={scope}>
     <MemoryTreeWorkspace scope={scope} environmentStudio={environmentStudio}/>
   </CloudBoundary>} />;
 }

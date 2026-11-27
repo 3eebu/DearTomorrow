@@ -5,7 +5,7 @@ import { prepareVoice } from '@/lib/voice-capture';
 
 type Capture = { stream:MediaStream; recorder:MediaRecorder; limit:number };
 type Phase = 'idle'|'permission'|'recording'|'preparing';
-export function VoiceAttachment({asset,onChange,busy}:{asset:VoiceAsset|null;onChange:(asset:VoiceAsset|null)=>void;busy:(busy:boolean)=>void}){
+export function VoiceAttachment({asset,onChange,busy,cloud}:{cloud:boolean;asset:VoiceAsset|null;onChange:(asset:VoiceAsset|null)=>void;busy:(busy:boolean)=>void}){
   const [phase,setPhase]=useState<Phase>('idle'),[error,setError]=useState('');
   const recording=useRef<Capture|null>(null),job=useRef(0);
   const onChangeRef=useRef(onChange),busyRef=useRef(busy);onChangeRef.current=onChange;busyRef.current=busy;
@@ -77,13 +77,14 @@ export function VoiceAttachment({asset,onChange,busy}:{asset:VoiceAsset|null;onC
       const active=recording.current;
       if(active?.recorder.state==='recording'){active.recorder.stop();close(active);transition('preparing');}
     }}>Keep recording</button>}
-    <label>Audio file<input type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.webm" disabled={phase!=='idle'}
+    <label>Audio file<input aria-describedby="letter-voice-storage" type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.webm" disabled={phase!=='idle'}
       onChange={event=>{
         const file=event.currentTarget.files?.[0];event.currentTarget.value='';
         if(file){setError('');void prepare(file,file.name,++job.current);}
       }}/></label>
+    <p id="letter-voice-storage">{cloud ? "Recordings save privately in My Space unless you share this keepsake." : "Recordings save with this letter in this browser."}</p>
     <p role="status">{phase==='permission'?'Waiting for microphone access…':phase==='recording'?'Recording · up to one minute':phase==='preparing'?'Preparing local audio…':
-      asset?asset.name+' · '+voiceTime(asset.durationMs/1000):'Up to one minute. Recordings are saved on this device.'}</p>
+      asset?asset.name+' · '+voiceTime(asset.durationMs/1000):'Up to one minute.'}</p>
     {error&&<p role="alert">{error}</p>}
     {asset&&phase==='idle'&&<><audio src={asset.data} controls preload="none" aria-label="Preview the voice recording"/>
       <button type="button" onClick={()=>onChange(null)}>Remove audio</button></>}

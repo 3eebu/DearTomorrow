@@ -8,10 +8,10 @@ import { VoiceInspector } from './voice-inspector';
 import type { VoiceAsset } from '@/lib/book-voice';
 import s from './studio.module.css';
 
-export function StudioInspector({ book, page, selected: e, patch, changePage, commit, upload, continueText, allowSurprises, uploadHidden, onVoice }: {
+export function StudioInspector({ book, page, selected: e, patch, changePage, commit, upload, continueText, allowSurprises, uploadHidden, onVoice, cloud }: {
   book: MemoryBookDocument; page: BookPage; selected?: BookElement; patch: (p: Partial<BookElement>, key?: string) => void;
   changePage: (p: BookPage, key?: string) => void; commit: (b: MemoryBookDocument, key?: string) => void; upload: () => void; continueText: () => void;
-  allowSurprises: boolean; onVoice: (asset?: VoiceAsset) => void; uploadHidden: (type: SurpriseKind, itemId?: string) => void;
+  cloud: boolean; allowSurprises: boolean; onVoice: (asset?: VoiceAsset) => void; uploadHidden: (type: SurpriseKind, itemId?: string) => void;
 }) {
   const selection = useRef({ start: 0, end: 0 });
   const field = (label: string, key: keyof BookElement, min: number, max: number, fallback: number, step = .1) => e && <label>{label}<input type="number" min={min} max={max} step={step} value={Number(Number(e[key] ?? fallback).toFixed(2))} disabled={e.locked} onChange={ev => { const n = ev.target.valueAsNumber; if (Number.isFinite(n)) patch({ [key]: Math.max(min, Math.min(max, n)) }, `${e.id}:${key}`); }}/></label>;
@@ -33,9 +33,11 @@ export function StudioInspector({ book, page, selected: e, patch, changePage, co
       {e.kind === 'note' && !e.surprise && colour('Note paper', 'background')}
       {e.kind === 'shape' && e.shape === 'rectangle' && field('Corner radius', 'radius', 0, 50, 0, 1)}
       <label>Layer name<input disabled={e.locked} maxLength={100} value={e.name || ''} placeholder={e.kind} onChange={ev => patch({ name: ev.target.value }, `${e.id}:name`)}/></label>
+      {(e.kind === 'photo' || e.kind === 'polaroid' || (allowSurprises && e.surprise)) &&
+        <p className={s.help}>{cloud ? 'Photographs save with this book in My Space.' : 'Photographs save with this book in this browser.'}</p>}
       {allowSurprises && <SurpriseInspector element={e} book={book} patch={patch} upload={uploadHidden}/>}
       {e.voice && <><div className={s.fields}>{colour('Card paper', 'background')}{colour('Card ink', 'color')}</div>
-        <VoiceInspector key={e.id} element={e} book={book} onChange={patch} onRecording={onVoice}/></>}
+        <VoiceInspector cloud={cloud} key={e.id} element={e} book={book} onChange={patch} onRecording={onVoice}/></>}
       {(e.kind === 'photo' || e.kind === 'polaroid') && <><label>Use a saved photograph<select disabled={e.locked} value={e.assetId || ''} onChange={ev => patch({ assetId: ev.target.value || undefined })}><option value="">Choose from this book…</option>{Object.entries(book.assets).map(([id, asset]) => <option key={id} value={id}>{asset.name}</option>)}</select></label><button disabled={e.locked} onClick={upload}>{e.assetId ? 'Replace photograph' : 'Choose photograph'} ↗</button></>}
       {['text', 'note', 'polaroid'].includes(e.kind) && !(e.kind === 'note' && e.surprise) && <details open={e.kind === 'text' || e.kind === 'note'}><summary>Writing & caption</summary><label>{e.kind === 'text' || e.kind === 'note' ? 'Your words' : 'Caption / image description'}<textarea rows={5} maxLength={20000} value={e.text} disabled={e.locked} onSelect={ev => { selection.current = { start: ev.currentTarget.selectionStart, end: ev.currentTarget.selectionEnd }; }} onChange={ev => patch({ text: ev.target.value, runs: editText(e.text, ev.target.value, e.runs) }, `${e.id}:text`)}/></label>
       <p className={s.help}>Double-click writing on the page to edit. Select words here to format just that passage.</p>

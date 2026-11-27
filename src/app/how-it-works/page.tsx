@@ -17,7 +17,7 @@ const chapters = [
     title: "Some words deserve to stay.",
     description: "Write on paper, choose the details that feel like you, and seal it in an envelope you can open again.",
     steps: ["Write your letter.", "Make it personal.", "Seal it and keep it safe."],
-    note: "Your letters stay in this browser’s Letter Box. Sending to a partner is still in development.",
+    note: "Write as a guest to save in this browser, or open Letters from My Space to save to your account.",
     filmDescription: "A fictional letter is written in Letter Studio. A wax seal is chosen, the envelope closes, and the paper unfolds again in the reader.",
   },
   {
@@ -42,8 +42,9 @@ const chapters = [
 
 const facts = [
   ["Do I need an account?", "You can write letters, grow a tree, and make a book without signing in."],
-  ["Where is my work saved?", "Saved work stays in this browser on this device, including after refresh. Export backups to keep a copy if you clear the browser’s data or change devices."],
-  ["Can I share with someone?", "Accounts, partner sharing, letter delivery, and cloud sync are still in development. Letter opening times currently work locally."],
+  ["Where is my work saved?", "Guest keepsakes save in this browser and stay after you close it. Clearing browser data can remove them. Keepsakes you make in My Space save privately to your account. The examples are fictional."],
+  ["Can I share with someone?", "Connect with your partner, then choose which keepsakes to share from My Space. A shared timed letter becomes readable at its opening time. Dear Tomorrow does not send it automatically."],
+  ["How do I keep a separate copy?", "Use Export letter in its options, Export backup in a book’s options, Export tree under Tree options, or Export journey in the journey overview. A download is a separate file. Anyone you give it to can keep their copy."],
   ["Can I use it on my phone?", "The preview adapts to smaller screens. You can swipe through a book or use the Memory Tree’s journal, timeline, and calendar."],
 ];
 
@@ -86,7 +87,7 @@ export default function HowItWorksPage() {
           </section>
         ))}
 
-        <section className={styles.facts} aria-labelledby="guide-facts">
+        <section id="storage-and-backups" className={styles.facts} aria-labelledby="guide-facts">
           <h2 id="guide-facts">Good to know.</h2>
           <dl>
             {facts.map(([question, answer]) => (

@@ -187,7 +187,7 @@ export function LetterStudio({initial,collections,save,exit,sealed,backup,journe
           <label>Collection<select value={letter.collectionId} onChange={e=>field({collectionId:e.target.value})}><option value="">No collection</option>
             {collections.map(collection=><option key={collection.id} value={collection.id}>{collection.name}</option>)}</select></label>
           {letter.kind==='when'&&<label>Open when… <input value={letter.label} maxLength={120} onChange={e=>field({label:e.target.value})} placeholder="you miss me"/></label>}
-          {letter.kind==='tomorrow'&&<Schedule letter={letter} change={timing=>field({timing})}/>}</>}
+          {letter.kind==='tomorrow'&&<Schedule letter={letter} cloud={cloud} change={timing=>field({timing})}/>}</>}
           <details open><summary>Writing style</summary><div className="lt-fields">
             <label>Font<select value={page.font} onChange={e=>pageFields({font:e.target.value as Page['font']})}>
               {Object.entries(letterFonts).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label>
@@ -231,7 +231,8 @@ export function LetterStudio({initial,collections,save,exit,sealed,backup,journe
         {tool==='Envelope'&&<EnvelopeTools design={letter.envelope} face={face} setFace={setFace} change={patch=>dispatch(l=>({...l,envelope:{...l.envelope,...patch}}))}/>}
         {tool==='Extras'&&<>
           <details open><summary>Photograph & drawing</summary><div className="lt-fields">
-            <label>Page photograph<input type="file" accept="image/jpeg,image/png,image/webp" disabled={photoBusy} onChange={event=>{
+            <small id="letter-photograph-storage">{cloud ? "Attachments save privately in My Space unless you share this keepsake." : "Attachments save with this letter in this browser."}</small>
+            <label>Page photograph<input aria-describedby="letter-photograph-storage" type="file" accept="image/jpeg,image/png,image/webp" disabled={photoBusy} onChange={event=>{
               const file=event.currentTarget.files?.[0];event.currentTarget.value='';if(file)void attach(file,page.id);
             }}/></label>
             {photoBusy&&<small role="status">Preparing the photograph…</small>}
@@ -246,7 +247,7 @@ export function LetterStudio({initial,collections,save,exit,sealed,backup,journe
             <label>Special date<input type="date" min="1900-01-01" max="2199-12-31" value={letter.specialDate} onChange={e=>field({specialDate:e.target.value})}/></label>
           </div></details>
           <details><summary>Voice recording</summary><div className="lt-fields">
-            <VoiceAttachment asset={letter.voice} onChange={voice=>field({voice})} busy={setAudioBusy}/>
+            <VoiceAttachment cloud={cloud} asset={letter.voice} onChange={voice=>field({voice})} busy={setAudioBusy}/>
             <label>Transcript<textarea rows={3} maxLength={12000} value={letter.transcript} onChange={e=>field({transcript:e.target.value})}/></label>
           </div></details>
         </>}
@@ -256,7 +257,7 @@ export function LetterStudio({initial,collections,save,exit,sealed,backup,journe
   </section>;
 }
 
-function Schedule({letter,change}:{letter:Letter;change:(timing:Letter['timing'])=>void}){
+function Schedule({letter,change,cloud}:{letter:Letter;cloud:boolean;change:(timing:Letter['timing'])=>void}){
   const {timing}=letter;
   const options=useMemo(()=>wallOptions(timing.wall,timing.zone),[timing.wall,timing.zone]);
   const zones=useMemo(()=>Array.from(new Set(['UTC',timing.zone,'America/New_York','America/Los_Angeles','Europe/London','Asia/Karachi',
@@ -269,7 +270,7 @@ function Schedule({letter,change}:{letter:Letter;change:(timing:Letter['timing']
     {options.length>1&&<label>This hour occurs twice. Use<select value={timing.occurrence} onChange={e=>set({occurrence:e.target.value as 'earlier'|'later'})}>
       <option value="earlier">The first occurrence</option><option value="later">The second occurrence</option></select></label>}
     {timing.wall&&!options.length&&<small role="status">That local time does not exist. Choose a different time.</small>}
-    <small>This is a local scheduling simulation. The countdown follows the device clock.</small>
+    <small>{cloud ? "If you share this letter, your partner can read it here at the opening time. Dear Tomorrow does not send it automatically." : "This guest countdown follows your device clock."}</small>
   </div>;
 }
 function EnvelopeTools({design,face,setFace,change}:{design:Envelope;face:Face;setFace:(f:Face)=>void;change:(patch:Partial<Envelope>)=>void}){
