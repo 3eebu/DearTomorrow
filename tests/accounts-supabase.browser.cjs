@@ -192,7 +192,7 @@ async function main() {
 
     stage = 'copying a permanent ID and saving a profile update';
     await a.context().grantPermissions(['clipboard-read','clipboard-write'], {origin:localOrigin(app)});
-    await a.getByRole('button', {name:'Copy your Dear Tomorrow ID'}).click();
+    await a.getByRole('button', {name:'Copy ID',exact:true}).click();
     await a.getByRole('status').filter({hasText:'ID copied.'}).waitFor();
     assert.ok(await a.evaluate(code=>navigator.clipboard.readText().then(text=>text===code),accounts[0].code));
     await a.getByLabel('Display name').fill(updatedName);
