@@ -5,6 +5,7 @@ import {cloudBooks} from '@/lib/accounts/cloud-client';
 import type {CloudScope} from '@/lib/accounts/documents';
 import { createBook, formats, LIMITS, uid, validateBook, type MemoryBookDocument } from '@/lib/memory-books';
 import { exportBook, loadLibrary, saveLibrary } from '@/lib/memory-book-storage';
+import { bookShelfEntry, type BookShelfEntry } from '@/lib/book-shelf';
 import { Cover } from './cover-renderer';
 import { BookStudio } from './book-studio';
 import {CoverStudio} from './cover-studio';
@@ -16,19 +17,32 @@ import { profileBook } from '@/lib/book-perf';
 import { FrameProbe } from './frame-probe';
 import s from './memory-books.module.css';
 
+function fullBook(entry:BookShelfEntry) {
+  if(!entry.document)throw new Error('This book could not be opened.');
+  return entry.document;
+}
+const localBooks = {
+  loadLibrary:async()=>(await loadLibrary()).map(bookShelfEntry),
+  loadBook:async(entry:BookShelfEntry)=>fullBook(entry),
+  saveLibrary:(next:BookShelfEntry[],previous:BookShelfEntry[])=>saveLibrary(next.map(fullBook),previous.map(fullBook)),
+};
+
 export function BookLibrary({scope}:{scope?:CloudScope}={}) {
-  const store=useMemo(()=>scope?cloudBooks(scope):{loadLibrary,saveLibrary},[scope]);
+  const store=useMemo(()=>scope?cloudBooks(scope):localBooks,[scope]);
   const savedLabel=scope?'Saved to My Space':'Saved on this device';
-  const [books, setBooks] = useState<MemoryBookDocument[]>([]);
+  const [books, setBooks] = useState<BookShelfEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [loadError, setLoadError] = useState('');
   const [loadMs, setLoadMs] = useState<number | undefined>();
   const [notice, setNotice] = useState('');
   const [status, setStatus] = useState(scope?'Loading My Space…':'Loading local drafts…');
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [openedBook, setOpenedBook] = useState<MemoryBookDocument>();
+  const [opening, setOpening] = useState(false);
+  const pendingOpen=useRef(false);
   const [mode, setMode] = useState<'library' | 'studio' | 'read' | 'cover' | 'organize' | 'gift' | 'example'>('library');
   const [creating, setCreating] = useState(false);
-  const [deleting, setDeleting] = useState<MemoryBookDocument | null>(null);
+  const [deleting, setDeleting] = useState<BookShelfEntry | null>(null);
   const [guide, setGuide] = useState(false);
   const [example, setExample] = useState<MemoryBookDocument>();
   const [exampleLoading, setExampleLoading] = useState(false);
@@ -40,8 +54,8 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
   const revision = useRef(0);
   const savedRevision = useRef(0);
   const queuedRevision = useRef(0);
-  const drafts = useRef<MemoryBookDocument[]>([]);
-  const savedBooks = useRef<MemoryBookDocument[]>([]);
+  const drafts = useRef<BookShelfEntry[]>([]);
+  const savedBooks = useRef<BookShelfEntry[]>([]);
   const saveQueue = useRef(Promise.resolve());
   const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const importRef = useRef<HTMLInputElement>(null);
@@ -85,7 +99,7 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
       clearTimeout(saveTimer.current);
     };
   }, [save]);
-  function change(next: (current: MemoryBookDocument[]) => MemoryBookDocument[]) {
+  function change(next: (current: BookShelfEntry[]) => BookShelfEntry[]) {
     drafts.current = next(drafts.current);
     revision.current++;
     setBooks(drafts.current);
@@ -95,19 +109,37 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
   }
   function update(book: MemoryBookDocument) {
     const draft = pruneVoiceAssets(book);
-    change(current => current.map(b => b.id === book.id ? { ...draft, updatedAt: new Date().toISOString() } : b));
+    change(current => current.map(b => b.id === book.id ? bookShelfEntry({ ...draft, updatedAt: new Date().toISOString() }) : b));
   }
-  function go(next: typeof mode) { save(); setMode(next); }
+  function go(next: typeof mode) { save(); setMode(next); if(next==='library')setOpenedBook(undefined); }
   function open(book: MemoryBookDocument, next: 'read' | 'studio' | 'cover' | 'organize' | 'gift') {
     setActiveId(book.id);
+    setOpenedBook(book);
     setFromStudio(false);
     if (status !== 'Unable to save') setNotice('');
     go(next);
   }
+  async function withBook(entry:BookShelfEntry,action:(book:MemoryBookDocument)=>void) {
+    if(pendingOpen.current)return;
+    pendingOpen.current=true;
+    setOpening(true);
+    try {
+      save();
+      await saveQueue.current;
+      const latest=drafts.current.find(book=>book.id===entry.id);
+      if(!latest)throw new Error('This book is unavailable.');
+      action(latest.document??await store.loadBook(latest));
+    } catch(error) {
+      setNotice(error instanceof Error?error.message:'This book could not be opened.');
+    } finally {
+      pendingOpen.current=false;
+      setOpening(false);
+    }
+  }
   function add(book: MemoryBookDocument, next: 'studio' | 'read' = 'read') {
     if (!loaded) { setNotice('Your library is unavailable. You can still read the example.'); return; }
     if (drafts.current.length >= LIMITS.books) { setNotice('Your library is full. Export a backup before making room for another book.'); return; }
-    change(current => [...current, book]); setCreating(false); open(book, next);
+    change(current => [...current, bookShelfEntry(book)]); setCreating(false); open(book, next);
   }
   async function browseExample() {
     setExampleLoading(true);
@@ -120,11 +152,11 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
       setNotice('The example could not open. Try again in a moment.');
     } finally { setExampleLoading(false); }
   }
-  const active = books.find(b => b.id === activeId);
+  const active = books.find(b => b.id === activeId)?.document ?? openedBook;
   const collections = [...new Set(books.map(book => book.bookmaking?.collection?.trim()).filter((name): name is string => !!name))].sort();
   const activeCollection = collections.includes(collection) ? collection : '';
   const visible = books.filter(b => b.archived === archive && b.title.toLowerCase().includes(search.toLowerCase()) &&
-    (!activeCollection || b.bookmaking?.collection?.trim() === activeCollection)).sort((a, b) => sort === 'title' ? a.title.localeCompare(b.title) : sort === 'pages' ? b.pages.length - a.pages.length : (sort === 'created' ? b.createdAt.localeCompare(a.createdAt) : b.updatedAt.localeCompare(a.updatedAt)));
+    (!activeCollection || b.bookmaking?.collection?.trim() === activeCollection)).sort((a, b) => sort === 'title' ? a.title.localeCompare(b.title) : sort === 'pages' ? b.pageCount - a.pageCount : (sort === 'created' ? b.createdAt.localeCompare(a.createdAt) : b.updatedAt.localeCompare(a.updatedAt)));
   return <div className={s.app}>
     <FrameProbe/>
     {mode === 'library' && <>
@@ -145,15 +177,24 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
           <option value="">All collections</option>{collections.map(name => <option key={name}>{name}</option>)}
         </select></label></div>}
         {loadError && <div role="alert" className={s.error}>{loadError} Reload this page to retry. Your stored library has not been changed.</div>}
-        {!loaded && !loadError && <p>Opening your local library…</p>}
+        {!loaded && !loadError && <p role="status">{scope?'Opening My Space…':'Opening your local library…'}</p>}
+        {opening && <p role="status">Opening your book…</p>}
         {loaded && visible.length === 0 && <div className={s.empty}><span className={s.emptyBook}>✧</span><h2>{search || archive || activeCollection ? 'No books here yet.' : 'Every story deserves a beginning.'}</h2><p>{search || archive || activeCollection ? 'Try another title or collection, or return to your books.' : 'Choose a cover. Keep a moment. Make something that could only be yours.'}</p>{!search && !archive && !activeCollection && <button className={s.primary} onClick={() => setCreating(true)}>Create your first book ↗</button>}</div>}
-        <div className={s.shelf}>{visible.map(book => <article className={s.libraryBook} key={book.id}>
-          <button className={s.coverButton} style={{ aspectRatio: book.widthMm / book.heightMm }} aria-label={`Read ${book.title}`} onClick={() => open(book, 'read')}><Cover book={book}/></button>
-          <h2>{book.title}</h2><p>{book.pages.length} pages · {book.chapters.length} {book.chapters.length === 1 ? 'chapter' : 'chapters'} · {book.widthMm} × {book.heightMm} mm</p>
+        <fieldset className={s.shelf} disabled={opening} style={{border:0,minInlineSize:0,margin:0}} aria-label="Your books">{visible.map(book => <article className={s.libraryBook} key={book.id}>
+          <button className={s.coverButton} style={{ aspectRatio: book.widthMm / book.heightMm }} aria-label={`Read ${book.title}`} onClick={() => void withBook(book, doc=>open(doc,'read'))}><Cover book={book}/></button>
+          <h2>{book.title}</h2><p>{book.pageCount} pages · {book.chapterCount} {book.chapterCount === 1 ? 'chapter' : 'chapters'} · {book.widthMm} × {book.heightMm} mm</p>
           {(book.bookmaking?.collection || book.bookmaking?.series || book.bookmaking?.volume) &&
             <p>{[book.bookmaking.collection, book.bookmaking.series, book.bookmaking.volume && `Volume ${book.bookmaking.volume}`].filter(Boolean).join(' · ')}</p>}
-          <div className={s.bookActions}><button onClick={() => open(book, 'read')}>Read ↗</button><button onClick={() => open(book, 'studio')}>Studio ↗</button><details><summary aria-label={`Options for ${book.title}`}>•••</summary><div><button onClick={() => { const copy = structuredClone(book); copy.id = uid(); copy.title = (book.title + ' — copy').slice(0, 120); copy.createdAt = copy.updatedAt = new Date().toISOString(); add(copy); }}>Duplicate</button><button onClick={() => open(book, 'cover')}>Cover Studio</button><button onClick={() => open(book, 'organize')}>Chapters & pages</button><button onClick={() => open(book, 'gift')}>Wrap as a gift</button><button onClick={() => exportBook(book)}>Export backup</button><button onClick={() => update({ ...book, archived: !book.archived })}>{book.archived ? 'Restore' : 'Archive'}</button><button onClick={() => setDeleting(book)}>Delete…</button></div></details></div>
-        </article>)}</div>
+          <div className={s.bookActions}><button onClick={() => void withBook(book,doc=>open(doc,'read'))}>Read ↗</button><button onClick={() => void withBook(book,doc=>open(doc,'studio'))}>Studio ↗</button><details><summary aria-label={`Options for ${book.title}`}>•••</summary><div>
+            <button onClick={() => void withBook(book,doc=>{ const now=new Date().toISOString(); add({...structuredClone(doc),id:uid(),title:(doc.title+' — copy').slice(0,120),createdAt:now,updatedAt:now}); })}>Duplicate</button>
+            <button onClick={() => void withBook(book,doc=>open(doc,'cover'))}>Cover Studio</button>
+            <button onClick={() => void withBook(book,doc=>open(doc,'organize'))}>Chapters & pages</button>
+            <button onClick={() => void withBook(book,doc=>open(doc,'gift'))}>Wrap as a gift</button>
+            <button onClick={() => void withBook(book,exportBook)}>Export backup</button>
+            <button onClick={() => void withBook(book,doc=>update({...doc,archived:!doc.archived}))}>{book.archived ? 'Restore' : 'Archive'}</button>
+            <button onClick={() => setDeleting(book)}>Delete…</button>
+          </div></details></div>
+        </article>)}</fieldset>
         <p className={s.storageNote}>{scope?'Books and photos save privately in My Space. Share individual books from My Space. Choose Export backup in a book’s options to download a separate copy.':'Guest books and photos save in this browser. Clearing browser data can remove them. Choose Export backup in a book’s options to download a separate copy.'}</p>
       </main>
     </>}

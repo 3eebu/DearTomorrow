@@ -2,12 +2,13 @@ import type {Shelf,saveShelf} from '../letter-storage';
 import type {SavedGrove} from '../memory-tree-storage';
 import type {SavedJourney} from '../journey-letter-storage';
 import {defaultPreferences, startingCollections, summarize, validateCollections, validatePreferences, validateSummary,type Letter,type Preferences} from '../letters';
-import {validateGrove, type Grove} from '../memory-tree';
+import {validateGrove, type Grove, type Photo, type Tree} from '../memory-tree';
 import type {MemoryBookDocument} from '../memory-books';
 import {validateJourneySummary, type Journey} from '../journey-letters';
 import {validateDocument,type CloudScope,type ScopeResult,type CloudDocument} from './documents';
 import type {SpaceKind} from './identity';
 import {cloudChunkBytes,cloudRequestBytes,directCloudRequestBytes} from './cloud-transport';
+import type {BookShelfEntry} from '../book-shelf';
 
 async function cloudPost<T>(owner:string,body:BodyInit,headers:Record<string,string>):Promise<T> {
   if(typeof navigator!=='undefined'&&!navigator.onLine)throw new Error('Offline. Keep this draft open or export a backup before leaving.');
@@ -51,25 +52,36 @@ export async function commitCloud(owner:string,kind:SpaceKind,expected:number,ch
   const payload=new Blob([JSON.stringify({action:'save',kind,expected,changes,removals,metadata,importing:!!receipt,receipt})],
     {type:'application/json'});
   if(payload.size>cloudRequestBytes)throw new Error('This save exceeds the 54 MB request limit. Save smaller batches or export a backup.');
-  const local=typeof location!=='undefined'&&['127.0.0.1','localhost','[::1]'].includes(location.hostname);
-  if(local||payload.size<=directCloudRequestBytes)return cloudPost(owner,payload,{'Content-Type':'application/json'});
+  const confirmed=(result:CommitResult)=>{
+    if(result.revision!==expected+1&&!(receipt&&result.imported===false&&typeof result.sourceId==='string')) {
+      throw new Error('The cloud could not confirm this save. Reopen your library to check the saved version.');
+    }
+    return result;
+  };
+  if(payload.size<=directCloudRequestBytes)return confirmed(await cloudPost(owner,payload,{'Content-Type':'application/json'}));
 
   const upload=crypto.randomUUID();
   const parts=Math.ceil(payload.size/cloudChunkBytes);
   try {
     for(let index=0;index<parts;index++) {
       const offset=index*cloudChunkBytes;
-      await cloudPost(owner,payload.slice(offset,offset+cloudChunkBytes),{
+      const part=await cloudPost<{staged:boolean}>(owner,payload.slice(offset,offset+cloudChunkBytes),{
         'Content-Type':'application/octet-stream','X-Dear-Transfer':upload,'X-Dear-Part':String(index),
       });
+      if(part.staged!==true)throw new Error('The cloud could not confirm this upload fragment. Keep your draft open and retry.');
     }
-    return await requestCloud(owner,{action:'complete-upload',upload,parts});
+    return confirmed(await requestCloud(owner,{action:'complete-upload',upload,parts}));
   } catch(error) {
     await requestCloud(owner,{action:'cancel-upload',upload}).catch(()=>{});
     throw error;
   }
 }
-const payloads = <K extends SpaceKind>(kind:K,scope:ScopeResult) => scope.documents.map(item=>validateDocument(kind,item.payload));
+function atRevision(snapshot:ScopeResult,revision:number,id:string) {
+  if(snapshot.revision!==revision||snapshot.documents.length!==1||snapshot.documents[0].id!==id) {
+    throw new Error('Your library changed in another tab. Reload it before continuing.');
+  }
+  return snapshot.documents[0];
+}
 
 export function cloudLetters({owner}:CloudScope) {
   return {
@@ -108,34 +120,70 @@ export function cloudBooks({owner}:CloudScope) {
   let revision:number|null=null;
   return {
     async loadLibrary() {
-      const snapshot=await readCloud(owner,'books',true);
-      const books=payloads('books',snapshot);
+      const snapshot=await requestCloud<{revision:number;books:BookShelfEntry[]}>(owner,{action:'scope',kind:'books',view:'book-shelf'});
       revision=snapshot.revision;
-      return books;
+      return snapshot.books;
     },
-    async saveLibrary(books:MemoryBookDocument[],previous:MemoryBookDocument[] = []) {
+    async loadBook(entry:BookShelfEntry) {
+      if(revision===null)throw new Error('Reopen your cloud library before opening this book.');
+      const expected=revision;
+      const snapshot=await readCloud(owner,'books',true,entry.id);
+      return validateDocument('books',atRevision(snapshot,expected,entry.id).payload);
+    },
+    async saveLibrary(books:BookShelfEntry[],previous:BookShelfEntry[]) {
       if(revision===null)throw new Error('Reopen your cloud library before saving.');
       const {changed,removed}=diff(books,previous);
-      const result=await commitCloud(owner,'books',revision,changed,removed,{});
+      const documents=changed.map(item=>{
+        if(!item.document)throw new Error('Open this book before saving changes.');
+        return item.document;
+      });
+      const result=await commitCloud(owner,'books',revision,documents,removed,{});
       revision=result.revision;
     },
   };
 }
 export function cloudTrees({owner}:CloudScope) {
   let previous:Grove['trees']=[];
+  const photos=new Map<string,Set<string>>();
+  async function prepareTree(tree:Tree,revision:number) {
+    const existing=previous.find(item=>item.id===tree.id);
+    const oldPhotos=photos.get(tree.id);
+    const unchanged=new Map(existing?.memories.map(memory=>[memory.id,memory.photos]));
+    const preserve=(memory:Tree['memories'][number])=>oldPhotos?.has(memory.id)&&
+      unchanged.get(memory.id)===memory.photos&&memory.photos.length===0;
+    if(!tree.memories.some(preserve))return tree;
+    const source=validateDocument('trees',atRevision(await readCloud(owner,'trees',true,tree.id),revision,tree.id).payload);
+    const restored=new Map(source.memories.map(memory=>[memory.id,memory.photos]));
+    return {...tree,memories:tree.memories.map(memory=>preserve(memory)?
+      {...memory,photos:restored.get(memory.id)!}:memory)};
+  }
   return {
     async loadGarden():Promise<SavedGrove> {
-      const snapshot=await readCloud(owner,'trees',true);
-      const grove=validateGrove({version:1,activeId:snapshot.metadata.activeId??'',trees:payloads('trees',snapshot)});
+      const snapshot=await readCloud(owner,'trees');
+      const trees=await Promise.all(snapshot.documents.map(async ({id})=>{
+        const index=await requestCloud<ScopeResult>(owner,{action:'scope',kind:'trees',id,content:true,view:'tree-index'});
+        return atRevision(index,snapshot.revision,id);
+      }));
+      const grove=validateGrove({version:1,activeId:snapshot.metadata.activeId??'',trees:trees.map(entry=>entry.payload)});
+      for(const entry of trees)photos.set(entry.id,new Set(entry.photoMemoryIds));
       previous=grove.trees;
       return {revision:snapshot.revision,grove};
     },
+    hasPhotos(tree:string,memory:string) {return photos.get(tree)?.has(memory)??false;},
+    async loadPhotos(tree:string,memory:string,revision:number) {
+      const snapshot=await requestCloud<ScopeResult>(owner,{action:'scope',kind:'trees',id:tree,content:true,view:'tree-photos',memory});
+      return atRevision(snapshot,revision,tree).payload as Photo[];
+    },
+    prepareTree,
     async saveGarden(grove:Grove,revision:number):Promise<SavedGrove> {
       const {changed,removed}=diff(grove.trees,previous);
-      const validated=validateGrove(grove);
-      const result=await commitCloud(owner,'trees',revision,changed,removed,{activeId:validated.activeId});
-      previous=validated.trees;
-      return {grove:validated,revision:result.revision};
+      validateGrove(grove);
+      const documents=await Promise.all(changed.map(tree=>prepareTree(tree,revision)));
+      const result=await commitCloud(owner,'trees',revision,documents,removed,{activeId:grove.activeId});
+      for(const tree of documents)photos.set(tree.id,new Set(tree.memories.filter(memory=>memory.photos.length).map(memory=>memory.id)));
+      for(const id of removed)photos.delete(id);
+      previous=grove.trees;
+      return {grove,revision:result.revision};
     },
   };
 }

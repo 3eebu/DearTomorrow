@@ -6,6 +6,8 @@ import {isSpaceKind} from '@/lib/accounts/identity';
 import {packMedia,PrivateMediaUnavailable,restoreMedia} from '@/lib/accounts/media';
 import {recordServiceEvent} from '@/lib/accounts/service-events';
 import {cloudChunkBytes,cloudMaxParts,cloudRequestBytes,directCloudRequestBytes} from '@/lib/accounts/cloud-transport';
+import type {BookShelfEntry} from '@/lib/book-shelf';
+import type {Tree} from '@/lib/memory-tree';
 
 const headers={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'};
 const failure=(status:number,error:string)=>NextResponse.json({error},{status,headers});
@@ -44,6 +46,16 @@ function streamedJson(value:unknown) {
     },
   });
   return new Response(stream,{headers:{...headers,'Content-Type':'application/json; charset=utf-8'}});
+}
+
+function shelfBookmaking(value:unknown):BookShelfEntry['bookmaking'] {
+  if(!value||typeof value!=='object'||!('version' in value)||value.version!==1)return undefined;
+  return {
+    version:1,
+    collection:'collection' in value&&typeof value.collection==='string'?value.collection:undefined,
+    series:'series' in value&&typeof value.series==='string'?value.series:undefined,
+    volume:'volume' in value&&typeof value.volume==='number'?value.volume:undefined,
+  };
 }
 
 async function stageChunk(request:NextRequest,actor:string,transfer:string) {
@@ -146,6 +158,10 @@ export async function POST(request:NextRequest) {
     if(action==='scope') {
       const id=input.id;
       if(id!==undefined&&(typeof id!=='string'||!sourceIdPattern.test(id)))return failure(400,'Choose a valid memory.');
+      const view=input.view;
+      const memoryId=input.memory;
+      if(view==='tree-photos'&&(typeof memoryId!=='string'||!sourceIdPattern.test(memoryId)))return failure(400,'Choose a valid memory.');
+      if((view==='tree-index'||view==='tree-photos')&&(kind!=='trees'||!id||input.content!==true))return failure(400,'Choose a valid tree.');
       if(input.content===true&&id===undefined)return failure(400,'Choose one memory to open.');
       const {data,error,status}=await client.rpc('dt_scope',{kind_name:kind,include_content:input.content===true,entry_id:id??null});
       if(error&&databaseUnavailable(status)) {
@@ -154,7 +170,42 @@ export async function POST(request:NextRequest) {
       }
       if(error||!data)return failure(403,'This private library could not be opened.');
       const scope=data as ScopeResult;
+      if(view==='book-shelf') {
+        if(kind!=='books'||id!==undefined||input.content===true)return failure(400,'Choose a valid book shelf.');
+        // Select only shelf fields through the owner's RLS policy. The second scope
+        // read guards against a save between the revision and projection queries.
+        const {data:rows,error:rowError}=await client.from('dt_documents').select(
+          'source_id,title,updated_at,summary,subtitle:payload->>subtitle,createdAt:payload->>createdAt,archived:payload->archived,widthMm:payload->widthMm,heightMm:payload->heightMm,color:payload->cover->>color,material:payload->cover->>material,chapters:payload->chapters,bookmaking:payload->bookmaking'
+        ).eq('owner_id',user.id).eq('kind','books');
+        const {data:latest,error:latestError}=await client.rpc('dt_scope',{kind_name:kind,include_content:false});
+        if(rowError||latestError||!rows||!latest)return failure(503,'Your book shelf could not be opened.');
+        if(latest.revision!==scope.revision||rows.length!==scope.documents.length) {
+          return failure(409,'Your book shelf changed while it was opening. Reload to see the latest version.');
+        }
+        const books:BookShelfEntry[]=rows.map(row=>({
+          id:row.source_id,title:row.title,subtitle:row.subtitle??'',createdAt:row.createdAt??row.updated_at,
+          updatedAt:row.updated_at,archived:row.archived===true,widthMm:Number(row.widthMm)||203.2,heightMm:Number(row.heightMm)||203.2,
+          cover:{color:row.color??'#643e4a',material:row.material==='leather'||row.material==='smooth'?row.material:'linen'},
+          pageCount:Number(row.summary?.pages)||0,chapterCount:Array.isArray(row.chapters)?row.chapters.length:0,
+          bookmaking:shelfBookmaking(row.bookmaking),
+        }));
+        return streamedJson({revision:scope.revision,books});
+      }
       if(input.content===true) {
+        if(view==='tree-index'||view==='tree-photos') {
+          const entry=scope.documents[0];
+          if(!entry)return failure(404,'This tree is unavailable.');
+          const tree=entry.payload as Tree;
+          if(view==='tree-index') {
+            entry.photoMemoryIds=tree.memories.filter(memory=>memory.photos.length).map(memory=>memory.id);
+            entry.payload={...tree,memories:tree.memories.map(memory=>({...memory,photos:[]}))};
+          } else {
+            const memory=tree.memories.find(memory=>memory.id===memoryId);
+            if(!memory)return failure(404,'This memory is unavailable.');
+            entry.payload=await restoreMedia(memory.photos,user.id+'/trees/'+entry.id,privateStorage());
+          }
+          return streamedJson(scope);
+        }
         const store=privateStorage();
         for(const item of scope.documents)item.payload=await restoreMedia(item.payload,user.id+'/'+kind+'/'+item.id,store);
       }

@@ -7,6 +7,7 @@ import { appOrigin, supabaseConfig } from './config';
 import { spaces, type SpaceKind } from './identity';
 import { withoutProviderTokens } from './oauth';
 import { recordServiceEvent } from './service-events';
+import { recoveryCookie, verifiesRecovery } from './recovery';
 
 export async function accountClient({oauthExchange=false}:{oauthExchange?:boolean}={}) {
   const config = supabaseConfig();
@@ -48,6 +49,14 @@ export async function account() {
   }
   if(!user?.email_confirmed_at)return null;
   return {client,user};
+}
+
+export async function recoveryAccount() {
+  const session=await account();
+  const proof=(await cookies()).get(recoveryCookie)?.value;
+  if(!session||!proof)return null;
+  const {data}=await session.client.auth.getSession();
+  return data.session?.user.id===session.user.id&&verifiesRecovery(proof,data.session.access_token)?session:null;
 }
 
 export async function requireAccount() {

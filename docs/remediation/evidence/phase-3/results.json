@@ -1,0 +1,248 @@
+{
+  "measurement": "Loopback Next.js production build, designated hosted development Supabase, Edge 390 × 844. Five samples per row. Transfer metrics cover private API responses. Legacy timing covers API replay, candidate timing covers navigation and UI.",
+  "profiles": [
+    {
+      "kind": "books",
+      "label": "small",
+      "count": 1,
+      "samples": 5,
+      "legacyReplay": {
+        "loadMs": {
+          "median": 1125,
+          "p95": 4878
+        },
+        "requests": {
+          "median": 2,
+          "p95": 2
+        },
+        "wireBytes": {
+          "median": 134697,
+          "p95": 134697
+        },
+        "decodedBytes": {
+          "median": 178492,
+          "p95": 178492
+        },
+        "longestTaskMs": {
+          "median": 0,
+          "p95": 0
+        },
+        "heapBytes": {
+          "median": 3995892,
+          "p95": 4013388
+        }
+      },
+      "candidatePage": {
+        "loadMs": {
+          "median": 2360,
+          "p95": 2752
+        },
+        "requests": {
+          "median": 1,
+          "p95": 1
+        },
+        "wireBytes": {
+          "median": 554,
+          "p95": 554
+        },
+        "decodedBytes": {
+          "median": 342,
+          "p95": 342
+        },
+        "longestTaskMs": {
+          "median": 58,
+          "p95": 64
+        },
+        "heapBytes": {
+          "median": 4932292,
+          "p95": 4971776
+        }
+      }
+    },
+    {
+      "kind": "trees",
+      "label": "small",
+      "count": 1,
+      "samples": 5,
+      "legacyReplay": {
+        "loadMs": {
+          "median": 1074,
+          "p95": 1135
+        },
+        "requests": {
+          "median": 2,
+          "p95": 2
+        },
+        "wireBytes": {
+          "median": 134667,
+          "p95": 134667
+        },
+        "decodedBytes": {
+          "median": 178628,
+          "p95": 178628
+        },
+        "longestTaskMs": {
+          "median": 0,
+          "p95": 0
+        },
+        "heapBytes": {
+          "median": 3972944,
+          "p95": 3995812
+        }
+      },
+      "candidatePage": {
+        "loadMs": {
+          "median": 2258,
+          "p95": 3054
+        },
+        "requests": {
+          "median": 3,
+          "p95": 3
+        },
+        "wireBytes": {
+          "median": 135019,
+          "p95": 135019
+        },
+        "decodedBytes": {
+          "median": 178908,
+          "p95": 178908
+        },
+        "longestTaskMs": {
+          "median": 57,
+          "p95": 61
+        },
+        "heapBytes": {
+          "median": 7541952,
+          "p95": 7675796
+        }
+      }
+    },
+    {
+      "kind": "books",
+      "label": "large",
+      "count": 13,
+      "samples": 5,
+      "legacyReplay": {
+        "loadMs": {
+          "median": 5483,
+          "p95": 20725
+        },
+        "requests": {
+          "median": 14,
+          "p95": 14
+        },
+        "wireBytes": {
+          "median": 5723704,
+          "p95": 5723704
+        },
+        "decodedBytes": {
+          "median": 7785821,
+          "p95": 7785821
+        },
+        "longestTaskMs": {
+          "median": 0,
+          "p95": 0
+        },
+        "heapBytes": {
+          "median": 11538432,
+          "p95": 11548320
+        }
+      },
+      "candidatePage": {
+        "loadMs": {
+          "median": 2095,
+          "p95": 2181
+        },
+        "requests": {
+          "median": 1,
+          "p95": 1
+        },
+        "wireBytes": {
+          "median": 958,
+          "p95": 958
+        },
+        "decodedBytes": {
+          "median": 4185,
+          "p95": 4185
+        },
+        "longestTaskMs": {
+          "median": 0,
+          "p95": 55
+        },
+        "heapBytes": {
+          "median": 5185204,
+          "p95": 5190168
+        }
+      }
+    },
+    {
+      "kind": "trees",
+      "label": "large",
+      "count": 33,
+      "samples": 5,
+      "legacyReplay": {
+        "loadMs": {
+          "median": 13700,
+          "p95": 17292
+        },
+        "requests": {
+          "median": 3,
+          "p95": 3
+        },
+        "wireBytes": {
+          "median": 4402407,
+          "p95": 4402407
+        },
+        "decodedBytes": {
+          "median": 5858224,
+          "p95": 5858224
+        },
+        "longestTaskMs": {
+          "median": 0,
+          "p95": 0
+        },
+        "heapBytes": {
+          "median": 9578952,
+          "p95": 9582696
+        }
+      },
+      "candidatePage": {
+        "loadMs": {
+          "median": 4173,
+          "p95": 16217
+        },
+        "requests": {
+          "median": 4,
+          "p95": 4
+        },
+        "wireBytes": {
+          "median": 137090,
+          "p95": 137090
+        },
+        "decodedBytes": {
+          "median": 189468,
+          "p95": 189468
+        },
+        "longestTaskMs": {
+          "median": 53,
+          "p95": 63
+        },
+        "heapBytes": {
+          "median": 8369576,
+          "p95": 8659328
+        }
+      }
+    }
+  ],
+  "verification": {
+    "stagedSave": "The large upload returned one revision, rejected a second completion, and restored every photograph and audio byte.",
+    "tree": "Loaded and decoded the selected memory photograph, then saved Calendar view with all 32 original photo values intact.",
+    "passwordlessClosure": "Confirmed identity without a password denied direct reset, set a password through a generated recovery link, and used the customer closure form.",
+    "retry": "Aborted fragment produced an error. Old revision and assets survived. Double retry committed once.",
+    "refresh": "Reload during the second fragment left the prior 14-book revision unchanged.",
+    "backup": "Downloaded backup validated and re-imported with all photograph and audio bytes.",
+    "sharing": "Recipient received identical photo/audio bytes after explicit grant. Reads were denied before the grant and after revocation.",
+    "passwordClosure": "Customer closure removed the owner and left the partner’s book and file bytes intact."
+  },
+  "largeBackupBytes": 5644056
+}
