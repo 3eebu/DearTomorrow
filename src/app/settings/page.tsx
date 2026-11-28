@@ -3,7 +3,7 @@ import {AccountShell,AccountNotice} from '@/components/accounts/account-shell';
 import {ConnectionDetails,Portrait,type ConnectionView} from '@/components/accounts/connection';
 import {CopyId} from '@/components/accounts/copy-id';
 import {ExportCloud} from '@/components/accounts/guest-migration';
-import {deleteAccount,saveAvatar,saveDisplayName,signOut} from '@/lib/accounts/actions';
+import {deleteAccount,requestClosureRecovery,saveAvatar,saveDisplayName,signOut} from '@/lib/accounts/actions';
 import {privateStorage,requireAccount} from '@/lib/accounts/server';
 import {mediaBucket} from '@/lib/accounts/media';
 import {CloudBoundary} from '@/components/accounts/cloud-boundary';
@@ -12,6 +12,7 @@ export const metadata={title:'Account settings — Dear Tomorrow'};
 export const dynamic='force-dynamic';
 export default async function Page({searchParams}:{searchParams:Promise<{message?:string}>}) {
   const {profile,user,client}=await requireAccount();
+  const message=(await searchParams).message;
   const view=profile.deleting_at?null:(await client.rpc('dt_connection_view')).data as ConnectionView|null;
   let photo:string|null=null;
   if(!profile.deleting_at&&profile.avatar?.startsWith(user.id+'/avatar/')) {
@@ -20,7 +21,7 @@ export default async function Page({searchParams}:{searchParams:Promise<{message
   }
   return <AccountShell><CloudBoundary scope={{owner:user.id,kind:'letters',path:'/settings'}} navigation={false}>
     <div className="dt-account-heading"><h1>Account settings.</h1></div>
-    <AccountNotice message={(await searchParams).message??(profile.deleting_at?'deletion_pending':undefined)}/>
+    <AccountNotice message={message??(profile.deleting_at?'deletion_pending':undefined)}/>
     {!profile.deleting_at&&<>
       <div className="dt-account-grid">
         <section className="dt-account-section">
@@ -57,8 +58,12 @@ export default async function Page({searchParams}:{searchParams:Promise<{message
     <section className="dt-account-section">
       <h2>Account access</h2>
       <form action={signOut}><button className="dt-account-secondary">Sign out</button></form>
-      <details className="dt-account-danger dt-stationery dt-stationery-card" open={!!profile.deleting_at||undefined}><summary>{profile.deleting_at?'Finish deleting account':'Delete account'}</summary>
+      <details className="dt-account-danger dt-stationery dt-stationery-card" open={profile.deleting_at||message==='closure-recovery'||message==='delete'?true:undefined}><summary>{profile.deleting_at?'Finish deleting account':'Delete account'}</summary>
         <p>This closes access and starts cleanup of your profile, owned cloud memories, files and connection. Guest memories and previously downloaded copies stay on their devices. <Link href="/privacy">Read about data removal</Link>.</p>
+        <p>If you sign in with Google or need a new password, verify your email to set one. Then sign in and return here to confirm deletion.</p>
+        <form action={requestClosureRecovery} className="dt-account-actions">
+          <button className="dt-account-secondary">Email me a password setup link</button>
+        </form>
         <form action={deleteAccount} className="dt-account-form">
           <label>Current password<input name="password" required type="password" autoComplete="current-password" maxLength={128}/></label>
           <label>Type DELETE to confirm<input name="confirmation" required pattern="DELETE" autoComplete="off"/></label>

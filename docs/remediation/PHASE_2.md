@@ -1,6 +1,6 @@
 # Phase 2 · Contrast, typography and navigation
 
-28 November 2026. The baseline was the approved Phase 1 commit `a147271`. The [Phase 2 implementation](https://github.com/3eebu/DearTomorrow/commit/18a512a75af53d65042dfa3e3770a4d63afd6337) was verified together with the existing remote Phase 4 work on the refinement branch. The [original audit](https://github.com/3eebu/DearTomorrow/blob/1fa2c6fbadc9d8c82136579829f83c5ec6fba14c/docs/audit/10-MASTER-ISSUE-REGISTER.md) is preserved. All hosted account checks used fictional data against the authorized development backend from a local production build.
+28 November 2026. The baseline was the approved Phase 1 commit `a147271`. The [Phase 2 implementation](https://github.com/3eebu/DearTomorrow/commit/18a512a75af53d65042dfa3e3770a4d63afd6337) was verified together with the independently published Phase 3 and 4 changes on the refinement branch. The [original audit](https://github.com/3eebu/DearTomorrow/blob/1fa2c6fbadc9d8c82136579829f83c5ec6fba14c/docs/audit/10-MASTER-ISSUE-REGISTER.md) is preserved. All hosted account checks used fictional data against the authorized development backend from a local production build.
 
 ## DT-QA-02
 
@@ -52,6 +52,6 @@ Solid colors were compared using relative luminance from computed foregrounds an
 
 ## Checks and reproducibility
 
-- Lint, standalone TypeScript, the Next.js production build and all 98 integrated branch automated tests passed. The existing Privacy and Service Information pages rendered and returned zero findings on these two axe rules at both sampled widths.
+- Lint, standalone TypeScript, the Next.js production build and all 100 integrated branch automated tests passed. The existing Privacy and Service Information pages rendered and returned zero findings on these two axe rules at both sampled widths.
 - The public browser runner accepts `before` or `after` followed by `edge`, `firefox` or `webkit`. It uses `AUDIT_URL`, `AUDIT_PW`, `AUDIT_EDGE` and `AUDIT_AXE`. The signed-in runner also uses the repo’s approved development integration variables and creates, verifies and removes only its own fictional account. The texture runner uses the optimized loopback origin and the same browser binary.
 - Source changes are limited to branded font assets and CSS, shared header navigation, nearby control labels and the audited color rules. [Implementation and files changed](https://github.com/3eebu/DearTomorrow/commit/18a512a75af53d65042dfa3e3770a4d63afd6337). Phase 2 was tested on loopback with the refinement branch’s existing deployment exclusion.

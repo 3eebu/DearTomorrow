@@ -3,6 +3,7 @@ import { coverDesign } from '@/lib/bookmaking';
 import { PageContent } from './page-content';
 import s from './bookmaking.module.css';
 import legacy from './memory-books.module.css';
+import type {BookShelfEntry} from '@/lib/book-shelf';
 
 export function coverPage(book: MemoryBookDocument, surface: CoverSurface): BookPage {
   const design = coverDesign(book);
@@ -36,8 +37,9 @@ export function BookSurface({ book, surface = 'front' }: { book: MemoryBookDocum
   </div>;
 }
 
-export function Cover({ book }: { book: MemoryBookDocument }) {
-  if (book.cover.design) return <BookSurface book={book}/>;
+export function Cover({ book }: { book: MemoryBookDocument | BookShelfEntry }) {
+  const document='pages' in book?book:book.document;
+  if (document?.cover.design) return <BookSurface book={document}/>;
   return <div className={`${legacy.cover} ${legacy[book.cover.material]}`} style={{ backgroundColor: book.cover.color }}>
     <div className={legacy.coverInset}>
       <small>DEAR TOMORROW</small><span className={legacy.coverOrnament}>✧</span>

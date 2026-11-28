@@ -53,6 +53,17 @@ test('a rejected fragment cancels the transfer without completing a save',async(
   assert.deepEqual(calls,['stage','cancel-upload']);
 });
 
+test('a successful HTTP status alone cannot acknowledge a staged or direct save',async()=>{
+  const calls=[];
+  const {commitCloud}=load('cloud-client',{fetch:async(_url,{headers,body})=>{
+    calls.push(headers['X-Dear-Transfer']?'stage':JSON.parse(typeof body==='string'?body:await body.text()).action);
+    return Response.json({});
+  }});
+  await assert.rejects(commitCloud('owner','books',0,[{payload:'one'}],[],{}),/could not confirm this save/);
+  await assert.rejects(commitCloud('owner','books',0,[{payload:'a'.repeat(5_000_000)}],[],{}),/could not confirm this upload fragment/);
+  assert.deepEqual(calls,['save','stage','cancel-upload']);
+});
+
 test('a library loads separately authorized documents and rejects a mixed revision',async()=>{
   let revision=4;
   const ids=[];

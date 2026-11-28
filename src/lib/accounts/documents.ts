@@ -9,7 +9,7 @@ export type CloudScope = {owner:string;kind:SpaceKind;path:string};
 export type LibraryItem = {id:string;sourceId:string;kind:SpaceKind;title:string;owned:boolean;ownerName:string;updated:string;draft:boolean;shared:boolean};
 export type CloudDocument = {id:string;ownerId:string;kind:SpaceKind;title:string;sourceId:string;payload:unknown;owned:boolean;shared:boolean;
   locked:boolean;opens:number|null;gates:{position:number;instant:number;sealed:boolean}[]};
-export type StoredEntry = {id:string;docId:string;summary:unknown;payload:unknown};
+export type StoredEntry = {id:string;docId:string;summary:unknown;payload:unknown;photoMemoryIds?:string[]};
 export type ScopeResult = {revision:number;metadata:Record<string,unknown>;documents:StoredEntry[]};
 export const sourceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 export const uuidPattern = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;

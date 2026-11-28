@@ -21,6 +21,7 @@ const notices: Record<string,string> = {
   request:'This connection request could not be changed. Review its current status and try again.',
   photo:'Choose a JPEG, PNG, or WebP photo up to 750 KB. Private photo storage must be configured.',
   delete:'Enter your current password and type DELETE to confirm.',
+  'closure-recovery':'Check the email on your account for a password setup link. After setting a password, sign in and return to Account settings.',
   deletion_pending:'Your account is closed for access. Confirm deletion again to finish private file cleanup.',
 };
 

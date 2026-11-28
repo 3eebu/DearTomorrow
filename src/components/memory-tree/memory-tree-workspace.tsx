@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {cloudTrees} from '@/lib/accounts/cloud-client';
 import type {CloudScope} from '@/lib/accounts/documents';
 import { chronological, displayDay, findMemories, localDay, newTree, nextAnniversary, putMemory, removeChapter, stage, validDay,
-  type Chapter, type Grove, type Memory, type MemoryInput, type Settings, type Tree, type View } from '@/lib/memory-tree';
+  type Chapter, type Grove, type Memory, type MemoryInput, type Photo, type Settings, type Tree, type View } from '@/lib/memory-tree';
 import { downloadTree, importTree, loadGarden, saveGarden, type SavedGrove } from '@/lib/memory-tree-storage';
 import { blankMemory, ChaptersForm, GardenDialog, MemoryForm, SettingsForm } from './tree-dialogs';
 import { Calendar, MemoryIndex, MemoryRows, Photos, RelationshipNotes, sampleTree, seedling } from './tree-journal';
@@ -16,7 +16,8 @@ const errorMessage=(error:unknown)=>error instanceof Error?error.message:'The ch
 type DialogMode='plant'|'appearance'|'chapters'|'memory'|'delete';
 type Commit=(tree:Tree)=>Promise<boolean>;
 export default function MemoryTreeWorkspace({scope,environmentStudio=false}:{scope?:CloudScope;environmentStudio?:boolean}={}){
-  const store=useMemo(()=>scope?cloudTrees(scope):{loadGarden,saveGarden},[scope]);
+  const cloudStore=useMemo(()=>scope?cloudTrees(scope):null,[scope]);
+  const store=cloudStore??{loadGarden,saveGarden};
   const [saved,setSaved]=useState<SavedGrove|null>(null),[demo,setDemo]=useState(false),[loading,setLoading]=useState(true);
   const [error,setError]=useState(''),[draft,setDraft]=useState<Tree|null>(null),[busy,setBusy]=useState(false);
   const [startupFocus,setStartupFocus]=useState<Focus|null>(null);
@@ -24,10 +25,10 @@ export default function MemoryTreeWorkspace({scope,environmentStudio=false}:{sco
   function show(records:SavedGrove){snapshot.current=records;setSaved(records);}
   useEffect(()=>{
     let current=true;
-    store.loadGarden().then(records=>{if(current)show(records);},failure=>{if(current)setError(errorMessage(failure));})
+    (cloudStore?.loadGarden()??loadGarden()).then(records=>{if(current)show(records);},failure=>{if(current)setError(errorMessage(failure));})
       .finally(()=>{if(current)setLoading(false);});
     return()=>{current=false;};
-  },[store]);
+  },[cloudStore]);
   const active=saved?.grove.trees.find(t=>t.id===saved.grove.activeId);
   async function transact(change:(grove:Grove)=>Grove,backup?:Tree){
     if(pending.current||!snapshot.current)return false;
@@ -54,6 +55,15 @@ export default function MemoryTreeWorkspace({scope,environmentStudio=false}:{sco
     }catch(failure){setError(errorMessage(failure));}
   }
   const tree=demo?sampleTree:active??seedling;
+  const photoSource=useMemo(()=>{
+    if(!cloudStore||!saved||!active||demo)return undefined;
+    const revision=saved.revision;
+    return {
+      has:(memory:string)=>cloudStore.hasPhotos(active.id,memory),
+      load:(memory:string)=>cloudStore.loadPhotos(active.id,memory,revision),
+      prepareTree:(tree:Tree)=>cloudStore.prepareTree(tree,revision),
+    };
+  },[cloudStore,saved,active,demo]);
   return <section id="memory-tree" className="mt-workspace" aria-labelledby="mt-tree-title">
     <div className="mt-origin">
       {tree.settings.name&&<p className="mt-kicker">Memory Tree</p>}
@@ -66,7 +76,7 @@ export default function MemoryTreeWorkspace({scope,environmentStudio=false}:{sco
       onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';if(file)void restore(file);}}/>}
     {loading&&!demo?<p className="mt-status" role="status">Opening your Memory Tree…</p>:
       <TreeExperience key={tree.id} tree={tree} demo={demo} planted={!!active&&!demo} editable={!demo&&!!saved} busy={busy} environmentStudio={environmentStudio} cloud={!!scope}
-        error={error} draft={draft} commit={commit} initialFocus={startupFocus} onError={setError}
+        error={error} draft={draft} commit={commit} initialFocus={startupFocus} onError={setError} photoSource={photoSource}
         exampleAction={<button className="mt-example-link" onClick={()=>{setDemo(!demo);setStartupFocus(null);}}>{demo?'Back to my tree':'Explore the example'}</button>}
         treeActions={!demo&&saved&&<>
           <button disabled={busy} onClick={()=>fileInput.current?.click()}>Import backup</button>
@@ -86,10 +96,11 @@ export function SharedTree({tree}:{tree:Tree}) {
   </section>;
 }
 
-function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,initialFocus,onError,onPlant,exampleAction,treeActions,environmentStudio=false,cloud=false}:{
+type PhotoSource={has:(memory:string)=>boolean;load:(memory:string)=>Promise<Photo[]>;prepareTree:(tree:Tree)=>Promise<Tree>};
+function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,initialFocus,onError,onPlant,exampleAction,treeActions,environmentStudio=false,cloud=false,photoSource}:{
   tree:Tree;demo:boolean;planted:boolean;editable:boolean;busy:boolean;error:string;draft:Tree|null;commit:Commit;
   initialFocus:Focus|null;onError:(s:string)=>void;onPlant:(s:Settings)=>Promise<boolean>;
-  exampleAction:ReactNode;treeActions:ReactNode;environmentStudio?:boolean;cloud?:boolean;
+  exampleAction:ReactNode;treeActions:ReactNode;environmentStudio?:boolean;cloud?:boolean;photoSource?:PhotoSource;
 }){
   const [today]=useState(localDay);
   const ordered=useMemo(()=>chronological(tree.memories),[tree.memories]);
@@ -116,6 +127,25 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
     new Set(match.map(memory=>memory.id)):null,[query,chapter,favorites,milestones,match]);
   const selection=ordered.find(m=>m.id===selected);
   const selectionIndex=selection?ordered.indexOf(selection):-1;
+  const [photoResult,setPhotoResult]=useState<{source:PhotoSource;id:string;photos?:Photo[];error?:string}>();
+  const [photoAttempt,retryPhotos]=useState(0);
+  const photoId=!landscape&&selection&&!selection.photos.length&&photoSource?.has(selection.id)?selection.id:undefined;
+  const displayedPhotos=photoResult&&photoResult.source===photoSource&&photoResult.id===photoId?photoResult:undefined;
+  useEffect(()=>{
+    if(!photoSource||!photoId)return;
+    let current=true;
+    photoSource.load(photoId).then(photos=>{
+      if(current)setPhotoResult({source:photoSource,id:photoId,photos});
+    },failure=>{
+      if(current)setPhotoResult({source:photoSource,id:photoId,error:errorMessage(failure)});
+    });
+    return()=>{current=false;};
+  },[photoId,photoSource,photoAttempt]);
+  const detailedSelection=selection&&displayedPhotos?.photos?{...selection,photos:displayedPhotos.photos}:selection;
+  async function exportTree(backup:Tree,name:string){
+    try {downloadTree(photoSource?await photoSource.prepareTree(backup):backup,name);}
+    catch(failure){onError(errorMessage(failure));}
+  }
   const inDay=(date:string)=>ordered.filter(m=>m.date===date || (m.annual&&date>=m.date&&
     nextAnniversary(m.date,date.slice(0,4)+'-01-01')===date));
   function selectDate(date:string){
@@ -177,7 +207,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
   const screenTree=demo||!editable?{...tree,settings:{...tree.settings,paused:demoPaused}}:tree;
   const calendarMemories=view==='calendar'?inDay(day):[];
   const displayError=error&&<div role="alert" className="mt-error">{error}
-    {draft&&<button type="button" onClick={()=>downloadTree(draft,(draft.settings.name||'Memory Tree')+' draft')}>Export draft</button>}</div>;
+    {draft&&<button type="button" onClick={()=>void exportTree(draft,(draft.settings.name||'Memory Tree')+' draft')}>Export draft</button>}</div>;
   return <>
     <div className="mt-toolbar">
       <div className="mt-toolbar-aside">{exampleAction}</div>
@@ -189,7 +219,7 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
           <div className="mt-menu-actions">
             {planted&&<><button disabled={busy} onClick={e=>{e.currentTarget.closest('details')!.open=false;setMode('appearance');}}>Appearance</button>
               <button disabled={busy} onClick={e=>{e.currentTarget.closest('details')!.open=false;setMode('chapters');}}>Chapters</button>
-              <button onClick={()=>downloadTree(tree,tree.settings.name||'Memory Tree')}>Export tree</button></>}
+              <button onClick={()=>void exportTree(tree,tree.settings.name||'Memory Tree')}>Export tree</button></>}
             {treeActions}
           </div>
         </details>}
@@ -239,7 +269,10 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
         <h2 id="mt-selected-title" ref={detail} tabIndex={-1}>{selection.title}</h2>
         <p className="mt-chapter-name">{[tree.chapters.find(c=>c.id===selection.chapterId)?.name,selection.time,selection.location].filter(Boolean).join(' · ')}</p>
         {selection.story&&<p className="mt-story">{selection.story}</p>}
-        {!!selection.photos.length&&<Photos memory={selection}/>}
+        {detailedSelection&&!!detailedSelection.photos.length&&<Photos memory={detailedSelection}/>}
+        {photoId&&!displayedPhotos&&<p role="status">Opening photographs…</p>}
+        {displayedPhotos?.error&&<p role="alert">{displayedPhotos.error}{' '}
+          <button onClick={()=>{setPhotoResult(undefined);retryPhotos(count=>count+1);}}>Retry photographs</button></p>}
         {!!selection.tags.length&&<p className="mt-tags">{selection.tags.join(' · ')}</p>}
         <div className="mt-detail-actions">
           <button disabled={selectionIndex<=0} onClick={()=>choose(ordered[selectionIndex-1])}>← Earlier</button>
@@ -247,9 +280,10 @@ function TreeExperience({tree,demo,planted,editable,busy,error,draft,commit,init
           <button className="mt-link" onClick={()=>choose(selection,true)}>Find this leaf ↗</button>
         </div>
         {planted&&<div className="mt-detail-actions">
-          <button disabled={busy} onClick={()=>open(selection)}>Edit</button>
-          <button disabled={busy} onClick={()=>open(selection,true)}>Duplicate</button>
-          <button onClick={()=>downloadTree({version:1,memory:selection},selection.title)}>Export memory</button>
+          <button disabled={busy||!!photoId&&!displayedPhotos?.photos} onClick={()=>open(detailedSelection)}>Edit</button>
+          <button disabled={busy||!!photoId&&!displayedPhotos?.photos} onClick={()=>open(detailedSelection,true)}>Duplicate</button>
+          <button disabled={!!photoId&&!displayedPhotos?.photos}
+            onClick={()=>downloadTree({version:1,memory:detailedSelection},selection.title)}>Export memory</button>
           <button disabled={busy} onClick={()=>setMode('delete')}>Delete</button>
         </div>}
       </article>}

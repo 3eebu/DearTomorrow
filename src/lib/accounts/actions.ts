@@ -1,7 +1,9 @@
 'use server';
 
 import {redirect} from 'next/navigation';
-import {account,accountClient,accountLanding,privateStorage} from './server';
+import {account,accountClient,accountLanding,privateStorage,recoveryAccount} from './server';
+import {cookies} from 'next/headers';
+import {recoveryCookie} from './recovery';
 import {appOrigin,supabaseConfig} from './config';
 import {oauthAuthorizeUrl,oauthCallbackPath} from './oauth';
 import {availableSocialProviders} from './social-providers';
@@ -77,20 +79,28 @@ export async function requestRecovery(form:FormData) {
   redirect('/forgot-password?message=recovery');
 }
 export async function resetPassword(form:FormData) {
-  const session=await account();
+  const session=await recoveryAccount();
   if(!session)redirect('/forgot-password?message=confirmation');
   const password=field(form,'password');
   if(!validPassword(password))redirect('/reset-password?message=details');
   const {error}=await session.client.auth.updateUser({password});
   if(error)recordAuthError(error.status);
   if(error)redirect('/reset-password?message=try');
+  (await cookies()).delete(recoveryCookie);
   await session.client.auth.signOut({scope:'global'});
   redirect('/login?message=changed');
 }
 export async function signOut() {
   const client=await accountClient();
+  (await cookies()).delete(recoveryCookie);
   await client?.auth.signOut({scope:'local'});
   redirect('/');
+}
+export async function requestClosureRecovery() {
+  const session=await account();
+  if(!session?.user.email)redirect('/login');
+  const {error}=await session.client.auth.resetPasswordForEmail(session.user.email,{redirectTo:appOrigin()+'/auth/confirm'});
+  redirect('/settings?message='+(error?.status===429?'rate':error?'try':'closure-recovery'));
 }
 export async function saveDisplayName(form:FormData) {
   const session=await account();

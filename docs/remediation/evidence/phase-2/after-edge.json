@@ -3193,7 +3193,11 @@
         "h": 93,
         "lines": 2
       },
-      "primary": null,
+      "primary": {
+        "w": 124,
+        "h": 44,
+        "lines": 1
+      },
       "overflow": 0,
       "computed": "\"Playfair Display\", Georgia, serif",
       "faces": [
@@ -3734,11 +3738,7 @@
         "h": 47,
         "lines": 1
       },
-      "primary": {
-        "w": 124,
-        "h": 44,
-        "lines": 1
-      },
+      "primary": null,
       "overflow": 0,
       "computed": "\"Playfair Display\", Georgia, serif",
       "faces": [
@@ -4824,11 +4824,7 @@
         "h": 49,
         "lines": 1
       },
-      "primary": {
-        "w": 151,
-        "h": 44,
-        "lines": 1
-      },
+      "primary": null,
       "overflow": 0,
       "computed": "\"Playfair Display\", Georgia, serif",
       "faces": [
@@ -5369,11 +5365,7 @@
         "h": 52,
         "lines": 1
       },
-      "primary": {
-        "w": 151,
-        "h": 44,
-        "lines": 1
-      },
+      "primary": null,
       "overflow": 0,
       "computed": "\"Playfair Display\", Georgia, serif",
       "faces": [
@@ -6455,7 +6447,11 @@
         "h": 102,
         "lines": 1
       },
-      "primary": null,
+      "primary": {
+        "w": 151,
+        "h": 44,
+        "lines": 1
+      },
       "overflow": 0,
       "computed": "\"Playfair Display\", Georgia, serif",
       "faces": [
@@ -6891,7 +6887,7 @@
           "bytes": 38804
         }
       ],
-      "cls": 0.0002,
+      "cls": 0.2709,
       "headingFaces": [
         {
           "familyName": "Playfair Display",
