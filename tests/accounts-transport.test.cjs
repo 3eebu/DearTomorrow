@@ -102,7 +102,7 @@ test('the private route consumes a large upload once and streams an authorized l
     return {data:null};
   }};
   const client={rpc:async(name,input)=>{
-    if(name==='dt_scope')return {data:{}};
+    if(name==='dt_scope')return {data:{revision:2}};
     if(name==='dt_commit_scope') {
       assert.equal(input.expected,2);
       assert.equal(input.changes[0].payload.data,stored.data);
@@ -124,7 +124,8 @@ test('the private route consumes a large upload once and streams an authorized l
       sourceIdPattern:/^[a-z]+$/,
     },
     '@/lib/accounts/identity':{isSpaceKind:kind=>kind==='books'},
-    '@/lib/accounts/media':{packMedia:async value=>value,restoreMedia:async value=>value},
+    '@/lib/accounts/media':{packMedia:async value=>value,restoreMedia:async value=>value,PrivateMediaUnavailable:class extends Error{}},
+    '@/lib/accounts/service-events':{recordServiceEvent(){}},
     '@/lib/accounts/cloud-transport':transport,
   };
   const source=readFileSync(join(__dirname,'../src/app/api/private-space/route.ts'),'utf8');

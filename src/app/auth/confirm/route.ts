@@ -1,6 +1,7 @@
 import {NextRequest,NextResponse} from 'next/server';
 import {appOrigin,matchesHostedOrigin} from '@/lib/accounts/config';
 import {accountClient} from '@/lib/accounts/server';
+import {recordAuthError} from '@/lib/accounts/service-events';
 
 export async function GET(request:NextRequest) {
   const token_hash=request.nextUrl.searchParams.get('token_hash');
@@ -9,6 +10,7 @@ export async function GET(request:NextRequest) {
   let destination='/login?message=confirmation';
   if(client && token_hash && token_hash.length<=512 && (type==='email'||type==='recovery')) {
     const {error}=await client.auth.verifyOtp({token_hash,type});
+    if(error)recordAuthError(error.status);
     if(!error)destination=type==='recovery'?'/reset-password':'/welcome';
   }
   return NextResponse.redirect(new URL(destination,appOrigin()),{headers:{'Cache-Control':'private, no-store','Referrer-Policy':'no-referrer'}});

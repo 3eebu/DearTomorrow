@@ -8,6 +8,7 @@ import {availableSocialProviders} from './social-providers';
 import {displayName,normalizeDearId} from './identity';
 import {uuidPattern} from './documents';
 import {removeOwnedMedia,saveImage} from './media';
+import {recordAuthError,recordServiceEvent} from './service-events';
 import {revalidatePath} from 'next/cache';
 import type {User} from '@supabase/supabase-js';
 
@@ -35,6 +36,7 @@ export async function signInWithProvider(form:FormData) {
     options:{redirectTo:new URL(oauthCallbackPath,appOrigin()).href,skipBrowserRedirect:true},
   });
   const destination = !error && data.url ? oauthAuthorizeUrl(config.url,data.url) : null;
+  if (error) recordAuthError(error.status);
   if (!destination) redirect('/login?message=social-failed');
   redirect(destination);
 }
@@ -47,6 +49,7 @@ export async function signUp(form:FormData) {
   const {data,error}=await client.auth.signUp({email:address,password,options:{
     data:{display_name:name},emailRedirectTo:appOrigin()+'/auth/confirm',
   }});
+  if(error)recordAuthError(error.status);
   if(error?.status===429)redirect('/signup?message=rate');
   if(error && error.status!==422)redirect('/signup?message=try');
   if(data.session&&data.user?.email_confirmed_at)await landing(client,data.user);
@@ -58,6 +61,7 @@ export async function signIn(form:FormData) {
   const address=email(form),password=field(form,'password');
   if(!address||!password||password.length>128)redirect('/login?message=credentials');
   const {data,error}=await client.auth.signInWithPassword({email:address,password});
+  if(error)recordAuthError(error.status);
   if(error?.status===429)redirect('/login?message=rate');
   if(error||!data.user?.email_confirmed_at)redirect('/login?message=credentials');
   await landing(client,data.user);
@@ -68,6 +72,7 @@ export async function requestRecovery(form:FormData) {
   const address=email(form);
   if(!address)redirect('/forgot-password?message=details');
   const {error}=await client.auth.resetPasswordForEmail(address,{redirectTo:appOrigin()+'/auth/confirm'});
+  if(error)recordAuthError(error.status);
   if(error?.status===429)redirect('/forgot-password?message=rate');
   redirect('/forgot-password?message=recovery');
 }
@@ -77,6 +82,7 @@ export async function resetPassword(form:FormData) {
   const password=field(form,'password');
   if(!validPassword(password))redirect('/reset-password?message=details');
   const {error}=await session.client.auth.updateUser({password});
+  if(error)recordAuthError(error.status);
   if(error)redirect('/reset-password?message=try');
   await session.client.auth.signOut({scope:'global'});
   redirect('/login?message=changed');
@@ -161,11 +167,20 @@ export async function deleteAccount(form:FormData) {
   const {data,error}=await session.client.auth.signInWithPassword({email:session.user.email,password});
   if(error||data.user?.id!==session.user.id)redirect('/settings?message=delete');
   const {error:closing}=await store.rpc('dt_begin_delete',{actor:session.user.id});
-  if(closing)redirect('/settings?message=try');
+  if(closing) {
+    recordServiceEvent('account.cleanup_failed');
+    redirect('/settings?message=try');
+  }
   try {await removeOwnedMedia(session.user.id,store);}
-  catch {redirect('/settings?message=deletion_pending');}
+  catch {
+    recordServiceEvent('account.cleanup_failed');
+    redirect('/settings?message=deletion_pending');
+  }
   const {error:failure}=await store.auth.admin.deleteUser(session.user.id);
-  if(failure)redirect('/settings?message=deletion_pending');
+  if(failure) {
+    recordServiceEvent('account.cleanup_failed');
+    redirect('/settings?message=deletion_pending');
+  }
   await session.client.auth.signOut({scope:'local'});
   redirect('/');
 }

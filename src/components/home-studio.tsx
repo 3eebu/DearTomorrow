@@ -128,7 +128,7 @@ export default function HomeStudio({ page = 'home', tree, letters, cloud = false
     </main>
     <footer className="dt-footer">
       <div><Link href="/" className="dt-wordmark">Dear <em>Tomorrow.</em></Link><span>Some words are worth waiting for.</span></div>
-      <nav aria-label="Footer navigation"><Link href="/about">About</Link><Link href="/how-it-works">How it works</Link><Link href="/memory-tree">Memory Tree</Link><Link href="/memory-books">Memory Books</Link><Link href="/letters">Letters</Link></nav>
+      <nav aria-label="Footer navigation"><Link href="/about">About</Link><Link href="/how-it-works">How it works</Link><Link href="/memory-tree">Memory Tree</Link><Link href="/memory-books">Memory Books</Link><Link href="/letters">Letters</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Service information</Link></nav>
       <small>© 2026 Dear Tomorrow · An interactive preview, not a live service</small>
     </footer>
     {isHome && <nav className="dt-bottom-nav" aria-label="Quick mobile navigation">

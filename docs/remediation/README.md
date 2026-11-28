@@ -1,6 +1,6 @@
 # Dear Tomorrow remediation tracker
 
-Updated 27 November 2026. The original audit is preserved verbatim at [1fa2c6f](https://github.com/3eebu/DearTomorrow/tree/1fa2c6fbadc9d8c82136579829f83c5ec6fba14c/docs/audit). This tracker records later work separately. Phase 1 covers three of the eighteen actionable findings. Severity refers to the original audit.
+Updated 27 November 2026. The original audit is preserved verbatim at [1fa2c6f](https://github.com/3eebu/DearTomorrow/tree/1fa2c6fbadc9d8c82136579829f83c5ec6fba14c/docs/audit). Severity refers to the original audit.
 
 | Finding | Original priority | Status | Subject |
 |---|---|---|---|
@@ -13,9 +13,9 @@ Updated 27 November 2026. The original audit is preserved verbatim at [1fa2c6f](
 | DT-QA-07 | P2 | Open | Cloud library scaling |
 | DT-QA-08 | P1 | Open | Large transfers and recovery over hosted HTTPS |
 | DT-QA-09 | P1 | Open | Actual email and Google on the release origin |
-| DT-QA-10 | P1 | Open | Recovery, retention and incident response |
-| DT-QA-11 | P1 | Open | Public privacy and service information |
-| DT-QA-12 | P2 | Open | Unused attachment retention |
+| DT-QA-10 | P1 | [Isolated drill passed. Provider restore and alert receipt pending external verification](PHASE_4.md#dt-qa-10) | Recovery, retention and incident response |
+| DT-QA-11 | P1 | [Draft screens implemented. Founder and legal review pending](PHASE_4.md#dt-qa-11) | Public privacy and service information |
+| DT-QA-12 | P2 | [Race mitigation and isolated retention checks passed. Hosted retention pending](PHASE_4.md#dt-qa-12) | Unused attachment retention |
 | DT-QA-13 | P2 | Open | WebKit navigation errors |
 | DT-QA-14 | P2 | Open | Frame pacing during book turns |
 | DT-QA-15 | P2 | [Resolved in Phase 1](PHASE_1.md#dt-qa-15) | Operational source of truth |
@@ -25,4 +25,4 @@ Updated 27 November 2026. The original audit is preserved verbatim at [1fa2c6f](
 | DT-QA-19 | Frozen | Frozen | GPU landscape replacement |
 | DT-QA-20 | P2 | Open | Production font delivery |
 
-Phase 1 was verified against an isolated production build and the designated development backend. Fifteen actionable findings remain open. Protected staging has its own verified revision. [Development status](../PROGRESS.md) · [Phase 1 evidence and screenshots](PHASE_1.md)
+Phase 1 was verified against an isolated production build and the designated development backend. Phase 4 used a separate local restore target. Protected staging has its own verified revision. [Development status](../PROGRESS.md) · [Phase 1 evidence and screenshots](PHASE_1.md) · [Phase 4 evidence](PHASE_4.md) · [Recovery and incident runbook](PHASE_4_OPERATIONS.md)

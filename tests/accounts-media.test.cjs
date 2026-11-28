@@ -8,7 +8,11 @@ const path=require('node:path');
 const exportsUnderTest={};
 const code=fs.readFileSync(path.resolve(__dirname,'../src/lib/accounts/media.ts'),'utf8');
 const {outputText}=ts.transpileModule(code,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}});
-vm.runInNewContext(outputText,{exports:exportsUnderTest,Buffer,require:name=>name==='server-only'?{}:require(name)});
+vm.runInNewContext(outputText,{exports:exportsUnderTest,Buffer,require:name=>{
+  if(name==='server-only')return {};
+  if(name==='./service-events')return {recordServiceEvent() {}};
+  return require(name);
+}});
 const {packMedia,restoreMedia,saveImage}=exportsUnderTest;
 const photo='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLttAAAAABJRU5ErkJggg==';
 const owner='a19a7231-de92-4649-8f7d-34d5bbb24558';
