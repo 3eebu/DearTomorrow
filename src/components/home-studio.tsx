@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { AboutNewspaperMontage } from './about-newspaper-montage';
 import { StationeryDialog } from './stationery-dialog';
+import { SiteNavigation } from './site-navigation';
 import { useEffect, useState } from 'react';
 import type { CSSProperties, ReactNode, TouchEvent } from 'react';
 
@@ -52,25 +53,15 @@ function JourneyLetters() {
 export default function HomeStudio({ page = 'home', tree, letters, cloud = false }: { page?: WorkspacePage; tree?: ReactNode; letters?: ReactNode; cloud?: boolean }) {
   useReveals();
   const isHome = page === 'home';
-  const [mobileMenu, setMobileMenu] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
   return <div className="dt-app" id="home">
     <a className="dt-skip" href="#dt-main">Skip to the story</a>
     <div className="dt-prototype-banner">{cloud ? 'DEAR TOMORROW · PRIVATE IN MY SPACE' : 'DEAR TOMORROW · GUEST KEEPSAKES SAVE IN THIS BROWSER'}</div>
     <header className="dt-header">
       <Link className="dt-wordmark" href="/" aria-label="Dear Tomorrow home">Dear <em>Tomorrow.</em></Link>
-      <nav className={'dt-navigation ' + (mobileMenu ? 'dt-nav-open' : '')} aria-label="Primary navigation">
-        <Link onClick={() => setMobileMenu(false)} href="/about">Our story</Link>
-        <Link onClick={() => setMobileMenu(false)} href="/how-it-works">How it works</Link>
-        <Link onClick={() => setMobileMenu(false)} href="/memory-books">Memory Books</Link>
-        <Link onClick={() => setMobileMenu(false)} href="/memory-tree">Memory Tree</Link>
-        <Link onClick={() => setMobileMenu(false)} href="/letters">Letters</Link>
-      </nav>
+      <SiteNavigation />
       <div className="dt-header-right">
         <button className="dt-button dt-header-create" type="button" onClick={() => setCreateOpen(true)}>Create something <span aria-hidden="true">↗</span></button>
-        <button className="dt-menu-button" type="button" onClick={() => setMobileMenu(open => !open)} aria-label={mobileMenu ? 'Close navigation' : 'Open navigation'} aria-expanded={mobileMenu}>
-          <span/><span/>
-        </button>
       </div>
     </header>
     <main id="dt-main">

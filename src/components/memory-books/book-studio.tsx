@@ -331,5 +331,5 @@ export function BookStudio({ book, onChange, status, onRead, onDone, onError, on
 function PageThumbnail({book,page,current,index,onClick}:{book:MemoryBookDocument;page:BookPage;current:boolean;index:number;onClick:()=>void}) {
   const ref=useRef<HTMLButtonElement>(null),[visible,setVisible]=useState(current||index<5);
   useEffect(()=>{if(!ref.current)return;const observer=new IntersectionObserver(entries=>setVisible(entries.some(v=>v.isIntersecting)),{rootMargin:'150px'});observer.observe(ref.current);return()=>observer.disconnect();},[]);
-  return <button ref={ref} aria-current={current?'page':undefined} aria-label={`Edit page ${index+1}`} onClick={onClick}><div style={{aspectRatio:book.widthMm/book.heightMm,background:page.paper}}>{visible&&<PageContent book={book} page={page}/>}</div><small>{index+1}</small></button>;
+  return <button ref={ref} aria-current={current?'page':undefined} onClick={onClick}><div aria-hidden="true" style={{aspectRatio:book.widthMm/book.heightMm,background:page.paper}}>{visible&&<PageContent book={book} page={page}/>}</div><small>Page {index+1}</small></button>;
 }

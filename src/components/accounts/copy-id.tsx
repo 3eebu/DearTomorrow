@@ -10,7 +10,7 @@ export function CopyId({code}:{code:string}) {
   return <div className="dt-account-id-card" aria-label="Permanent Dear Tomorrow ID">
     <p className="dt-account-id-label">Your permanent code</p>
     <div className="dt-account-code"><code aria-label={`Dear Tomorrow ID ${code}`}>{code}</code>
-      <button className="dt-account-secondary" type="button" onClick={()=>void copy()} aria-label="Copy your Dear Tomorrow ID">
+      <button className="dt-account-secondary" type="button" onClick={()=>void copy()}>
         {notice==='ID copied.'?'Copied ✓':'Copy ID'}</button></div>
     <p className="dt-account-id-help" role={notice?'status':undefined} aria-live="polite">{notice||'This code is yours to keep. Share it only with the person you want to connect with.'}</p>
   </div>;

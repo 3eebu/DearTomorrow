@@ -1,6 +1,7 @@
 'use client';
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { StationeryConfirm, StationeryDialog } from '@/components/stationery-dialog';
+import { SiteNavigation } from '@/components/site-navigation';
 import {cloudBooks} from '@/lib/accounts/cloud-client';
 import type {CloudScope} from '@/lib/accounts/documents';
 import { createBook, formats, LIMITS, uid, validateBook, type MemoryBookDocument } from '@/lib/memory-books';
@@ -128,7 +129,7 @@ export function BookLibrary({scope}:{scope?:CloudScope}={}) {
   return <div className={s.app}>
     <FrameProbe/>
     {mode === 'library' && <>
-      <div className={s.topbar}><a href="/" className={s.brand}>Dear Tomorrow.</a><span className={s.localBadge}>{scope ? 'PRIVATE IN MY SPACE' : 'SAVED IN THIS BROWSER'}</span><a href="/">Back to Dear Tomorrow ↗</a></div>
+      <div className={s.topbar}><a href="/" className={s.brand} aria-label="Dear Tomorrow home">Dear Tomorrow.</a><span className={s.localBadge}>{scope ? 'PRIVATE IN MY SPACE' : 'SAVED IN THIS BROWSER'}</span><SiteNavigation compact /></div>
       <main className={s.library} data-library-load-ms={profileBook() ? loadMs : undefined}>
         <div className={s.libraryIntro}><div><span className={s.eyebrow}>FOR THE THINGS THAT STAY</span><h1>My Memory <em>Books.</em></h1><p>A place for your photographs, your words, your wonderfully ordinary days.</p></div><button className={s.primary} disabled={!loaded} onClick={() => setCreating(true)}>＋ Create a book</button></div>
         <section className={s.exampleInvitation} aria-label="An example Memory Book">

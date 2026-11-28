@@ -118,7 +118,7 @@ export function AboutNewspaperMontage({ variant = "about" }: { variant?: "about"
       <span className={styles.captionTitle}>One name. So many stories.</span>
       <span className={styles.captionNote}>Fictional editions. Real affection for the written word.</span>
     </figcaption>
-    <button type="button" className={styles.replay} onClick={replay} aria-label="Replay the newspaper montage">
+    <button type="button" className={styles.replay} onClick={replay}>
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4.2 6.1A6.4 6.4 0 1 1 3.6 12M4.2 2.8v3.7h3.7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
       <span>Replay montage</span>
     </button>

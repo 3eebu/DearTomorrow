@@ -31,7 +31,7 @@ export function AccountNav({enabled}:{enabled:boolean}) {
   },[enabled,pathname]);
   return <nav className="dt-account-nav" aria-label="Account">
     {user?<>{!user.deleting&&<><Link href="/my-space">My Space</Link>{user.paired&&<Link href="/our-space">Our Space</Link>}</>}
-      <details><summary>{user.name}</summary><div><Link href="/settings">Settings</Link>
+      <details key={pathname}><summary>{user.name}</summary><div><Link href="/settings">Settings</Link>
         {!user.deleting&&!user.paired&&<Link href="/connect">Find your person</Link>}
         <form action={signOut}><button>Sign out</button></form>
       </div></details>

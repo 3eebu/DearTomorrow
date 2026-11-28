@@ -1,6 +1,7 @@
-.dt-account-nav{display:flex;justify-content:flex-end;align-items:center;gap:18px;padding:0 clamp(20px,5vw,80px);background:#efe5da;color:#642f40;border-bottom:1px solid #e1d4ca;font-size:.75rem;min-height:42px;position:relative;z-index:40}
+.dt-account-nav{display:flex;justify-content:flex-end;align-items:center;gap:18px;padding:0 clamp(20px,5vw,80px);background:#efe5da;color:#642f40;border-bottom:1px solid #e1d4ca;font-size:.75rem;min-height:42px;position:relative;z-index:55}
 .dt-account-nav :is(a,summary,button){min-height:40px;display:inline-flex;align-items:center}
 .dt-account-nav summary{cursor:pointer;max-width:min(28vw,180px);overflow:hidden;white-space:nowrap}
+.dt-account-nav summary::after{content:"";width:.4em;height:.4em;flex:none;border-inline-end:1px solid;border-block-end:1px solid;rotate:45deg;margin-inline-start:.55em;margin-block-start:-.2em}
 .dt-account-nav details>div{position:absolute;right:clamp(20px,5vw,80px);top:100%;padding:6px 18px;background:#fbf4e9;border:1px solid #dbc9bb;min-width:145px}
 .dt-account-nav details>div>a{display:flex}
 .dt-account-nav button{background:none;color:inherit;border:0;padding:0}
@@ -60,7 +61,7 @@ body:has(> .dt-auth-page) { display: flex; flex-direction: column; min-height: 1
 .dt-account-form{display:grid;gap:17px;max-width:500px;margin:20px 0 12px}
 .dt-account-form label{display:grid;gap:8px;font-size:.78rem;font-weight:600;letter-spacing:.025em;color:#594742}
 .dt-account-form :is(input,textarea){min-height:50px;width:100%;min-width:0;border:1px solid #cdb9ab;border-radius:2px;padding:11px 13px;background:#fffdf8;color:#382a2a;font:1rem/1.4 'DM Sans',sans-serif;transition:border-color .18s ease,box-shadow .18s ease,background-color .18s ease}
-.dt-account-form :is(input,textarea)::placeholder{color:#a28d83}
+.dt-account-form :is(input,textarea)::placeholder{color:#705d53}
 .dt-account-form :is(input,textarea):hover{border-color:#9f8176}
 .dt-account-form :is(input,textarea):focus-visible{outline:2px solid #80505e;outline-offset:2px;border-color:#80505e;background:#fffefa}
 .dt-account-form :is(input,textarea):user-invalid:not(:placeholder-shown){border-color:#a04f53;box-shadow:0 0 0 2px #a04f5314}
@@ -84,7 +85,7 @@ body:has(> .dt-auth-page) { display: flex; flex-direction: column; min-height: 1
 .dt-account-code{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:12px 0}
 .dt-account-code code{font-size:clamp(.8rem,3.5vw,1.05rem);padding:7px 9px;border:1px solid var(--a-line);background:#f5ebdb;color:#512b36}
 .dt-account-id-card{padding:20px clamp(16px,3vw,25px);border:1px solid #ddcbbd;background:linear-gradient(135deg,#faf3e9,#f1e5d9);box-shadow:0 9px 22px #51362b0b;max-width:440px}
-.dt-account-id-label,.dt-connect-kicker{font-size:.7rem!important;letter-spacing:.18em;text-transform:uppercase;color:#967565!important}
+.dt-account-id-label,.dt-connect-kicker{font-size:.7rem!important;letter-spacing:.18em;text-transform:uppercase;color:#715546!important}
 .dt-account-id-card .dt-account-code{justify-content:space-between;gap:10px;margin:12px 0}
 .dt-account-id-card .dt-account-code code{font:600 clamp(.78rem,3.6vw,1rem)/1.4 'DM Sans',sans-serif;letter-spacing:.055em;overflow-wrap:anywhere}
 .dt-account-id-help{font-size:.82rem;line-height:1.55!important}

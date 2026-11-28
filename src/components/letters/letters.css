@@ -12,7 +12,7 @@
   min-height:43px;padding:.62rem .85rem;border:1px solid var(--lt-line);background:transparent;cursor:pointer;font-size:.87rem;
 }
 .lt-workspace button:hover:not(:disabled) { background:#eadccd; }
-.lt-workspace button:disabled { opacity:.5;cursor:default; }
+.lt-workspace button:disabled { color:#6f5b50; background:#e9ded2; opacity:1; cursor:not-allowed; }
 .lt-workspace .lt-primary { background:var(--lt-plum);border-color:var(--lt-plum);color:#fff6eb; }
 .lt-workspace .lt-primary:hover:not(:disabled) { background:#53313c; }
 .lt-workspace .lt-link { border-color:transparent;text-decoration:underline;text-underline-offset:.3em;color:var(--lt-plum); }
@@ -265,7 +265,7 @@
 }
 .lt-workspace .lt-paper-writing {display:block;width:100%;min-height:17rem;padding:0;border:0;resize:vertical;
   field-sizing:content;background:transparent;white-space:pre-wrap;overflow-wrap:anywhere;}
-.lt-workspace .lt-paper-writing::placeholder {color:color-mix(in srgb,var(--lt-page-ink),transparent 45%);}
+.lt-workspace .lt-paper-writing::placeholder {color:var(--lt-page-ink);opacity:1;}
 .lt-page-words p {line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;margin-bottom:var(--lt-page-space);}
 .lt-signature {font:400 clamp(1.05rem,2.6vw,1.6rem)/1.5 var(--lt-hand);color:var(--lt-page-ink);
   overflow-wrap:anywhere;margin-top:1.4rem!important;text-align:var(--lt-align);}

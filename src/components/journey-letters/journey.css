@@ -45,6 +45,7 @@
 .jl-secondary { color: var(--jl-wine); border-color: var(--jl-line); background: #fcf8f0; }
 .jl-secondary:hover:not(:disabled) { background: #efe1d1; }
 .jl-link { padding: .4em .05em; color: var(--jl-wine); background: transparent; text-decoration: underline; text-underline-offset: .24em; }
+.jl-root :is(.jl-primary,.jl-secondary,.jl-link):disabled { opacity: 1; color: #6f5b50; background: #eee4da; cursor: not-allowed; }
 .jl-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.15rem; }
 .jl-hero {
   display: grid;
