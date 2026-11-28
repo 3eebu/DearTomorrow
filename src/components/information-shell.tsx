@@ -24,6 +24,8 @@ export function InformationShell({children, showPreviewLink = true, className}:{
           <Link href="/how-it-works">How it works</Link>
           <Link href="/memory-tree">Memory Tree</Link>
           <Link href="/letters">Letters</Link>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Service information</Link>
         </nav>
         <small>© Dear Tomorrow · Currently in preview</small>
       </footer>

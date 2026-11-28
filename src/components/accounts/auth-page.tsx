@@ -24,6 +24,7 @@ export async function AuthPage({mode,message}:{mode:keyof typeof forms;message?:
         {form.description&&<p>{form.description}</p>}
       </div>
       <AccountNotice message={message??(!enabled?'unavailable':undefined)}/>
+      {mode==='signup'&&<p className="dt-signup-information">Before you register, read our <Link href="/privacy">privacy information</Link> and <Link href="/terms">service information</Link>.</p>}
       <form action={form.action} className="dt-account-form">
         {mode==='signup'&&<label>Display name<input name="name" required maxLength={60} autoComplete="nickname"/></label>}
         {mode!=='reset'&&<label>Email address<input name="email" required type="email" maxLength={254} autoComplete="email"/></label>}

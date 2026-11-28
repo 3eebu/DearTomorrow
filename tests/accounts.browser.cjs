@@ -42,6 +42,19 @@ async function run() {
           await page.screenshot({path:path.join(shots,route.slice(1)+'-'+width+'.png'),fullPage:true});
         }
       }
+      await page.goto(base+'/signup');
+      for (const [name,route,title] of [
+        ['privacy information','/privacy','Privacy'],
+        ['service information','/terms','Service information'],
+      ]) {
+        await page.getByRole('main').getByRole('link',{name,exact:true}).click();
+        await page.waitForURL(base+route);
+        await page.getByRole('heading',{name:title,exact:true}).waitFor();
+        assert.ok(await page.getByText('Draft for review.',{exact:true}).isVisible());
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
+        await page.getByRole('link',{name:'Go to registration'}).click();
+        await page.waitForURL(base+'/signup');
+      }
       for(const route of ['/my-space','/our-space','/settings','/connect','/welcome',
         '/my-space/memory/396cf2e5-0ad2-4cbb-8d48-7587ee731dfe','/our-space/memory/396cf2e5-0ad2-4cbb-8d48-7587ee731dfe',
         '/letters?space=mine','/memory-books?space=mine','/memory-tree?space=mine','/journey-letters?space=mine']) {
@@ -55,6 +68,11 @@ async function run() {
     for(const route of ['/','/about','/how-it-works','/letters','/memory-books','/memory-tree','/journey-letters']) {
       assert.equal((await page.goto(base+route)).status(),200,route);
       await page.locator('main h1').first().waitFor();
+      if(route==='/'||route==='/about') {
+        const footer=page.getByRole('navigation',{name:'Footer navigation'});
+        assert.equal(await footer.getByRole('link',{name:'Privacy',exact:true}).getAttribute('href'),'/privacy');
+        assert.equal(await footer.getByRole('link',{name:'Service information',exact:true}).getAttribute('href'),'/terms');
+      }
     }
     const unauthorized=await page.request.post(base+'/api/private-space',{
       headers:{origin:new URL(base).origin,'x-dear-account':'396cf2e5-0ad2-4cbb-8d48-7587ee731dfe'},

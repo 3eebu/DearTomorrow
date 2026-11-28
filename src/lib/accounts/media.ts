@@ -1,8 +1,10 @@
 import 'server-only';
 import {createHash} from 'node:crypto';
 import {privateStorage} from './server';
+import {recordServiceEvent} from './service-events';
 
 export const mediaBucket='dear-tomorrow-private';
+export class PrivateMediaUnavailable extends Error {}
 const marker='$dearMedia';
 const allow = /^data:(image\/(?:jpeg|png|webp)|audio\/(?:wav|mpeg|ogg|webm|mp4));base64,([A-Za-z0-9+/]+={0,2})$/;
 type Store=NonNullable<ReturnType<typeof privateStorage>>;
@@ -27,8 +29,13 @@ export async function saveImage(bytes:Buffer,mime:string,owner:string,store:Stor
 }
 const digest=(bytes:Buffer)=>createHash('sha256').update(bytes).digest('hex');
 async function upload(bytes:Buffer,type:string,key:string,store:Store) {
-  const {error}=await store.storage.from(mediaBucket).upload(key,bytes,{contentType:type,upsert:false,cacheControl:'0'});
-  if(error && !('statusCode' in error && String(error.statusCode)==='409'))throw new Error('A private attachment could not be saved. Retry before leaving.');
+  try {
+    const {error}=await store.storage.from(mediaBucket).upload(key,bytes,{contentType:type,upsert:false,cacheControl:'0'});
+    if(error && !('statusCode' in error && String(error.statusCode)==='409'))throw error;
+  } catch {
+    recordServiceEvent('storage.write_failed');
+    throw new PrivateMediaUnavailable('A private attachment could not be saved. Retry before leaving.');
+  }
 }
 
 async function walk(value:unknown,convert:(item:unknown)=>Promise<{value:unknown}|null>,depth=0):Promise<unknown> {
@@ -57,7 +64,10 @@ export async function packMedia(payload:unknown,prefix:string,store:Store|null) 
     const [,mime,base64]=match;
     const bytes=Buffer.from(base64,'base64');
     if(bytes.length>6000000||!expectedBytes(bytes,mime))throw new Error('A photograph or audio attachment could not be verified.');
-    if(!store)throw new Error('Private media storage is not configured.');
+    if(!store) {
+      recordServiceEvent('storage.write_failed');
+      throw new PrivateMediaUnavailable('Private media storage is not configured.');
+    }
     const key=prefix+'/'+digest(bytes);
     await upload(bytes,mime,key,store);
     return {value:{[marker]:key,mime}};
@@ -73,12 +83,17 @@ export function restoreMedia(payload:unknown,prefix:string,store:Store|null) {
       !/^[a-f0-9]{64}$/.test(key.slice(prefix.length+1))||!allow.test('data:'+mime+';base64,AA==')) {
       throw new Error('An attachment reference failed its ownership check.');
     }
-    if(!store)throw new Error('Private media storage is not configured.');
-    const {data,error}=await store.storage.from(mediaBucket).download(key);
-    if(error||!data)throw new Error('A private attachment could not be retrieved.');
-    const bytes=Buffer.from(await data.arrayBuffer());
-    if(!expectedBytes(bytes,mime))throw new Error('A private attachment could not be verified.');
-    return {value:'data:'+mime+';base64,'+bytes.toString('base64')};
+    try {
+      if(!store)throw new PrivateMediaUnavailable();
+      const {data,error}=await store.storage.from(mediaBucket).download(key);
+      if(error||!data)throw new PrivateMediaUnavailable();
+      const bytes=Buffer.from(await data.arrayBuffer());
+      if(!expectedBytes(bytes,mime))throw new PrivateMediaUnavailable();
+      return {value:'data:'+mime+';base64,'+bytes.toString('base64')};
+    } catch {
+      recordServiceEvent('storage.read_failed');
+      throw new PrivateMediaUnavailable('A private attachment could not be retrieved.');
+    }
   });
 }
 

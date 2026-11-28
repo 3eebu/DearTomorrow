@@ -1,6 +1,7 @@
 import {NextRequest,NextResponse} from 'next/server';
 import {appOrigin,matchesHostedOrigin} from '@/lib/accounts/config';
 import {accountClient,accountLanding} from '@/lib/accounts/server';
+import {recordAuthError,recordServiceEvent} from '@/lib/accounts/service-events';
 
 function redirectTo(path:string) {
   return NextResponse.redirect(new URL(path,appOrigin()),{
@@ -23,6 +24,7 @@ export async function GET(request:NextRequest) {
   if (!client) return redirectTo('/login?message=social-unavailable');
   try {
     const {data,error} = await client.auth.exchangeCodeForSession(code);
+    if (error) recordAuthError(error.status);
     if (error || !data.user) return redirectTo('/login?message=social-expired');
     const {data:{user}} = await client.auth.getUser();
     if (!user?.email_confirmed_at || user.id!==data.user.id) {
@@ -32,6 +34,7 @@ export async function GET(request:NextRequest) {
     const destination = await accountLanding(client,user.id);
     return redirectTo(destination ?? '/login?message=social-failed');
   } catch {
+    recordServiceEvent('auth.unavailable');
     return redirectTo('/login?message=social-failed');
   }
 }

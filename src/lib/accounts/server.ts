@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { appOrigin, supabaseConfig } from './config';
 import { spaces, type SpaceKind } from './identity';
 import { withoutProviderTokens } from './oauth';
+import { recordServiceEvent } from './service-events';
 
 export async function accountClient({oauthExchange=false}:{oauthExchange?:boolean}={}) {
   const config = supabaseConfig();
@@ -41,7 +42,10 @@ export type Profile = {display_name:string; dear_id:string; onboarded:boolean; d
 export async function account() {
   const client = await accountClient();
   if(!client)return null;
-  const {data:{user}} = await client.auth.getUser();
+  const {data:{user},error} = await client.auth.getUser();
+  if(error&&(error.status===0||(error.status??0)>=500||error.name==='AuthRetryableFetchError')) {
+    recordServiceEvent('auth.unavailable');
+  }
   if(!user?.email_confirmed_at)return null;
   return {client,user};
 }
@@ -51,7 +55,10 @@ export async function requireAccount() {
   if(!session)redirect('/login');
   const {data,error} = await session.client.from('dt_profiles')
     .select('display_name,dear_id,onboarded,deleting_at,avatar').eq('id',session.user.id).single();
-  if(error || !data) throw new Error('Your private profile could not be loaded.');
+  if(error || !data) {
+    recordServiceEvent('database.unavailable');
+    throw new Error('Your private profile could not be loaded.');
+  }
   return {...session,profile:data as Profile};
 }
 
