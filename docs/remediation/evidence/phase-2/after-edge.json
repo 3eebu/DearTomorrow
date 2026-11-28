@@ -1,0 +1,7469 @@
+{
+  "phase": "after",
+  "engine": "edge",
+  "version": "158.0.4370.45",
+  "scans": [
+    {
+      "route": "/",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-copy > .dt-overline"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#dt-hero-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#dt-hero-title > em"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-lead"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href$=\"#dt-discover\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href$=\"#dt-discover\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-footnote"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_archiveHeading > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_archiveHeading > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ink > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ink > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_cutout > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_cutout > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_captionTitle"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_captionNote"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_replay > span"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href=\"/\"]"
+          ],
+          "reason": "elmPartiallyObscured"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href=\"/\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"memory-books\"]"
+          ],
+          "reason": "elmPartiallyObscured"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"memory-books\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"memory-tree\"]"
+          ],
+          "reason": "elmPartiallyObscured"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"memory-tree\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"letters\"]"
+          ],
+          "reason": "elmPartiallyObscured"
+        }
+      ]
+    },
+    {
+      "route": "/about",
+      "width": 390,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "route": "/how-it-works",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".DydK9W_down > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Replay Letters walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Expand Letters walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Replay Memory Tree walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Expand Memory Tree walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(4) > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(5) > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            ".DydK9W_down"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Replay Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Expand Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Replay Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Expand Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Memory Books walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(4)"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(5)"
+          ]
+        }
+      ]
+    },
+    {
+      "route": "/letters",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-env-from"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-box-lid-face > strong"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-box-photo-label"
+          ],
+          "reason": "pseudoContent"
+        }
+      ]
+    },
+    {
+      "route": "/journey-letters",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-hero-cities > span:nth-child(1)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-hero-cities > span:nth-child(2)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "text[y=\"-27\"]"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-departure-mark > .jl-map-city[y=\"26\"][text-anchor=\"middle\"]"
+          ],
+          "reason": "imgNode"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-arrival-mark > .jl-map-city[y=\"26\"][text-anchor=\"middle\"]"
+          ],
+          "reason": "imgNode"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-map-hand"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "figcaption > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-link[type=\"button\"]"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-link[type=\"button\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        }
+      ]
+    },
+    {
+      "route": "/memory-books",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_emptyBook"
+          ],
+          "reason": "nonBmp"
+        }
+      ]
+    },
+    {
+      "route": "/memory-tree",
+      "width": 390,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "route": "/signup",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-signup-information"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-signup-information > a[href$=\"privacy\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-signup-information > a[href$=\"terms\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(4)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-password-help"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-divider"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/login",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-recovery"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-divider"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"signup\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/forgot-password",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/reset-password",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-copy > .dt-overline"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#dt-hero-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#dt-hero-title > em"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-lead"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href$=\"#dt-discover\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href$=\"#dt-discover\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-footnote"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_archiveHeading > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_archiveHeading > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ink > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ink > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_cutout > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_cutout > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_strip > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_captionTitle"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_captionNote"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_replay > span"
+          ],
+          "reason": "pseudoContent"
+        }
+      ]
+    },
+    {
+      "route": "/about",
+      "width": 1440,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "route": "/how-it-works",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".DydK9W_down > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Replay Letters walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Expand Letters walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Replay Memory Tree walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Expand Memory Tree walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(4) > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(5) > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            ".DydK9W_down"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Replay Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Expand Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Replay Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Expand Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Memory Books walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(4)"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(5)"
+          ]
+        }
+      ]
+    },
+    {
+      "route": "/letters",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-env-from"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-box-lid-face > strong"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-box-photo-label"
+          ],
+          "reason": "pseudoContent"
+        }
+      ]
+    },
+    {
+      "route": "/journey-letters",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-hero-cities > span:nth-child(1)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-hero-cities > span:nth-child(2)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "text[y=\"-27\"]"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-departure-mark > .jl-map-city[y=\"26\"][text-anchor=\"middle\"]"
+          ],
+          "reason": "imgNode"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-arrival-mark > .jl-map-city[y=\"26\"][text-anchor=\"middle\"]"
+          ],
+          "reason": "imgNode"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-map-hand"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "figcaption > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-link[type=\"button\"]"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-link[type=\"button\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        }
+      ]
+    },
+    {
+      "route": "/memory-books",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_emptyBook"
+          ],
+          "reason": "nonBmp"
+        }
+      ]
+    },
+    {
+      "route": "/memory-tree",
+      "width": 1440,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "route": "/signup",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-signup-information"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-signup-information > a[href$=\"privacy\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-signup-information > a[href$=\"terms\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(4)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-password-help"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-divider"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/login",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-recovery"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-divider"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"signup\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/forgot-password",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/reset-password",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/privacy",
+      "width": 390,
+      "supplemental": true,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "route": "/terms",
+      "width": 390,
+      "supplemental": true,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "route": "/privacy",
+      "width": 1440,
+      "supplemental": true,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "route": "/terms",
+      "width": 1440,
+      "supplemental": true,
+      "failures": [],
+      "manual": []
+    }
+  ],
+  "layout": [
+    {
+      "width": 1440,
+      "route": "/",
+      "heading": {
+        "w": 569,
+        "h": 319,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/about",
+      "heading": {
+        "w": 528,
+        "h": 249,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 1050,
+        "h": 207,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/letters",
+      "heading": {
+        "w": 417,
+        "h": 163,
+        "lines": 1
+      },
+      "primary": {
+        "w": 128,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 520,
+        "h": 222,
+        "lines": 2
+      },
+      "primary": {
+        "w": 165,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/memory-books",
+      "heading": {
+        "w": 545,
+        "h": 77,
+        "lines": 1
+      },
+      "primary": {
+        "w": 141,
+        "h": 49,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 1200,
+        "h": 92,
+        "lines": 1
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/signup",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/reset-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/",
+      "heading": {
+        "w": 272,
+        "h": 161,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/about",
+      "heading": {
+        "w": 284,
+        "h": 127,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 276,
+        "h": 190,
+        "lines": 4
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/letters",
+      "heading": {
+        "w": 198,
+        "h": 77,
+        "lines": 1
+      },
+      "primary": {
+        "w": 128,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 286,
+        "h": 90,
+        "lines": 2
+      },
+      "primary": {
+        "w": 165,
+        "h": 44,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/memory-books",
+      "heading": {
+        "w": 272,
+        "h": 101,
+        "lines": 2
+      },
+      "primary": {
+        "w": 141,
+        "h": 49,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 282,
+        "h": 93,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/signup",
+      "heading": {
+        "w": 254,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 254,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/login",
+      "heading": {
+        "w": 254,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 254,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 254,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 320,
+      "route": "/reset-password",
+      "heading": {
+        "w": 254,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/",
+      "heading": {
+        "w": 327,
+        "h": 161,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/about",
+      "heading": {
+        "w": 333,
+        "h": 85,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 331,
+        "h": 142,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/letters",
+      "heading": {
+        "w": 198,
+        "h": 77,
+        "lines": 1
+      },
+      "primary": {
+        "w": 128,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 341,
+        "h": 94,
+        "lines": 2
+      },
+      "primary": {
+        "w": 165,
+        "h": 44,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/memory-books",
+      "heading": {
+        "w": 327,
+        "h": 101,
+        "lines": 2
+      },
+      "primary": {
+        "w": 141,
+        "h": 49,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 330,
+        "h": 47,
+        "lines": 1
+      },
+      "primary": {
+        "w": 124,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/signup",
+      "heading": {
+        "w": 309,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 309,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/login",
+      "heading": {
+        "w": 309,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 309,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 309,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 375,
+      "route": "/reset-password",
+      "heading": {
+        "w": 309,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "heading": {
+        "w": 342,
+        "h": 163,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/about",
+      "heading": {
+        "w": 346,
+        "h": 88,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 346,
+        "h": 146,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/letters",
+      "heading": {
+        "w": 198,
+        "h": 77,
+        "lines": 1
+      },
+      "primary": {
+        "w": 128,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 356,
+        "h": 97,
+        "lines": 2
+      },
+      "primary": {
+        "w": 165,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/memory-books",
+      "heading": {
+        "w": 342,
+        "h": 101,
+        "lines": 2
+      },
+      "primary": {
+        "w": 141,
+        "h": 49,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 343,
+        "h": 47,
+        "lines": 1
+      },
+      "primary": {
+        "w": 124,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/signup",
+      "heading": {
+        "w": 324,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 324,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/login",
+      "heading": {
+        "w": 324,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 324,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 324,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 390,
+      "route": "/reset-password",
+      "heading": {
+        "w": 324,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/",
+      "heading": {
+        "w": 712,
+        "h": 263,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/about",
+      "heading": {
+        "w": 606,
+        "h": 237,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 724,
+        "h": 110,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/letters",
+      "heading": {
+        "w": 225,
+        "h": 88,
+        "lines": 1
+      },
+      "primary": {
+        "w": 128,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 277,
+        "h": 119,
+        "lines": 2
+      },
+      "primary": {
+        "w": 165,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/memory-books",
+      "heading": {
+        "w": 442,
+        "h": 44,
+        "lines": 1
+      },
+      "primary": {
+        "w": 141,
+        "h": 49,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 676,
+        "h": 49,
+        "lines": 1
+      },
+      "primary": {
+        "w": 151,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/signup",
+      "heading": {
+        "w": 390,
+        "h": 39,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 39,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 390,
+        "h": 39,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 768,
+      "route": "/reset-password",
+      "heading": {
+        "w": 390,
+        "h": 39,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/",
+      "heading": {
+        "w": 340,
+        "h": 189,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/about",
+      "heading": {
+        "w": 606,
+        "h": 237,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 776,
+        "h": 118,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/letters",
+      "heading": {
+        "w": 238,
+        "h": 93,
+        "lines": 1
+      },
+      "primary": {
+        "w": 128,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 296,
+        "h": 127,
+        "lines": 2
+      },
+      "primary": {
+        "w": 165,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/memory-books",
+      "heading": {
+        "w": 442,
+        "h": 45,
+        "lines": 1
+      },
+      "primary": {
+        "w": 141,
+        "h": 49,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 722,
+        "h": 52,
+        "lines": 1
+      },
+      "primary": {
+        "w": 151,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/signup",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 820,
+      "route": "/reset-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/",
+      "heading": {
+        "w": 506,
+        "h": 283,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/about",
+      "heading": {
+        "w": 469,
+        "h": 222,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 1050,
+        "h": 184,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/letters",
+      "heading": {
+        "w": 371,
+        "h": 145,
+        "lines": 1
+      },
+      "primary": {
+        "w": 128,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 462,
+        "h": 198,
+        "lines": 2
+      },
+      "primary": {
+        "w": 165,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/memory-books",
+      "heading": {
+        "w": 499,
+        "h": 70,
+        "lines": 1
+      },
+      "primary": {
+        "w": 141,
+        "h": 49,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 1126,
+        "h": 81,
+        "lines": 1
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/signup",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1280,
+      "route": "/reset-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/",
+      "heading": {
+        "w": 549,
+        "h": 479,
+        "lines": 4
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/about",
+      "heading": {
+        "w": 559,
+        "h": 299,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 1050,
+        "h": 221,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/letters",
+      "heading": {
+        "w": 495,
+        "h": 194,
+        "lines": 1
+      },
+      "primary": {
+        "w": 128,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 514,
+        "h": 392,
+        "lines": 3
+      },
+      "primary": {
+        "w": 165,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/memory-books",
+      "heading": {
+        "w": 545,
+        "h": 77,
+        "lines": 1
+      },
+      "primary": {
+        "w": 141,
+        "h": 49,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 1200,
+        "h": 102,
+        "lines": 1
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/signup",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    },
+    {
+      "width": 1920,
+      "route": "/reset-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 91,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": null
+    }
+  ],
+  "type": [
+    {
+      "width": 390,
+      "route": "/about",
+      "heading": {
+        "w": 346,
+        "h": 88,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": 0.044,
+      "headingFaces": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display",
+          "isCustomFont": true,
+          "glyphCount": 10
+        },
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display-Italic",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "DM Sans 9pt",
+          "postScriptName": "DM-Sans-9pt-14pt-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 30
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "heading": {
+        "w": 342,
+        "h": 163,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        }
+      ],
+      "cls": 0,
+      "headingFaces": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display",
+          "isCustomFont": true,
+          "glyphCount": 19
+        },
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display-Italic",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "DM Sans 9pt",
+          "postScriptName": "DM-Sans-9pt-14pt-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 34
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "route": "/login",
+      "heading": {
+        "w": 324,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 324,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        }
+      ],
+      "cls": 0.0002,
+      "headingFaces": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display",
+          "isCustomFont": true,
+          "glyphCount": 13
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "DM Sans 9pt",
+          "postScriptName": "DM-Sans-9pt-14pt",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "route": "/about",
+      "heading": {
+        "w": 346,
+        "h": 131,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 0
+        }
+      ],
+      "cls": null,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia-Italic",
+          "isCustomFont": false,
+          "glyphCount": 18
+        },
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 10
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "Arial-BoldMT",
+          "isCustomFont": false,
+          "glyphCount": 30
+        }
+      ],
+      "fallback": true
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "heading": {
+        "w": 342,
+        "h": 163,
+        "lines": 3
+      },
+      "primary": {
+        "w": 196,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 0
+        }
+      ],
+      "cls": null,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia-Italic",
+          "isCustomFont": false,
+          "glyphCount": 12
+        },
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 19
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "Arial-BoldMT",
+          "isCustomFont": false,
+          "glyphCount": 34
+        }
+      ],
+      "fallback": true
+    },
+    {
+      "width": 390,
+      "route": "/login",
+      "heading": {
+        "w": 324,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 324,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 0
+        }
+      ],
+      "cls": null,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 13
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "ArialMT",
+          "isCustomFont": false,
+          "glyphCount": 16
+        }
+      ],
+      "fallback": true
+    },
+    {
+      "width": 1440,
+      "route": "/about",
+      "heading": {
+        "w": 528,
+        "h": 249,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        }
+      ],
+      "cls": 0.0137,
+      "headingFaces": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display",
+          "isCustomFont": true,
+          "glyphCount": 10
+        },
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display-Italic",
+          "isCustomFont": true,
+          "glyphCount": 18
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "DM Sans 9pt",
+          "postScriptName": "DM-Sans-9pt-14pt-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 30
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "heading": {
+        "w": 569,
+        "h": 319,
+        "lines": 3
+      },
+      "primary": {
+        "w": 199,
+        "h": 48,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        }
+      ],
+      "cls": 0,
+      "headingFaces": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display",
+          "isCustomFont": true,
+          "glyphCount": 19
+        },
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display-Italic",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "DM Sans 9pt",
+          "postScriptName": "DM-Sans-9pt-14pt-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 34
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "style": "normal"
+        },
+        {
+          "family": "Playfair Display",
+          "style": "italic"
+        },
+        {
+          "family": "DM Sans",
+          "style": "normal"
+        }
+      ],
+      "advance": {
+        "display": 699.06,
+        "georgia": 692.2,
+        "sans": 695.11,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 36932
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 38404
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 38804
+        }
+      ],
+      "cls": 0.0001,
+      "headingFaces": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "Playfair-Display",
+          "isCustomFont": true,
+          "glyphCount": 13
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "DM Sans 9pt",
+          "postScriptName": "DM-Sans-9pt-14pt",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "route": "/about",
+      "heading": {
+        "w": 528,
+        "h": 249,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 0
+        }
+      ],
+      "cls": null,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia-Italic",
+          "isCustomFont": false,
+          "glyphCount": 18
+        },
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 10
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "Arial-BoldMT",
+          "isCustomFont": false,
+          "glyphCount": 30
+        }
+      ],
+      "fallback": true
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "heading": {
+        "w": 569,
+        "h": 319,
+        "lines": 3
+      },
+      "primary": {
+        "w": 196,
+        "h": 48,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 0
+        }
+      ],
+      "cls": null,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia-Italic",
+          "isCustomFont": false,
+          "glyphCount": 12
+        },
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 19
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "Arial-BoldMT",
+          "isCustomFont": false,
+          "glyphCount": 34
+        }
+      ],
+      "fallback": true
+    },
+    {
+      "width": 1440,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [
+        {
+          "path": "/_next/static/media/dm-sans-latin-wght-normal.0tm8u-h63rec8.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-normal.1izqcz-wkfvza.woff2",
+          "bytes": 0
+        },
+        {
+          "path": "/_next/static/media/playfair-display-latin-wght-italic.3wz967ibaache.woff2",
+          "bytes": 0
+        }
+      ],
+      "cls": null,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 13
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "ArialMT",
+          "isCustomFont": false,
+          "glyphCount": 16
+        }
+      ],
+      "fallback": true
+    }
+  ],
+  "navigation": {}
+}

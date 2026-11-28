@@ -1,0 +1,1508 @@
+{
+  "phase": "after",
+  "scans": [
+    {
+      "state": "welcome",
+      "width": 390,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "state": "/my-space",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-space-empty > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "h3"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-space-empty > p"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "state": "/our-space",
+      "width": 390,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "state": "/connect",
+      "width": 390,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "state": "/settings",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-id-label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-secondary[type=\"button\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-id-help"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "summary"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "state": "/memory-books?space=mine",
+      "width": 390,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "state": "Book Studio",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(5)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgImage"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Book Studio photographs",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_empty"
+          ],
+          "reason": "elmPartiallyObscuring"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(5)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(4)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(5)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_addPage > small"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-current=\"page\"] > small"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button:nth-child(3) > small"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Book Studio surprises",
+      "width": 390,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_template:nth-child(7)"
+          ],
+          "reason": "elmPartiallyObscuring"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(5)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(4)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(5)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_addPage > small"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-current=\"page\"] > small"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button:nth-child(3) > small"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "/my-space",
+      "width": 1440,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "state": "/our-space",
+      "width": 1440,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "state": "/connect",
+      "width": 1440,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "state": "/settings",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-id-label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-secondary[type=\"button\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-id-help"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "summary"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "state": "/memory-books?space=mine",
+      "width": 1440,
+      "failures": [],
+      "manual": []
+    },
+    {
+      "state": "Book Studio",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Templates\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Layers\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Book settings\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Hand\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "i:nth-child(2)"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgImage"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close properties\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Book Studio photographs",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Templates\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Layers\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Book settings\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Hand\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "i:nth-child(2)"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgImage"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close properties\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Book Studio surprises",
+      "width": 1440,
+      "failures": [],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Templates\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Layers\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Book settings\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Hand\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "i:nth-child(2)"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgImage"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close properties\"]"
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "route": "/",
+      "width": 320,
+      "menu": {
+        "visible": true,
+        "style": "solid",
+        "h": 44
+      },
+      "escape": true,
+      "touchNavigation": true,
+      "home": true
+    },
+    {
+      "route": "/about",
+      "width": 375,
+      "menu": {
+        "visible": true,
+        "style": "solid",
+        "h": 44
+      },
+      "escape": true,
+      "touchNavigation": true,
+      "home": true
+    },
+    {
+      "route": "/journey-letters",
+      "width": 390,
+      "menu": {
+        "visible": true,
+        "style": "solid",
+        "h": 44
+      },
+      "escape": true,
+      "touchNavigation": true,
+      "home": true
+    },
+    {
+      "route": "/how-it-works",
+      "width": 768,
+      "menu": {
+        "visible": true,
+        "style": "solid",
+        "h": 44
+      },
+      "escape": true,
+      "touchNavigation": true,
+      "home": true
+    },
+    {
+      "route": "/letters",
+      "width": 820,
+      "menu": {
+        "visible": true,
+        "style": "solid",
+        "h": 44
+      },
+      "escape": true,
+      "touchNavigation": true,
+      "home": true
+    },
+    {
+      "route": "/memory-books",
+      "width": 390,
+      "menu": {
+        "visible": true,
+        "style": "solid",
+        "h": 44
+      },
+      "escape": true,
+      "touchNavigation": true,
+      "home": true
+    },
+    {
+      "route": "/login",
+      "width": 390,
+      "menu": {
+        "visible": true,
+        "style": "solid",
+        "h": 44
+      },
+      "escape": true,
+      "touchNavigation": true,
+      "home": true
+    },
+    {
+      "replay": true
+    },
+    {
+      "dialogKeyboard": true
+    },
+    {
+      "accountSettingsFromHome": true
+    },
+    {
+      "immersiveReaderExit": true,
+      "width": 390
+    },
+    {
+      "immersiveReaderExit": true,
+      "width": 1440
+    }
+  ],
+  "zoom": [
+    {
+      "route": "/",
+      "overflow": 0,
+      "heading": 162.75
+    },
+    {
+      "route": "/about",
+      "overflow": 0,
+      "heading": 87.59375
+    },
+    {
+      "route": "/memory-books",
+      "overflow": 0,
+      "heading": 101.1875
+    },
+    {
+      "route": "/login",
+      "overflow": 0,
+      "heading": 32.25
+    }
+  ]
+}

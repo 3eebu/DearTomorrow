@@ -1,0 +1,3956 @@
+{
+  "phase": "before",
+  "engine": "edge",
+  "version": "158.0.4370.45",
+  "scans": [
+    {
+      "route": "/",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-welcome-heading > .dt-overline"
+          ],
+          "message": "Element has insufficient color contrast of 3.78 (foreground color: #947b70, background color: #fdfaf5, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947b70",
+            "bgColor": "#fdfaf5",
+            "contrastRatio": 3.78,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-rooms-top > .dt-overline"
+          ],
+          "message": "Element has insufficient color contrast of 3.33 (foreground color: #947b70, background color: #f2ebe3, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947b70",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 3.33,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"letters\"] > span:nth-child(1)"
+          ],
+          "message": "Element has insufficient color contrast of 2.91 (foreground color: #9f8575, background color: #f2ebe3, font size: 12.8pt (17px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#9f8575",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 2.91,
+            "fontSize": "12.8pt (17px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"letters\"] > .dt-room-description"
+          ],
+          "message": "Element has insufficient color contrast of 3.73 (foreground color: #867569, background color: #f2ebe3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#867569",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 3.73,
+            "fontSize": "9.0pt (12px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"memory-books\"] > span:nth-child(1)"
+          ],
+          "message": "Element has insufficient color contrast of 2.91 (foreground color: #9f8575, background color: #f2ebe3, font size: 12.8pt (17px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#9f8575",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 2.91,
+            "fontSize": "12.8pt (17px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"memory-books\"] > .dt-room-description"
+          ],
+          "message": "Element has insufficient color contrast of 3.73 (foreground color: #867569, background color: #f2ebe3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#867569",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 3.73,
+            "fontSize": "9.0pt (12px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"memory-tree\"] > span:nth-child(1)"
+          ],
+          "message": "Element has insufficient color contrast of 2.91 (foreground color: #9f8575, background color: #f2ebe3, font size: 12.8pt (17px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#9f8575",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 2.91,
+            "fontSize": "12.8pt (17px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"memory-tree\"] > .dt-room-description"
+          ],
+          "message": "Element has insufficient color contrast of 3.73 (foreground color: #867569, background color: #f2ebe3, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#867569",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 3.73,
+            "fontSize": "9.0pt (12px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            ".auLUVq_replay"
+          ],
+          "message": "Text inside the element is not included in the accessible name"
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-copy > .dt-overline"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#dt-hero-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#dt-hero-title > em"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-lead"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href$=\"#dt-discover\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href$=\"#dt-discover\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-footnote"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_archiveHeading > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_archiveHeading > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ink > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ink > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_cutout > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_cutout > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_captionTitle"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_captionNote"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_replay > span"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href=\"/\"]"
+          ],
+          "reason": "elmPartiallyObscured"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href=\"/\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"memory-books\"]"
+          ],
+          "reason": "elmPartiallyObscured"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"memory-books\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"memory-tree\"]"
+          ],
+          "reason": "elmPartiallyObscured"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"memory-tree\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-bottom-nav > a[href$=\"letters\"]"
+          ],
+          "reason": "elmPartiallyObscured"
+        }
+      ]
+    },
+    {
+      "route": "/about",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "route": "/how-it-works",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".DydK9W_down > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Replay Letters walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Expand Letters walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Replay Memory Tree walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Expand Memory Tree walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(4) > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(5) > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            ".DydK9W_down"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Replay Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Expand Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Replay Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Expand Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Memory Books walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(4)"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(5)"
+          ]
+        }
+      ]
+    },
+    {
+      "route": "/letters",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-primary"
+          ],
+          "message": "Element has insufficient color contrast of 2.41 (foreground color: #fdf5ea, background color: #b29b9a, font size: 10.4pt (13.92px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#fdf5ea",
+            "bgColor": "#b29b9a",
+            "contrastRatio": 2.41,
+            "fontSize": "10.4pt (13.92px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-library-header > .lt-actions > button:nth-child(1)"
+          ],
+          "message": "Element has insufficient color contrast of 2.93 (foreground color: #978f87, background color: #faf5ec, font size: 10.4pt (13.92px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#978f87",
+            "bgColor": "#faf5ec",
+            "contrastRatio": 2.93,
+            "fontSize": "10.4pt (13.92px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-library-header > .lt-actions > button:nth-child(2)"
+          ],
+          "message": "Element has insufficient color contrast of 2.93 (foreground color: #978f87, background color: #faf5ec, font size: 10.4pt (13.92px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#978f87",
+            "bgColor": "#faf5ec",
+            "contrastRatio": 2.93,
+            "fontSize": "10.4pt (13.92px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-actions > button:nth-child(3)"
+          ],
+          "message": "Element has insufficient color contrast of 2.93 (foreground color: #978f87, background color: #faf5ec, font size: 10.4pt (13.92px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#978f87",
+            "bgColor": "#faf5ec",
+            "contrastRatio": 2.93,
+            "fontSize": "10.4pt (13.92px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-overline"
+          ],
+          "message": "Element has insufficient color contrast of 3.65 (foreground color: #947b70, background color: #f9f6f0, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947b70",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.65,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-route-city:nth-child(1) > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #918071, background color: #f9f6f0, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#918071",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.52,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-route-end > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #918071, background color: #f9f6f0, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#918071",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.52,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-env-from"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-box-lid-face > strong"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-box-photo-label"
+          ],
+          "reason": "pseudoContent"
+        }
+      ]
+    },
+    {
+      "route": "/journey-letters",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-hero-cities > span:nth-child(1)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-hero-cities > span:nth-child(2)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "text[y=\"-27\"]"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-departure-mark > .jl-map-city[y=\"26\"][text-anchor=\"middle\"]"
+          ],
+          "reason": "imgNode"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-arrival-mark > .jl-map-city[y=\"26\"][text-anchor=\"middle\"]"
+          ],
+          "reason": "imgNode"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-map-hand"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "figcaption > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[type=\"button\"]"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[type=\"button\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        }
+      ]
+    },
+    {
+      "route": "/memory-books",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_libraryIntro > div > .f1o-2W_eyebrow"
+          ],
+          "message": "Element has insufficient color contrast of 3.63 (foreground color: #917b65, background color: #f7f3ec, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#917b65",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.63,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_libraryIntro > div > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.89 (foreground color: #84786b, background color: #f7f3ec, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#84786b",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.89,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div:nth-child(2) > .f1o-2W_eyebrow"
+          ],
+          "message": "Element has insufficient color contrast of 3.19 (foreground color: #917b65, background color: #eee4d6, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#917b65",
+            "bgColor": "#eee4d6",
+            "contrastRatio": 3.19,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_empty > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.89 (foreground color: #84786b, background color: #f7f3ec, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#84786b",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.89,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_storageNote"
+          ],
+          "message": "Element has insufficient color contrast of 3.65 (foreground color: #8b7c6c, background color: #f7f3ec, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#8b7c6c",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.65,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_emptyBook"
+          ],
+          "reason": "nonBmp"
+        }
+      ]
+    },
+    {
+      "route": "/memory-tree",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "route": "/signup",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(4)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-password-help"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-divider"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/login",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-recovery"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-divider"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"signup\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/forgot-password",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/reset-password",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-welcome-heading > .dt-overline"
+          ],
+          "message": "Element has insufficient color contrast of 3.78 (foreground color: #947b70, background color: #fdfaf5, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947b70",
+            "bgColor": "#fdfaf5",
+            "contrastRatio": 3.78,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-rooms-top > .dt-overline"
+          ],
+          "message": "Element has insufficient color contrast of 3.33 (foreground color: #947b70, background color: #f2ebe3, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947b70",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 3.33,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"letters\"] > span:nth-child(1)"
+          ],
+          "message": "Element has insufficient color contrast of 2.91 (foreground color: #9f8575, background color: #f2ebe3, font size: 12.8pt (17px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#9f8575",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 2.91,
+            "fontSize": "12.8pt (17px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"letters\"] > .dt-room-description"
+          ],
+          "message": "Element has insufficient color contrast of 3.73 (foreground color: #867569, background color: #f2ebe3, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#867569",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 3.73,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"memory-books\"] > span:nth-child(1)"
+          ],
+          "message": "Element has insufficient color contrast of 2.91 (foreground color: #9f8575, background color: #f2ebe3, font size: 12.8pt (17px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#9f8575",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 2.91,
+            "fontSize": "12.8pt (17px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"memory-books\"] > .dt-room-description"
+          ],
+          "message": "Element has insufficient color contrast of 3.73 (foreground color: #867569, background color: #f2ebe3, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#867569",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 3.73,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"memory-tree\"] > span:nth-child(1)"
+          ],
+          "message": "Element has insufficient color contrast of 2.91 (foreground color: #9f8575, background color: #f2ebe3, font size: 12.8pt (17px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#9f8575",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 2.91,
+            "fontSize": "12.8pt (17px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-room-link[href$=\"memory-tree\"] > .dt-room-description"
+          ],
+          "message": "Element has insufficient color contrast of 3.73 (foreground color: #867569, background color: #f2ebe3, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#867569",
+            "bgColor": "#f2ebe3",
+            "contrastRatio": 3.73,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            ".auLUVq_replay"
+          ],
+          "message": "Text inside the element is not included in the accessible name"
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-copy > .dt-overline"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#dt-hero-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#dt-hero-title > em"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-lead"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href$=\"#dt-discover\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "a[href$=\"#dt-discover\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-hero-footnote"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_archiveHeading > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_archiveHeading > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_folio > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_sunday > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_column > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_journal > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_review > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ink > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ink > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_broadsheet > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_magazine > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_chronicle > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_letters > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_quarterly > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_cutout > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_cutout > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_edition > span:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_edition > span:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_article > p:nth-child(1)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_article > p:nth-child(2)"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_ledger > .auLUVq_sheet > .auLUVq_colophon"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_note > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_strip > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_publication"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_issue"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_headline"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_affection > .auLUVq_sheet > .auLUVq_deck"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_captionTitle"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_captionNote"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".auLUVq_replay > span"
+          ],
+          "reason": "pseudoContent"
+        }
+      ]
+    },
+    {
+      "route": "/about",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "route": "/how-it-works",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".DydK9W_down > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Replay Letters walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Expand Letters walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Replay Memory Tree walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Expand Memory Tree walkthrough\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(4) > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(5) > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            ".DydK9W_down"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Replay Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Expand Letters walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Replay Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Expand Memory Tree walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Play Memory Books walkthrough\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(4)"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-controls=\"memory-books-film\"]:nth-child(5)"
+          ]
+        }
+      ]
+    },
+    {
+      "route": "/letters",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-overline"
+          ],
+          "message": "Element has insufficient color contrast of 3.65 (foreground color: #947b70, background color: #f9f6f0, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947b70",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.65,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-route-city:nth-child(1) > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #918071, background color: #f9f6f0, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#918071",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.52,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-route-end > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #918071, background color: #f9f6f0, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#918071",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.52,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"cotton\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"linen\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-env-from"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-stamp"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-stamp > i"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "span[data-material=\"kraft\"] > .lt-env-address"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-box-lid-face > strong"
+          ],
+          "reason": "pseudoContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".lt-box-photo-label"
+          ],
+          "reason": "pseudoContent"
+        }
+      ]
+    },
+    {
+      "route": "/journey-letters",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-hero-cities > span:nth-child(1)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-hero-cities > span:nth-child(2)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "text[y=\"-27\"]"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-departure-mark > .jl-map-city[y=\"26\"][text-anchor=\"middle\"]"
+          ],
+          "reason": "imgNode"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-arrival-mark > .jl-map-city[y=\"26\"][text-anchor=\"middle\"]"
+          ],
+          "reason": "imgNode"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".jl-map-hand"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "figcaption > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[type=\"button\"]"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[type=\"button\"] > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        }
+      ]
+    },
+    {
+      "route": "/memory-books",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_localBadge"
+          ],
+          "message": "Element has insufficient color contrast of 3.43 (foreground color: #8e8172, background color: #f7f3ec, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#8e8172",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.43,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_libraryIntro > div > .f1o-2W_eyebrow"
+          ],
+          "message": "Element has insufficient color contrast of 3.63 (foreground color: #917b65, background color: #f7f3ec, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#917b65",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.63,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_libraryIntro > div > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.89 (foreground color: #84786b, background color: #f7f3ec, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#84786b",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.89,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div:nth-child(2) > .f1o-2W_eyebrow"
+          ],
+          "message": "Element has insufficient color contrast of 3.19 (foreground color: #917b65, background color: #eee4d6, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#917b65",
+            "bgColor": "#eee4d6",
+            "contrastRatio": 3.19,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_empty > p"
+          ],
+          "message": "Element has insufficient color contrast of 3.89 (foreground color: #84786b, background color: #f7f3ec, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#84786b",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.89,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_storageNote"
+          ],
+          "message": "Element has insufficient color contrast of 3.65 (foreground color: #8b7c6c, background color: #f7f3ec, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#8b7c6c",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.65,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_emptyBook"
+          ],
+          "reason": "nonBmp"
+        }
+      ]
+    },
+    {
+      "route": "/memory-tree",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div > span"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.37 (foreground color: #948377, background color: #f9f6f0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#948377",
+            "bgColor": "#f9f6f0",
+            "contrastRatio": 3.37,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "route": "/signup",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(4)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-password-help"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-divider"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/login",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-recovery"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-tactile-primary"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-divider"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"signup\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/forgot-password",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "route": "/reset-password",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "message": "Element has insufficient color contrast of 3.52 (foreground color: #947d72, background color: #f8f4ed, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#auth-title"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-heading > p"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-auth-switch > a[href$=\"login\"]"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    }
+  ],
+  "layout": [
+    {
+      "width": 1440,
+      "route": "/",
+      "heading": {
+        "w": 569,
+        "h": 319,
+        "lines": 3
+      },
+      "primary": {
+        "w": 196,
+        "h": 48,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/about",
+      "heading": {
+        "w": 528,
+        "h": 249,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/how-it-works",
+      "heading": {
+        "w": 1050,
+        "h": 207,
+        "lines": 2
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/letters",
+      "heading": {
+        "w": 411,
+        "h": 163,
+        "lines": 1
+      },
+      "primary": {
+        "w": 122,
+        "h": 43,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/journey-letters",
+      "heading": {
+        "w": 520,
+        "h": 334,
+        "lines": 3
+      },
+      "primary": {
+        "w": 163,
+        "h": 44,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/memory-books",
+      "heading": {
+        "w": 545,
+        "h": 77,
+        "lines": 1
+      },
+      "primary": {
+        "w": 139,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/memory-tree",
+      "heading": {
+        "w": 1200,
+        "h": 92,
+        "lines": 1
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/signup",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/forgot-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 88,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    },
+    {
+      "width": 1440,
+      "route": "/reset-password",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 88,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": null
+    }
+  ],
+  "type": [
+    {
+      "width": 390,
+      "route": "/about",
+      "heading": {
+        "w": 346,
+        "h": 131,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia-Italic",
+          "isCustomFont": false,
+          "glyphCount": 18
+        },
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 10
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "Arial-BoldMT",
+          "isCustomFont": false,
+          "glyphCount": 30
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "heading": {
+        "w": 342,
+        "h": 163,
+        "lines": 3
+      },
+      "primary": {
+        "w": 196,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia-Italic",
+          "isCustomFont": false,
+          "glyphCount": 12
+        },
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 19
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "Arial-BoldMT",
+          "isCustomFont": false,
+          "glyphCount": 34
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "route": "/login",
+      "heading": {
+        "w": 324,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 324,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 13
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "ArialMT",
+          "isCustomFont": false,
+          "glyphCount": 16
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "route": "/about",
+      "heading": {
+        "w": 528,
+        "h": 249,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia-Italic",
+          "isCustomFont": false,
+          "glyphCount": 18
+        },
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 10
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "Arial-BoldMT",
+          "isCustomFont": false,
+          "glyphCount": 30
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "heading": {
+        "w": 569,
+        "h": 319,
+        "lines": 3
+      },
+      "primary": {
+        "w": 196,
+        "h": 48,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia-Italic",
+          "isCustomFont": false,
+          "glyphCount": 12
+        },
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 19
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "Arial-BoldMT",
+          "isCustomFont": false,
+          "glyphCount": 34
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "\"Playfair Display\", Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0,
+      "headingFaces": [
+        {
+          "familyName": "Georgia",
+          "postScriptName": "Georgia",
+          "isCustomFont": false,
+          "glyphCount": 13
+        }
+      ],
+      "bodyFaces": [
+        {
+          "familyName": "Arial",
+          "postScriptName": "ArialMT",
+          "isCustomFont": false,
+          "glyphCount": 16
+        }
+      ]
+    }
+  ],
+  "navigation": {}
+}

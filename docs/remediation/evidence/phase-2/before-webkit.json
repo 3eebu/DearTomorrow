@@ -1,0 +1,152 @@
+{
+  "phase": "before",
+  "engine": "webkit",
+  "version": "26.5",
+  "scans": [],
+  "layout": [],
+  "type": [
+    {
+      "width": 390,
+      "route": "/about",
+      "heading": {
+        "w": 346,
+        "h": 131,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "Playfair Display, Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "heading": {
+        "w": 342,
+        "h": 163,
+        "lines": 3
+      },
+      "primary": {
+        "w": 196,
+        "h": 48,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Playfair Display, Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0
+    },
+    {
+      "width": 390,
+      "route": "/login",
+      "heading": {
+        "w": 324,
+        "h": 32,
+        "lines": 1
+      },
+      "primary": {
+        "w": 324,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Playfair Display, Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0
+    },
+    {
+      "width": 1440,
+      "route": "/about",
+      "heading": {
+        "w": 528,
+        "h": 249,
+        "lines": 3
+      },
+      "primary": null,
+      "overflow": 0,
+      "computed": "Playfair Display, Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "heading": {
+        "w": 569,
+        "h": 319,
+        "lines": 3
+      },
+      "primary": {
+        "w": 196,
+        "h": 48,
+        "lines": 2
+      },
+      "overflow": 0,
+      "computed": "Playfair Display, Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0
+    },
+    {
+      "width": 1440,
+      "route": "/login",
+      "heading": {
+        "w": 390,
+        "h": 41,
+        "lines": 1
+      },
+      "primary": {
+        "w": 390,
+        "h": 44,
+        "lines": 1
+      },
+      "overflow": 0,
+      "computed": "Playfair Display, Georgia, serif",
+      "faces": [],
+      "advance": {
+        "display": 692.2,
+        "georgia": 692.2,
+        "sans": 669.81,
+        "arial": 669.81
+      },
+      "fonts": [],
+      "cls": 0
+    }
+  ],
+  "navigation": {}
+}

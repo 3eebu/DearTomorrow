@@ -1,0 +1,2290 @@
+{
+  "phase": "before",
+  "scans": [
+    {
+      "state": "welcome",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "state": "/my-space",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-space-empty > span[aria-hidden=\"true\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "h3"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-space-empty > p"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "state": "/our-space",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "state": "/connect",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-connect-kicker"
+          ],
+          "metrics": {
+            "fgColor": "#967565",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.8,
+            "fontSize": "8.4pt (11.2px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "state": "/settings",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[type=\"button\"]"
+          ]
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-id-label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[type=\"button\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-id-help"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "summary"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "state": "/memory-books?space=mine",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_libraryIntro > div > .f1o-2W_eyebrow"
+          ],
+          "metrics": {
+            "fgColor": "#917b65",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.63,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_libraryIntro > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#84786b",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.89,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div:nth-child(2) > .f1o-2W_eyebrow"
+          ],
+          "metrics": {
+            "fgColor": "#917b65",
+            "bgColor": "#eee4d6",
+            "contrastRatio": 3.19,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_storageNote"
+          ],
+          "metrics": {
+            "fgColor": "#8b7c6c",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.65,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "state": "Book Studio",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small[role=\"status\"]"
+          ],
+          "metrics": {
+            "fgColor": "#8b7d6f",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.73,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-current=\"page\"]"
+          ]
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(5)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgImage"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Book Studio photographs",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small[role=\"status\"]"
+          ],
+          "metrics": {
+            "fgColor": "#8b7d6f",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.73,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#book-photograph-storage"
+          ],
+          "metrics": {
+            "fgColor": "#8c7b6c",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.8,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_help:nth-child(4)"
+          ],
+          "metrics": {
+            "fgColor": "#8c7b6c",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.8,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-current=\"page\"]"
+          ]
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_empty"
+          ],
+          "reason": "elmPartiallyObscuring"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(5)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(4)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(5)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_addPage > small"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-current=\"page\"] > small"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Edit page 2\"] > small"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Book Studio surprises",
+      "width": 390,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small[role=\"status\"]"
+          ],
+          "metrics": {
+            "fgColor": "#8b7d6f",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.73,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-current=\"page\"]"
+          ]
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_template:nth-child(7)"
+          ],
+          "reason": "elmPartiallyObscuring"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(5)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(4)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(5)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_addPage > small"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-current=\"page\"] > small"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Edit page 2\"] > small"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "/my-space",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "state": "/our-space",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "state": "/connect",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-connect-kicker"
+          ],
+          "metrics": {
+            "fgColor": "#967565",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.8,
+            "fontSize": "8.4pt (11.2px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "state": "/settings",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "footer > small"
+          ],
+          "metrics": {
+            "fgColor": "#947d72",
+            "bgColor": "#f8f4ed",
+            "contrastRatio": 3.52,
+            "fontSize": "8.3pt (11px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[type=\"button\"]"
+          ]
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-id-label"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[type=\"button\"]"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".dt-account-id-help"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "summary"
+          ],
+          "reason": "bgGradient"
+        }
+      ]
+    },
+    {
+      "state": "/memory-books?space=mine",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_localBadge"
+          ],
+          "metrics": {
+            "fgColor": "#8e8172",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.43,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_libraryIntro > div > .f1o-2W_eyebrow"
+          ],
+          "metrics": {
+            "fgColor": "#917b65",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.63,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_libraryIntro > div > p"
+          ],
+          "metrics": {
+            "fgColor": "#84786b",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.89,
+            "fontSize": "9.8pt (13px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div:nth-child(2) > .f1o-2W_eyebrow"
+          ],
+          "metrics": {
+            "fgColor": "#917b65",
+            "bgColor": "#eee4d6",
+            "contrastRatio": 3.19,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_storageNote"
+          ],
+          "metrics": {
+            "fgColor": "#8b7c6c",
+            "bgColor": "#f7f3ec",
+            "contrastRatio": 3.65,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        }
+      ],
+      "manual": []
+    },
+    {
+      "state": "Book Studio",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small[role=\"status\"]"
+          ],
+          "metrics": {
+            "fgColor": "#8b7d6f",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.73,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_collection > p"
+          ],
+          "metrics": {
+            "fgColor": "#8c7b6c",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.8,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(3) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.13,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(4) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.13,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(5) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.13,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(6) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.13,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(7) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.13,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(8) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.13,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(9) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.13,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(10) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#eee5da",
+            "contrastRatio": 2.68,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_textSample:nth-child(11) > small"
+          ],
+          "metrics": {
+            "fgColor": "#9a8a78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.13,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_kicker"
+          ],
+          "metrics": {
+            "fgColor": "#967d6e",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.6,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_inspectorContent > p"
+          ],
+          "metrics": {
+            "fgColor": "#8c7b6c",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.8,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-current=\"page\"]"
+          ]
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Templates\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Layers\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Book settings\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Hand\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "i:nth-child(2)"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgImage"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close properties\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Book Studio photographs",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small[role=\"status\"]"
+          ],
+          "metrics": {
+            "fgColor": "#8b7d6f",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.73,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "#book-photograph-storage"
+          ],
+          "metrics": {
+            "fgColor": "#8c7b6c",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.8,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_help:nth-child(4)"
+          ],
+          "metrics": {
+            "fgColor": "#8c7b6c",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.8,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_empty"
+          ],
+          "metrics": {
+            "fgColor": "#a18d78",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 2.98,
+            "fontSize": "13.5pt (18px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_kicker"
+          ],
+          "metrics": {
+            "fgColor": "#967d6e",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.6,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_inspectorContent > .qS_g3G_help"
+          ],
+          "metrics": {
+            "fgColor": "#8c7b6c",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.8,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-current=\"page\"]"
+          ]
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Templates\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Layers\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Book settings\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Hand\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "i:nth-child(2)"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgImage"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close properties\"]"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Book Studio surprises",
+      "width": 1440,
+      "failures": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "small[role=\"status\"]"
+          ],
+          "metrics": {
+            "fgColor": "#8b7d6f",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.73,
+            "fontSize": "6.8pt (9px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_kicker"
+          ],
+          "metrics": {
+            "fgColor": "#967d6e",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.6,
+            "fontSize": "6.0pt (8px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "p"
+          ],
+          "metrics": {
+            "fgColor": "#8c7b6c",
+            "bgColor": "#fbf7f0",
+            "contrastRatio": 3.8,
+            "fontSize": "7.5pt (10px)",
+            "fontWeight": "normal",
+            "messageKey": null,
+            "expectedContrastRatio": "4.5:1"
+          }
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-current=\"page\"]"
+          ]
+        }
+      ],
+      "manual": [
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Back to library\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Photographs\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Decorations\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Paper\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Templates\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Layers\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Book settings\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[title=\"Hand\"] > b"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "i:nth-child(2)"
+          ],
+          "reason": "shortTextContent"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ],
+          "reason": "nonBmp"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_canvasBar > div > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > button"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_selectionBar > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_object.f1o-2W_object[role=\"group\"]:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            "div[aria-label=\"polaroid: The little things.\"] > .f1o-2W_polaroid > .f1o-2W_photoCaption"
+          ],
+          "reason": "bgOverlap"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(1)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(2)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(3)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".qS_g3G_viewOptions > button:nth-child(6)"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(2) > .f1o-2W_words[data-writing=\"true\"] > div"
+          ],
+          "reason": "bgImage"
+        },
+        {
+          "rule": "color-contrast",
+          "target": [
+            ".f1o-2W_paper > .f1o-2W_object:nth-child(3) > .f1o-2W_polaroid > .f1o-2W_photoWell > .f1o-2W_photoPlaceholder > span"
+          ],
+          "reason": "bgGradient"
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Undo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Redo\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close collection\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom out\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Zoom in\"]"
+          ]
+        },
+        {
+          "rule": "label-content-name-mismatch",
+          "target": [
+            "button[aria-label=\"Close properties\"]"
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "zoom": []
+}
