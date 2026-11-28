@@ -7,10 +7,55 @@ const base=process.env.ACCOUNTS_URL||'http://127.0.0.1:3002';
 const shots=process.env.ACCOUNTS_SHOTS;
 const expectGoogle=process.env.ACCOUNTS_EXPECT_GOOGLE==='true';
 
+async function checkSignupSubmission(browser) {
+  const page=await browser.newPage();
+  let submissions=0;
+  let releaseRequest;
+  const waitForRelease=new Promise(resolve=>{releaseRequest=resolve;});
+  await page.route(base+'/signup',async route=>{
+    if(route.request().method()!=='POST')return route.continue();
+    submissions++;
+    await waitForRelease;
+    await route.continue();
+  });
+  try {
+    await page.goto(base+'/signup',{waitUntil:'networkidle'});
+    // Whitespace passes native required-field checks and fails server validation before any email is sent.
+    await page.getByLabel('Display name').fill(' ');
+    await page.getByLabel('Email address').fill('fictional@example.test');
+    const password=page.getByLabel('Password',{exact:true});
+    await password.fill('fictional-password');
+    const form=page.locator('main .dt-account-form');
+    await form.evaluate(element=>{
+      element.requestSubmit();
+      element.requestSubmit();
+    });
+    const pending=page.getByRole('button',{name:'Creating account…'});
+    await pending.waitFor();
+    assert.ok(await pending.isDisabled());
+    await password.press('Enter');
+    await form.evaluate(element=>element.requestSubmit());
+    await page.waitForRequest(request=>request.url()===base+'/signup'&&request.method()==='POST',{timeout:500})
+      .then(()=>assert.fail('Another signup POST was sent while the first was pending.'),error=>{
+        if(error.name!=='TimeoutError')throw error;
+      });
+    assert.equal(submissions,1);
+    releaseRequest();
+    await page.waitForURL(base+'/signup?message=details');
+    assert.ok(await page.getByRole('button',{name:'Create account'}).isEnabled());
+    await page.goto(base+'/signup?message=signup-rate');
+    assert.ok(await page.getByText('If you just requested a confirmation email',{exact:false}).isVisible());
+  } finally {
+    releaseRequest();
+    await page.close();
+  }
+}
+
 async function run() {
   const browser=await chromium.launch({executablePath:process.env.ACCOUNTS_CHROMIUM});
   const errors=[];
   try {
+    await checkSignupSubmission(browser);
     for(const [width,height] of [[1440,1050],[820,1180],[390,844],[320,760]]) {
       const profile=await browser.newContext({viewport:{width,height},isMobile:width<500,hasTouch:width<500,reducedMotion:'reduce'});
       const page=await profile.newPage();
@@ -105,7 +150,7 @@ async function run() {
     assert.equal(new URL(withoutVerifier.headers().location).origin,new URL(base).origin);
     assert.equal(withoutVerifier.headers()['set-cookie'],undefined);
     assert.deepEqual(errors,[]);
-    console.log('Guest and authenticated-route boundaries, fixed callback origin, and responsive signup, login, and recovery checked.');
+    console.log('Signup submission protection, guest and authenticated-route boundaries, fixed callback origin, and responsive signup, login, and recovery checked.');
   } finally {await browser.close();}
 }
 run().catch(error=>{console.error(error);process.exitCode=1;});

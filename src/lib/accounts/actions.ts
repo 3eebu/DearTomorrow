@@ -52,7 +52,7 @@ export async function signUp(form:FormData) {
     data:{display_name:name},emailRedirectTo:appOrigin()+'/auth/confirm',
   }});
   if(error)recordAuthError(error.status);
-  if(error?.status===429)redirect('/signup?message=rate');
+  if(error?.status===429)redirect('/signup?message=signup-rate');
   if(error && error.status!==422)redirect('/signup?message=try');
   if(data.session&&data.user?.email_confirmed_at)await landing(client,data.user);
   redirect('/login?message=verification');
